@@ -1,0 +1,23 @@
+.product-name:hover > button {
+    animation: slideToRight 1s ease-in-out;
+    background-color: black;
+    color: white;
+}
+
+@keyframes slideToRight {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.add-to-cart:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    transition: .3s ease;
+    cursor: pointer;
+}

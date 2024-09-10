@@ -27,6 +27,10 @@ const config: Config = {
     },
     extend: {
       colors: {
+<<<<<<< HEAD
+=======
+        yellow: "#ECB407",
+>>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
         primary: "#F4E6DB",
         cream: "rgb(255 241 228)",
         black: "#141414",
@@ -38,6 +42,12 @@ const config: Config = {
         "gray-text": "#B6B6B6",
       },
       backgroundImage: {},
+<<<<<<< HEAD
+=======
+      boxShadow: {
+        custom: 'rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em',
+      },
+>>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
     },
   },
   plugins: [],

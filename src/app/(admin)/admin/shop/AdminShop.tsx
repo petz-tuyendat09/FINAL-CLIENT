@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import useGetProduct from "@/hooks/useGetProduct";
 import AdminShopGrid from "./AdminShopGrid";
 import { Product } from "@/types/Product";
@@ -16,6 +17,19 @@ export default function AdminShop({
   const { products, handleFetchMore, handleQueryProduct } = useGetProduct({
     initialData,
     initialTotalPages,
+=======
+import useGetProduct from "./hooks/useGetProduct";
+import AdminShopGrid from "./AdminShopGrid";
+import { PaginateProduct } from "@/types/Product";
+import Link from "next/link";
+interface AdminShopProps {
+  initialData: PaginateProduct;
+}
+
+export default function AdminShop({ initialData }: AdminShopProps) {
+  const { products, handleFetchMore, handleQueryProduct } = useGetProduct({
+    initialData,
+>>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
   });
 
   function handleLoadMore() {

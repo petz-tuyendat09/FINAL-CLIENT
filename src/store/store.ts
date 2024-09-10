@@ -4,6 +4,9 @@ import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsAPI } from "./services/product";
+import { categoriesAPI } from "./services/categories";
+import { subCategoriesAPI } from "./services/subcategories";
+
 const persistConfig: PersistConfig<ReturnType<typeof rootReducer>> = {
   key: "root",
   storage,
@@ -18,7 +21,11 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(productsAPI.middleware),
+    }).concat(
+      productsAPI.middleware,
+      categoriesAPI.middleware,
+      subCategoriesAPI.middleware
+    ),
 });
 
 setupListeners(store.dispatch);

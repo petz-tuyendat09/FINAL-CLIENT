@@ -47,7 +47,7 @@ export default function useAddProductForm() {
       if (!values.productName) {
         errors.productName = "Required name";
       }
-      if (values.productPrice === 0) {
+      if (values.productPrice === 0 || !values.productPrice) {
         errors.productPrice = "Required price";
       }
       if (values.productQuantity === 0) {

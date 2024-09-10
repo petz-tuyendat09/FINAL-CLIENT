@@ -9,7 +9,7 @@ interface PageQuery {
 export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/",
+    baseUrl: "http://localhost:8888/api/product/",
   }),
   tagTypes: ["Product"],
 

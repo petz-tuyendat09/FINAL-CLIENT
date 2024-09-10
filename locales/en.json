@@ -8,5 +8,8 @@
         "howToBooking": "How to make an appointment?",
         "contact": "Contact us!",
         "discover": "Discover"
+    },
+    "arrivals": {
+        "title": "Our New Arrivals"
     }
 }

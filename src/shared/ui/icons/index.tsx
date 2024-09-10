@@ -1,3 +1,8 @@
+export { HeadphoneIcon } from "./HeadphoneIcon";
+export { PaymentIcon } from "./PaymentIcon";
+export { ReturnsIcon } from "./ReturnsIcon";
+export { TruckIcon } from "./TruckIcon";
+export { PawIcon } from "./PawIcon";
 export { UserIcon } from "./UserIcon";
 export { StarIcon } from "./StarIcon";
 export { SendIcon } from "./SendIcon";

@@ -8,7 +8,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { CSelect } from '@/shared/ui/CSelect/CSelect';
 export default function Header() {
-    const t = useTranslations('nav');
     const router = useRouter();
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -1,0 +1,15 @@
+export { ArrowRight } from "./ArrowRight";
+export { CalendarIcon } from "./CalendarIcon";
+export { CorgyIcon } from "./CorgyIcon";
+export { UserSmileIcon } from "./UserSmileIcon";
+export { HeadphoneIcon } from "./HeadphoneIcon";
+export { PaymentIcon } from "./PaymentIcon";
+export { ReturnsIcon } from "./ReturnsIcon";
+export { TruckIcon } from "./TruckIcon";
+export { PawIcon } from "./PawIcon";
+export { UserIcon } from "./UserIcon";
+export { StarIcon } from "./StarIcon";
+export { SendIcon } from "./SendIcon";
+export { MenuIcon } from "./MenuIcon";
+export { CommentIcon } from "./CommentIcon";
+export { CartIcon } from "./CartIcon";

@@ -1,0 +1,20 @@
+.custom-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 50px;
+}
+
+.prev-button:hover,
+.next-button:hover {
+    background-color: #5BD0F1;
+}
+
+.prev-button, .next-button {
+    width: 30px !important;
+    height: 30px !important;
+    box-shadow: rgba(0, 0, 0, 0.29) 0px 1px 2px 0px;
+}
+
+.prev-icon, .next-icon {
+    width: 20px !important;
+}

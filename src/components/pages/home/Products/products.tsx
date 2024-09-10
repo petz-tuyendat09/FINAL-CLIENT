@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-"use client";
-import useGetProduct from "@/hooks/useGetProduct";
-import { PaginateProduct, Product } from "@/types/Product";
-import { useTranslations } from "next-intl";
-interface ProductsProps {
-  initialData: PaginateProduct;
-  products: Product[];
-}
-export const Products = ({ initialData }: ProductsProps) => {
-  const t = useTranslations("arrivals");
-  const { products } = useGetProduct({ initialData });
-
-  console.log(products);
-  return (
-    <div className="px-[40px] mt-[50px]">
-      <div className="flex items-center justify-center">
-        <h1 className="text-[26px] font-[600]">{t("title")}</h1>
-      </div>
-      <div>
-        <div></div>
-      </div>
-    </div>
-  );
-};
-=======
 'use client'
 import { useGetAllProductsQuery } from "@/network/apis/products";
 import { useTranslations } from "next-intl";
@@ -70,4 +44,3 @@ export const Products = () => {
         </div>
     )
 }
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e

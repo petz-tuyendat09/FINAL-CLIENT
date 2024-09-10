@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
 body {
     @apply font-sans; 
   }
-=======
-body {
-    @apply font-sans; 
-  }
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e

@@ -6,10 +6,6 @@ import CSwiper from "@/shared/ui/CSwiper/CSwiper";
 import { Booking } from "@/components/pages/home/Booking/booking";
 import { CommentIcon, SendIcon, StarIcon } from "@/shared/ui/icons";
 import { Products } from "@/components/pages/home/Products/products";
-<<<<<<< HEAD
-export default function Index() {
-    const t = useTranslations('home');
-=======
 import { Feedbacks } from "@/components/pages/home/Feedbacks/feedbacks";
 import { Swiper as SwiperType } from 'swiper/types';
 import { useState } from "react";
@@ -22,7 +18,6 @@ export default function Index() {
     const handleSwiper = (swiper: SwiperType) => {
         setSwiperInstance(swiper);
     };
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
     return (
         <div className="mb-[50px]">
             <div className="px-[40px] mt-[50px]">
@@ -51,11 +46,7 @@ export default function Index() {
                 <div className="relative">
                     <img src="./images/home-bg.png" />
                     <div className="absolute top-[20%] left-[-20%] shadow-custom w-[230px] rounded-[20px] px-[20px] py-[15px] bg-white">
-<<<<<<< HEAD
-                        <CSwiper>
-=======
                         <CSwiper slidesPerview={1} navigationCustom={<CustomNavigation swiperRef={swiperInstance} />} handleSwiper={handleSwiper}>
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
                             <SwiperSlide>
                                 <div>
                                     <div className="flex flex-row items-center gap-[10px]">
@@ -127,11 +118,8 @@ export default function Index() {
             </div>
             <Booking />
             <Products />
-<<<<<<< HEAD
-=======
             <Feedbacks />
             <About />
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
         </div>
     );
 }

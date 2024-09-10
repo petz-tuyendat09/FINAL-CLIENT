@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
@@ -7,14 +6,27 @@ import FormAddProductNormalInput from "./FormAddProductNormalInput";
 import FormAddProductPrice from "./FormAddProductPrice";
 import FormAddProductType from "./FormAddProductType";
 import useAddProductForm from "./useAddProductForm";
-import { useLazyGetSubCategoriesQuery } from "@/store/services/subcategories";
-import { useGetCategoriesQuery } from "@/store/services/categories";
+
+const categories = [
+  {
+    _id: "66503ba754d8397df731b398",
+    categoryName: "Cleanser",
+  },
+  {
+    _id: "6690f17d49a259b0a8ffe487",
+    categoryName: "Serum",
+  },
+  {
+    _id: "6690f18849a259b0a8ffe488",
+    categoryName: "Toner",
+  },
+  {
+    _id: "6690f19049a259b0a8ffe489",
+    categoryName: "Exfoliants",
+  },
+];
 
 export default function FormAddProduct() {
-  const { data: categories } = useGetCategoriesQuery();
-  const [getSubCategories, { data: subCategories }] =
-    useLazyGetSubCategoriesQuery();
-
   const [imagePreview, setImagePreview] = useState(NoImg.src);
 
   const { formik } = useAddProductForm();
@@ -29,14 +41,6 @@ export default function FormAddProduct() {
       reader.readAsDataURL(file);
       formik.setFieldValue("productImage", file);
     }
-  }
-
-  function handleChangeCategory(event: React.ChangeEvent<HTMLSelectElement>) {
-    // Get the selected option's text (innerText)
-    const selectedOptionText = event.target.selectedOptions[0].innerText;
-
-    // Fetch subcategories using the selected option's text
-    getSubCategories(selectedOptionText);
   }
 
   return (
@@ -56,7 +60,7 @@ export default function FormAddProduct() {
               <img
                 className="rounded-xl"
                 src={imagePreview}
-                alt="Sản phẩm không có hình ảnh"
+                alt="No product image found"
               />
             </div>
             <input
@@ -75,10 +79,10 @@ export default function FormAddProduct() {
               inputType="text"
               // duplicatedMessage={duplicatedMessage}
               visitedInput={formik.touched.productName}
-              label="Tên sản phẩm"
+              label="Product name"
               onChangeEvent={formik.handleChange}
               inputName="productName"
-              inputPlaceHolder="Nhập tên sản phẩm"
+              inputPlaceHolder="Enter product name"
               onBlurEvent={formik.handleBlur}
               errorMessage={formik.errors.productName}
             />
@@ -87,11 +91,11 @@ export default function FormAddProduct() {
                 visitedInput={formik.touched.productCategory}
                 errorMessage={formik.errors.productCategory}
                 onChangeEvent={formik.handleChange}
-                defaultText="Chọn danh mục"
+                defaultText="Choose Product Type"
                 inputName="productCategory"
                 optionValues={categories?.map((data) => (
                   <option key={data._id} value={data._id}>
-                    {data.categoriesName}
+                    {data.categoryName}
                   </option>
                 ))}
               />
@@ -99,7 +103,7 @@ export default function FormAddProduct() {
                 visitedInput={formik.touched.productSkintype}
                 errorMessage={formik.errors.productSkintype}
                 onChangeEvent={formik.handleChange}
-                defaultText="Chọn danh mục con"
+                defaultText="Choose Skin Type"
                 inputName="productSkintype"
                 // optionValues={skinType?.map((data) => (
                 //   <option key={data._id} value={data._id}>
@@ -109,18 +113,21 @@ export default function FormAddProduct() {
               />
             </div>
             <FormAddProductPrice
-              formik={formik}
+              onBlurEvent={formik.handleBlur}
+              inputPriceValue={formik.values.productPrice}
+              inputDiscountValue={formik.values.salePercent}
+              onChangeEvent={formik.handleChange}
               errorMessage={formik.errors.productPrice}
               visitedInput={formik.touched.productPrice}
             />
             <FormAddProductNormalInput
               inputType="number"
               visitedInput={formik.touched.productQuantity}
-              label="Nhập số lượng"
+              label="Product quantity"
               onBlurEvent={formik.handleBlur}
               onChangeEvent={formik.handleChange}
               inputName="productQuantity"
-              inputPlaceHolder="Nhập số lượng sản phẩm"
+              inputPlaceHolder="Enter product quantity"
               errorMessage={formik.errors.productQuantity}
             />
             <button

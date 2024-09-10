@@ -18,26 +18,16 @@
     "dotenv": "^16.4.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.3.31",
-<<<<<<< HEAD
-=======
     "lodash": "^4.17.21",
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
     "moment": "^2.30.1",
     "next": "14.2.7",
     "next-auth": "^4.24.7",
     "next-intl": "^3.18.0",
-<<<<<<< HEAD
-=======
     "numeral": "^2.0.6",
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-intersection-observer": "^9.13.0",
-<<<<<<< HEAD
-    "react-number-format": "^5.4.2",
-=======
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
     "react-redux": "^9.1.2",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
@@ -47,10 +37,7 @@
   "devDependencies": {
     "@iconify/react": "^5.0.2",
     "@types/node": "^20",
-<<<<<<< HEAD
-=======
     "@types/numeral": "^2.0.5",
->>>>>>> 27ea2b71898f71d1b528b0ba3be043b4884d760e
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/swiper": "^5.4.3",

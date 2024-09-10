@@ -1,7 +1,3 @@
-export { ArrowRight } from "./ArrowRight";
-export { CalendarIcon } from "./CalendarIcon";
-export { CorgyIcon } from "./CorgyIcon";
-export { UserSmileIcon } from "./UserSmileIcon";
 export { HeadphoneIcon } from "./HeadphoneIcon";
 export { PaymentIcon } from "./PaymentIcon";
 export { ReturnsIcon } from "./ReturnsIcon";

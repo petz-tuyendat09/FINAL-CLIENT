@@ -1,0 +1,12 @@
+{
+    "nav": {
+        "title": "Tiêu đề"
+    },
+
+    "home": {
+        "booking": "Đặt lịch",
+        "howToBooking": "Làm sao để đặt lịch?",
+        "contact": "Liên hệ với chúng tôi!",
+        "discover": "Khám Phá"
+    }
+}

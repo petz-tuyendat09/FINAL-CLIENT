@@ -1,0 +1,12 @@
+{
+    "nav": {
+        "title": "Title"
+    },
+
+    "home": {
+        "booking": "Make an appointment",
+        "howToBooking": "How to make an appointment?",
+        "contact": "Contact us!",
+        "discover": "Discover"
+    }
+}

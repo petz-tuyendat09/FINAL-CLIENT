@@ -1,0 +1,9 @@
+.menu-item-hover {
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.menu-item-hover:hover {
+    background-color: #aa8453;
+    border: 1px solid white;
+}

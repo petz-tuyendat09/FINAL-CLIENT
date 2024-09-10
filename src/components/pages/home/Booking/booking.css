@@ -1,0 +1,84 @@
+.main-btn:hover>.layer {
+  animation: slideDown 1s ease;
+  background-color: black;
+}
+
+.main-btn:hover>button {
+  animation: slideDown 1s ease;
+  animation-delay: .3s;
+}
+
+.main-btn:hover>button {
+  background-color: white;
+  z-index: 2;
+}
+
+.main-btn:hover>span {
+  color: white;
+  z-index: 2;
+}
+
+.main-btn {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.layer {
+  content: "";
+  width: 140px;
+  height: 36px;
+  z-index: 1;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    color: white;
+    opacity: 1;
+  }
+}
+
+
+.form-layer {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  content: '';
+  width: 100px;
+  height: 100px;
+  border-bottom-left-radius: 20px;
+  background-color: #5BD0F1;
+}
+
+.booking-btn {
+  overflow: hidden;
+  position: relative;
+}
+
+.booking-btn>span {
+  z-index: 20;
+}
+
+.booking-btn::after {
+  background: #5BD0F1;
+  content: "";
+  height: 155px;
+  left: -75px;
+  opacity: 1;
+  position: absolute;
+  top: -50px;
+  transform: rotate(35deg);
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  z-index: 10;
+}
+
+.booking-btn:hover::after {
+  left: 120%;
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}

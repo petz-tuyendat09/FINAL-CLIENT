@@ -1,18 +1,21 @@
 import { getProduct, getProductWithPaginate } from "@/apis/product";
 import { useCallback, useState } from "react";
-import { Product, PaginateProduct } from "@/types/Product";
+import { Product } from "@/types/Product";
 
 interface UseGetProductProps {
-  initialData: PaginateProduct;
+  initialData: Product[];
+  initialTotalPages?: number;
 }
 
-export default function useGetProduct({ initialData }: UseGetProductProps) {
-  const [products, setListProduct] = useState<Product[]>(initialData.products);
-  const [paginatedProducts, setPaginatedProducts] = useState<Product[]>(
-    initialData.products
-  );
+export default function useGetProduct({
+  initialData,
+  initialTotalPages,
+}: UseGetProductProps) {
+  const [products, setListProduct] = useState<Product[]>(initialData);
+  const [paginatedProducts, setPaginatedProducts] =
+    useState<Product[]>(initialData);
   const [currPage, setCurrPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(initialData.totalPages);
+  const [totalPages, setTotalPages] = useState<number>(initialTotalPages ?? 0);
 
   // Hàm chưa tối ưu k xài
   const handleFetchProduct = useCallback(async () => {

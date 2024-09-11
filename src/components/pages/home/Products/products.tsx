@@ -8,7 +8,6 @@ import "./products.css";
 export const Products = () => {
   const t = useTranslations("arrivals");
   const { data, error, isLoading } = useGetProductsQuery({});
-  console.log(data);
   return (
     <div className="px-[40px] mt-[80px]">
       <div className="flex items-center justify-center">

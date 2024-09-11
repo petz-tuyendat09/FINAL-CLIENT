@@ -28,7 +28,6 @@ export const Booking = () => {
             date: data.date.format("DD-MM-YYYY"),
             time: data.time.format("h:mm A"),
         };
-        console.log('click');
         console.log(customData);
     };
 

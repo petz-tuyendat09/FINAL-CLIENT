@@ -37,6 +37,9 @@ const config: Config = {
         gray: "#F7F7F7",
         "gray-darker": "#F2F2F2",
         "gray-text": "#B6B6B6",
+        peach: 'rgb(250, 244, 242)',
+        darkPeach: '#ffe6d4',
+        red: '#ed6435'
       },
       backgroundImage: {},
       boxShadow: {

@@ -10,6 +10,25 @@ export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8888/api/product/",
+    // Prepare headers dynamically
+    // prepareHeaders: (headers, { getState }) => {
+    //   // Ensure Content-Type is correctly set
+    //   const contentType = headers.get("Content-Type");
+    //   if (contentType !== "") {
+    //     headers.set("Content-Type", "application/json");
+    //   }
+    //   if (contentType === "") {
+    //     headers.delete("Content-Type");
+    //   }
+
+    //   // Get the token from the store and set the Authorization header
+    //   const token = (getState() as RootState).user.token; // Adjust based on your state structure
+    //   if (token) {
+    //     headers.set("authorization", `Bearer ${token}`);
+    //   }
+
+    //   return headers;
+    // },
   }),
   tagTypes: ["Product"],
 
@@ -17,10 +36,10 @@ export const productsAPI = createApi({
     // Modified getProducts endpoint to accept a params object
     getProducts: builder.query<Product[], Record<string, any>>({
       query: (params) => {
-        // Convert params object to query string using URLSearchParams
         const queryParams = new URLSearchParams(
           params as Record<string, string>
         ).toString();
+
         return `?${queryParams}`; // Return the URL with the query string
       },
       providesTags: ["Product"],

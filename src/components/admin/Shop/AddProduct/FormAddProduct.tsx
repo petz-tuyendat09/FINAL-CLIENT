@@ -7,8 +7,8 @@ import FormAddProductNormalInput from "./FormAddProductNormalInput";
 import FormAddProductPrice from "./FormAddProductPrice";
 import FormAddProductType from "./FormAddProductType";
 import useAddProductForm from "./useAddProductForm";
-import { useLazyGetSubCategoriesQuery } from "@/store/services/subcategories";
-import { useGetCategoriesQuery } from "@/store/services/categories";
+import { useLazyGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
+import { useGetCategoriesQuery } from "@/libs/features/services/categories";
 
 export default function FormAddProduct() {
   const { data: categories } = useGetCategoriesQuery();
@@ -38,6 +38,9 @@ export default function FormAddProduct() {
     // Fetch subcategories using the selected option's text
     getSubCategories(selectedOptionText);
   }
+
+  console.log(categories);
+  console.log("123");
 
   return (
     <form onSubmit={formik.handleSubmit} encType="multipart/form-data">

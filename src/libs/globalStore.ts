@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GlobalStoreState {
   lng: string;
@@ -9,14 +9,14 @@ const initialState: GlobalStoreState = {
 };
 
 const globalStoreSlice = createSlice({
-  name: 'globalStore',
+  name: "globalStore",
   initialState,
   reducers: {
     setLng(state, action: PayloadAction<string>) {
       state.lng = action.payload;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { setLng } = globalStoreSlice.actions;
 export default globalStoreSlice.reducer;

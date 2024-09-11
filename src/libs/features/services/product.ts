@@ -14,8 +14,15 @@ export const productsAPI = createApi({
   tagTypes: ["Product"],
 
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], string>({
-      query: (query) => `by-query/${query}`,
+    // Modified getProducts endpoint to accept a params object
+    getProducts: builder.query<Product[], Record<string, any>>({
+      query: (params) => {
+        // Convert params object to query string using URLSearchParams
+        const queryParams = new URLSearchParams(
+          params as Record<string, string>
+        ).toString();
+        return `?${queryParams}`; // Return the URL with the query string
+      },
       providesTags: ["Product"],
     }),
     addNewProduct: builder.mutation<any, FormData>({

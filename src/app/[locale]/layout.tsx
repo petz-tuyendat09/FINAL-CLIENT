@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import LocaleSetter from "@/components/shared/LocaleSetter/LocaleSetter";
 
-const App = async ({ children }:{ children: React.ReactNode }) => {
+const App = async ({ children }: { children: React.ReactNode }) => {
   const locale = await getLocale();
   const messages = await getMessages();
 

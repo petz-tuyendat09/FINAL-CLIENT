@@ -16,11 +16,6 @@ export default function FormAddProductPrice({
     formik.values.productPrice -
     formik.values.productPrice * (formik.values.salePercent / 100);
 
-  console.log(formik.values.productPrice);
-  console.log("Discount Percent:", formik.values.salePercent);
-
-  console.log(priceAfterDiscount);
-
   return (
     <div className="flex w-full gap-4">
       <div>

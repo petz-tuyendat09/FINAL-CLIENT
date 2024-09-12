@@ -13,6 +13,7 @@ const config: Config = {
       mono: ["ui-monospace", "SFMono-Regular"],
       display: ["Roboto"],
       body: ['"Roboto"'],
+      nunito: ["Nunito Sans", "sans-serif"]
     },
     container: {
       center: true,

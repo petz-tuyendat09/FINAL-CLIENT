@@ -2,6 +2,7 @@
     "nav": {
         "title": "Title"
     },
+
     "home": {
         "booking": "Make an appointment",
         "howToBooking": "How to make an appointment?",
@@ -21,6 +22,22 @@
             "item3": "bedding, beds, and cages;",
             "item4": "aquariums, tanks, and accessories;",
             "item5": "clothes, collars, and harnesses."
+        },
+        "freeShipping": {
+            "title": "Free Shipping",
+            "content": "Free shipping on all orders."
+        },
+        "returns": {
+            "title": "10-Day Returns",
+            "content": "Contact us for a return."
+        },
+        "payment": {
+            "title": "Secure Payment",
+            "content": "We accept Visa and MasterCard."
+        },
+        "support": {
+            "title": "Online Support",
+            "content": "We are always here to help."
         }
     }
 }

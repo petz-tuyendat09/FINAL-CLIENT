@@ -1,49 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
-import NoImg from "@@/assets/images/no-img.jpg";
+import { useEffect } from "react";
 import FormAddProductNormalInput from "./FormAddProductNormalInput";
 import FormAddProductPrice from "./FormAddProductPrice";
 import FormAddProductType from "./FormAddProductType";
-import useAddProductForm from "./useAddProductForm";
+import useAddProductForm from "./hook/useAddProductForm";
 import { useLazyGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
 import { useGetCategoriesQuery } from "@/libs/features/services/categories";
+import MyEditor from "./CKEditorComponent";
+import FormAddProductImage from "./FormAddProductImage";
 
 export default function FormAddProduct() {
   const { data: categories } = useGetCategoriesQuery();
   const [getSubCategories, { data: subCategories }] =
     useLazyGetSubCategoriesQuery();
+  const {
+    formik,
+    imagePreview,
+    handleImageChange,
+    animalType,
+    handleAnimalTypeChange,
+  } = useAddProductForm();
 
-  const [imagePreview, setImagePreview] = useState(NoImg.src);
-
-  const { formik } = useAddProductForm();
-
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-      formik.setFieldValue("productImage", file);
+  useEffect(() => {
+    if (animalType) {
+      getSubCategories({
+        animalType: animalType,
+        categoryId: formik.values.productCategory,
+      });
     }
-  }
-
-  function handleChangeCategory(event: React.ChangeEvent<HTMLSelectElement>) {
-    // Get the selected option's text (innerText)
-    const selectedOptionText = event.target.selectedOptions[0].innerText;
-
-    // Fetch subcategories using the selected option's text
-    getSubCategories(selectedOptionText);
-  }
-
-  console.log(categories);
-  console.log("123");
+  }, [animalType, formik.values.productCategory, getSubCategories]);
 
   return (
-    <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
+    <form onSubmit={formik.handleChange} encType="multipart/form-data">
       <div className="flex gap-8">
         <div className="form-group bg-white p-4">
           <div>
@@ -70,6 +60,11 @@ export default function FormAddProduct() {
               type="file"
             />
           </div>
+          <div className="flex">
+            <FormAddProductImage inputId="1" formik={formik} />
+            <FormAddProductImage inputId="2" formik={formik} />
+            <FormAddProductImage inputId="3" formik={formik} />
+          </div>
         </div>
         <div className="w-2/3 bg-white">
           <h1 className="border-1 border-b p-4">General Information</h1>
@@ -94,21 +89,35 @@ export default function FormAddProduct() {
                 inputName="productCategory"
                 optionValues={categories?.map((data) => (
                   <option key={data._id} value={data._id}>
-                    {data.categoriesName}
+                    {data.categoryName}
                   </option>
                 ))}
               />
               <FormAddProductType
-                visitedInput={formik.touched.productSkintype}
-                errorMessage={formik.errors.productSkintype}
+                visitedInput={formik.touched.productCategory}
+                onChangeEvent={handleAnimalTypeChange}
+                defaultText="Chọn thú cưng"
+                inputName="productCategory"
+                optionValues={
+                  formik.values.productCategory && (
+                    <>
+                      <option value="Chó">Chó</option>
+                      <option value="Mèo">Mèo</option>
+                    </>
+                  )
+                }
+              />
+              <FormAddProductType
+                visitedInput={formik.touched.productSubcategory}
+                errorMessage={formik.errors.productSubcategory}
                 onChangeEvent={formik.handleChange}
                 defaultText="Chọn danh mục con"
                 inputName="productSkintype"
-                // optionValues={skinType?.map((data) => (
-                //   <option key={data._id} value={data._id}>
-                //     {data.skinType}
-                //   </option>
-                // ))}
+                optionValues={subCategories?.map((data) => (
+                  <option key={data._id} value={data._id}>
+                    {data.subCategoryName}
+                  </option>
+                ))}
               />
             </div>
             <FormAddProductPrice
@@ -126,6 +135,7 @@ export default function FormAddProduct() {
               inputPlaceHolder="Nhập số lượng sản phẩm"
               errorMessage={formik.errors.productQuantity}
             />
+            {/* <MyEditor /> */}
             <button
               type="submit"
               className="ml-auto rounded-xl bg-primary px-4 py-2"

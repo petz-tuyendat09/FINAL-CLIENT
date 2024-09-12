@@ -37,7 +37,7 @@ export const productsAPI = createApi({
     getProducts: builder.query<Product[], Record<string, any>>({
       query: (params) => {
         const queryParams = new URLSearchParams(
-          params as Record<string, string>
+          params as Record<string, string>,
         ).toString();
 
         return `?${queryParams}`; // Return the URL with the query string
@@ -46,7 +46,7 @@ export const productsAPI = createApi({
     }),
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
-        url: "",
+        url: "insert-product",
         method: "POST",
         body: formData,
       }),

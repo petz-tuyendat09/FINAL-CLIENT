@@ -34,7 +34,7 @@ export default function useGetProduct({
       const data = await getProduct({ productName: productName });
       setListProduct(data);
     },
-    [paginatedProducts]
+    [paginatedProducts],
   );
 
   const handleFetchProductPaginate = useCallback(
@@ -45,7 +45,7 @@ export default function useGetProduct({
       setTotalPages(data.totalPages);
       setCurrPage(page); // Update current page
     },
-    []
+    [],
   );
 
   const handleFetchMore = useCallback(
@@ -68,7 +68,7 @@ export default function useGetProduct({
         alert("Hết rồi ní");
       }
     },
-    [currPage, totalPages]
+    [currPage, totalPages],
   );
 
   return {

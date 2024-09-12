@@ -1,45 +1,76 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
-// import { useAddNewProductMutation } from "@/libs/features/services/products";
+import NoImg from "@@/assets/images/no-img.jpg";
+
+import { useAddNewProductMutation } from "@/libs/features/services/product";
 import { useRouter } from "next/navigation";
 
 interface errorsValues {
   productName: string;
+  productThumbail: string;
   productImage: string;
   productPrice: string;
   salePercent: string;
   productQuantity: string;
   productCategory: string;
-  productSkintype: string;
+  productSubcategory: string;
+  animalType: string;
+  productDescription: string;
 }
 
 export default function useAddProductForm() {
-  // const [addNewProduct, { data, error: mutationError }] =
-  //   useAddNewProductMutation();
+  const [imagePreview, setImagePreview] = useState(NoImg.src);
+  const [animalType, setAnimalType] = useState<string>("");
+
+  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      formik.setFieldValue("productThumbnail", file);
+    }
+  }
+
+  const handleAnimalTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const animalTypeSelected = e.target.value;
+    setAnimalType(animalTypeSelected);
+    formik.setFieldValue("productSubcategory", animalTypeSelected);
+  };
+  const [addNewProduct, { data, error: mutationError }] =
+    useAddNewProductMutation();
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
       productName: "",
-      productImage: null,
+      productThumbnail: null,
+      productImages: [],
       productPrice: 0,
       salePercent: 0,
       productQuantity: 0,
       productCategory: "",
-      productSkintype: "",
+      productSubcategory: "",
+      animalType: "",
+      productDescription: "",
     },
     onSubmit: (values) => {
       const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
         if (value !== null) {
-          if (typeof value === "number") {
+          if (Array.isArray(value)) {
+            value.forEach((item) => formData.append(key, item));
+          } else if (typeof value === "number") {
             formData.append(key, value.toString());
           } else {
             formData.append(key, value);
           }
         }
       });
-      // addNewProduct(formData);
+      // console.log(formData);
+      addNewProduct(formData);
     },
     validate: (values) => {
       let errors: Partial<errorsValues> = {};
@@ -53,11 +84,12 @@ export default function useAddProductForm() {
       if (values.productQuantity === 0) {
         errors.productQuantity = "Required quantity";
       }
-      if (!values.productSkintype) {
-        errors.productSkintype = "Required";
-      }
+
       if (!values.productCategory) {
         errors.productCategory = "Required";
+      }
+      if (!values.productSubcategory) {
+        errors.productSubcategory = "Required";
       }
 
       return errors;
@@ -80,6 +112,10 @@ export default function useAddProductForm() {
 
   return {
     formik,
+    imagePreview,
+    handleImageChange,
+    animalType,
+    handleAnimalTypeChange,
     // duplicatedMessage
   };
 }

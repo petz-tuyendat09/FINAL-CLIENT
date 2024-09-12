@@ -1,44 +1,54 @@
 "use client";
-
-import useGetProduct from "@/hooks/useGetProduct";
-import AdminShopGrid from "./AdminShopGrid";
-import { Product } from "@/types/Product";
+import AdminGrid from "./AdminGrid";
 import Link from "next/link";
-interface AdminShopProps {
+import { Product } from "@/types/Product";
+import useGetProduct from "@/hooks/useGetProduct";
+import Filter from "@/components/admin/Shop/Filter/Filter";
+import { useState } from "react";
+
+interface AdminShopServerProps {
   initialData: Product[];
   initialTotalPages: number;
 }
 
-export default function AdminShop({
+export default function AdminShopServer({
   initialData,
   initialTotalPages,
-}: AdminShopProps) {
+}: AdminShopServerProps) {
   const { products, handleFetchMore, handleQueryProduct } = useGetProduct({
     initialData,
     initialTotalPages,
+  });
+
+  const [filter, setFilter] = useState<object>({
+    salePercent: 0,
+    status: "lastest",
   });
 
   function handleLoadMore() {
     handleFetchMore(3);
   }
 
+  function handleFilter(filterOption: string) {
+    setFilter((prevState) => [...prevState, filterOption]);
+    console.log(filter);
+  }
+
   return (
     <div>
-      <div className="flex justify-between mb-8">
-        <input
-          onChange={(e) => handleQueryProduct(e.target.value)}
-          type="text"
-          className="border border-black px-2 py-1"
-          placeholder="Search tí style"
+      <div className="mb-8 flex items-center justify-between">
+        <Filter
+          handleQueryProduct={handleQueryProduct}
+          handleFilter={handleFilter}
         />
         <Link
-          className="bg-primary rounded-xl px-4 py-2 font-medium"
+          className="rounded-xl bg-primary px-4 py-2 font-medium"
           href="add-product"
         >
           Thêm sản phẩm
         </Link>
       </div>
-      <AdminShopGrid products={products} />
+      <AdminGrid products={products} />
       <button onClick={handleLoadMore}>Load more</button>
     </div>
   );

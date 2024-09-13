@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import NoImg from "@@/assets/images/no-img.jpg";
 
 import { useAddNewProductMutation } from "@/libs/features/services/product";
 import { useRouter } from "next/navigation";
@@ -19,26 +18,15 @@ interface errorsValues {
 }
 
 export default function useAddProductForm() {
-  const [imagePreview, setImagePreview] = useState(NoImg.src);
   const [animalType, setAnimalType] = useState<string>("");
-
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-      formik.setFieldValue("productThumbnail", file);
-    }
-  }
 
   const handleAnimalTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const animalTypeSelected = e.target.value;
     setAnimalType(animalTypeSelected);
-    formik.setFieldValue("productSubcategory", animalTypeSelected);
+    formik.setFieldValue("animalType", animalTypeSelected);
+    console.log(formik.values.animalType);
   };
+
   const [addNewProduct, { data, error: mutationError }] =
     useAddNewProductMutation();
   const router = useRouter();
@@ -47,7 +35,7 @@ export default function useAddProductForm() {
     initialValues: {
       productName: "",
       productThumbnail: null,
-      productImages: [],
+      productImages: [{}, {}, {}],
       productPrice: 0,
       salePercent: 0,
       productQuantity: 0,
@@ -61,15 +49,18 @@ export default function useAddProductForm() {
       Object.entries(values).forEach(([key, value]) => {
         if (value !== null) {
           if (Array.isArray(value)) {
-            value.forEach((item) => formData.append(key, item));
+            value.forEach((item, index) => {
+              if (item instanceof File) {
+                formData.append(`${key}[${index}]`, item);
+              }
+            });
           } else if (typeof value === "number") {
             formData.append(key, value.toString());
           } else {
-            formData.append(key, value);
+            formData.append(key, value as string);
           }
         }
       });
-      // console.log(formData);
       addNewProduct(formData);
     },
     validate: (values) => {
@@ -98,12 +89,6 @@ export default function useAddProductForm() {
 
   // let duplicatedMessage;
 
-  // if (data) {
-  //   if (data.message === "Duplicated product name") {
-  //     duplicatedMessage = "Duplicated product name";
-  //   }
-  // }
-
   // useEffect(() => {
   //   if (data && data.status === 201) {
   //     router.push("/admin/shop");
@@ -112,8 +97,6 @@ export default function useAddProductForm() {
 
   return {
     formik,
-    imagePreview,
-    handleImageChange,
     animalType,
     handleAnimalTypeChange,
     // duplicatedMessage

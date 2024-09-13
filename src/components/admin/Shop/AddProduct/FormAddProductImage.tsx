@@ -1,33 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import NoImg from "@@/assets/images/no-img.jpg";
-import { useState } from "react";
 import { FormikProps } from "formik";
+
+import usePreviewUploadImage from "./hook/usePreviewUploadImage";
 
 interface FormAddProductImageProps {
   inputId: string;
+  index: number;
   formik: FormikProps<any>; // Type for Formik's context
 }
 
 export default function FormAddProductImage({
   inputId,
+  index,
   formik,
 }: FormAddProductImageProps) {
-  const [imagePreview, setImagePreview] = useState(NoImg.src);
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-      formik.setFieldValue("productImages", [
-        ...formik.values.productImages,
-        file,
-      ]);
-    }
-    console.log(formik.values);
-  }
+  const { imagePreview, handlePreviewImg } = usePreviewUploadImage({
+    formik: formik,
+    fieldToSetValue: `productImages[${index}]`,
+  });
+
   return (
     <div>
       <div className="group relative space-y-2">
@@ -45,7 +36,7 @@ export default function FormAddProductImage({
         />
       </div>
       <input
-        onChange={handleImageChange}
+        onChange={handlePreviewImg}
         id={inputId}
         name="productImages"
         className="hidden"

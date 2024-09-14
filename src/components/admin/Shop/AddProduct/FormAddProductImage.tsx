@@ -5,12 +5,14 @@ import usePreviewUploadImage from "./hook/usePreviewUploadImage";
 
 interface FormAddProductImageProps {
   inputId: string;
+  inputName: string;
   index: number;
   formik: FormikProps<any>; // Type for Formik's context
 }
 
 export default function FormAddProductImage({
   inputId,
+  inputName,
   index,
   formik,
 }: FormAddProductImageProps) {
@@ -38,7 +40,7 @@ export default function FormAddProductImage({
       <input
         onChange={handlePreviewImg}
         id={inputId}
-        name="productImages"
+        name={inputName}
         className="hidden"
         type="file"
       />

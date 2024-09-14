@@ -15,7 +15,8 @@ export default function FormAddProduct() {
   const { data: categories } = useGetCategoriesQuery();
   const [getSubCategories, { data: subCategories }] =
     useLazyGetSubCategoriesQuery();
-  const { formik, animalType, handleAnimalTypeChange } = useAddProductForm();
+  const { formik, animalType, handleAnimalTypeChange, duplicatedMessage } =
+    useAddProductForm();
 
   useEffect(() => {
     if (animalType) {
@@ -26,8 +27,6 @@ export default function FormAddProduct() {
     }
   }, [animalType, formik.values.productCategory, getSubCategories]);
 
-  console.log(categories);
-
   return (
     <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
       <div className="flex gap-8">
@@ -37,14 +36,12 @@ export default function FormAddProduct() {
           <div className="space-y-4 p-4">
             <FormAddProductNormalInput
               inputType="text"
-              // duplicatedMessage={duplicatedMessage}
-              visitedInput={formik.touched.productName}
+              duplicatedMessage={duplicatedMessage}
+              errorMessage={formik.errors.productName}
               label="Tên sản phẩm"
-              onChangeEvent={formik.handleChange}
               inputName="productName"
               inputPlaceHolder="Nhập tên sản phẩm"
-              onBlurEvent={formik.handleBlur}
-              errorMessage={formik.errors.productName}
+              formik={formik}
             />
             <div className="flex w-full gap-2">
               <FormAddProductType
@@ -63,7 +60,7 @@ export default function FormAddProduct() {
                 visitedInput={formik.touched.animalType}
                 onChangeEvent={handleAnimalTypeChange}
                 defaultText="Chọn thú cưng"
-                inputName="productCategory"
+                inputName="animalType"
                 optionValues={
                   formik.values.productCategory && (
                     <>
@@ -93,13 +90,11 @@ export default function FormAddProduct() {
             />
             <FormAddProductNormalInput
               inputType="number"
-              visitedInput={formik.touched.productQuantity}
               label="Nhập số lượng"
-              onBlurEvent={formik.handleBlur}
-              onChangeEvent={formik.handleChange}
               inputName="productQuantity"
               inputPlaceHolder="Nhập số lượng sản phẩm"
               errorMessage={formik.errors.productQuantity}
+              formik={formik}
             />
             {/* <MyEditor /> */}
             <button

@@ -1,41 +1,45 @@
+import { FormikProps } from "formik";
+
 interface FormAddProductNormalInputProps {
-  onChangeEvent: React.ChangeEventHandler<HTMLInputElement>;
-  onBlurEvent: React.FocusEventHandler<HTMLInputElement>;
-  visitedInput?: boolean;
   inputPlaceHolder: string;
   inputName: string;
   label: string;
-  errorMessage?: string;
   duplicatedMessage?: string;
+  errorMessage?: string;
   inputType: string;
+  formik: FormikProps<any>;
 }
 
 export default function FormAddProductNormalInput({
-  onChangeEvent,
-  onBlurEvent,
   inputPlaceHolder,
   inputName,
   label,
-  visitedInput,
-  errorMessage,
   duplicatedMessage,
+  errorMessage,
   inputType,
+  formik,
 }: FormAddProductNormalInputProps) {
   return (
     <div>
-      <label className="mb-2 block" htmlFor="product-quantity">
+      <label className="block" htmlFor="product-quantity">
         {label}
       </label>
-      <p className="text-sm text-red-500">{visitedInput && errorMessage}</p>
+
+      <p className="text-sm text-red-500">
+        {formik.touched[inputName] && errorMessage}
+      </p>
       <p className="text-sm text-red-500">{duplicatedMessage}</p>
 
       <input
-        className="w-full rounded-lg border p-2 focus:outline-none"
+        className="mt-1 w-full rounded-lg border p-2 focus:outline-none"
         placeholder={inputPlaceHolder}
         type={inputType}
-        onBlur={onBlurEvent}
+        onBlur={formik.handleBlur}
         name={inputName}
-        onChange={onChangeEvent}
+        onChange={formik.handleChange}
+        onWheel={(e: React.WheelEvent<HTMLInputElement>) =>
+          e.currentTarget.blur()
+        }
       />
     </div>
   );

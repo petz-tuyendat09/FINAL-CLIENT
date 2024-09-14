@@ -41,7 +41,7 @@ export default function FormAddProductPrice({
       </div>
       <div>
         <p>
-          Giảm giá <span className="text-sm text-gray-400">(Optional)</span>
+          Giảm giá <span className="text-sm text-gray-text">(Optional)</span>
         </p>
         <div className="flex items-center rounded-lg border p-2">
           <p>%</p>
@@ -52,6 +52,10 @@ export default function FormAddProductPrice({
             placeholder="Nhập phần trăm giảm"
             value={formik.values.salePercent}
             className="p-1 focus:outline-none"
+            max={100}
+            onWheel={(e: React.WheelEvent<HTMLInputElement>) =>
+              e.currentTarget.blur()
+            }
           />
         </div>
       </div>

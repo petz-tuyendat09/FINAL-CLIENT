@@ -28,7 +28,7 @@ export default function FormAddProductThumbnail({
             Select
           </label>
           <img
-            className="rounded-xl"
+            className="w-full rounded-xl"
             src={imagePreview}
             alt="Sản phẩm không có hình ảnh"
           />
@@ -41,18 +41,21 @@ export default function FormAddProductThumbnail({
           type="file"
         />
       </div>
-      <div className="flex w-full">
+      <div className="flex w-full gap-4">
         <FormAddProductImage
+          inputName="prductImage[0]"
           inputId="product-image-1"
           index={0}
           formik={formik}
         />
         <FormAddProductImage
+          inputName="prductImage[1]"
           inputId="product-image-2"
           index={1}
           formik={formik}
         />
         <FormAddProductImage
+          inputName="prductImage[2]"
           inputId="product-image-3"
           index={2}
           formik={formik}

@@ -32,8 +32,7 @@ export const getProduct = async (params: QueryParams) => {
 export const getProductWithPaginate = async (params: QueryParams) => {
   const options: any = {
     method: "GET",
-     next: { revalidate: 3600 } 
-
+    // next: { revalidate: 3600 },
   };
 
   const queryParams = new URLSearchParams(
@@ -42,7 +41,6 @@ export const getProductWithPaginate = async (params: QueryParams) => {
   const response = await fetch(
     `${DOMAIN_URL}/product/page?${queryParams}`,
     options,
-  
   );
 
   return response.json();

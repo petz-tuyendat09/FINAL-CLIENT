@@ -47,7 +47,6 @@ export default function useAddProductForm() {
       productDescription: "",
     },
     onSubmit: (values) => {
-      console.log(values.productName);
       const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
         if (key === "productImages" && Array.isArray(value)) {
@@ -62,9 +61,7 @@ export default function useAddProductForm() {
           formData.append(key, value as string);
         }
       });
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
+
       addNewProduct(formData);
     },
     validate: (values) => {
@@ -73,11 +70,14 @@ export default function useAddProductForm() {
       if (!values.productName) {
         errors.productName = "Required name";
       }
-      if (!values.productQuantity) {
+      if (!values.productQuantity || values.productQuantity == 0) {
         errors.productQuantity = "Required quantity";
       }
       if (values.productPrice === 0 || !values.productPrice) {
         errors.productPrice = "Required price";
+      }
+      if (values.productPrice <= 1000 || !values.productPrice) {
+        errors.productPrice = "Invalid price";
       }
       if (!values.productCategory) {
         errors.productCategory = "Required";

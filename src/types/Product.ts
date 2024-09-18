@@ -16,7 +16,8 @@ export interface Product {
   productBuy: number;
   productSlug: string;
   productQuantity: number;
-  productImage: string;
+  productThumbnail: string;
+  productImages: [];
   productDescription: string;
   productCategory: ProductCategory;
   productSubCategory: ProductSubCategory;

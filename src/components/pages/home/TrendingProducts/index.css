@@ -1,21 +1,13 @@
-.product-container:hover>.buttons {
-    animation: slideToLeft 2s ease;
+.product-container:hover>.buttons>button:nth-child(2), .product-container:hover>.buttons>button:last-child {
+    animation: slideToLeft 2s ease forwards; 
 }
 
-.product-container:hover>.buttons>button {
-    display: flex;
+.product-container:hover>.buttons>button:nth-child(2) {
+    animation-delay: 200ms;
 }
 
-.buttons>button:first-child {
-    animation-delay: 500ms;
-}
-
-.buttons>button:nth-child(1) {
-    animation-delay: 800ms;
-}
-
-.buttons>button:last-child {
-    animation-delay: 1s;
+.product-container:hover>.buttons>button:last-child {
+    animation-delay: 400ms;
 }
 
 @keyframes slideToLeft {

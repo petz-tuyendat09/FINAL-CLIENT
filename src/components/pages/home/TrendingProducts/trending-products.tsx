@@ -7,6 +7,7 @@ import CustomNavigation from "./custom-navigation";
 import numeral from "numeral";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import './index.css';
+import Image from "next/image";
 export const TrendingProducts = () => {
     const { data, error, isLoading } = useGetTrendingProductsQuery({});
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
@@ -38,13 +39,11 @@ export const TrendingProducts = () => {
                                     <div className="bg-gray rounded-[10px] pb-[20px] hover:shadow-custom cursor-pointer">
                                         <div className="product-container relative overflow-x-hidden">
                                             <div>
-                                                <img
-                                                    src={
-                                                        process.env.NEXT_PUBLIC_API_URL +
-                                                        "public/images/products/" +
-                                                        item.productImage
-                                                    }
-                                                    width="400px"
+                                                <Image
+                                                    alt=""
+                                                    src={item.productThumbnail}
+                                                    width={470}
+                                                    height={300}
                                                     className="rounded-tl-[10px] rounded-tr-[10px]"
                                                 />
                                             </div>
@@ -53,9 +52,9 @@ export const TrendingProducts = () => {
                                                 <span className="text-[18px] text-yellow font-[500]">{numeral(item.productPrice).format("$0,")}</span>
                                             </div>
                                             <div className="buttons flex flex-col gap gap-[10px] absolute right-[15px] top-[10px]">
-                                                <button className="bg-white shadow-custom w-[32px] h-[32px] flex justify-center items-center rounded-[50%]"><Icon icon="fluent:heart-16-filled" width={22} className="hover:text-red" /></button>
-                                                <button className="bg-white hidden shadow-custom w-[32px] h-[32px] justify-center items-center rounded-[50%]"><Icon icon="weui:eyes-on-outlined" width={20} className="hover:text-red" /></button>
-                                                <button className="bg-white hidden shadow-custom w-[32px] h-[32px] justify-center items-center rounded-[50%]"><Icon icon="fa6-solid:cart-plus" className="hover:text-red" /></button>
+                                                <button className="bg-white shadow-custom w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="fluent:heart-16-filled" width={22} className="hover:text-white" /></button>
+                                                <button className="bg-white shadow-custom opacity-0 w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="weui:eyes-on-outlined" width={20}  className="hover:text-white" /></button>
+                                                <button className="bg-white shadow-custom opacity-0 w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="fa6-solid:cart-plus" className="hover:text-white" /></button>
                                             </div>
                                         </div>
                                     </div>

@@ -5,6 +5,7 @@ import numeral from "numeral";
 import { BoxIcon } from "@/shared/ui/icons/BoxIcon";
 import "./products.css";
 import { ArrowDownIcon } from "@/shared/ui/icons";
+import Image from "next/image";
 export const Products = () => {
   const t = useTranslations("arrivals");
   const { data, error, isLoading } = useGetProductsQuery({});
@@ -17,18 +18,16 @@ export const Products = () => {
         <div className="grid grid-cols-3 gap-[20px] justify-between items-center">
           {data?.slice(0,6).map((item, i) => (
             <div key={i}>
-              <div className="relative">
-                <img
-                  src={
-                    process.env.NEXT_PUBLIC_API_URL +
-                    "public/images/products/" +
-                    item.productImage
-                  }
-                  width="470px"
+              <div className="relative shadow-custom rounded-[10px]">
+                <Image
+                  alt=""
+                  src={item.productThumbnail}
+                  width={470}
+                  height={300}
                   className="rounded-[10px]"
                 />
                 <div className="absolute bottom-[20px] left-[10px] flex flex-row justify-between items-center w-[450px]">
-                  <div className="product-name flex flex-row items-center justify-between bg-[#14141443] w-[300px] py-[8px] px-[20px] rounded-[20px] cursor-pointer">
+                  <div className="product-name flex flex-row items-center justify-between bg-[#494949d1] w-[300px] py-[8px] px-[20px] rounded-[20px] cursor-pointer">
                     <p className="text-white">{item.productName}</p>
                     <button className="bg-white w-[25px] h-[25px] rounded-[50%] flex items-center justify-center">
                       <ArrowDownIcon width="14" className="arrow-icon" style={{ transform: 'rotate(270deg)' }} />

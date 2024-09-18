@@ -6,7 +6,7 @@ const nextConfig = {
   swcMinify: true,
   ignoreBuildErrors: false,
   images: {
-    domains: ["localhost"],
+    domains: ["final-asm.s3.ap-southeast-2.amazonaws.com"],
   },
 };
 

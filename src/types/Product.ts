@@ -16,11 +16,12 @@ export interface Product {
   productBuy: number;
   productSlug: string;
   productQuantity: number;
-  productImage: string;
+  productImages: [];
+  productThumbnail: string;
   productDescription: string;
-  productCategory: ProductCategory;
-  productSubCategory: ProductSubCategory;
-  productFor: string;
+  productCategory: string;
+  productSubCategory: string;
+  animalType: string;
 }
 
 export interface PaginateProduct {

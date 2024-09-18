@@ -25,6 +25,8 @@ export default function AdminShopServer({
     status: "lastest",
   });
 
+  console.log(initialData);
+
   function handleLoadMore() {
     handleFetchMore(3);
   }

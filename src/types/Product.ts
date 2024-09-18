@@ -19,9 +19,9 @@ export interface Product {
   productThumbnail: string;
   productImages: [];
   productDescription: string;
-  productCategory: ProductCategory;
-  productSubCategory: ProductSubCategory;
-  productFor: string;
+  productCategory: string;
+  productSubCategory: string;
+  animalType: string;
 }
 
 export interface PaginateProduct {

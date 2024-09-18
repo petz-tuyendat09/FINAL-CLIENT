@@ -8,6 +8,7 @@ async function AdminShopServer() {
     page: 1,
     limit: 6,
   });
+
   return (
     <AdminShop
       initialData={data.products}

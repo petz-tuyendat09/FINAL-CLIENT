@@ -29,22 +29,22 @@ const config: Config = {
     extend: {
       colors: {
         yellow: "#ECB407",
-        primary: "#F4E6DB",
+        primary: "#FFEACF",
         cream: "rgb(255 241 228)",
         black: "#141414",
-        "primary-hover": "#c5c0e2",
+        "primary-hover": "#fff5e7",
         secondary: "#5BD0F1",
         teriary: "#EDB507",
         gray: "#F7F7F7",
         "gray-darker": "#F2F2F2",
         "gray-text": "#B6B6B6",
-        peach: 'rgb(250, 244, 242)',
-        darkPeach: '#ffe6d4',
-        red: '#ed6435'
+        peach: "rgb(250, 244, 242)",
+        darkPeach: "#ffe6d4",
+        "custom-red": "#ed6435",
       },
       backgroundImage: {},
       boxShadow: {
-        custom: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
+        custom: 'rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em',
       },
     },
   },

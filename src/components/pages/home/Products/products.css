@@ -1,7 +1,5 @@
 .product-name:hover > button {
     animation: slideToRight 1s ease-in-out;
-    background-color: black;
-    color: white;
 }
 
 @keyframes slideToRight {

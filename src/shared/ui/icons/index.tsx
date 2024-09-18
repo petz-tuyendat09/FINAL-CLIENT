@@ -1,3 +1,4 @@
+export { ArrowDownIcon } from "./ArrowDown";
 export { ArrowRight } from "./ArrowRight";
 export { CalendarIcon } from "./CalendarIcon";
 export { CorgyIcon } from "./CorgyIcon";

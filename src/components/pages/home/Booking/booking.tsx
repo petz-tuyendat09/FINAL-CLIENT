@@ -1,11 +1,11 @@
 import { Cat } from "@/shared/ui/Cat";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import "./booking.css";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import CTimePicker from "@/shared/ui/CTimePicker/CTimePicker";
 import { CDatePicker } from "@/shared/ui/CDatePicker/CDatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { CServiceSelect } from "@/shared/ui/CSelect/CSelect";
+import { ArrowDownIcon } from "@/shared/ui/icons";
 type FormData = {
     name: string;
     email: string;
@@ -81,7 +81,7 @@ export const Booking = () => {
                                 <div className="flex flex-row items-center gap-[10px] bg-white absolute top-[10px] left-[10px] py-[5px] px-[15px] rounded-[20px] main-btn">
                                     <span className="text-[17px]">Grooming</span>
                                     <button className="bg-[#EEECEC] w-[25px] h-[25px] flex items-center justify-center rounded-[50%]">
-                                        <ArrowDownwardIcon className="text-[15px]" />
+                                        <ArrowDownIcon width="14" />
                                     </button>
                                     <div className="layer absolute top-0 left-0"></div>
                                 </div>
@@ -99,7 +99,7 @@ export const Booking = () => {
                                 <div className="flex flex-row items-center gap-[10px] bg-white absolute top-[10px] left-[10px] py-[5px] px-[15px] rounded-[20px] main-btn">
                                     <span className="text-[17px]">Shopping</span>
                                     <button className="bg-[#EEECEC] w-[25px] h-[25px] flex items-center justify-center rounded-[50%]">
-                                        <ArrowDownwardIcon className="text-[15px]" />
+                                        <ArrowDownIcon width="14" />
                                     </button>
                                     <div className="layer absolute top-0 left-0"></div>
                                 </div>
@@ -207,12 +207,13 @@ export const Booking = () => {
                                             control={control}
                                             rules={{ required: 'Please select a service' }}
                                             render={({ field }: any) => (
-                                                <CServiceSelect
-                                                    {...field}
-                                                    defaultValue="1"
-                                                    options={services}
-                                                    className="w-[720px] h-[50px]"
-                                                />
+                                                <>
+                                                    <CServiceSelect
+                                                        {...field}
+                                                        options={services}
+                                                        className="w-[720px] h-[50px]"
+                                                    />
+                                                </>
                                             )}
                                         />
                                     </div>

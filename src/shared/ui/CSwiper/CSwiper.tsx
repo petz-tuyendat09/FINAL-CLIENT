@@ -21,7 +21,7 @@ const CSwiper: React.FC<SwiperWrapperProps> = ({ slidesPerview, className, child
             <Swiper
                 onSwiper={handleSwiper}
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
-                spaceBetween={25}
+                spaceBetween={20}
                 slidesPerView={slidesPerview}
                 navigation={false}
             >

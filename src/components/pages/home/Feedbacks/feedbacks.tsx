@@ -67,8 +67,8 @@ export const Feedbacks = () => {
     <div className="px-[40px] mt-[120px]">
       <div className="flex flex-row items-center gap-[10px]">
         <div className="w-[65%] flex flex-row justify-between">
-          {overviews.map((item) => (
-            <div className="bg-yellow w-[302px] p-[20px] rounded-[20px]">
+          {overviews.map((item, i) => (
+            <div className="bg-yellow w-[302px] p-[20px] rounded-[20px]" key={i}>
               <div className="h-[100px]">{item.icon}</div>
               <div className="text-[30px] font-[600]">{item.quantity}</div>
               <p className="text-[17px]">{item.content}</p>
@@ -100,35 +100,42 @@ export const Feedbacks = () => {
                 }
                 handleSwiper={handleSwiper}
               >
-                {feedbacks.map((item) => (
-                  <SwiperSlide>
-                    <div className="rounded-[5px] bg-white py-[25px] px-[30px]">
-                      <div className="flex flex-row gap-[3px]">
-                        {Array.from({ length: item.stars }, (_, index) => (
-                          <StarIcon key={index} />
-                        ))}
-                      </div>
-                      <div className="mt-[10px] mb-[20px]">
-                        "{item.content}"
-                      </div>
-                      <div className="flex flex-row items-center gap-[10px]">
-                        <div>
-                            <img src={'./images/' + item.user.avatar} width="60px" />
+                {feedbacks.map((item, i) => (
+                  <div key={i}>
+                    <SwiperSlide>
+                      <div className="rounded-[5px] bg-white py-[25px] px-[30px]">
+                        <div className="flex flex-row gap-[3px]">
+                          {Array.from({ length: item.stars }, (_, index) => (
+                            <StarIcon key={index} />
+                          ))}
                         </div>
-                        <div>
+                        <div className="mt-[10px] mb-[20px]">
+                          "{item.content}"
+                        </div>
+                        <div className="flex flex-row items-center gap-[10px]">
+                          <div>
+                            <img
+                              src={"./images/" + item.user.avatar}
+                              width="60px"
+                            />
+                          </div>
+                          <div>
                             <h1 className="font-[500]">{item.user.name}</h1>
-                            <p className="text-[13px] text-[#747474]">Khách hàng</p>
+                            <p className="text-[13px] text-[#747474]">
+                              Khách hàng
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
+                    </SwiperSlide>
+                  </div>
                 ))}
               </CSwiper>
             </div>
           </div>
         </div>
         <div className="w-[28%]">
-            <img src="./images/image.png" />
+          <img src="./images/image.png" />
         </div>
       </div>
     </div>

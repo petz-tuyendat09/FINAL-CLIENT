@@ -1,22 +1,22 @@
 "use client";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import { useTranslations } from "next-intl";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import numeral from "numeral";
 import { BoxIcon } from "@/shared/ui/icons/BoxIcon";
 import "./products.css";
+import { ArrowDownIcon } from "@/shared/ui/icons";
 export const Products = () => {
   const t = useTranslations("arrivals");
   const { data, error, isLoading } = useGetProductsQuery({});
   return (
     <div className="px-[40px] mt-[80px]">
       <div className="flex items-center justify-center">
-        <h1 className="text-[30px] font-[600]">{t("title")}</h1>
+        <h1 className="text-[34px] font-[600] text-[#3c3731]">{t("title")}</h1>
       </div>
       <div className="mt-[20px]">
-        <div className="flex flex-row justify-between items-center">
-          {data?.map((item) => (
-            <div key={item._id}>
+        <div className="grid grid-cols-3 gap-[20px] justify-between items-center">
+          {data?.slice(0,6).map((item, i) => (
+            <div key={i}>
               <div className="relative">
                 <img
                   src={
@@ -31,7 +31,7 @@ export const Products = () => {
                   <div className="product-name flex flex-row items-center justify-between bg-[#14141443] w-[300px] py-[8px] px-[20px] rounded-[20px] cursor-pointer">
                     <p className="text-white">{item.productName}</p>
                     <button className="bg-white w-[25px] h-[25px] rounded-[50%] flex items-center justify-center">
-                      <ArrowForwardIcon className="text-[18px]" />
+                      <ArrowDownIcon width="14" className="arrow-icon" style={{ transform: 'rotate(270deg)' }} />
                     </button>
                   </div>
                   <div className="bg-black px-[25px] py-[8px] rounded-[20px]">

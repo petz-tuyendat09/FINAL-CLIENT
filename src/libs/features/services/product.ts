@@ -44,6 +44,11 @@ export const productsAPI = createApi({
       },
       providesTags: ["Product"],
     }),
+    getTrendingProducts: builder.query<any, {}>({
+      query: ({}) => ({
+        url: `/trending`
+      })
+    }),
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
         url: "",
@@ -76,6 +81,7 @@ export const productsAPI = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetTrendingProductsQuery,
   useLazyGetProductByPageQuery,
   useGetProductByPageQuery,
   useAddNewProductMutation,

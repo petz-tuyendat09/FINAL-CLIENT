@@ -22,7 +22,7 @@ const CSelect = ({ handleChange, options, ...props }: CSelectProps) => (
 const CServiceSelect = ({ defaultValue, handleChange, options, ...props }: CSelectProps) => (
   <Space wrap>
     <Select
-      defaultValue={defaultValue}
+      defaultValue="Select a service"
       onChange={handleChange}
       options={options}
       {...props}

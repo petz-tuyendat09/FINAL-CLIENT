@@ -1,0 +1,31 @@
+.product-container:hover>.buttons {
+    animation: slideToLeft 2s ease;
+}
+
+.product-container:hover>.buttons>button {
+    display: flex;
+}
+
+.buttons>button:first-child {
+    animation-delay: 500ms;
+}
+
+.buttons>button:nth-child(1) {
+    animation-delay: 800ms;
+}
+
+.buttons>button:last-child {
+    animation-delay: 1s;
+}
+
+@keyframes slideToLeft {
+    0% {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

@@ -11,6 +11,7 @@ import { Swiper as SwiperType } from 'swiper/types';
 import { useState } from "react";
 import CustomNavigation from "@/shared/ui/CSwiper/CustomNavigation";
 import { About } from "@/components/pages/home/About/about";
+import { TrendingProducts } from "@/components/pages/home/TrendingProducts/trending-products";
 export default function Index() {
     const t = useTranslations('home');
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
@@ -120,6 +121,7 @@ export default function Index() {
             <Products />
             <Feedbacks />
             <About />
+            <TrendingProducts />
         </div>
     );
 }

@@ -1,0 +1,9 @@
+
+.rate-stars::after {
+    content: "|";
+    position: absolute;
+    right: -22px;
+    top: -3px;
+    font-size: 19px;
+    color: #686e7d;
+}

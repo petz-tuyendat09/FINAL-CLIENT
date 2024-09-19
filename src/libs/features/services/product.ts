@@ -33,14 +33,20 @@ export const productsAPI = createApi({
   tagTypes: ["Product"],
 
   endpoints: (builder) => ({
-    // Modified getProducts endpoint to accept a params object
     getProducts: builder.query<Product[], Record<string, any>>({
       query: (params) => {
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
 
-        return `?${queryParams}`; // Return the URL with the query string
+        return `?${queryParams}`;
+      },
+      providesTags: ["Product"],
+    }),
+    getProductsByCategoryId: builder.query<Product[], Record<string, any>>({
+      query: (params) => {
+        const queryParams = new URLSearchParams(params as Record<string, string>).toString();
+        return `/byCategory?${queryParams}`; 
       },
       providesTags: ["Product"],
     }),
@@ -81,6 +87,7 @@ export const productsAPI = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetProductsByCategoryIdQuery,
   useGetTrendingProductsQuery,
   useLazyGetProductByPageQuery,
   useGetProductByPageQuery,

@@ -19,3 +19,16 @@
     transition: .3s ease;
     cursor: pointer;
 }
+
+.category-item::after {
+    content: "/";
+    position: absolute;
+    right: -25px;
+    top: -2px;
+    font-size: 19px;
+    color: #686e7d;
+}
+
+ul > .category-item:last-child:after {
+    font-size: 0px;
+}

@@ -94,6 +94,7 @@ export const Feedbacks = () => {
             <h1 className="text-[23px]">OUR FEEDBACKS</h1>
             <div className="mt-[30px]">
               <CSwiper
+                autoplay={true}
                 slidesPerview={2}
                 navigationCustom={
                   <CustomNavigation swiperRef={swiperInstance} />

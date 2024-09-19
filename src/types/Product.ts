@@ -22,6 +22,9 @@ export interface Product {
   productCategory: string;
   productSubCategory: string;
   animalType: string;
+  productRating: number;
+  productWeight: [];
+  ratingCount: number;
 }
 
 export interface PaginateProduct {

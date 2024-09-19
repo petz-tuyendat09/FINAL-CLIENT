@@ -12,10 +12,10 @@ interface SwiperWrapperProps {
     className?: string;
     handleSwiper: (swiper: SwiperType) => void; 
     navigationCustom?: React.ReactNode; 
-    slidesPerview: number
+    slidesPerview: number,
+    autoplay: boolean;
 }
-
-const CSwiper: React.FC<SwiperWrapperProps> = ({ slidesPerview, className, children, handleSwiper, navigationCustom }) => {
+const CSwiper: React.FC<SwiperWrapperProps> = ({ autoplay, slidesPerview, className, children, handleSwiper, navigationCustom }) => {
     return (
         <div className={className}>
             <Swiper
@@ -24,6 +24,7 @@ const CSwiper: React.FC<SwiperWrapperProps> = ({ slidesPerview, className, child
                 spaceBetween={20}
                 slidesPerView={slidesPerview}
                 navigation={false}
+                autoplay={autoplay ? { delay: 1000 } : false}
             >
                 {children}
             </Swiper>

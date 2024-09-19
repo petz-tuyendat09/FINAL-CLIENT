@@ -37,7 +37,7 @@ export const About = () => {
                         <h2 className="mt-[20px] text-[#958b7e] text-[18px] font-nunito">{t('desc')}</h2>
                         <p className="mt-[25px] text-[#958b7e] text-[17px] font-nunito">{t('selling')}</p>
                         <div className="flex flex-col gap-[20px] mt-[25px]">
-                            {products.map((item, i) => (
+                            {products?.map((item, i) => (
                                 <div className="flex flex-row items-center gap-[10px]" key={i}>
                                     <PawIcon width="22" color="#45c1c7" />
                                     <span className="text-[#958b7e] font-nunito">{item}</span>

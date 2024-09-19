@@ -8,13 +8,18 @@ import numeral from "numeral";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import './index.css';
 import Image from "next/image";
+import { Button, useDisclosure } from "@nextui-org/react";
+import DetailModal from "../ModalDetails/modal-details";
+import { Product } from "@/types/Product";
 export const TrendingProducts = () => {
     const { data, error, isLoading } = useGetTrendingProductsQuery({});
+    const [selectedData, setSelectedData] = useState<Product[]>([]);
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
 
     const handleSwiper = (swiper: SwiperType) => {
         setSwiperInstance(swiper);
     };
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
     return (
         <div className="mt-[80px] px-[40px]">
             <div className="flex flex-col items-center justify-center">
@@ -28,6 +33,7 @@ export const TrendingProducts = () => {
             </div>
             <div className="mt-[70px] px-[50px]">
                 <CSwiper
+                    autoplay={false}
                     handleSwiper={handleSwiper}
                     slidesPerview={4}
                     navigationCustom={<CustomNavigation swiperRef={swiperInstance} />}
@@ -53,7 +59,7 @@ export const TrendingProducts = () => {
                                             </div>
                                             <div className="buttons flex flex-col gap gap-[10px] absolute right-[15px] top-[10px]">
                                                 <button className="bg-white shadow-custom w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="fluent:heart-16-filled" width={22} className="hover:text-white" /></button>
-                                                <button className="bg-white shadow-custom opacity-0 w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="weui:eyes-on-outlined" width={20}  className="hover:text-white" /></button>
+                                                <Button onClick={() => setSelectedData(item)} onPress={onOpen} className="bg-white shadow-custom opacity-0 min-w-0 p-0 w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="weui:eyes-on-outlined" width={20}  className="hover:text-white" /></Button>
                                                 <button className="bg-white shadow-custom opacity-0 w-[32px] h-[32px] flex justify-center items-center rounded-[50%] hover:bg-custom-red hover:text-white"><Icon icon="fa6-solid:cart-plus" className="hover:text-white" /></button>
                                             </div>
                                         </div>
@@ -64,6 +70,7 @@ export const TrendingProducts = () => {
                     </div>
                 </CSwiper>
             </div>
+            <DetailModal selectedData={selectedData} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} />
         </div>
     );
 };

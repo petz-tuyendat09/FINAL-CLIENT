@@ -33,6 +33,7 @@ export const getProductWithPaginate = async (params: QueryParams) => {
   const options: any = {
     method: "GET",
     // next: { revalidate: 3600 },
+    cache: "no-store", // Không cache dữ liệu
   };
 
   const queryParams = new URLSearchParams(

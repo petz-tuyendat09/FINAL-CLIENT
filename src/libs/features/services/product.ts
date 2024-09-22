@@ -6,6 +6,20 @@ interface PageQuery {
   limit: number;
 }
 
+export interface QueryParams {
+  productName?: string;
+  status?: string;
+  salePerecent?: string;
+  limit?: number;
+  productCategory?: string;
+  productSlug?: string;
+  productSubcategory?: string;
+  salePercent?: number;
+  productStatus?: string;
+  animalType?: string;
+  productBuy?: number;
+}
+
 export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
@@ -33,11 +47,12 @@ export const productsAPI = createApi({
   tagTypes: ["Product"],
 
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], Record<string, any>>({
+    getProducts: builder.query<Product[], QueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
+        console.log(queryParams);
 
         return `?${queryParams}`;
       },
@@ -45,15 +60,17 @@ export const productsAPI = createApi({
     }),
     getProductsByCategoryId: builder.query<Product[], Record<string, any>>({
       query: (params) => {
-        const queryParams = new URLSearchParams(params as Record<string, string>).toString();
-        return `/byCategory?${queryParams}`; 
+        const queryParams = new URLSearchParams(
+          params as Record<string, string>,
+        ).toString();
+        return `/byCategory?${queryParams}`;
       },
       providesTags: ["Product"],
     }),
     getTrendingProducts: builder.query<any, {}>({
       query: ({}) => ({
-        url: `/trending`
-      })
+        url: `/trending`,
+      }),
     }),
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({

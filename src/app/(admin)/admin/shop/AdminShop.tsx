@@ -5,6 +5,7 @@ import { Product } from "@/types/Product";
 import useGetProduct from "@/hooks/useGetProduct";
 import Filter from "@/components/admin/Shop/Filter/Filter";
 import { useState } from "react";
+import { useGetProductsQuery } from "@/libs/features/services/product";
 
 interface AdminShopServerProps {
   initialData: Product[];
@@ -25,14 +26,12 @@ export default function AdminShopServer({
     status: "lastest",
   });
 
-  console.log(initialData);
-
   function handleLoadMore() {
     handleFetchMore(3);
   }
 
   function handleFilter(filterOption: string) {
-    setFilter((prevState) => [...prevState, filterOption]);
+    // setFilter((prevState) => [...prevState, filterOption]);
     console.log(filter);
   }
 

@@ -6,7 +6,7 @@ import { PaginateProduct } from "@/types/Product";
 async function AdminShopServer() {
   const data: PaginateProduct = await getProductWithPaginate({
     page: 1,
-    limit: 6,
+    limit: 2,
   });
 
   return (

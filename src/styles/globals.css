@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap');
+
+
 body {
     @apply font-sans; 
   }
@@ -15,4 +19,17 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.button-color {
+background-image: linear-gradient(90deg,#e9b59a,#e5a685,#d39474,#e9b59a,#e9b59a);
+background-size: 200% 200%;
+background-position: 0%;
+transition: background-position 0.5s ease;
+
+
+}
+
+.button-color:hover {
+  background-position: 100%;
 }

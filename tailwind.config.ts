@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,13 +10,21 @@ const config: Config = {
   theme: {
     fontFamily: {
       sans: ["Roboto", "system-ui"],
-      serif: ["Lora", "Georgia"],
+      serif: ["Cormorant", "Georgia"],
       mono: ["ui-monospace", "SFMono-Regular"],
       display: ["Roboto"],
-      body: ['"Roboto"'],
-      nunito: ["Nunito Sans", "sans-serif"],
-      quicksand: ["Quicksand", "sans-serif"]
+      body: ["Roboto"],
     },
+    borderRadius: {
+      button: "20px",
+      none: "0",
+      sm: "0.125rem",
+      md: "0.375rem",
+      lg: "0.5rem",
+      full: "9999px",
+      large: "12px",
+    },
+
     container: {
       center: true,
       padding: "2rem",
@@ -24,29 +32,41 @@ const config: Config = {
         sm: "600px",
         md: "728px",
         lg: "984px",
-        xl: "1400px",
-        "2xl": "1880px",
+        xl: "1360px",
+        "2xl": "1840px",
       },
     },
     extend: {
       colors: {
-        yellow: "#ECB407",
-        primary: "#FFEACF",
-        cream: "rgb(255 241 228)",
-        black: "#141414",
+        primary: "#D6E9FB",
+        black: "#1d1d1d",
         "primary-hover": "#fff5e7",
-        secondary: "#5BD0F1",
-        teriary: "#EDB507",
+        secondary: "#F4EFEC",
         gray: "#F7F7F7",
         "gray-darker": "#F2F2F2",
-        "gray-text": "#B6B6B6",
-        peach: "rgb(250, 244, 242)",
-        darkPeach: "#ffe6d4",
-        "custom-red": "#ed6435",
+        "gray-text": "#69696C",
+        "border-color": "#DAE9F3",
+        warning: "#B11935",
+        success: "#20CE5D",
       },
-      backgroundImage: {},
+      fontSize: {
+        display: "4rem",
+        h1: "3rem",
+        h2: "2rem",
+        h3: "1.625rem",
+        h4: "1.25rem",
+        base: "1rem",
+      },
+
+      backgroundImage: {
+        "services-image-1": "url('/images/services-image-1.png')",
+        "services-image-2": "url('/images/services-image-2.png')",
+        "services-image-3": "url('/images/services-image-3.png')",
+        "services-image-4": "url('/images/services-image-4.png')",
+      },
       boxShadow: {
-        custom: 'rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em',
+        custom:
+          "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em",
       },
     },
   },

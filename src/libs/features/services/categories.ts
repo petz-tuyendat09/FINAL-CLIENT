@@ -9,7 +9,7 @@ export const categoriesAPI = createApi({
   tagTypes: ["Categories"],
 
   endpoints: (builder) => ({
-    getCategories: builder.query<Categories[], {}>({
+    getCategories: builder.query<Categories[], string>({
       query: () => "",
       providesTags: ["Categories"],
     }),

@@ -13,6 +13,7 @@ export default function ProductCardAdmin({
   handleDeleteProduct,
 }: ProductCardAdminProps) {
   const thumbnailURL = Product.productThumbnail;
+  console.log(thumbnailURL);
 
   return (
     <div className="w-90 rounded-xl bg-gray-darker p-4">
@@ -23,8 +24,9 @@ export default function ProductCardAdmin({
           productSlug={Product.productSlug}
         />
         <Image
+        loader={() => thumbnailURL}
           src={thumbnailURL}
-          alt="product img"
+          alt="Product Image"
           width={222}
           height={222}
           style={{ width: "100%", height: "100%" }}

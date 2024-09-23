@@ -15,7 +15,7 @@ const ProductInfo = memo(
     });
 
     return (
-      <div className="flex justify-between text-center">
+      <div className="flex justify-between items-center text-center">
         <h2 className="font-serif text-h4">{productName}</h2>
         {productSalePercent === 0 && (
           <span className="text-body">{formatedMoney}</span>

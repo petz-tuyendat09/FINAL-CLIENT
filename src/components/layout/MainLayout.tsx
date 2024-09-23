@@ -1,6 +1,6 @@
 "use client";
-import Footer from "../ui/Footer";
-import Header from "../ui/Header/Header";
+import Footer from "@/components/ui/Footer";
+import Header from "@/components/ui/Header/Header";
 import React, { ReactNode } from "react";
 import StoreProvider from "@/app/StoreProvider";
 interface LayoutProps {

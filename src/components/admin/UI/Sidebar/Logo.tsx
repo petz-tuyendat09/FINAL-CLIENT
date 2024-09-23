@@ -14,7 +14,7 @@ export default function Logo() {
           priority
         />
       </span>
-      <p className="-ml-4">Care4Pet</p>
+      <p className="-ml-4">PETZ</p>
     </div>
   );
 }

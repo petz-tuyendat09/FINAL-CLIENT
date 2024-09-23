@@ -1,5 +1,6 @@
 import "../../styles/globals.css";
 import MainLayout from "@/components/layout/MainLayout";
+
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import LocaleSetter from "@/components/shared/LocaleSetter/LocaleSetter";
@@ -34,12 +35,13 @@ const App = async ({ children }: { children: React.ReactNode }) => {
         ></link>
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
+      <NextIntlClientProvider messages={messages}>
           <MainLayout>
             <LocaleSetter initialLocale={locale} />
             {children}
           </MainLayout>
         </NextIntlClientProvider>
+
       </body>
     </html>
   );

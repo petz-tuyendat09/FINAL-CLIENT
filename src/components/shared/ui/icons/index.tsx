@@ -1,3 +1,5 @@
+import { Ball } from "./Ball";
+import { FootIcon } from "./FootIcon";
 export { ArrowDownIcon } from "./ArrowDown";
 export { ArrowRight } from "./ArrowRight";
 export { CalendarIcon } from "./CalendarIcon";

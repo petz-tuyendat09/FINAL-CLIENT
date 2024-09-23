@@ -1,28 +1,11 @@
-"use client";
+import Logo from "./Logo";
+import Navigation from "./Navigation";
 
-import Image from "next/image";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
-import Link from "next/link";
-
-export default function Navbar() {
-  const [showNav, setShowNav] = useState<boolean>(false);
-  const [hidden, setHidden] = useState(false);
-
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
-
-    if (previous) {
-      if (latest > previous && latest > 150) {
-        setHidden(true);
-        setShowNav(false);
-      } else {
-        setHidden(false);
-      }
-    }
-  });
-
-  return <motion.div>Header</motion.div>;
+export default function Header() {
+  return (
+    <header className="sticky top-8 z-50 mx-auto mb-8 flex w-fit gap-4 rounded-full bg-primary px-8 py-4">
+      <Logo />
+      <Navigation />
+    </header>
+  );
 }

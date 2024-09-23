@@ -9,7 +9,6 @@ interface PageQuery {
 export interface QueryParams {
   productName?: string;
   status?: string;
-  salePerecent?: string;
   limit?: number;
   productCategory?: string;
   productSlug?: string;

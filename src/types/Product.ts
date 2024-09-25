@@ -1,12 +1,5 @@
-interface ProductCategory {
-  categoryId: string;
-  categoryName: string;
-}
 
-interface ProductSubCategory {
-  categoryId: string;
-  categoryName: string;
-}
+
 
 export interface Product {
   _id: string;
@@ -29,5 +22,10 @@ export interface Product {
 
 export interface PaginateProduct {
   products: Product[];
-  totalPages: number;
+  pagination: {
+    currentPage:number,
+    limit:number,
+    totalDocuments:number;
+    totalPages: number,
+  }
 }

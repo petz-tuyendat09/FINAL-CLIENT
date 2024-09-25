@@ -6,8 +6,13 @@ import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const itemVariant = {
-  default: { opacity: 0, scale: 0.9 },
-  hover: { opacity: 100, scale: 1 }, // Trạng thái khi hover
+  default: {
+    opacity: 0,
+    scale: 0.9,
+
+    display: "none",
+  },
+  hover: { opacity: 100, scale: 1, display: "block" }, // Trạng thái khi hover
 };
 
 const iconVariant = {
@@ -18,20 +23,21 @@ const iconVariant = {
 };
 
 const categoryVariant = {
-  default: { opacity: 0, y: 20 },
-  hover: { opacity: 100, y: 0 }, // Trạng thái khi hover
+  default: { opacity: 0, x: -10 },
+  hover: { opacity: 80, x: 0 }, // Trạng thái khi hover
 };
 
 export default function NavigationCategories() {
   const { data: categories } = useGetCategoriesQuery("");
 
   return (
-    <motion.ul
+    <motion.li
+      initial={false}
       className="category-parent relative flex items-center gap-1"
       whileHover="hover"
       animate="default"
     >
-      <Link href="/shop">Shop</Link>
+      <Link href="/vi/shop">Shop</Link>
       <motion.div className="text-sm" variants={iconVariant}>
         <Icon icon="ep:arrow-down-bold" />
       </motion.div>
@@ -39,16 +45,18 @@ export default function NavigationCategories() {
         variants={itemVariant}
         className="absolute top-14 w-52 space-y-2 rounded-lg bg-primary px-4 py-4"
       >
-        {categories?.map((category) => (
-          <motion.div
-            transition={{ delay: 0.15 }}
-            key={category._id}
-            variants={categoryVariant}
-          >
-            <Link href={category._id}>{category.categoryName}</Link>
-          </motion.div>
+        {categories?.map((category, index) => (
+          <Link href={`vi/shop?category=${category._id}`} key={category._id}>
+            <motion.div
+              className="text-gray-text hover:text-black"
+              transition={{ delay: 0.1 * index }}
+              variants={categoryVariant}
+            >
+              {category.categoryName}
+            </motion.div>
+          </Link>
         ))}
       </motion.div>
-    </motion.ul>
+    </motion.li>
   );
 }

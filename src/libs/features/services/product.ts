@@ -7,15 +7,16 @@ interface PageQuery {
 }
 
 export interface QueryParams {
+  page?:number;
   productName?: string;
   status?: string;
   limit?: number;
-  productCategory?: string;
+  productCategory?: string | string[];
   productSlug?: string;
-  productSubcategory?: string;
+  productSubCategory?: string | string[];
   salePercent?: number;
   productStatus?: string;
-  animalType?: string;
+  animalType?: string | string[];
   productBuy?: number;
 }
 
@@ -46,7 +47,7 @@ export const productsAPI = createApi({
   tagTypes: ["Product"],
 
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], QueryParams>({
+    getProducts: builder.query<PaginateProduct, QueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
@@ -57,20 +58,7 @@ export const productsAPI = createApi({
       },
       providesTags: ["Product"],
     }),
-    getProductsByCategoryId: builder.query<Product[], Record<string, any>>({
-      query: (params) => {
-        const queryParams = new URLSearchParams(
-          params as Record<string, string>,
-        ).toString();
-        return `/byCategory?${queryParams}`;
-      },
-      providesTags: ["Product"],
-    }),
-    getTrendingProducts: builder.query<any, {}>({
-      query: ({}) => ({
-        url: `/trending`,
-      }),
-    }),
+  
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
         url: "insert-product",
@@ -103,8 +91,7 @@ export const productsAPI = createApi({
 
 export const {
   useGetProductsQuery,
-  useGetProductsByCategoryIdQuery,
-  useGetTrendingProductsQuery,
+  useLazyGetProductsQuery,
   useLazyGetProductByPageQuery,
   useGetProductByPageQuery,
   useAddNewProductMutation,

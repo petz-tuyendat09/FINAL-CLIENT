@@ -22,7 +22,7 @@ export default function Shop() {
         handleSubCategoryToggle,
       }}
     >
-      <div className="container my-24 flex gap-8">
+      <div className="my-24 flex gap-8">
         <Filter />
         <ProductGrid />
       </div>

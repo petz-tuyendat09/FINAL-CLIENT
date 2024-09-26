@@ -14,7 +14,7 @@ export default function Filter() {
 
   return (
     <div className="w-1/4 text-h4">
-      <h2 className="mb-4 text-h2">Danh mục sản phẩm</h2>
+      <h2 className="text-h2">Danh mục sản phẩm</h2>
       <div className="space-y-2">
         {categories?.map((category) => (
           <Category key={category._id} category={category} />

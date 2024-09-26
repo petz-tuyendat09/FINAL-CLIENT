@@ -9,19 +9,17 @@ interface UseGetProductProps {
   filterCategory: string[];
   filterSubCategory: string[];
   filterAnimalType?: string;
-  filterProductName?: string;
 }
 
 export default function useGetProductShop({
   filterCategory,
   filterSubCategory,
   filterAnimalType,
-  filterProductName,
 }: UseGetProductProps) {
   const { data: PaginateProduct } = useGetProductsQuery({
     productCategory: filterCategory,
     productSubCategory: filterSubCategory,
-    limit: 25,
+    limit: 3,
     page: 1,
   });
 
@@ -33,7 +31,7 @@ export default function useGetProductShop({
   const [currPage, setCurrPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
 
-  console.log(PaginateProduct);
+  console.log(paginatedProducts);
 
   useEffect(() => {
     if (PaginateProduct?.products) {
@@ -62,10 +60,12 @@ export default function useGetProductShop({
               ...prevProducts,
               ...data.products,
             ]);
+
             setPaginatedProducts((prevProducts) => [
               ...prevProducts,
               ...data.products,
             ]);
+
             setCurrPage(nextPage);
           }
         } catch (error) {
@@ -82,42 +82,37 @@ export default function useGetProductShop({
       filterCategory,
       filterSubCategory,
       filterAnimalType,
-      filterProductName,
       triggerGetProducts, // Include in dependencies
     ],
   );
 
-  // const handleQueryProduct = useCallback(
-  //   async (productName: string) => {
-  //     if (productName.trim() === "") {
-  //       // If search input is empty, revert back to paginatedProducts
-  //       setListProduct(paginatedProducts);
-  //       return;
-  //     }
+  const handleQueryProduct = useCallback(
+    async (productName: string) => {
+      if (productName.trim() === "") {
+        setListProduct(paginatedProducts);
+        return;
+      }
 
-  //     // Fetch products matching the search query
-  //     const data = await getProduct({
-  //       productName: productName,
-  //       productCategory: filterCategory,
-  //       productSubcategory: filterSubCategory,
-  //       animalType: filterAnimalType,
-  //       limit: 1000, // Adjust as needed
-  //     });
+      // Fetch products matching the search query
+      const data = await triggerGetProducts({
+        productName: productName,
+        limit: 1000,
+      }).unwrap();
 
-  //     if (data?.products) {
-  //       setListProduct(data.products);
-  //     } else {
-  //       setListProduct([]);
-  //     }
-  //   },
-  //   [paginatedProducts, filterCategory, filterSubCategory, filterAnimalType],
-  // );
+      if (data?.products) {
+        setListProduct(data.products);
+      } else {
+        setListProduct([]);
+      }
+    },
+    [paginatedProducts, triggerGetProducts],
+  );
 
   return {
     products,
     totalPages,
     currPage,
     handleFetchMore,
-    // handleQueryProduct,
+    handleQueryProduct,
   };
 }

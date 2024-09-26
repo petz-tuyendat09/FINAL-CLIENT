@@ -41,7 +41,7 @@ export default function CategoriesSelect({
         <div className="rounded-xl h-0.5 w-48 bg-black"></div>
       </motion.div>
 
-      <ul className="flex flex-col gap-8 text-4xl">
+      <ul className="flex flex-col gap-8 text-h3">
         {categoriesList?.map((category, index) => (
           <li key={category._id} className="flex items-center gap-4">
             <button

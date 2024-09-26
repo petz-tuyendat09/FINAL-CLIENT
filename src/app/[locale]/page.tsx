@@ -7,14 +7,14 @@ import SaleSection from "@/components/pages/Home/SaleSection/SaleSection";
 import MarketSection from "@/components/pages/Home/MarketSection/MarketSection";
 export default function page() {
   return (
-    <div className="container">
+    <>
       <HeroSection />
       <ServicesSection />
       <BookingSection />
       <FeedbackSection />
       <Categories />
-      <SaleSection/>
-      <MarketSection/>
-    </div>
+      <SaleSection />
+      <MarketSection />
+    </>
   );
 }

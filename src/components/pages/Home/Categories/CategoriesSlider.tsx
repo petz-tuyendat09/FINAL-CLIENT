@@ -13,7 +13,7 @@ export default function CategoriesSlider() {
   }
 
   return (
-    <div className="mt-20 flex items-center">
+    <div className="mt-20 flex items-center gap-12">
       <CategoriesSelect
         handleFilterProduct={handleFilterProduct}
       ></CategoriesSelect>

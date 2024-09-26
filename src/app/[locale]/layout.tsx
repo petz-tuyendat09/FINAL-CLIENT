@@ -1,47 +1,46 @@
 import "../../styles/globals.css";
-import MainLayout from "@/components/layout/MainLayout";
-
+import { Roboto, Cormorant } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import LocaleSetter from "@/components/shared/LocaleSetter/LocaleSetter";
+import StoreProvider from "../StoreProvider";
+import Header from "@/components/ui/Header/Header";
+import Footer from "@/components/ui/Footer";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-roboto",
+});
+
+const cormorant = Cormorant({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-cormorant",
+});
 
 const App = async ({ children }: { children: React.ReactNode }) => {
   const locale = await getLocale();
   const messages = await getMessages();
 
   return (
-    <html>
+    <html className={`${roboto.variable} ${cormorant.variable}`}>
       <head>
         <title>Care4Pet</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="use-credentials"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap"
-          rel="stylesheet"
-        ></link>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="use-credentials"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet"
-        ></link>
       </head>
       <body>
-      <NextIntlClientProvider messages={messages}>
-          <MainLayout>
+        <NextIntlClientProvider messages={messages}>
+          <StoreProvider>
             <LocaleSetter initialLocale={locale} />
-            {children}
-          </MainLayout>
+            <Header />
+            <div className="container">{children}</div>
+            <Footer />
+          </StoreProvider>
         </NextIntlClientProvider>
-
       </body>
     </html>
   );

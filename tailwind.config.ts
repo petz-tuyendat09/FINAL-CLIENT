@@ -9,11 +9,11 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Roboto", "system-ui"],
-      serif: ["Cormorant", "Georgia"],
-      mono: ["ui-monospace", "SFMono-Regular"],
-      display: ["Roboto"],
-      body: ["Roboto"],
+      sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
+      serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+      mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
+      display: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
+      body: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
     },
     borderRadius: {
       button: "20px",
@@ -33,7 +33,7 @@ const config: Config = {
         md: "728px",
         lg: "984px",
         xl: "1360px",
-        "2xl": "1840px",
+        "2xl": "1740px",
       },
     },
     extend: {

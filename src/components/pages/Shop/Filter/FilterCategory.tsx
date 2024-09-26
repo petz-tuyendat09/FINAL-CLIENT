@@ -6,7 +6,7 @@ import FilterSubcategory from "./FilterSubcategory";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const parentVariant = {
-  default: { height: "27px" },
+  default: { height: "40px" },
   extend: {
     height: "fit-content",
   },
@@ -41,7 +41,7 @@ const Category = ({ category }: CategoryProps) => {
       className="overflow-y-hidden"
     >
       <button
-        className="flex items-center text-left"
+        className={`${selectedCategory ? "bg-primary" : ""} flex items-center rounded-full px-4 py-2 text-left transition delay-75 duration-300`}
         onClick={() => handleCategoryToggle(category._id)}
       >
         <p className="w-44">{category.categoryName}</p>

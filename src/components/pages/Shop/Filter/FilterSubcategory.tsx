@@ -38,7 +38,7 @@ export default function FilterSubcategory({
       animate={{
         height: showSubcategory ? "fit-content" : "27px",
       }}
-      className="ml-4 overflow-y-hidden"
+      className="my-2 ml-6 overflow-y-hidden"
     >
       <button
         className="text-left"
@@ -46,9 +46,17 @@ export default function FilterSubcategory({
       >
         {animalType}
       </button>
-      <div className="ml-6 space-y-1">
+      <div className="ml-3">
         {subCategorySpecific?.map((subcategory) => (
-          <p key={subcategory._id}>
+          <motion.p
+            className="my-2"
+            animate={{
+              color: filters.subCate[categoryId]?.includes(subcategory._id)
+                ? "red"
+                : "black",
+            }}
+            key={subcategory._id}
+          >
             <button
               onClick={() =>
                 handleSubCategoryToggle(categoryId, subcategory._id)
@@ -56,7 +64,7 @@ export default function FilterSubcategory({
             >
               {subcategory.subCategoryName}
             </button>
-          </p>
+          </motion.p>
         ))}
       </div>
     </motion.div>

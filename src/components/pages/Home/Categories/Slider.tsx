@@ -10,20 +10,11 @@ interface ProductSliderProps {
 }
 
 export default function ProductSlider({ categoryName }: ProductSliderProps) {
-  const { data } = useGetProductsQuery({ productCategory: categoryName });
-
-  console.log(categoryName);
-
-  console.log(data);
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    arrows: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-  };
+  const { data } = useGetProductsQuery({
+    productCategory: categoryName,
+    limit: 25,
+    page: 1,
+  });
 
   return (
     <div className="slider-container w-3/4">
@@ -34,7 +25,7 @@ export default function ProductSlider({ categoryName }: ProductSliderProps) {
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
       >
-        {data?.map((product) => (
+        {data?.products.map((product) => (
           <SwiperSlide key={product._id}>
             <ProductBox Product={product} />
           </SwiperSlide>

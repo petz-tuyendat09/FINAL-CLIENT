@@ -1,12 +1,14 @@
 "use client";
+
 import { GetStaticProps } from "next";
 import { productsAPI } from "@/libs/features/services/product";
-import { useGetProductsQuery } from "@/libs/features/services/product";
 import { store } from "@/libs/store";
 import { CategoryFilterContext } from "../_store/FilterContext";
-import { useContext } from "react";
+import { useContext, useState, useEffect, useMemo } from "react";
 import ProductCard from "@/components/ui/ProductCard/ProductCard";
 import useGetProductShop from "./useGetProductShop";
+import FilterInput from "../Filter/FilterInput";
+import debounce from "lodash.debounce";
 
 const ProductGrid = () => {
   const categoryFilterContext = useContext(CategoryFilterContext);
@@ -20,27 +22,34 @@ const ProductGrid = () => {
   const filterByCategory = filters.category || null;
   const filterBySubcategory = Object.values(filters.subCate).flat();
 
-  console.log("subCate: ", filterBySubcategory);
+  // State to track if a search is active
+  const [isSearching, setIsSearching] = useState(false);
 
-  const {
-    products,
-    totalPages,
-    currPage,
-    handleFetchMore,
-    // handleQueryProduct,
-  } = useGetProductShop({
+  const { products, handleFetchMore, handleQueryProduct } = useGetProductShop({
     filterCategory: filterByCategory,
     filterSubCategory: filterBySubcategory,
   });
 
-  console.log(filters);
+  // Function to handle changes in search term
+  const handleSearchTermChange = (searchTerm: string) => {
+    setIsSearching(searchTerm.trim() !== "");
+  };
 
   return (
-    <div className="grid w-full grid-cols-4 gap-8">
-      {products?.map((product) => (
-        <ProductCard key={product._id} Product={product} />
-      ))}
-      <button onClick={() => handleFetchMore(2)}>Tải thêm</button>
+    <div className="w-full">
+      <FilterInput
+        handleQueryProduct={handleQueryProduct}
+        onSearchTermChange={handleSearchTermChange}
+      />
+      <div className="grid grid-cols-4 gap-8">
+        {products?.map((product, index) => (
+          <ProductCard key={index} Product={product} />
+        ))}
+      </div>
+      {/* Hide the button when searching */}
+      {!isSearching && (
+        <button onClick={() => handleFetchMore(2)}>Tải thêm</button>
+      )}
     </div>
   );
 };

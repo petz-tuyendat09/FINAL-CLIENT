@@ -1,14 +1,14 @@
 import "@/styles/globals.css";
-import { Roboto, Cormorant } from "next/font/google";
+import { Manrope, Cormorant } from "next/font/google";
 
 import StoreProvider from "../../StoreProvider";
 
-const roboto = Roboto({
+const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
-  style: ["normal", "italic"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  style: ["normal"],
   display: "swap",
-  variable: "--font-roboto",
+  variable: "--font-manrope",
 });
 
 const cormorant = Cormorant({
@@ -20,7 +20,7 @@ const cormorant = Cormorant({
 });
 const App = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <html className={`${roboto.variable} ${cormorant.variable}`}>
+    <html className={`${manrope.variable} ${cormorant.variable}`}>
       <head>
         <title>Care4Pet</title>
       </head>

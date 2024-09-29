@@ -1,10 +1,10 @@
 "use client";
 
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { productsAPI } from "@/libs/features/services/product";
 import { store } from "@/libs/store";
 import { CategoryFilterContext } from "../_store/FilterContext";
-import { useContext, useState, useEffect, useMemo } from "react";
+import { useContext, useState } from "react";
 import ProductCard from "@/components/ui/ProductCard/ProductCard";
 import useGetProductShop from "./useGetProductShop";
 import FilterInput from "../Filter/FilterInput";
@@ -30,6 +30,8 @@ const ProductGrid = () => {
     filterSubCategory: filterBySubcategory,
   });
 
+  console.log(products);
+
   // Function to handle changes in search term
   const handleSearchTermChange = (searchTerm: string) => {
     setIsSearching(searchTerm.trim() !== "");
@@ -54,22 +56,21 @@ const ProductGrid = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const Store = store;
 
-  // Prefetch data với RTK Query
+  // Prefetch data with RTK Query
   await Store.dispatch(
     productsAPI.endpoints.getProducts.initiate({ limit: 25 }),
   );
 
-  // Chờ cho tất cả các queries hoàn thành
+  // Wait for all queries to complete
   await Promise.all(Store.dispatch(productsAPI.util.getRunningQueriesThunk()));
 
   return {
     props: {
       initialReduxState: Store.getState(),
     },
-    revalidate: 360, // Thời gian revalidate (cập nhật dữ liệu tĩnh mỗi 10 giây)
   };
 };
 

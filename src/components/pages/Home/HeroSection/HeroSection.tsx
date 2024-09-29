@@ -1,75 +1,81 @@
+"use client";
+
 import Button from "@/components/ui/Button";
-import HeroSectionImage1 from "@@/assets/images/hero-section-image-1.png";
-import HeroSectionImage2 from "@@/assets/images/hero-section-image-2.png";
-import HeroSectionImage3 from "@@/assets/images/hero-section-image-3.png";
-import HeroSectionImage4 from "@@/assets/images/hero-section-image-4.png";
-import HeroSectionImage5 from "@@/assets/images/hero-section-image-5.png";
+import HeroSectionImage1 from "@@/assets/images/hero-section-image-1.jpeg";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
+import { motion } from "framer-motion";
+
+const textAppearVariant = {
+  enter: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+};
+
 export default function HeroSection() {
   return (
-    <section className="mb-24">
-      <div className="text-center font-serif text-display">
-        Spa đẳng cấp <p>cho những người bạn lông xù</p>
-        <Button additionClass="text-h4 mx-auto gap-2">
-          Đặt lịch
-          <Icon icon="bi:arrow-right" />
-        </Button>
-      </div>
-      <div className="flex items-center justify-center gap-8">
-        <div className="hidden w-1/5 space-y-4 lg:block">
-          <div>
-            <ResponsiveImage
-              imageSrc={HeroSectionImage5}
-              priority
-              additionClass="rounded-button"
-              altImage="Hero Section Image"
-              imageWidth={500}
-              imageHeight={500}
-            />
+    <section className="mb-24 h-screen">
+      <div className="flex h-full">
+        <div className="flex w-1/2 flex-col text-center text-display">
+          <div className="mt-auto">
+            <p className="text-h4">Chăm sóc thú cưng của bạn</p>
+            <div className="mb-4 font-serif">
+              <motion.h1
+                variants={textAppearVariant}
+                initial="enter"
+                animate="animate"
+                transition={{ duration: 0.5 }}
+              >
+                Spa Đẳng Cấp Cho
+              </motion.h1>
+              <motion.h1
+                variants={textAppearVariant}
+                initial="enter"
+                animate="animate"
+                transition={{ duration: 0.5 }}
+              >
+                Những Người Bạn
+              </motion.h1>
+              <motion.h1
+                variants={textAppearVariant}
+                initial="enter"
+                animate="animate"
+                transition={{ duration: 0.5 }}
+              >
+                Lông Xù
+              </motion.h1>
+            </div>
           </div>
-          <div>
-            <ResponsiveImage
-              imageSrc={HeroSectionImage3}
-              priority
-              additionClass="rounded-button"
-              altImage="Hero Section Image"
-              imageWidth={500}
-              imageHeight={500}
-            />
+          <div className="mb-4 mt-auto flex items-center justify-between px-4">
+            <Button additionClass="text-h4">
+              Đặt lịch ngay
+              <Icon
+                className="mx-auto ml-2 size-8 rotate-90 text-white"
+                icon="majesticons:arrow-up-line"
+              />
+            </Button>
+            <div className="flex w-fit gap-2 text-base">
+              <div className="text-base">
+                <p>Khám phá </p>
+                <p>sản phẩm</p>
+              </div>
+              <button className="size-12 rotate-45 rounded-full bg-black transition duration-300 hover:rotate-90">
+                <Icon
+                  className="mx-auto size-8 text-white"
+                  icon="majesticons:arrow-up-line"
+                />
+              </button>
+            </div>
           </div>
         </div>
-        <div className="w-full lg:w-1/2">
+
+        <div className="w-1/2 py-4">
           <ResponsiveImage
             imageSrc={HeroSectionImage1}
-            priority
-            additionClass="rounded-button"
-            altImage="Hero Section Image"
-            imageWidth={500}
-            imageHeight={500}
+            imageHeight={1000}
+            imageWidth={1000}
+            altImage="Hero Image"
+            additionClass=" object-cover rounded-button"
           />
-        </div>
-        <div className="hidden w-1/5 space-y-4 lg:block">
-          <div>
-            <ResponsiveImage
-              imageSrc={HeroSectionImage2}
-              priority
-              additionClass="rounded-button"
-              altImage="Hero Section Image"
-              imageWidth={500}
-              imageHeight={500}
-            />
-          </div>
-          <div>
-            <ResponsiveImage
-              imageSrc={HeroSectionImage4}
-              priority
-              additionClass="rounded-button"
-              altImage="Hero Section Image"
-              imageWidth={500}
-              imageHeight={500}
-            />
-          </div>
         </div>
       </div>
     </section>

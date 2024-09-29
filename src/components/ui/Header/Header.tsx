@@ -1,9 +1,9 @@
 import Logo from "./Logo";
-import Navigation from "./Navigation";
+import Navigation from "./SiteLink/SiteLink";
 
 export default function Header() {
   return (
-    <header className="sticky top-8 z-50 mx-auto mb-8 flex w-fit gap-4 rounded-full bg-primary px-8 py-4">
+    <header className="absolute left-8 top-8">
       <Logo />
       <Navigation />
     </header>

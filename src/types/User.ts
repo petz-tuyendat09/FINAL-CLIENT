@@ -4,6 +4,17 @@ interface UserOrder {
   orderTotal: number;
 }
 
+export interface RegisterUser {
+  email:string;
+  username:string;
+  password:string
+}
+
+export interface VerifyEmail {
+  email:string;
+  otpCode:number;
+}
+
 // Định nghĩa interface cho User
 export interface User {
   _id: string;

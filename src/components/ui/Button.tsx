@@ -10,7 +10,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`${additionClass} button-color flex items-center rounded-full px-8 py-2 font-sans font-[400] text-white transition-all delay-75 duration-300`}
+      className={`${additionClass} flex items-center rounded-full bg-black px-8 py-2 font-sans font-[400] text-white transition-all delay-75 duration-300`}
       {...props}
     >
       {children}

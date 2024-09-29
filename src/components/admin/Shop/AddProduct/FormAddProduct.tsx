@@ -12,7 +12,7 @@ import MyEditor from "./CKEditorComponent";
 import FormAddProductThumbnail from "./FormAddProductThumbnail";
 
 export default function FormAddProduct() {
-  const { data: categories } = useGetCategoriesQuery();
+  const { data: categories } = useGetCategoriesQuery("");
   const [getSubCategories, { data: subCategories }] =
     useLazyGetSubCategoriesQuery();
   const { formik, animalType, handleAnimalTypeChange, duplicatedMessage } =
@@ -99,7 +99,7 @@ export default function FormAddProduct() {
             {/* <MyEditor /> */}
             <button
               type="submit"
-              className="ml-auto rounded-xl bg-primary px-4 py-2"
+              className="rounded-xl ml-auto bg-primary px-4 py-2"
             >
               Save
             </button>

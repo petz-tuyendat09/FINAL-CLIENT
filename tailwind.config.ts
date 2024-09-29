@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     fontFamily: {
       sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
-      serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+      serif: ['var(--font-roboto-slab)', 'Georgia', 'serif'],
       mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
       display: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
       body: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
@@ -33,7 +33,7 @@ const config: Config = {
         md: "728px",
         lg: "984px",
         xl: "1360px",
-        "2xl": "1720px",
+        "2xl": "1700px",
       },
     },
     extend: {
@@ -42,7 +42,7 @@ const config: Config = {
         black: "#1d1d1d",
         "primary-hover": "#fff5e7",
         secondary: "#F4EFEC",
-        gray: "#F7F7F7",
+        gray: "#e3e1e1",
         "gray-darker": "#F2F2F2",
         "gray-text": "#69696C",
         "border-color": "#DAE9F3",

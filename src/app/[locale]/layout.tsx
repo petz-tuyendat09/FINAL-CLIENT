@@ -1,26 +1,27 @@
 import "../../styles/globals.css";
-import { Roboto, Cormorant } from "next/font/google";
+import { Roboto, Roboto_Slab } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import LocaleSetter from "@/components/shared/LocaleSetter/LocaleSetter";
 import StoreProvider from "../StoreProvider";
 import Header from "@/components/ui/Header/Header";
 import Footer from "@/components/ui/Footer";
+import NavigateBar from "@/components/ui/NavigateBar/NavigateBar";
 
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   display: "swap",
   variable: "--font-roboto",
 });
 
-const cormorant = Cormorant({
+const roboto_slab = Roboto_Slab({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   display: "swap",
-  variable: "--font-cormorant",
+  variable: "--font-roboto-slab",
 });
 
 const App = async ({ children }: { children: React.ReactNode }) => {
@@ -28,7 +29,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
   const messages = await getMessages();
 
   return (
-    <html className={`${roboto.variable} ${cormorant.variable}`}>
+    <html className={`${roboto.variable} ${roboto_slab.variable}`}>
       <head>
         <title>Care4Pet</title>
       </head>
@@ -38,6 +39,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
             <LocaleSetter initialLocale={locale} />
             <Header />
             <div className="container">{children}</div>
+            <NavigateBar />
             <Footer />
           </StoreProvider>
         </NextIntlClientProvider>

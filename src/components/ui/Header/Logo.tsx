@@ -1,9 +1,14 @@
 import LogoImage from "@@/assets/images/logo.png";
 import ResponsiveImage from "../ResponsiveImage";
+import Link from "next/link";
 
-export default function Logo() {
+interface LogoProps {
+  textColor?: "text-black" | "text-white";
+}
+
+export default function Logo({ textColor }: LogoProps) {
   return (
-    <div className="flex items-center">
+    <Link href="/" className={`flex items-center ${textColor}`}>
       <div className="w-8">
         <ResponsiveImage
           imageSrc={LogoImage}
@@ -13,6 +18,6 @@ export default function Logo() {
         />
       </div>
       <p className="font-bold tracking-wider">PETZ</p>
-    </div>
+    </Link>
   );
 }

@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { productsAPI } from "./features/services/product";
+import { authAPI } from "./features/services/auth";
 import { categoriesAPI } from "./features/services/categories";
 import { subCategoriesAPI } from "./features/services/subcategories";
 import cartSlice from "./features/cart/cart";
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   [productsAPI.reducerPath]: productsAPI.reducer,
   [categoriesAPI.reducerPath]: categoriesAPI.reducer,
   [subCategoriesAPI.reducerPath]: subCategoriesAPI.reducer,
+  [authAPI.reducerPath]: authAPI.reducer,
 });
 
 // Configuration for redux-persist
@@ -38,7 +40,8 @@ export const store = configureStore({
     }).concat(
       productsAPI.middleware,
       categoriesAPI.middleware,
-      subCategoriesAPI.middleware
+      subCategoriesAPI.middleware,
+      authAPI.middleware
     ),
 });
 

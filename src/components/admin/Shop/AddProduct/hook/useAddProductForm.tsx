@@ -14,6 +14,7 @@ interface errorsValues {
   productSubcategory: string;
   animalType: string;
   productDescription: string;
+  productOption: string;
 }
 
 export default function useAddProductForm() {
@@ -45,6 +46,7 @@ export default function useAddProductForm() {
       productSubcategory: "",
       animalType: "",
       productDescription: "",
+      productOption: [],
     },
     onSubmit: (values) => {
       const formData = new FormData();
@@ -92,6 +94,14 @@ export default function useAddProductForm() {
 
       if (values.salePercent > 100) {
         formik.setFieldValue("salePercent", 100);
+      }
+
+      if (!values.productOption || values.productOption.length === 0) {
+        errors.productOption = "Vui lòng nhập ít nhất 1 tùy chọn sản phẩm";
+      } else if (
+        values.productOption.some((option: string) => option.trim() === "")
+      ) {
+        errors.productOption = "Tùy chọn không hợp lệ, không được để trống";
       }
 
       return errors;

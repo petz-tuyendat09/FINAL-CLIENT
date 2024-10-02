@@ -17,8 +17,8 @@ export default function DynamicLink() {
         <li
           key={link.url}
           className={`${
-            pathname === link.url ? "bg-primary" : ""
-          } flex items-center gap-1 rounded-xl px-8 py-4 transition duration-300 hover:bg-primary-hover`}
+            pathname === link.url ? "bg-black text-white" : ""
+          } rounded-xl flex items-center gap-1 rounded-full px-8 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white`}
         >
           <span>{link.icon}</span>
           <Link href={link.url}>{link.label}</Link>

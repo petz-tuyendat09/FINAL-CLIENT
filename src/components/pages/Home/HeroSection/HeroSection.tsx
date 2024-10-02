@@ -1,7 +1,8 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import HeroSectionImage1 from "@@/assets/images/hero-section-image-1.jpeg";
+import HeroSectionImage from "@@/assets/images/here-section-image.jpg";
+
 import { Icon } from "@iconify/react/dist/iconify.js";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import { motion } from "framer-motion";
@@ -14,16 +15,17 @@ const textAppearVariant = {
 export default function HeroSection() {
   return (
     <section className="mb-24 h-screen">
-      <div className="flex h-full">
-        <div className="flex w-1/2 flex-col text-center text-display">
-          <div className="mt-auto">
+      <div className="block h-full lg:flex">
+        <div className="flex w-1/2 flex-col self-center text-center text-display">
+          <div>
             <p className="text-h4">Chăm sóc thú cưng của bạn</p>
             <div className="mb-4 font-serif">
               <motion.h1
                 variants={textAppearVariant}
                 initial="enter"
                 animate="animate"
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="bg-clip-text"
               >
                 Spa Đẳng Cấp Cho
               </motion.h1>
@@ -31,7 +33,8 @@ export default function HeroSection() {
                 variants={textAppearVariant}
                 initial="enter"
                 animate="animate"
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="-my-[16px] bg-clip-text"
               >
                 Những Người Bạn
               </motion.h1>
@@ -39,42 +42,37 @@ export default function HeroSection() {
                 variants={textAppearVariant}
                 initial="enter"
                 animate="animate"
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="bg-clip-text"
               >
                 Lông Xù
               </motion.h1>
             </div>
           </div>
-          <div className="mb-4 mt-auto flex items-center justify-between px-4">
-            <Button additionClass="text-h4">
+          <div className="mt-2 flex items-center justify-center gap-2 px-4">
+            <Button additionClass="text-h4 group">
               Đặt lịch ngay
               <Icon
-                className="mx-auto ml-2 size-8 rotate-90 text-white"
-                icon="majesticons:arrow-up-line"
+                icon="pajamas:long-arrow"
+                className="mx-auto ml-2 size-8 text-white transition duration-300 group-hover:translate-x-1"
               />
             </Button>
-            <div className="flex w-fit gap-2 text-base">
-              <div className="text-base">
-                <p>Khám phá </p>
-                <p>sản phẩm</p>
-              </div>
-              <button className="size-12 rotate-45 rounded-full bg-black transition duration-300 hover:rotate-90">
-                <Icon
-                  className="mx-auto size-8 text-white"
-                  icon="majesticons:arrow-up-line"
-                />
-              </button>
-            </div>
+            <Button
+              textColor="black"
+              additionClass="text-h4 bg-white border border-black hover:bg-black hover:text-white transition duration-300"
+            >
+              Cửa hàng
+            </Button>
           </div>
         </div>
 
         <div className="w-1/2 py-4">
           <ResponsiveImage
-            imageSrc={HeroSectionImage1}
+            imageSrc={HeroSectionImage}
             imageHeight={1000}
             imageWidth={1000}
             altImage="Hero Image"
-            additionClass=" object-cover rounded-button"
+            additionClass=" object-cover rounded-[30px]"
           />
         </div>
       </div>

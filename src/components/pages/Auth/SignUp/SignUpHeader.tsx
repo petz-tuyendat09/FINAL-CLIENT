@@ -10,7 +10,7 @@ export default function SignUpHeader() {
       <h4 className="mt-2 text-h3 font-semibold">Đăng ký</h4>
       <div className="text-center text-[12px]">
         <button
-          className="text-gray-text underline"
+          className="text-gray-400 underline"
           onClick={() => setSignUp(false)} // Set SignUp to true when clicked
         >
           về đăng nhập

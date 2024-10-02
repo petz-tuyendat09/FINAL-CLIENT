@@ -1,6 +1,3 @@
-
-
-
 export interface Product {
   _id: string;
   productName: string;
@@ -16,16 +13,16 @@ export interface Product {
   productSubCategory: string;
   animalType: string;
   productRating: number;
-  productWeight: [];
+  productOption: [];
   ratingCount: number;
 }
 
 export interface PaginateProduct {
   products: Product[];
   pagination: {
-    currentPage:number,
-    limit:number,
-    totalDocuments:number;
-    totalPages: number,
-  }
+    currentPage: number;
+    limit: number;
+    totalDocuments: number;
+    totalPages: number;
+  };
 }

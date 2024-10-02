@@ -25,8 +25,8 @@ const roboto_slab = Roboto_Slab({
 });
 
 const App = async ({ children }: { children: React.ReactNode }) => {
-  const locale = await getLocale();
-  const messages = await getMessages();
+  // const locale = await getLocale();
+  // const messages = await getMessages();
 
   return (
     <html className={`${roboto.variable} ${roboto_slab.variable}`}>
@@ -34,15 +34,15 @@ const App = async ({ children }: { children: React.ReactNode }) => {
         <title>Care4Pet</title>
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <StoreProvider>
-            <LocaleSetter initialLocale={locale} />
-            <Header />
-            <div className="container">{children}</div>
-            <NavigateBar />
-            <Footer />
-          </StoreProvider>
-        </NextIntlClientProvider>
+        {/* <NextIntlClientProvider messages={messages}> */}
+        <StoreProvider>
+          {/* <LocaleSetter initialLocale={locale} /> */}
+          <Header />
+          <div className="container">{children}</div>
+          <NavigateBar />
+          <Footer />
+        </StoreProvider>
+        {/* </NextIntlClientProvider> */}
       </body>
     </html>
   );

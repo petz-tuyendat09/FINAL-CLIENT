@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
 import { useSignUpMutation } from "@/libs/features/services/auth";
+import { useAuth } from "../../_store/AuthContext";
+
 import {
   validateEmail,
   validateUsername,
@@ -16,12 +17,8 @@ interface errorsValues {
 }
 
 export default function useSignUp() {
-  const [duplicatedMessage, setDuplicatedMessage] = useState<
-    string | undefined
-  >();
-  const [signUp, { data, error: mutationError, isLoading }] =
-    useSignUpMutation();
-  const router = useRouter();
+  const { setVerifying, setEmail, setModalDisplay, setModalText } = useAuth();
+  const [signUp, { data, error: signUpError, isLoading }] = useSignUpMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +27,7 @@ export default function useSignUp() {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       signUp(values);
     },
     validate: (values) => {
@@ -63,13 +60,22 @@ export default function useSignUp() {
   });
 
   useEffect(() => {
-    if (mutationError && "data" in mutationError) {
-      setDuplicatedMessage((mutationError.data as any).message);
+    if (signUpError) {
+      if ("data" in signUpError) {
+        setModalDisplay(true);
+        setModalText((signUpError.data as any).message);
+      }
     }
-  }, [mutationError]);
 
+    if (data) {
+      setVerifying(true);
+      setEmail(formik.values.email);
+      setModalDisplay(true);
+      setModalText("Đã gửi OTP đến Mail của bạn");
+    }
+  }, [signUpError, data, setVerifying, setEmail]);
   return {
     formik,
-    duplicatedMessage,
+    isLoading,
   };
 }

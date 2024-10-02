@@ -17,7 +17,7 @@ export default function FormAddProductType({
 }: FormAddProductTypeProps) {
   return (
     <div className="w-1/2">
-      <label className="mb-2 block" htmlFor={inputName}>
+      <label className="block font-bold" htmlFor={inputName}>
         {defaultText}
         <span className="ml-1 text-xs text-red-500">
           {visitedInput && errorMessage}
@@ -26,7 +26,7 @@ export default function FormAddProductType({
 
       <select
         onChange={onChangeEvent}
-        className="w-full rounded-lg border p-2"
+        className="w-full rounded-md border px-2 py-2"
         name={inputName}
         defaultValue="DEFAULT"
         id={inputName}

@@ -18,7 +18,7 @@ export default function ProductCardAdminInfo({
   const { salePrice } = calculateSalePrice(productSalePercent, productPrice);
 
   return (
-    <>
+    <div className="bg-gray-light mt-2 rounded-[20px] p-4">
       {productSalePercent === 0 && (
         <span className="font-bold">{salePrice.toFixed(2)} $</span>
       )}
@@ -41,6 +41,6 @@ export default function ProductCardAdminInfo({
           Quantity: {productQuantity}
         </p>
       </div>
-    </>
+    </div>
   );
 }

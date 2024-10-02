@@ -13,13 +13,14 @@ export default function ProductCardAdminButtonAction({
   productSlug,
 }: ProductCardAdminButtonActionProps) {
   return (
-    <div className="absolute right-0 z-10 flex translate-x-4 flex-col text-2xl opacity-0 transition delay-75 duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+    <div className="absolute right-4 top-4 z-10 flex flex-col space-y-2 text-2xl transition delay-75 duration-300">
       <button
-      // onClick={() => handleDeleteProduct(productId)}
+        className="rounded-full bg-black p-2 text-white"
+        // onClick={() => handleDeleteProduct(productId)}
       >
         <Icon icon="mdi:trash" />
       </button>
-      <button>
+      <button className="rounded-full bg-black p-2 text-white">
         <Link href={`shop/edit-product/${productSlug}`}>
           <Icon icon="flowbite:edit-solid" />
         </Link>

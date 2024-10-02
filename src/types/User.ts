@@ -5,31 +5,40 @@ interface UserOrder {
 }
 
 export interface RegisterUser {
-  email:string;
-  username:string;
-  password:string
+  email: string;
+  username: string;
+  password: string;
+}
+
+export interface LoginUser {
+  loginkey: string;
+  password: string;
 }
 
 export interface VerifyEmail {
-  email:string;
-  otpCode:number;
+  email: string;
+  otpCode: number;
 }
 
 // Định nghĩa interface cho User
 export interface User {
-  _id: string;
   googleId: string | null;
   username: string;
-  password: string;
   displayName: string;
   userActive: boolean;
   userAddress: string;
   userEmail: string;
   userPhone: string;
-  userRole: string;
-  userOrders: UserOrder[];
+  userRole: "user" | "admin";
   userPoint: number;
+  userLevel: number;
+  userExperiments: number;
+  userVoucher: string[];
   userImage: string;
+  userOrders: any[];
+  __v: number;
+  token: string;
+  refreshToken: string;
 }
 
 export interface SecureUser {

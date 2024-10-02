@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function BookingSection() {
   return (
     <section className="my-24">
-      <div className="flex flex-col items-center justify-center gap-4 rounded-button bg-secondary p-4 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-button p-4 text-center">
         <h1 className="font-serif text-display text-black">
           Lên kế hoạch thư giãn cho <p>người bạn lông xù</p>
         </h1>

@@ -5,7 +5,6 @@ interface AuthInputProps {
   inputName: string;
   formik: FormikProps<any>;
   errorMessage?: string;
-  duplicatedMessage?: string;
   typePassword?: boolean;
 }
 
@@ -14,7 +13,6 @@ export default function AuthInput({
   inputName,
   formik,
   errorMessage,
-  duplicatedMessage,
   typePassword,
 }: AuthInputProps) {
   const isDirty = formik.touched[inputName];
@@ -22,7 +20,6 @@ export default function AuthInput({
   return (
     <div>
       <p className="ml-4 text-[12px] text-red-500">{isDirty && errorMessage}</p>
-      <p className="ml-4 text-[12px] text-red-500">{duplicatedMessage}</p>
       <div
         className={`relative rounded-full border ${isDirty && errorMessage ? "border-red-500" : "border-[#eaedf3]"} bg-white`}
       >

@@ -5,6 +5,7 @@ import FeedbackSection from "@/components/pages/Home/FeedbackSection/FeedbackSec
 import Categories from "@/components/pages/Home/Categories/Categories";
 import SaleSection from "@/components/pages/Home/SaleSection/SaleSection";
 import MarketSection from "@/components/pages/Home/MarketSection/MarketSection";
+import React from "react";
 export default function page() {
   return (
     <>
@@ -13,7 +14,6 @@ export default function page() {
       <BookingSection />
       <FeedbackSection />
       <Categories />
-      <SaleSection />
       <MarketSection />
     </>
   );

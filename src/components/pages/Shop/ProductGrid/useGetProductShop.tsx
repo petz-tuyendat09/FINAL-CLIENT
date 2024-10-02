@@ -8,13 +8,11 @@ import {
 interface UseGetProductProps {
   filterCategory: string[];
   filterSubCategory: string[];
-  filterAnimalType?: string;
 }
 
 export default function useGetProductShop({
   filterCategory,
   filterSubCategory,
-  filterAnimalType,
 }: UseGetProductProps) {
   const { data: PaginateProduct } = useGetProductsQuery({
     productCategory: filterCategory,
@@ -81,7 +79,6 @@ export default function useGetProductShop({
       totalPages,
       filterCategory,
       filterSubCategory,
-      filterAnimalType,
       triggerGetProducts, // Include in dependencies
     ],
   );

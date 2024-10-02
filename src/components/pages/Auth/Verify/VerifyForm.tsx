@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useVerify from "./_hook/useVerify";
 import VerifyInput from "./VerifyInput"; // Import the OTPInput component
+import { useAuth } from "../_store/AuthContext";
 
 export default function VerifyForm() {
-  const { formik, handleResendOTP, seconds, canResend } = useVerify();
+  const { formik, handleResendOTP, seconds, canResend, resendProgress } =
+    useVerify();
   const [otp, setOtp] = useState<Array<number | undefined>>(
     Array(6).fill(undefined),
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const otpCode = otp.join("");
-    formik.setFieldValue("otpCode", otpCode);
-    // formik.handleSubmit(); // Submit the Formik form
+    await formik.setFieldValue("otpCode", Number(otpCode));
+    formik.handleSubmit(); // Submit the Formik form
   };
 
   return (
@@ -29,9 +31,10 @@ export default function VerifyForm() {
         <button
           disabled={!canResend}
           onClick={handleResendOTP}
-          className="text-gray-text transition duration-300 hover:text-black"
+          type="button"
+          className="text-gray-400 transition duration-300 hover:text-black"
         >
-          Gửi lại OTP
+          {resendProgress ? "Đang gửi OTP" : "Gửi lại OTP"}
         </button>
       </div>
 

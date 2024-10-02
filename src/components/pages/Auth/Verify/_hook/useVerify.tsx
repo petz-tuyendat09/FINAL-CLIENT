@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
-import { useVerifyEmailMutation } from "@/libs/features/services/auth";
+import {
+  useVerifyEmailMutation,
+  useResendOTPMutation,
+} from "@/libs/features/services/auth";
 import { useAuth } from "../../_store/AuthContext";
 
-import { validateEmail } from "@/utils/validationUtils";
-
 interface errorsValues {
-  email: string;
   otpCode: string;
 }
 
 export default function useVerify() {
-  const { email } = useAuth();
+  const { setSignUp, setVerifying, email, setModalDisplay, setModalText } =
+    useAuth();
   const [seconds, setSeconds] = useState<number>(60);
   const [canResend, setCanResend] = useState<boolean>(false);
 
@@ -28,13 +28,20 @@ export default function useVerify() {
     return () => clearTimeout(timerId);
   }, [seconds]);
 
-  const [verify, { data, error: mutationError, isLoading }] =
-    useVerifyEmailMutation();
-  const router = useRouter();
+  const [
+    verify,
+    { data: verifyResponse, error: verifyError, isLoading: verifyProgress },
+  ] = useVerifyEmailMutation();
 
-  function handleResendOTP() {
+  const [
+    resendOTP,
+    { data: resendResponse, error: resendError, isLoading: resendProgress },
+  ] = useResendOTPMutation();
+
+  async function handleResendOTP() {
+    await resendOTP(email);
     setCanResend(false);
-    setSeconds(60);
+    setSeconds(5);
   }
 
   const formik = useFormik({
@@ -49,17 +56,45 @@ export default function useVerify() {
       let errors: Partial<errorsValues> = {};
 
       if (!values.otpCode) {
-        errors.otpCode = "OTP không được để trống";
+        setModalDisplay(true);
+        setModalText("OTP không được để trống");
       }
-
       return errors;
     },
   });
+
+  useEffect(() => {
+    if (verifyError && "data" in verifyError) {
+      setModalDisplay(true);
+      setModalText((verifyError.data as any).message);
+    } else if (resendError && "data" in resendError) {
+      setModalText((resendError.data as any).message);
+    }
+
+    if (verifyResponse) {
+      setModalText("Đăng ký thành công");
+      setModalDisplay(true);
+      setVerifying(false);
+      setSignUp(false);
+    } else if (resendResponse) {
+      setModalText("Đã gửi mã OTP");
+      setModalDisplay(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    verifyError,
+    resendError,
+    verifyResponse,
+    resendResponse,
+    setVerifying,
+    setSignUp,
+  ]);
 
   return {
     formik,
     handleResendOTP,
     seconds,
     canResend,
+    resendProgress,
   };
 }

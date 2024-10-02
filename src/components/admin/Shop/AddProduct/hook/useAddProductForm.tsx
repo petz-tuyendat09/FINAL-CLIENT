@@ -38,21 +38,22 @@ export default function useAddProductForm() {
     initialValues: {
       productName: "",
       productThumbnail: null,
-      productImages: [{}, {}, {}],
+      productImages: [],
       productPrice: 0,
       salePercent: 0,
-      productQuantity: 10,
+      productQuantity: 0,
       productCategory: "",
       productSubcategory: "",
       animalType: "",
       productDescription: "",
       productOption: [],
+      productDetailDescription: "", // Ensure this is included
     },
     onSubmit: (values) => {
       const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
         if (key === "productImages" && Array.isArray(value)) {
-          value.forEach((item, index) => {
+          value.forEach((item: any, index) => {
             if (item instanceof File) {
               formData.append(`productImages`, item);
             }

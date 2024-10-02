@@ -12,10 +12,10 @@ interface ProductBoxProps {
 }
 
 const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
-  const productWeight: string[] = Product.productWeight;
+  const productOption: string[] = Product.productOption;
 
   const [selectedWeight, setSelectedWeight] = useState<string>(
-    productWeight?.[0] || "200g",
+    productOption?.[0] || "200g",
   );
 
   function handleSelectWeigth(weigth: string) {
@@ -25,7 +25,7 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
   const productThumbnail = Product?.productThumbnail;
   return (
     <div className={additionalClassess}>
-      <div className="group relative mb-4 block">
+      <div className="relative mb-4 block">
         <Link href={`shop/${Product?.productSlug}`}>
           <Image
             className="rounded-xl select-none object-contain"
@@ -47,7 +47,7 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
       <ProductInfo
         productName={Product?.productName}
         subCategoryId={Product?.productSubCategory}
-        productWeigth={productWeight?.[0]}
+        productOption={productOption?.[0]}
       />
     </div>
   );

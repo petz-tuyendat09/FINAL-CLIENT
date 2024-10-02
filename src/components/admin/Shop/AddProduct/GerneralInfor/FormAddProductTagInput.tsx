@@ -25,7 +25,7 @@ export default function FormAddProductTagInput({
       <p className="text-sm text-red-500">
         {formik.touched[inputName] && errorMessage}
       </p>
-      <div className="bg-gray-200 mt-1 flex w-full flex-wrap items-center gap-2 rounded-md p-2">
+      <div className="bg-gray-100 mt-1 flex w-full flex-wrap items-center gap-2 rounded-lg p-2">
         <input
           className="flex-grow bg-transparent focus:outline-none"
           placeholder={inputPlaceHolder}

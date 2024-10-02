@@ -4,6 +4,7 @@ import { SubCategories } from "@/types/SubCategories";
 interface QueryParams {
   animalType?: string;
   categoryId?: string;
+  subCategoryId?: string;
 }
 
 export const subCategoriesAPI = createApi({

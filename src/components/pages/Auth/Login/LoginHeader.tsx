@@ -11,7 +11,7 @@ export default function LoginHeader() {
       <div className="text-center text-[12px]">
         <p>hoặc</p>
         <button
-          className="text-gray-text underline"
+          className="text-gray-400 underline"
           onClick={() => setSignUp(true)} // Set SignUp to true when clicked
         >
           tạo tài khoản mới

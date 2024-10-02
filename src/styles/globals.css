@@ -33,8 +33,10 @@ transition: background-position 0.5s ease;
 .button-color:hover {
   background-position: 100%;
 }
+
+
 body {
-  background-color: #f9fafc;
+  background-color: #fff;
 }
 
 /* Change Autocomplete styles in Chrome*/

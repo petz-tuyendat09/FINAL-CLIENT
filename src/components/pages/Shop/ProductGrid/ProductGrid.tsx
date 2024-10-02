@@ -8,7 +8,6 @@ import { useContext, useState } from "react";
 import ProductCard from "@/components/ui/ProductCard/ProductCard";
 import useGetProductShop from "./useGetProductShop";
 import FilterInput from "../Filter/FilterInput";
-import debounce from "lodash.debounce";
 
 const ProductGrid = () => {
   const categoryFilterContext = useContext(CategoryFilterContext);

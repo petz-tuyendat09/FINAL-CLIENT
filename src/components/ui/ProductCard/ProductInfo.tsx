@@ -1,30 +1,26 @@
-import React, { useMemo, memo } from "react";
-import calculateSalePrice from "@/utils/caculateSalePrice";
+import { useGetCategoriesQuery } from "@/libs/features/services/categories";
+import { useGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
+
+import { memo } from "react";
 interface ProductInfoProps {
   productName: string;
-  productPrice: number;
-  productSalePercent?: number;
+  subCategoryId: string;
+  productWeigth: string;
 }
 
 const ProductInfo = memo(
-  ({ productName, productPrice, productSalePercent = 0 }: ProductInfoProps) => {
-    const { salePrice } = calculateSalePrice(productSalePercent, productPrice);
-    const formatedMoney = salePrice.toLocaleString("it-IT", {
-      style: "currency",
-      currency: "VND",
-    });
+  ({ productName, subCategoryId, productWeigth }: ProductInfoProps) => {
+    const { data } = useGetSubCategoriesQuery({ subCategoryId: subCategoryId });
 
     return (
-      <div className="flex justify-between items-center text-center">
-        <h2 className="font-serif text-h4">{productName}</h2>
-        {productSalePercent === 0 && (
-          <span className="text-body">{formatedMoney}</span>
-        )}
-        {productSalePercent !== 0 && (
-          <>
-            <span className="text-body">{formatedMoney}</span>
-          </>
-        )}
+      <div className="flex items-center justify-between">
+        <p>
+          <h2 className="font-serif text-h4">{productName}</h2>
+          <h2 className="text-gray-500">
+            {data && data[0].subCategoryName} /
+            <span className="text-gray-400">{productWeigth}</span>
+          </h2>
+        </p>
       </div>
     );
   },

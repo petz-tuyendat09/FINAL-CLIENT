@@ -6,7 +6,7 @@ interface OTPInputProps {
 }
 
 export default function OTPInput({ otp, setOtp }: OTPInputProps) {
-  const inputRefs = useRef<Array<HTMLInputElement | null>>([]); // Ref cho các input
+  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -14,13 +14,11 @@ export default function OTPInput({ otp, setOtp }: OTPInputProps) {
   ) => {
     const value = e.target.value;
 
-    // Chỉ cho phép nhập 1 chữ số
     if (/^\d$/.test(value)) {
       const newOtp = [...otp];
-      newOtp[index] = Number(value); // Chuyển đổi thành kiểu number
+      newOtp[index] = Number(value);
       setOtp(newOtp);
 
-      // Nếu không phải là ô cuối cùng, chuyển focus sang ô tiếp theo
       if (index < 5) {
         inputRefs.current[index + 1]?.focus();
       }
@@ -33,10 +31,9 @@ export default function OTPInput({ otp, setOtp }: OTPInputProps) {
   ) => {
     if (e.key === "Backspace") {
       const newOtp = [...otp];
-      newOtp[index] = undefined; // Xóa giá trị hiện tại (trả về undefined)
+      newOtp[index] = undefined;
       setOtp(newOtp);
 
-      // Nếu không phải là ô đầu tiên, quay lại ô trước đó
       if (index > 0) {
         inputRefs.current[index - 1]?.focus();
       }
@@ -46,20 +43,18 @@ export default function OTPInput({ otp, setOtp }: OTPInputProps) {
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pasteData = e.clipboardData.getData("text");
 
-    // Kiểm tra nếu dữ liệu đã paste có phải là 6 chữ số
     if (/^\d{6}$/.test(pasteData)) {
-      const newOtp = pasteData.split("").map(Number); // Chuyển đổi thành mảng các số
+      const newOtp = pasteData.split("").map(Number);
       setOtp(newOtp);
 
-      // Gán giá trị cho từng input và chuyển focus tới input cuối cùng
       newOtp.forEach((digit, index) => {
         if (inputRefs.current[index]) {
-          inputRefs.current[index]!.value = String(digit); // Hiển thị số
+          inputRefs.current[index]!.value = String(digit);
         }
       });
 
-      // Focus vào ô cuối cùng sau khi paste
-      inputRefs.current[5]?.focus();
+      // Tự động focus vào ô cuối cùng khi đã dán mã
+      inputRefs.current[newOtp.length - 1]?.focus();
     }
   };
 
@@ -69,11 +64,11 @@ export default function OTPInput({ otp, setOtp }: OTPInputProps) {
         <input
           key={index}
           type="text"
-          className="h-12 w-12 rounded-lg border border-[#e5dbdb] bg-gray-darker text-center drop-shadow-sm"
+          className="border-gray-400 bg-gray-50 focus-within:outline-gray-400 h-12 w-12 rounded-lg border text-center drop-shadow-sm"
           value={value !== undefined ? value : ""}
           onChange={(e) => handleChange(e, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
-          onPaste={handlePaste}
+          onPaste={(e) => index === 0 && handlePaste(e)} // Chỉ cho phép dán từ ô đầu tiên
           maxLength={1} // Giới hạn 1 ký tự
           ref={(el) => {
             inputRefs.current[index] = el;

@@ -1,12 +1,10 @@
 "use server";
 
-import next from "next";
-
 // const DOMAIN_URL = process.env.DOMAIN_URL;
 const DOMAIN_URL = "http://localhost:8888/api";
 
 export interface QueryParams {
-  page?:number;
+  page?: number;
   productName?: string;
   status?: string;
   limit?: number;
@@ -23,7 +21,6 @@ export const getProduct = async (params: QueryParams) => {
   const options: any = {
     method: "GET",
     cache: "no-store", // Không cache dữ liệu
-
   };
 
   const queryParams = new URLSearchParams(

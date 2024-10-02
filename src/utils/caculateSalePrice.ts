@@ -2,9 +2,13 @@ export default function calculateSalePrice(
   productSalePercent: number,
   productPrice: number,
 ) {
-  const salePrice = productSalePercent
-    ? productPrice * (1 - productSalePercent / 100)
-    : productPrice;
+  // Tính số tiền được giảm
+  const discount = productSalePercent
+    ? productPrice * (productSalePercent / 100)
+    : 0;
+
+  // Tính giá sau khi giảm
+  const salePrice = productPrice - discount;
 
   return { salePrice };
 }

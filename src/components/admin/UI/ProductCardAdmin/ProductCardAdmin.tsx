@@ -16,23 +16,25 @@ export default function ProductCardAdmin({
   console.log(thumbnailURL);
 
   return (
-    <div className="w-90 rounded-xl bg-gray-darker p-4">
-      <div className="group relative">
-        <ProductCardAdminButtonAction
-          // handleDeleteProduct={handleDeleteProduct}
-          productId={Product._id}
-          productSlug={Product.productSlug}
-        />
-        <Image
-        loader={() => thumbnailURL}
-          src={thumbnailURL}
-          alt="Product Image"
-          width={222}
-          height={222}
-          style={{ width: "100%", height: "100%" }}
-          priority
-        />
-      </div>
+    <div>
+      <p>
+        <div className="group relative rounded-lg bg-primary">
+          <ProductCardAdminButtonAction
+            // handleDeleteProduct={handleDeleteProduct}
+            productId={Product._id}
+            productSlug={Product.productSlug}
+          />
+          <Image
+            loader={() => thumbnailURL}
+            src={thumbnailURL}
+            alt="Product Image"
+            width={222}
+            height={222}
+            style={{ width: "100%", height: "100%" }}
+            priority
+          />
+        </div>
+      </p>
       <ProductCardAdminInfo
         productSalePercent={Product.salePercent}
         productPrice={Product.productPrice}

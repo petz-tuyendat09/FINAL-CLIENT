@@ -8,6 +8,7 @@ interface FormAddProductNormalInputProps {
   errorMessage?: string;
   inputType: string;
   formik: FormikProps<any>;
+  className?: string;
 }
 
 export default function FormAddProductNormalInput({
@@ -18,20 +19,19 @@ export default function FormAddProductNormalInput({
   errorMessage,
   inputType,
   formik,
+  className = "",
 }: FormAddProductNormalInputProps) {
   return (
-    <div>
-      <label className="block" htmlFor="product-quantity">
+    <div className={className}>
+      <label className="block font-[500]" htmlFor={inputName}>
         {label}
       </label>
-
       <p className="text-sm text-red-500">
         {formik.touched[inputName] && errorMessage}
       </p>
       <p className="text-sm text-red-500">{duplicatedMessage}</p>
-
       <input
-        className="mt-1 w-full rounded-lg border p-2 focus:outline-none"
+        className="bg-gray-100 mt-1 w-full rounded-md p-2 focus:outline-none"
         placeholder={inputPlaceHolder}
         type={inputType}
         onBlur={formik.handleBlur}

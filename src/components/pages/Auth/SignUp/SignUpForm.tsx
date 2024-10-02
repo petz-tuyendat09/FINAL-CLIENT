@@ -1,18 +1,16 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import AuthInput from "../AuthInput/AuthInput";
-import { useAuth } from "../_store/AuthContext"; // Import useAuth to access setVerifying
 import useSignUp from "./_hook/useSignUpForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AuthModal from "../AuthModal";
+import { AnimatePresence } from "framer-motion";
 export default function SignUpForm() {
-  const { setVerifying, setEmail } = useAuth();
-  const { formik, duplicatedMessage } = useSignUp();
+  const { formik, isLoading } = useSignUp();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
     formik.handleSubmit();
-    setVerifying(true);
-    setEmail(formik.values.email);
   };
 
   const handleShowPassword = () => {
@@ -26,14 +24,12 @@ export default function SignUpForm() {
     >
       <AuthInput
         errorMessage={formik.errors.email}
-        duplicatedMessage={duplicatedMessage}
         formik={formik}
         inputName="email"
         labelText="Email"
       />
       <AuthInput
         errorMessage={formik.errors.username}
-        duplicatedMessage={duplicatedMessage}
         formik={formik}
         inputName="username"
         labelText="Tên đăng nhập"
@@ -66,7 +62,7 @@ export default function SignUpForm() {
         type="submit"
         className="w-full rounded-full bg-black py-[1rem] font-semibold text-white"
       >
-        Đăng ký
+        {isLoading ? "Đang đăng ký khà khà" : "Đăng ký"}
       </button>
       <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-[1rem] font-semibold text-white">
         <Icon className="size-6" icon="flat-color-icons:google" />

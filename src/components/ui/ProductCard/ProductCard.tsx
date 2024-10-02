@@ -2,10 +2,10 @@ import { memo, useState } from "react";
 import Image from "next/image";
 import ProductInfo from "./ProductInfo";
 import Link from "next/link";
-import ProductCardButton from "./ProductButton";
+import ProductCardBuyNow from "./ProductCardBuyNow";
 import { Product } from "@/types/Product";
 import DummyImage from "@@/assets/images/dummy-product.png";
-import ProductCardSelectWeight from "./ProductCardSelectWeight";
+import ProductCardSelectWeight from "./ProductCardCartButton";
 interface ProductBoxProps {
   Product: Product;
   additionalClassess?: string;
@@ -35,21 +35,19 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
             height={500}
             style={{ width: "100%", height: "auto" }}
           />
-          <p className="absolute left-6 top-6 rounded-lg bg-black px-4 py-1 text-white">
-            -{Product.salePercent}%
-          </p>
+          {Product.salePercent >= 1 && (
+            <p className="absolute left-6 top-8 rounded-lg bg-black px-4 py-1 text-white">
+              {Product.salePercent}%
+            </p>
+          )}
         </Link>
-        <ProductCardSelectWeight
-          productWeight={Product.productWeight}
-          selectedWeight={selectedWeight}
-          handleSelectWeigth={handleSelectWeigth}
-        />
-        <ProductCardButton />
+        <ProductCardSelectWeight Product={Product} />
+        <ProductCardBuyNow Product={Product} />
       </div>
       <ProductInfo
-        productSalePercent={Product.salePercent}
         productName={Product?.productName}
-        productPrice={Product?.productPrice}
+        subCategoryId={Product?.productSubCategory}
+        productWeigth={productWeight?.[0]}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import Slider from "./Slider";
+import Slider from "./ProductSlider";
 import CategoriesSelect from "./CategoriesSelect";
 import { useState } from "react";
 export default function CategoriesSlider() {

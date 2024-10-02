@@ -5,11 +5,11 @@ import { memo } from "react";
 interface ProductInfoProps {
   productName: string;
   subCategoryId: string;
-  productWeigth: string;
+  productOption: string;
 }
 
 const ProductInfo = memo(
-  ({ productName, subCategoryId, productWeigth }: ProductInfoProps) => {
+  ({ productName, subCategoryId, productOption }: ProductInfoProps) => {
     const { data } = useGetSubCategoriesQuery({ subCategoryId: subCategoryId });
 
     return (
@@ -18,7 +18,7 @@ const ProductInfo = memo(
           <h2 className="font-serif text-h4">{productName}</h2>
           <h2 className="text-gray-500">
             {data && data[0].subCategoryName} /
-            <span className="text-gray-400">{productWeigth}</span>
+            <span className="text-gray-400">{productOption}</span>
           </h2>
         </p>
       </div>

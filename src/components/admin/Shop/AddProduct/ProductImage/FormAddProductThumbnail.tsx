@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
 import { FormikProps } from "formik";
 import usePreviewUploadImage from "../hook/usePreviewUploadImage";
-import FormAddProductImage from "./FormAddProductImage";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 interface FormAddProductThumbnailProps {
   formik: FormikProps<any>;
@@ -17,12 +17,15 @@ export default function FormAddProductThumbnail({
     fieldToSetValue: "productThumbnail",
   });
 
-  const handleAddImage = () => {
-    // Thêm một object trống vào mảng productImages trong Formik
-    formik.setFieldValue("productImages", [
-      ...formik.values.productImages,
-      {}, // Thêm một object mới cho hình ảnh
-    ]);
+  console.log(formik.values.productImages);
+
+  const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      const updatedImages = [...formik.values.productImages, ...fileArray];
+      formik.setFieldValue("productImages", updatedImages);
+    }
   };
 
   const handleRemoveImage = (index: number) => {
@@ -31,8 +34,14 @@ export default function FormAddProductThumbnail({
     formik.setFieldValue("productImages", updatedImages);
   };
 
+  const getImageSrc = (image: File | string) => {
+    return image instanceof File ? URL.createObjectURL(image) : image;
+  };
+
+  console.log(formik.values.productImages);
+
   return (
-    <div className="form-group bg-gray-50 w-2/4 rounded-[20px] p-4">
+    <div className="form-group bg-gray-50 h-fit w-2/4 max-w-[560px] rounded-[20px] px-4 py-8">
       <h1 className="text-xl font-bold">Thêm hình</h1>
       <div>
         <div className="group relative space-y-2">
@@ -58,32 +67,44 @@ export default function FormAddProductThumbnail({
         />
       </div>
 
-      {/* Thêm các input cho hình ảnh sản phẩm */}
-      <div className="mt-4 flex flex-wrap gap-4">
-        {formik.values.productImages.map((_, index) => (
-          <div key={index} className="relative w-[48%]">
-            <FormAddProductImage
-              inputName={`productImages[${index}]`}
-              inputId={`product-image-${index}`}
-              index={index}
-              formik={formik}
-            />
-            <button
-              type="button"
-              className="absolute right-4 top-4 rounded-full bg-white p-2 text-red-500 shadow-md"
-              onClick={() => handleRemoveImage(index)}
-            >
-              <Icon className="size-3" icon="streamline:delete-1-solid" />
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={handleAddImage}
-          className="mt-2 w-full rounded-md bg-black p-2 text-white"
-        >
-          Thêm hình ảnh
-        </button>
+      <div className="mt-4 flex gap-4">
+        <Swiper spaceBetween={20} slidesPerView={3} className="h-32 w-full">
+          {formik.values.productImages.map(
+            (image: File | string, index: number) => (
+              <SwiperSlide key={index}>
+                <div className="relative">
+                  <img
+                    src={getImageSrc(image)}
+                    alt={`Sản phẩm ${index}`}
+                    className="rounded-xl h-40 w-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-1 top-1 rounded-full bg-white p-2 text-red-500 shadow-md"
+                    onClick={() => handleRemoveImage(index)}
+                  >
+                    <Icon className="size-2" icon="streamline:delete-1-solid" />
+                  </button>
+                </div>
+              </SwiperSlide>
+            ),
+          )}
+        </Swiper>
+        <div className="mt-4">
+          <label
+            htmlFor="productImages"
+            className="mt-2 inline-block cursor-pointer rounded-md bg-black p-2 text-white"
+          >
+            Thêm hình ảnh
+          </label>
+          <input
+            id="productImages"
+            type="file"
+            className="hidden"
+            multiple
+            onChange={handleAddImages}
+          />
+        </div>
       </div>
     </div>
   );

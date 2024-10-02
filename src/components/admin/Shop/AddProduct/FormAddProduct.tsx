@@ -11,6 +11,8 @@ import { useGetCategoriesQuery } from "@/libs/features/services/categories";
 import MyEditor from "./CKEditorComponent";
 import FormAddProductThumbnail from "./ProductImage/FormAddProductThumbnail";
 import GerneralInformation from "./GerneralInfor/GerneralInformation";
+import Link from "next/link";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function FormAddProduct() {
   const { data: categories } = useGetCategoriesQuery("");
@@ -28,9 +30,26 @@ export default function FormAddProduct() {
     }
   }, [animalType, formik.values.productCategory, getSubCategories]);
 
+  function handleButtonSubmit() {
+    formik.handleSubmit();
+  }
+
   return (
     <>
-      <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
+      <div className="mb-2 flex justify-between text-xl">
+        <Link className="flex items-center gap-1" href="/admin/shop">
+          <Icon icon="gravity-ui:arrow-left" />
+          Quay về
+        </Link>
+
+        <button
+          onClick={handleButtonSubmit}
+          className="rounded-lg bg-black px-6 py-2 text-white"
+        >
+          Save
+        </button>
+      </div>
+      <form encType="multipart/form-data">
         <div className="flex gap-8">
           <FormAddProductThumbnail formik={formik} />
           <div className="w-3/4">
@@ -38,8 +57,9 @@ export default function FormAddProduct() {
               formik={formik}
               duplicatedMessage={duplicatedMessage}
             />
-            <div className="flex gap-4">
-              <div className="bg-gray-100 w-1/2 rounded-[20px] p-4">
+
+            <div className="mt-4 flex gap-4">
+              <div className="h-fit w-1/2 rounded-[20px] bg-gray-50 p-4">
                 <FormAddProductPrice
                   formik={formik}
                   errorMessage={formik.errors.productPrice}
@@ -47,17 +67,8 @@ export default function FormAddProduct() {
                 />
               </div>
 
-              <div className="bg-gray-100 h-40 w-1/2"></div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </>
-  );
-}
-
-{
-  /* <FormAddProductType
+              <div className="w-1/2 space-y-4 rounded-lg bg-gray-50 p-4">
+                <FormAddProductType
                   visitedInput={formik.touched.productCategory}
                   errorMessage={formik.errors.productCategory}
                   onChangeEvent={formik.handleChange}
@@ -82,10 +93,8 @@ export default function FormAddProduct() {
                       </>
                     )
                   }
-                /> */
-}
-{
-  /* <FormAddProductType
+                />
+                <FormAddProductType
                   visitedInput={formik.touched.productSubcategory}
                   errorMessage={formik.errors.productSubcategory}
                   onChangeEvent={formik.handleChange}
@@ -96,5 +105,13 @@ export default function FormAddProduct() {
                       {data.subCategoryName}
                     </option>
                   ))}
-                /> */
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <MyEditor formik={formik} />
+      </form>
+    </>
+  );
 }

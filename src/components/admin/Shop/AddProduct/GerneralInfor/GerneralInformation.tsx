@@ -14,7 +14,7 @@ export default function GerneralInformation({
   console.log(formik.errors.productOption);
 
   return (
-    <div className="bg-gray-50 rounded-[20px] px-4 py-8">
+    <div className="bg-gray-50 rounded-lg px-4 py-8">
       <h1 className="mb-4 text-xl font-bold">Thông tin sản phẩm</h1>
 
       <div className="mb-4">
@@ -29,7 +29,7 @@ export default function GerneralInformation({
         </p>
         <p className="text-sm text-red-500">{duplicatedMessage}</p>
         <input
-          className="bg-gray-200 mt-1 w-full rounded-md p-2 focus:outline-none"
+          className="bg-gray-100 mt-1 w-full rounded-md p-2 focus:outline-none"
           placeholder="Tên sản phẩm"
           type="text"
           onBlur={formik.handleBlur}
@@ -47,7 +47,7 @@ export default function GerneralInformation({
           placeholder="Nhập mô tả sản phẩm"
           name="productDescription"
           id="productDescription"
-          className="bg-gray-200 focus w-full rounded-[20px] px-4 py-2 focus:outline-none"
+          className="bg-gray-100 focus w-full rounded-lg px-4 py-2 focus:outline-none"
         />
       </div>
 

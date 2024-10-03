@@ -6,7 +6,7 @@ import { AuthProvider, useAuth } from "./_store/AuthContext"; // Import AuthProv
 import SignUp from "./SignUp/SignUp";
 import { AnimatePresence } from "framer-motion";
 import Verify from "./Verify/Verify";
-import AuthModal from "./AuthModal";
+import NoActionModal from "../../ui/NoActionModal";
 import { useEffect } from "react";
 
 export default function Auth() {
@@ -55,7 +55,7 @@ function AuthContent() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {modalDisplay && <AuthModal modalText={modalText} />}
+        {modalDisplay && <NoActionModal modalText={modalText} />}
       </AnimatePresence>
     </div>
   );

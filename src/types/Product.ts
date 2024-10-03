@@ -1,3 +1,8 @@
+interface ProductDetailDescription {
+  _id: string;
+  detailContent: string;
+}
+
 export interface Product {
   _id: string;
   productName: string;
@@ -9,6 +14,7 @@ export interface Product {
   productThumbnail: string;
   productImages: [];
   productDescription: string;
+  productDetailDescription: ProductDetailDescription;
   productCategory: string;
   productSubCategory: string;
   animalType: string;

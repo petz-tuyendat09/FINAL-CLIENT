@@ -1,5 +1,5 @@
-import { Field, FormikProps } from "formik";
-import FormAddProductTagInput from "./FormAddProductTagInput";
+import { FormikProps } from "formik";
+import FormEditProductTagInput from "./FormEditProductTagInput";
 
 interface GerneralInformationProps {
   duplicatedMessage?: string;
@@ -29,6 +29,7 @@ export default function GerneralInformation({
           className="mt-1 w-full rounded-md bg-gray-100 p-2 focus:outline-none"
           placeholder="Tên sản phẩm"
           type="text"
+          value={formik.values.productName}
           onBlur={formik.handleBlur}
           name="productName"
           onChange={formik.handleChange}
@@ -50,7 +51,7 @@ export default function GerneralInformation({
 
       <div>
         <p className="mb-1 font-[500]">Tùy chọn sản phẩm</p>
-        <FormAddProductTagInput
+        <FormEditProductTagInput
           errorMessage={
             typeof formik.errors.productOption === "string"
               ? formik.errors.productOption

@@ -4,11 +4,18 @@ import Link from "next/link";
 
 interface LogoProps {
   textColor?: "text-black" | "text-white";
+  additionalClasses?: string;
 }
 
-export default function Logo({ textColor }: LogoProps) {
+export default function Logo({
+  textColor = "text-black",
+  additionalClasses = "",
+}: LogoProps) {
   return (
-    <Link href="/" className={`flex items-center ${textColor}`}>
+    <Link
+      href="/"
+      className={`flex items-center ${textColor} ${additionalClasses}`}
+    >
       <div className="w-8">
         <ResponsiveImage
           imageSrc={LogoImage}

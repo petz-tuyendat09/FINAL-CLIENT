@@ -5,19 +5,14 @@ import ProductCardAdminInfo from "./ProductCardAdminInfo";
 
 interface ProductCardAdminProps {
   Product: Product;
-  handleDeleteProduct?: Function;
 }
 
-export default function ProductCardAdmin({
-  Product,
-  handleDeleteProduct,
-}: ProductCardAdminProps) {
+export default function ProductCardAdmin({ Product }: ProductCardAdminProps) {
   const thumbnailURL = Product.productThumbnail;
-  console.log(thumbnailURL);
 
   return (
     <div>
-      <p>
+      <div>
         <div className="group relative rounded-lg bg-primary">
           <ProductCardAdminButtonAction
             // handleDeleteProduct={handleDeleteProduct}
@@ -25,7 +20,7 @@ export default function ProductCardAdmin({
             productSlug={Product.productSlug}
           />
           <Image
-            loader={() => thumbnailURL}
+            unoptimized
             src={thumbnailURL}
             alt="Product Image"
             width={222}
@@ -34,7 +29,7 @@ export default function ProductCardAdmin({
             priority
           />
         </div>
-      </p>
+      </div>
       <ProductCardAdminInfo
         productSalePercent={Product.salePercent}
         productPrice={Product.productPrice}

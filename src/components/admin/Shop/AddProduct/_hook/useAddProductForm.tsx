@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useAddNewProductMutation } from "@/libs/features/services/product";
 import { useRouter } from "next/navigation";
+import { ModalProvider, useModal } from "../_store/ModalContext"; // Import the ModalProvider
 
 interface errorsValues {
   productName: string;
@@ -18,10 +20,12 @@ interface errorsValues {
 }
 
 export default function useAddProductForm() {
+  const { setModalText, setModalDisplay } = useModal();
   const [animalType, setAnimalType] = useState<string>("");
   const [duplicatedMessage, setDuplicatedMessage] = useState<
     string | undefined
   >();
+  const router = useRouter();
 
   const handleAnimalTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const animalTypeSelected = e.target.value;
@@ -30,9 +34,8 @@ export default function useAddProductForm() {
     console.log(formik.values.animalType);
   };
 
-  const [addNewProduct, { data, error: mutationError }] =
+  const [addNewProduct, { data: mutationResponse, error: mutationError }] =
     useAddNewProductMutation();
-  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -47,16 +50,21 @@ export default function useAddProductForm() {
       animalType: "",
       productDescription: "",
       productOption: [],
-      productDetailDescription: "", // Ensure this is included
+      productDetailDescription: "",
     },
     onSubmit: (values) => {
       const formData = new FormData();
+
       Object.entries(values).forEach(([key, value]) => {
         if (key === "productImages" && Array.isArray(value)) {
           value.forEach((item: any, index) => {
             if (item instanceof File) {
               formData.append(`productImages`, item);
             }
+          });
+        } else if (key === "productOption" && Array.isArray(value)) {
+          value.forEach((option, index) => {
+            formData.append(`productOption[${index}]`, option);
           });
         } else if (typeof value === "number") {
           formData.append(key, value.toString());
@@ -113,7 +121,11 @@ export default function useAddProductForm() {
     if (mutationError && "data" in mutationError) {
       setDuplicatedMessage((mutationError.data as any).message);
     }
-  }, [mutationError]);
+    if (mutationResponse) {
+      setModalDisplay(true); // Show modal on successful product addition
+      setModalText("Thêm sản phẩm thành công quay về sau 3s");
+    }
+  }, [mutationError, mutationResponse]);
 
   useEffect(() => {
     if (formik.values.productName) {

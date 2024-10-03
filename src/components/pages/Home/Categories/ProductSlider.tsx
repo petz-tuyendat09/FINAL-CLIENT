@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useCallback, useRef } from "react";
 // CSS
 import "swiper/css";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface ProductSliderProps {
   filterOption?: object;
@@ -13,7 +14,6 @@ interface ProductSliderProps {
 
 export default function ProductSlider({ filterOption }: ProductSliderProps) {
   const sliderRef = useRef(null);
-  const swiper = useSwiper();
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -47,13 +47,21 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
             </motion.div>
           </SwiperSlide>
         ))}
-        <button className="absolute right-0 top-1/2 z-10" onClick={handleNext}>
-          Next
-        </button>
-        <button className="absolute left-0 top-1/2 z-10" onClick={handlePrev}>
-          Prev
-        </button>
       </Swiper>
+      <button
+        type="button"
+        className="absolute -right-4 top-1/2 z-10 rounded-full bg-black p-2 text-white"
+        onClick={handleNext}
+      >
+        <Icon icon="tabler:chevron-right" />
+      </button>
+      <button
+        type="button"
+        className="absolute -left-4 top-1/2 z-10 rounded-full bg-black p-2 text-white"
+        onClick={handlePrev}
+      >
+        <Icon icon="tabler:chevron-left" />
+      </button>
     </div>
   );
 }

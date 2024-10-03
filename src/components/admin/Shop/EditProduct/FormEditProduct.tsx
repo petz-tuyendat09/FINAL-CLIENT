@@ -1,39 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { ModalProvider, useModal } from "./_store/ModalContext"; // Import the ModalProvider
+
 import { useEffect } from "react";
-import FormAddProductPrice from "./PriceAndStock/FormAddProductPrice";
-import FormAddProductType from "./FormAddProductType";
-import useAddProductForm from "./_hook/useAddProductForm";
+import FormEditProductPrice from "./PriceAndStock/FormEditProductPrice";
+import FormEditProductType from "./FormEditProductType";
+import useAddProductForm from "./_hook/useEditProductForm";
 import { useLazyGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
 import { useGetCategoriesQuery } from "@/libs/features/services/categories";
 import MyEditor from "./CKEditorComponent";
-import FormAddProductThumbnail from "./ProductImage/FormAddProductThumbnail";
+import FormEditProductThumnail from "./ProductImage/FormEditProductThumbnail";
 import GerneralInformation from "./GerneralInfor/GerneralInformation";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useRouter } from "next/navigation";
-import { AnimatePresence } from "framer-motion";
-import NoActionModal from "@/components/ui/NoActionModal";
 
-export default function FormAddProductWithContext() {
-  return (
-    <ModalProvider>
-      <FormAddProduct />
-    </ModalProvider>
-  );
+interface FormEditProductProps {
+  slug: string;
 }
 
-function FormAddProduct() {
+export default function FormEditProduct({ slug }: FormEditProductProps) {
   const { data: categories } = useGetCategoriesQuery("");
-  const { modalText, modalDisplay } = useModal();
-
   const [getSubCategories, { data: subCategories }] =
     useLazyGetSubCategoriesQuery();
   const { formik, animalType, handleAnimalTypeChange, duplicatedMessage } =
-    useAddProductForm();
-
-  const router = useRouter();
+    useAddProductForm({ slug });
 
   useEffect(() => {
     if (animalType) {
@@ -43,18 +32,6 @@ function FormAddProduct() {
       });
     }
   }, [animalType, formik.values.productCategory, getSubCategories]);
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (modalDisplay) {
-      timer = setTimeout(() => {
-        router.push("/admin/shop");
-      }, 5000);
-    }
-
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalDisplay]);
 
   function handleButtonSubmit() {
     formik.handleSubmit();
@@ -69,6 +46,7 @@ function FormAddProduct() {
         </Link>
 
         <button
+          type="submit"
           onClick={handleButtonSubmit}
           className="rounded-lg bg-black px-6 py-2 text-white"
         >
@@ -77,7 +55,7 @@ function FormAddProduct() {
       </div>
       <form encType="multipart/form-data">
         <div className="flex gap-8">
-          <FormAddProductThumbnail formik={formik} />
+          <FormEditProductThumnail formik={formik} />
           <div className="w-3/4">
             <GerneralInformation
               formik={formik}
@@ -86,7 +64,7 @@ function FormAddProduct() {
 
             <div className="mt-4 flex gap-4">
               <div className="h-fit w-1/2 rounded-[20px] bg-gray-50 p-4">
-                <FormAddProductPrice
+                <FormEditProductPrice
                   formik={formik}
                   errorMessage={formik.errors.productPrice}
                   visitedInput={formik.touched.productPrice}
@@ -94,9 +72,10 @@ function FormAddProduct() {
               </div>
 
               <div className="w-1/2 space-y-4 rounded-lg bg-gray-50 p-4">
-                <FormAddProductType
+                <FormEditProductType
                   visitedInput={formik.touched.productCategory}
                   errorMessage={formik.errors.productCategory}
+                  defaultValue={formik.values.productCategory}
                   onChangeEvent={formik.handleChange}
                   defaultText="Chọn danh mục"
                   inputName="productCategory"
@@ -106,8 +85,9 @@ function FormAddProduct() {
                     </option>
                   ))}
                 />
-                <FormAddProductType
+                <FormEditProductType
                   visitedInput={formik.touched.animalType}
+                  defaultValue={formik.values.animalType}
                   onChangeEvent={handleAnimalTypeChange}
                   defaultText="Chọn thú cưng"
                   inputName="animalType"
@@ -120,9 +100,10 @@ function FormAddProduct() {
                     )
                   }
                 />
-                <FormAddProductType
+                <FormEditProductType
                   visitedInput={formik.touched.productSubcategory}
                   errorMessage={formik.errors.productSubcategory}
+                  defaultValue={formik.values.productSubcategory}
                   onChangeEvent={formik.handleChange}
                   defaultText="Chọn danh mục con"
                   inputName="productSubcategory"
@@ -138,9 +119,6 @@ function FormAddProduct() {
         </div>
         <MyEditor formik={formik} />
       </form>
-      <AnimatePresence>
-        {modalDisplay && <NoActionModal modalText={modalText} />}
-      </AnimatePresence>
     </>
   );
 }

@@ -4,21 +4,18 @@ import usePreviewUploadImage from "../_hook/usePreviewUploadImage";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { useCallback, useRef } from "react";
 
-interface FormAddProductThumbnailProps {
+interface FormEditProductThumbnailProps {
   formik: FormikProps<any>;
 }
 
-export default function FormAddProductThumbnail({
+export default function FormEditProductThumbnail({
   formik,
-}: FormAddProductThumbnailProps) {
+}: FormEditProductThumbnailProps) {
   const { imagePreview, handlePreviewImg } = usePreviewUploadImage({
     formik: formik,
     fieldToSetValue: "productThumbnail",
   });
-
-  const sliderRef = useRef(null);
 
   const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -26,28 +23,28 @@ export default function FormAddProductThumbnail({
       const fileArray = Array.from(files);
       const updatedImages = [...formik.values.productImages, ...fileArray];
       formik.setFieldValue("productImages", updatedImages);
+      // Add new images to newImages field to track them for upload
+      formik.setFieldValue("newImages", [
+        ...formik.values.newImages,
+        ...fileArray,
+      ]);
     }
   };
 
   const handleRemoveImage = (index: number) => {
     const updatedImages = [...formik.values.productImages];
-    updatedImages.splice(index, 1);
+    const removeImage = updatedImages.splice(index, 1);
     formik.setFieldValue("productImages", updatedImages);
+    formik.setFieldValue("removeImages", [
+      ...formik.values.removeImages,
+      removeImage,
+    ]);
+    console.log(formik.values.removeImages);
   };
 
   const getImageSrc = (image: File | string) => {
     return image instanceof File ? URL.createObjectURL(image) : image;
   };
-
-  const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
-  }, []);
-
-  const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slideNext();
-  }, []);
 
   return (
     <div className="form-group h-fit w-2/4 max-w-[560px] rounded-[20px] bg-gray-50 px-4 py-8">
@@ -77,12 +74,7 @@ export default function FormAddProductThumbnail({
       </div>
 
       <div className="mt-4 flex gap-4">
-        <Swiper
-          spaceBetween={20}
-          slidesPerView={3}
-          className="relative h-32 w-full"
-          ref={sliderRef}
-        >
+        <Swiper spaceBetween={20} slidesPerView={3} className="h-32 w-full">
           {formik.values.productImages.map(
             (image: File | string, index: number) => (
               <SwiperSlide key={index}>
@@ -103,27 +95,13 @@ export default function FormAddProductThumbnail({
               </SwiperSlide>
             ),
           )}
-          <button
-            type="button"
-            className="absolute right-0 top-1/2 z-10 rounded-full bg-black p-1 text-white"
-            onClick={handleNext}
-          >
-            <Icon icon="tabler:chevron-right" />
-          </button>
-          <button
-            type="button"
-            className="absolute left-0 top-1/2 z-10 bg-black p-1 text-white"
-            onClick={handlePrev}
-          >
-            <Icon icon="tabler:chevron-left" />
-          </button>
         </Swiper>
-        <div className="mt-4 w-1/4">
+        <div className="mt-4">
           <label
             htmlFor="productImages"
             className="mt-2 inline-block cursor-pointer rounded-md bg-black p-2 text-white"
           >
-            Thêm ảnh
+            Thêm hình ảnh
           </label>
           <input
             id="productImages"

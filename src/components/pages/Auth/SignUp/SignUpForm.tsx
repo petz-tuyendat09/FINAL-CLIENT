@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import AuthInput from "../AuthInput/AuthInput";
 import useSignUp from "./_hook/useSignUpForm";
 import { useEffect, useState } from "react";
-import AuthModal from "../AuthModal";
+import AuthModal from "../../../ui/NoActionModal";
 import { AnimatePresence } from "framer-motion";
 export default function SignUpForm() {
   const { formik, isLoading } = useSignUp();

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Product } from "@/types/Product";
 import {
+  useDeleteProductMutation,
   useGetProductsQuery,
   useLazyGetProductsQuery,
 } from "@/libs/features/services/product";
@@ -10,7 +11,7 @@ interface UseGetProductProps {
   filterSubCategory?: string[];
 }
 
-export default function useGetProductAdmin({
+export default function useProductActionAdmin({
   filterCategory,
   filterSubCategory,
 }: UseGetProductProps) {
@@ -22,12 +23,12 @@ export default function useGetProductAdmin({
   const [triggerGetProducts, { data: lazyData, isFetching, isError }] =
     useLazyGetProductsQuery();
 
+  const [deleteProduct] = useDeleteProductMutation(); // Mutation để xóa sản phẩm
+
   const [products, setListProduct] = useState<Product[]>([]);
   const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
   const [currPage, setCurrPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
-
-  console.log(paginatedProducts);
 
   useEffect(() => {
     if (PaginateProduct?.products) {
@@ -69,14 +70,7 @@ export default function useGetProductAdmin({
         alert("No more products to load.");
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      currPage,
-      totalPages,
-      filterCategory,
-      filterSubCategory,
-      triggerGetProducts, // Include in dependencies
-    ],
+    [currPage, totalPages, triggerGetProducts],
   );
 
   const handleQueryProduct = useCallback(
@@ -86,7 +80,6 @@ export default function useGetProductAdmin({
         return;
       }
 
-      // Fetch products matching the search query
       const data = await triggerGetProducts({
         productName: productName,
         limit: 1000,
@@ -101,11 +94,30 @@ export default function useGetProductAdmin({
     [paginatedProducts, triggerGetProducts],
   );
 
+  const handleDeleteProduct = useCallback(
+    async (productId: string) => {
+      try {
+        await deleteProduct(productId).unwrap();
+
+        setListProduct((prevProducts) =>
+          prevProducts.filter((product) => product._id !== productId),
+        );
+        setPaginatedProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== productId),
+        );
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+      }
+    },
+    [deleteProduct],
+  );
+
   return {
     products,
     totalPages,
     currPage,
     handleFetchMore,
     handleQueryProduct,
+    handleDeleteProduct, // Trả về hàm xóa sản phẩm
   };
 }

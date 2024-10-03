@@ -1,7 +1,7 @@
 import { FormikProps } from "formik";
 import React, { useState } from "react";
 
-interface FormAddProductTagInputProps {
+interface FormEditProductTagInputProps {
   inputPlaceHolder: string;
   inputName: string;
   errorMessage?: string;
@@ -9,50 +9,19 @@ interface FormAddProductTagInputProps {
   className?: string;
 }
 
-export default function FormAddProductTagInput({
+export default function FormEditProductTagInput({
   inputPlaceHolder,
   inputName,
   errorMessage,
   formik,
   className = "",
-}: FormAddProductTagInputProps) {
+}: FormEditProductTagInputProps) {
   const [tagInput, setTagInput] = useState("");
-  const [duplicateError, setDuplicateError] = useState<string | null>(null);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTagInput(e.target.value);
-    setDuplicateError(null);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim() !== "") {
-      e.preventDefault();
-      // Check if tag already exists
-      if (formik.values[inputName].includes(tagInput.trim())) {
-        setDuplicateError("Tag đã tồn tại!");
-      } else {
-        formik.setFieldValue(inputName, [
-          ...formik.values[inputName],
-          tagInput.trim(),
-        ]);
-        setTagInput("");
-      }
-    }
-  };
-
-  // Function to handle tag removal
-  const handleTagRemove = (index: number) => {
-    const updatedTags = formik.values[inputName].filter(
-      (_: string, i: number) => i !== index,
-    );
-    formik.setFieldValue(inputName, updatedTags);
-  };
 
   return (
     <div className={className}>
       <p className="text-sm text-red-500">
         {formik.touched[inputName] && errorMessage}
-        {duplicateError}
       </p>
       <div className="mt-1 flex w-full flex-wrap items-center gap-2 rounded-lg bg-gray-100 p-2">
         <input
@@ -61,9 +30,18 @@ export default function FormAddProductTagInput({
           type="text"
           value={tagInput}
           name={inputName}
-          onChange={handleInputChange}
+          onChange={(e) => setTagInput(e.target.value)}
           onBlur={formik.handleBlur}
-          onKeyDown={handleKeyDown}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && tagInput.trim() !== "") {
+              e.preventDefault();
+              formik.setFieldValue(inputName, [
+                ...formik.values[inputName],
+                tagInput.trim(),
+              ]);
+              setTagInput("");
+            }
+          }}
         />
       </div>
       <div className="flex gap-2">
@@ -76,7 +54,12 @@ export default function FormAddProductTagInput({
             <button
               type="button"
               className="ml-2 text-white"
-              onClick={() => handleTagRemove(index)}
+              onClick={() => {
+                const updatedTags = formik.values[inputName].filter(
+                  (_: string, i: number) => i !== index,
+                );
+                formik.setFieldValue(inputName, updatedTags);
+              }}
             >
               x
             </button>

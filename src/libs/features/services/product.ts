@@ -7,7 +7,7 @@ interface PageQuery {
 }
 
 export interface QueryParams {
-  page?:number;
+  page?: number;
   productName?: string;
   status?: string;
   limit?: number;
@@ -56,9 +56,8 @@ export const productsAPI = createApi({
 
         return `?${queryParams}`;
       },
-      providesTags: ["Product"],
     }),
-  
+
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
         url: "insert-product",
@@ -69,22 +68,21 @@ export const productsAPI = createApi({
     }),
     deleteProduct: builder.mutation<void, string>({
       query: (productId: string) => ({
-        url: `/${productId}`,
+        url: `/delete-product`,
         method: "DELETE",
+        body: {
+          productId: productId,
+        },
       }),
       invalidatesTags: ["Product"],
     }),
-    getProductByPage: builder.query<PaginateProduct, PageQuery>({
-      query: ({ page, limit }) => `page/?${page}?limit=${limit}`,
-      providesTags: ["Product"],
-    }),
-    editProduct: builder.mutation<any, { id: string; formData: FormData }>({
-      query: ({ id, formData }) => ({
-        url: `/${id}`,
+
+    editProduct: builder.mutation<any, FormData>({
+      query: (formData: FormData) => ({
+        url: `/edit-product`,
         method: "PUT",
         body: formData,
       }),
-      invalidatesTags: ["Product"],
     }),
   }),
 });
@@ -92,8 +90,6 @@ export const productsAPI = createApi({
 export const {
   useGetProductsQuery,
   useLazyGetProductsQuery,
-  useLazyGetProductByPageQuery,
-  useGetProductByPageQuery,
   useAddNewProductMutation,
   useDeleteProductMutation,
   useEditProductMutation,

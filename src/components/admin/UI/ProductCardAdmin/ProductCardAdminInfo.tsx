@@ -17,19 +17,14 @@ export default function ProductCardAdminInfo({
 }: ProductCardAdminInfoProps) {
   const { salePrice } = calculateSalePrice(productSalePercent, productPrice);
 
+  const formatedMoney = salePrice.toLocaleString("it-IT", {
+    style: "currency",
+    currency: "VND",
+  });
+
   return (
     <div className="bg-gray-light mt-2 rounded-[20px] p-4">
-      {productSalePercent === 0 && (
-        <span className="font-bold">{salePrice.toFixed(2)} $</span>
-      )}
-      {productSalePercent !== 0 && (
-        <>
-          <span className="font-bold">{salePrice.toFixed(2)} $</span>
-          <span className="ml-2 rounded-lg bg-black px-2 py-1 text-sm text-white">
-            {productSalePercent}%
-          </span>
-        </>
-      )}
+      <p className="font-bold">{formatedMoney}</p>
       <p>{productName}</p>
       <div className="flex gap-2">
         <p className="flex items-center gap-1">

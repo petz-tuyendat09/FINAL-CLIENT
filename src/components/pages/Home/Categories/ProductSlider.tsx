@@ -1,9 +1,10 @@
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import ProductBox from "@/components/ui/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import { motion } from "framer-motion";
 import { useCallback, useRef } from "react";
+import SwiperCore from "swiper";
 // CSS
 import "swiper/css";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -13,16 +14,16 @@ interface ProductSliderProps {
 }
 
 export default function ProductSlider({ filterOption }: ProductSliderProps) {
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<SwiperCore | null>(null);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
+    sliderRef.current.slidePrev();
   }, []);
 
   const handleNext = useCallback(() => {
     if (!sliderRef.current) return;
-    sliderRef.current.swiper.slideNext();
+    sliderRef.current.slideNext();
   }, []);
 
   const { data } = useGetProductsQuery({
@@ -35,7 +36,11 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
 
   return (
     <div className="slider-container relative">
-      <Swiper ref={sliderRef} spaceBetween={20} slidesPerView={4}>
+      <Swiper
+        onSwiper={(swiper) => (sliderRef.current = swiper)}
+        spaceBetween={20}
+        slidesPerView={4}
+      >
         {data?.products.map((product, index) => (
           <SwiperSlide key={product._id}>
             <motion.div

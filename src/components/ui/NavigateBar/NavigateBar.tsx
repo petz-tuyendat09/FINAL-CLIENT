@@ -27,6 +27,9 @@ function NavigateName({
       case "/marketplace":
         setPathname("Tìm bạn");
         break;
+      case "/message":
+        setPathname("Tin nhắn");
+        break;
 
       default:
         break;
@@ -41,14 +44,18 @@ function NavigateName({
         display: isHidden ? "block" : "none",
       }}
       transition={{ delay: 0.3 }}
-      className={`hidden w-fit min-w-max max-w-max select-none lg:block`}
+      className={`w-fit min-w-max max-w-max select-none`}
     >
       {pathName}
     </motion.button>
   );
 }
 
-export default function NavigateBar() {
+interface NavigateBarProps {
+  onTop?: boolean;
+}
+
+export default function NavigateBar({ onTop }: NavigateBarProps) {
   const [isHidden, setIsHidden] = useState<boolean>(false);
 
   function handleToggleNavbar() {
@@ -61,7 +68,7 @@ export default function NavigateBar() {
     const previous = scrollY.getPrevious();
 
     if (previous) {
-      if (latest > previous && latest > 250) {
+      if (latest > previous && latest > 150) {
         setIsHidden(true);
       } else {
         setIsHidden(true);
@@ -73,7 +80,7 @@ export default function NavigateBar() {
     <motion.div
       initial={false}
       animate={{
-        width: isHidden ? 160 : 380,
+        width: isHidden ? 160 : 490,
       }}
       transition={{
         type: "spring",
@@ -81,7 +88,7 @@ export default function NavigateBar() {
         damping: 6, // Lực cản (giá trị càng thấp, bounce càng nhiều)
         mass: 0.4, // Khối lượng của đối tượng (khối lượng lớn hơn sẽ làm chậm chuyển động)
       }}
-      className={`glass-navbar } fixed bottom-4 left-1/2 z-40 flex -translate-x-1/2 overflow-x-hidden rounded-full text-white shadow-md`}
+      className={`glass-navbar fixed ${onTop ? "top-1" : "bottom-4"} left-1/2 z-40 flex -translate-x-1/2 overflow-x-hidden rounded-full text-white shadow-md`}
     >
       <div className="flex items-center gap-2 py-2 pr-4">
         <button
@@ -106,6 +113,7 @@ export default function NavigateBar() {
           href="/marketplace"
           label="Tìm bạn"
         />
+        <TransitionLink isHidden={isHidden} href="/message" label="Tin nhắn" />
       </div>
     </motion.div>
   );

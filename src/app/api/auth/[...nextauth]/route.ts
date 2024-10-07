@@ -25,6 +25,7 @@ const handler = NextAuth({
           });
 
           const data = await response.json();
+          console.log(data);
 
           if (response.ok && data.canLogin) {
             return {
@@ -33,7 +34,7 @@ const handler = NextAuth({
               refreshToken: data.refreshToken,
             };
           } else {
-            return null;
+            throw new Error(data);
           }
         } catch (error) {
           console.error("Error during login:", error);
@@ -68,7 +69,7 @@ const handler = NextAuth({
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth",
   },
   secret: "thisCanChange",
 });

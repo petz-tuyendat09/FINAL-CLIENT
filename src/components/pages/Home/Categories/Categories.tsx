@@ -1,6 +1,5 @@
 "use client";
 
-import CategoriesSlider from "./CategoriesSlider";
 import { useState } from "react";
 import ProductSlider from "./ProductSlider";
 import CategoryButton from "./CategoryButton";
@@ -12,22 +11,28 @@ type FilterProductState =
 
 export default function Categories() {
   const [filterOption, setFilterOption] = useState<FilterProductState>({
-    productBuy: 100,
+    productStatus: "lastest",
   });
+  const [currentFilter, setCurrentFilter] = useState("lastest");
 
   function handleFilterProduct(filterOption: string) {
     switch (filterOption) {
-      case "latest":
+      case "lastest":
         setFilterOption({ productStatus: "latest" });
+        setCurrentFilter("lastest");
+
         break;
       case "discount":
         setFilterOption({ salePercent: 1 });
+        setCurrentFilter("discount");
         break;
       case "bestseller":
         setFilterOption({ productBuy: 100 });
+        setCurrentFilter("bestseller");
+
         break;
       default:
-        setFilterOption({ productBuy: 100 });
+        setFilterOption({ productStatus: "latest" });
     }
   }
 
@@ -39,16 +44,19 @@ export default function Categories() {
         </h1>
         <div className="space-x-4">
           <CategoryButton
+            currentFilter={currentFilter}
+            filterOption="lastest"
+            handleFilter={handleFilterProduct}
+            buttonLabel="Mới nhất"
+          />
+          <CategoryButton
+            currentFilter={currentFilter}
             filterOption="bestseller"
             handleFilter={handleFilterProduct}
             buttonLabel="Bán chạy nhất"
           />
           <CategoryButton
-            filterOption="latest"
-            handleFilter={handleFilterProduct}
-            buttonLabel="Mới nhất"
-          />
-          <CategoryButton
+            currentFilter={currentFilter}
             filterOption="discount"
             handleFilter={handleFilterProduct}
             buttonLabel="Giảm giá"

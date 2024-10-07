@@ -8,6 +8,8 @@ import { AnimatePresence } from "framer-motion";
 import Verify from "./Verify/Verify";
 import NoActionModal from "../../ui/NoActionModal";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Auth() {
   return (
@@ -27,6 +29,16 @@ function AuthContent() {
     setModalText,
   } = useAuth();
 
+  const router = useRouter();
+
+  const session = useSession();
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/");
+  //   }
+  //   return;
+  // }, [session, router]);
+
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
@@ -42,8 +54,13 @@ function AuthContent() {
     return () => clearTimeout(timer);
   }, [modalDisplay, setModalDisplay, setModalText]);
 
+  if (session.status == "authenticated") {
+    router.push("/");
+    return null; // Render nothing while redirecting
+  }
+
   return (
-    <div className="container flex h-screen items-center text-black">
+    <div className="container relative z-50 flex h-screen items-center text-black">
       <AuthVideo />
       <AnimatePresence mode="wait">
         {verifying ? (

@@ -18,16 +18,15 @@ export default function ProductButton({ Product }: ProductCartButtonProps) {
   });
 
   return (
-    <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2 transition">
-      <button className="group flex h-10 w-48 items-center justify-between rounded-full bg-white px-4 drop-shadow-sm">
-        <p>Mua ngay</p>
-        <div className="rounded-full bg-black p-2 text-white transition duration-300 group-hover:translate-x-2">
-          <Icon icon="humbleicons:arrow-up" className="size-5 rotate-90" />
+    <div className="absolute bottom-2 w-full md:bottom-4">
+      <div className="w-full items-center justify-center gap-2 md:flex">
+        <div className="mx-auto flex w-fit items-center rounded-full bg-black px-2 py-0.5 text-center text-white md:mx-0 md:px-4 md:py-2">
+          <p className="w-fit text-[10px] md:text-base">{formatedMoney}</p>
+          <div className="rounded-full bg-black p-1 text-white md:hidden">
+            <Icon icon="humbleicons:arrow-up" className="size-3 rotate-90" />
+          </div>
         </div>
-      </button>
-      <Button additionClass="gap-1 text-base text-white">
-        <p className="w-20">{formatedMoney}</p>
-      </Button>
+      </div>
     </div>
   );
 }

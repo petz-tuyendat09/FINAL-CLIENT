@@ -38,9 +38,9 @@ export default function FilterInput({
   }, [debouncedHandleQueryProduct]);
 
   return (
-    <div className="mb-4 w-1/4 rounded-full bg-primary">
+    <div className="mb-4 w-full rounded-full bg-black">
       <input
-        className="w-full rounded-full bg-transparent px-4 py-2 text-black focus:outline-none"
+        className="w-full rounded-full bg-transparent px-4 py-2 text-white focus:outline-none"
         type="text"
         placeholder="Tìm sản phẩm"
         value={searchTerm}

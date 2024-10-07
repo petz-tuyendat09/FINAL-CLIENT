@@ -17,7 +17,7 @@ export default function useGetProductShop({
   const { data: PaginateProduct } = useGetProductsQuery({
     productCategory: filterCategory,
     productSubCategory: filterSubCategory,
-    limit: 3,
+    limit: 4,
     page: 1,
   });
 

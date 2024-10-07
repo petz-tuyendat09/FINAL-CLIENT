@@ -13,7 +13,7 @@ export const animatePageIn = () => {
     tl.set([col1, col2, col3, col4], {
       yPercent: 0,
     }).to([col1, col2, col3, col4], {
-      yPercent: 100,
+      yPercent: 120,
       stagger: 0.3,
     });
   }

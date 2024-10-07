@@ -9,12 +9,17 @@ export const links = [
   {
     url: "/admin/shop",
     icon: <Icon className="size-6" icon="iconoir:shop" />,
-    label: "Shop",
+    label: "Sản phẩm",
+  },
+  {
+    url: "/admin/category-voucher",
+    icon: <Icon className="size-6" icon="mdi:voucher-outline" />,
+    label: "Danh mục",
   },
   {
     url: "/admin/orders",
     icon: <Icon className="size-6" icon="lets-icons:order" />,
-    label: "Orders",
+    label: "Đơn hàng",
   },
   {
     url: "/admin/feedback",

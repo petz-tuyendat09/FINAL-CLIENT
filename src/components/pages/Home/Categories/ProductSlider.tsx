@@ -31,8 +31,6 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
     limit: 25,
     page: 1,
   });
-  console.log("Filter option:", { filterOption });
-  console.log(data);
 
   return (
     <div className="slider-container relative">

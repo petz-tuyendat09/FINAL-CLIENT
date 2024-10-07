@@ -5,7 +5,7 @@ import Link from "next/link";
 import ProductCardBuyNow from "./ProductCardBuyNow";
 import { Product } from "@/types/Product";
 import DummyImage from "@@/assets/images/dummy-product.png";
-import ProductCardSelectWeight from "./ProductCardCartButton";
+import ProductCardCartButton from "./ProductCardCartButton";
 interface ProductBoxProps {
   Product: Product;
   additionalClassess?: string;
@@ -13,42 +13,33 @@ interface ProductBoxProps {
 
 const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
   const productOption: string[] = Product.productOption;
-
-  const [selectedWeight, setSelectedWeight] = useState<string>(
-    productOption?.[0] || "200g",
-  );
-
-  function handleSelectWeigth(weigth: string) {
-    setSelectedWeight(weigth);
-  }
-
   const productThumbnail = Product?.productThumbnail;
+
   return (
     <div className={additionalClassess}>
-      <div className="relative mb-4 block">
+      <div className="relative mb-4 block h-2/3 bg-red-500">
         <Link href={`shop/${Product?.productSlug}`}>
           <Image
-            className="rounded-xl select-none object-contain"
-            src={DummyImage}
+            className="rounded-xl select-none object-cover"
+            src={productThumbnail}
             alt="Product Image"
             width={500}
             height={500}
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: "100%", height: "100%" }}
           />
           {Product.salePercent >= 1 && (
-            <p className="absolute left-6 top-8 rounded-lg bg-black px-4 py-1 text-white">
+            <p className="absolute left-2 top-2 rounded-lg bg-black px-4 py-1 text-[10px] text-white md:text-base">
               {Product.salePercent}%
             </p>
           )}
         </Link>
-        <ProductCardSelectWeight Product={Product} />
-        <ProductCardBuyNow Product={Product} />
+        <ProductCardCartButton Product={Product} />
+        <ProductInfo
+          productName={Product?.productName}
+          subCategoryId={Product?.productSubCategory}
+          productOption={Product?.productOption}
+        />
       </div>
-      <ProductInfo
-        productName={Product?.productName}
-        subCategoryId={Product?.productSubCategory}
-        productOption={productOption?.[0]}
-      />
     </div>
   );
 });

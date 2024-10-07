@@ -15,7 +15,7 @@ const textAppearVariant = {
 export default function HeroSection() {
   return (
     <section className="mb-24 h-screen">
-      <div className="block h-full lg:flex">
+      <div className="block h-full px-4 lg:flex">
         <div className="flex w-1/2 flex-col self-center text-center text-display">
           <div>
             <p className="text-h4">Chăm sóc thú cưng của bạn</p>

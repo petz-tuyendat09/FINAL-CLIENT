@@ -6,7 +6,7 @@ import FilterSubcategory from "./FilterSubcategory";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const parentVariant = {
-  default: { height: "40px" },
+  default: { height: "45px" },
   extend: {
     height: "fit-content",
   },
@@ -38,13 +38,13 @@ const Category = ({ category }: CategoryProps) => {
       variants={parentVariant}
       initial={false}
       animate={selectedCategory ? "extend" : "default"}
-      className="overflow-y-hidden"
+      className="w-full overflow-hidden"
     >
       <button
-        className={`${selectedCategory ? "bg-primary" : ""} flex items-center rounded-full px-4 py-2 text-left transition delay-75 duration-300`}
+        className={`flex w-full items-center justify-between border-b border-gray-300 py-2 text-left font-bold transition delay-75 duration-300`}
         onClick={() => handleCategoryToggle(category._id)}
       >
-        <p className="w-44">{category.categoryName}</p>
+        <p className="">{category.categoryName}</p>
         <motion.div
           variants={iconVariant}
           animate={selectedCategory ? "selected" : "default"}

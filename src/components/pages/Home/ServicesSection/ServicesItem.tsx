@@ -1,27 +1,40 @@
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
+import { StaticImageData } from "next/image";
 import Link from "next/link";
 
 interface ServicesItemProps {
-  width: string;
-  backgroundImageClass: string;
-  imageText: string;
+  additionalClass?: string;
+  servicesTitle: string;
+  servicesText: string;
+  imageSrc: StaticImageData;
 }
 
 export default function ServicesItem({
-  width,
-  backgroundImageClass,
-  imageText,
+  additionalClass,
+  imageSrc,
+  servicesText,
+  servicesTitle,
 }: ServicesItemProps) {
   return (
-    <div
-      className={`group flex ${width} ${backgroundImageClass} flex-col justify-between rounded-button bg-[length:100%] bg-center p-4 font-serif text-h2 text-white transition-all duration-300 hover:bg-[length:110%] lg:text-h1`}
-    >
-      {imageText}
-      <Link
-        href={"/"}
-        className="mx-auto block w-fit rounded-full bg-primary px-6 py-2 text-h4 text-black opacity-100 transition delay-75 duration-300 lg:translate-y-2 lg:text-h3 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100"
+    <div>
+      <div
+        className={`group relative h-[350px] rounded-[20px] font-serif text-white lg:h-[450px] lg:text-h1`}
       >
-        Xem thêm
-      </Link>
+        <ResponsiveImage
+          additionClass="rounded-[20px]"
+          imageSrc={imageSrc}
+          altImage="Services Images"
+          imageHeight={650}
+          imageWidth={650}
+        />
+        <div className="absolute top-0 h-full min-h-full w-full min-w-full rounded-[20px] bg-black opacity-20" />
+        <div className="absolute bottom-4 flex w-full translate-y-2 flex-col items-center justify-center gap-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <h4 className="text-h4">{servicesTitle}</h4>
+          <button className="w-fit rounded-full bg-black px-8 py-2 text-base text-white transition duration-300 hover:bg-gray-800">
+            Đặt lịch ngay
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function BookingSection() {
         </p>
         <Link
           href="/"
-          className="button-color flex items-center gap-2 rounded-full px-6 py-2 text-white transition-all delay-75 duration-300"
+          className="flex items-center gap-2 rounded-full bg-black px-6 py-2 text-white transition-all delay-75 duration-300"
         >
           Đặt lịch
           <Icon icon="bi:arrow-right" />

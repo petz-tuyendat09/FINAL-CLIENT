@@ -8,6 +8,7 @@ import { useContext, useState } from "react";
 import ProductCard from "@/components/ui/ProductCard/ProductCard";
 import useGetProductShop from "./useGetProductShop";
 import FilterInput from "../Filter/FilterInput";
+import Filter from "../Filter/Filter";
 
 const ProductGrid = () => {
   const categoryFilterContext = useContext(CategoryFilterContext);
@@ -37,12 +38,12 @@ const ProductGrid = () => {
   };
 
   return (
-    <div className="w-full">
-      <FilterInput
+    <div>
+      <Filter
         handleQueryProduct={handleQueryProduct}
-        onSearchTermChange={handleSearchTermChange}
+        handleSearchTermChange={handleSearchTermChange}
       />
-      <div className="grid grid-cols-4 gap-8">
+      <div className="xl:grid-cols- container grid grid-cols-2 gap-4 lg:grid-cols-3">
         {products?.map((product, index) => (
           <ProductCard key={index} Product={product} />
         ))}

@@ -12,7 +12,6 @@ export default function page() {
       <HeroSection />
       <ServicesSection />
       <BookingSection />
-      <FeedbackSection />
       <Categories />
       <MarketSection />
     </>

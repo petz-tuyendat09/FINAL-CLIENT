@@ -38,7 +38,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
         <StoreProvider>
           {/* <LocaleSetter initialLocale={locale} /> */}
           <Header />
-          <div className="container">{children}</div>
+          <main>{children}</main>
           <NavigateBar />
           <Footer />
         </StoreProvider>

@@ -20,6 +20,8 @@ export default function useProductActionAdmin({
     page: 1,
   });
 
+  console.log(PaginateProduct);
+
   const [triggerGetProducts, { data: lazyData, isFetching, isError }] =
     useLazyGetProductsQuery();
 

@@ -3,7 +3,7 @@ import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import Button from "@/components/ui/Button";
 export default function MarketSection() {
   return (
-    <section className="my-24">
+    <section className="container my-24">
       <div className="flex h-[40rem] gap-32">
         <div className="h-full w-[40%]">
           <ResponsiveImage

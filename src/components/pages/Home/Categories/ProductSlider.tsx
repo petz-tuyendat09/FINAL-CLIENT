@@ -49,9 +49,9 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
             >
               <ProductBox Product={product} />
             </motion.div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 }

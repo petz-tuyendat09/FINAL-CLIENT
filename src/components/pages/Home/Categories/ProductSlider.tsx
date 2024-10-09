@@ -1,5 +1,3 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import ProductBox from "@/components/ui/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import { motion } from "framer-motion";
@@ -7,7 +5,6 @@ import { useCallback, useRef } from "react";
 import SwiperCore from "swiper";
 // CSS
 import "swiper/css";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface ProductSliderProps {
   filterOption?: object;
@@ -33,14 +30,23 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
   });
 
   return (
-    <div className="slider-container relative">
-      <Swiper
-        onSwiper={(swiper) => (sliderRef.current = swiper)}
-        spaceBetween={20}
-        slidesPerView={4}
-      >
-        {data?.products?.map((product, index) => (
-          <SwiperSlide key={product._id}>
+    <div className="relative">
+      <div className="grid grid-cols-4 gap-4">
+        {data?.products.map((product, index) => (
+          <div key={product._id}>
+            {index === 2 && (
+              <div className="relative h-full items-center justify-center text-h1 font-bold uppercase text-black 2xl:text-[72px]">
+                <p>ưu đãi</p>
+                <span className="text-primary">đặc biệt</span>
+                <p>cho</p>
+                <p>khách mới</p>
+                <button className="absolute bottom-4 h-fit w-fit rounded-full bg-primary px-6 py-2 text-base text-white">
+                  Đăng ký ngay
+                </button>
+              </div>
+            )}
+
+            {/* Hiển thị sản phẩm */}
             <motion.div
               className={`${index == 2 && "hidden"}`}
               initial={{ opacity: 0 }}
@@ -49,9 +55,9 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
             >
               <ProductBox Product={product} />
             </motion.div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
+      </div>
     </div>
   );
 }

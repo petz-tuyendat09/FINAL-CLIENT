@@ -35,21 +35,21 @@ export default function ServicesSection() {
                 />
               </div>
             </div>
-            <div className="relative top-12 self-center text-[172px] font-bold text-black">
+            <div className="relative top-12 self-center text-[72px] font-bold text-black xl:text-[120px]">
               DỊCH VỤ
             </div>
           </div>
-          <div className="mt-2 max-w-[800px] text-h4">
+          <div className="my-4 max-w-[800px] text-h4">
             Dịch vụ spa chuyên nghiệp cho thú cưng, từ chăm sóc lông, da đến thư
             giãn. Chúng tôi cam kết mang lại sự thoải mái và an toàn tối đa cho
             thú cưng của bạn
-            <NormalTransitionLink
-              className="ml-2 rounded-full bg-primary px-6 py-2 text-white"
-              href="/booking"
-            >
-              Đặt lịch ngay
-            </NormalTransitionLink>
           </div>
+          <NormalTransitionLink
+            className="rounded-full bg-primary px-6 py-2 text-white"
+            href="/booking"
+          >
+            Đặt lịch ngay
+          </NormalTransitionLink>
         </div>
         <Swiper
           className="w-1/2"
@@ -66,6 +66,10 @@ export default function ServicesSection() {
               spaceBetween: 10,
             },
             1024: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            1880: {
               slidesPerView: 2,
               spaceBetween: -80,
             },

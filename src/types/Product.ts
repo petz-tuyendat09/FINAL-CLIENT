@@ -3,23 +3,26 @@ interface ProductDetailDescription {
   detailContent: string;
 }
 
+export interface ProductOption {
+  name: string;
+  productPrice: number;
+  productName: number;
+}
+
 export interface Product {
   _id: string;
   productName: string;
-  productPrice: number;
   salePercent: number;
   productBuy: number;
   productSlug: string;
-  productQuantity: number;
   productThumbnail: string;
   productImages: [];
   productDescription: string;
   productDetailDescription: ProductDetailDescription;
   productCategory: string;
   productSubCategory: string;
-  animalType: string;
   productRating: number;
-  productOption: [];
+  productOption: ProductOption[];
   ratingCount: number;
 }
 

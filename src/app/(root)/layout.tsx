@@ -1,5 +1,5 @@
 import "../../styles/globals.css";
-import { Roboto, Roboto_Slab } from "next/font/google";
+import { Roboto, Lora } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import LocaleSetter from "@/components/shared/LocaleSetter/LocaleSetter";
@@ -16,12 +16,12 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
-const roboto_slab = Roboto_Slab({
+const lora = Lora({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-roboto-slab",
+  variable: "--font-lora",
 });
 
 const App = async ({ children }: { children: React.ReactNode }) => {
@@ -29,7 +29,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
   // const messages = await getMessages();
 
   return (
-    <html className={`${roboto.variable} ${roboto_slab.variable}`}>
+    <html className={`${roboto.variable} ${lora.variable}`}>
       <head>
         <title>Care4Pet</title>
       </head>

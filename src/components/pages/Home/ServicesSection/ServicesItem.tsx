@@ -18,7 +18,7 @@ export default function ServicesItem({
   return (
     <div>
       <div
-        className={`group relative h-[350px] rounded-[20px] font-serif text-white lg:h-[450px] lg:text-h1`}
+        className={`group relative mx-auto h-[380px] w-[420px] rounded-[20px] bg-green-500 font-serif text-white lg:text-h1`}
       >
         <ResponsiveImage
           additionClass="rounded-[20px]"

@@ -71,7 +71,10 @@ const handler = NextAuth({
   pages: {
     signIn: "/auth",
   },
-  secret: "thisCanChange",
+  secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
 });
 
 export { handler as GET, handler as POST };

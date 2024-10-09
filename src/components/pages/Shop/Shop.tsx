@@ -6,19 +6,14 @@ import Filter from "./Filter/Filter";
 import ProductGrid from "./ProductGrid/ProductGrid";
 
 export default function Shop() {
-  const {
-    filters,
-    handleCategoryToggle,
-    handleAnimalTypeToggle,
-    handleSubCategoryToggle,
-  } = useCategoryFilter();
+  const { filters, handleCategoryToggle, handleSubCategoryToggle } =
+    useCategoryFilter();
 
   return (
     <CategoryFilterContext.Provider
       value={{
         filters,
         handleCategoryToggle,
-        handleAnimalTypeToggle,
         handleSubCategoryToggle,
       }}
     >

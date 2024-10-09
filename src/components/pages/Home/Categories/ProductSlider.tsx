@@ -39,7 +39,7 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
         spaceBetween={20}
         slidesPerView={4}
       >
-        {data?.products.map((product, index) => (
+        {data?.products?.map((product, index) => (
           <SwiperSlide key={product._id}>
             <motion.div
               initial={{ opacity: 0 }}

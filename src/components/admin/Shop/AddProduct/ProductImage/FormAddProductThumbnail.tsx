@@ -41,19 +41,25 @@ export default function FormAddProductThumbnail({
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
+    (sliderRef.current as any).swiper.slidePrev();
   }, []);
 
   const handleNext = useCallback(() => {
     if (!sliderRef.current) return;
-    sliderRef.current.swiper.slideNext();
+    (sliderRef.current as any).swiper.slideNext();
   }, []);
+
+  console.log(formik.errors.productThumbnail);
 
   return (
     <div className="form-group h-fit w-2/4 max-w-[560px] rounded-[20px] bg-gray-50 px-4 py-8">
       <h1 className="text-xl font-bold">Thêm hình</h1>
+      <p className="text-base text-red-500">
+        {formik.touched.productThumbnail &&
+          (formik.errors as any).productThumbnail}
+      </p>
       <div>
-        <div className="group relative space-y-2">
+        <div className="group relative max-h-[500px] space-y-2">
           <div className="rounded-xl absolute bottom-0 left-0 right-0 top-0 opacity-35 transition delay-75 duration-300 group-hover:bg-stone-700" />
           <label
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/3 cursor-pointer rounded-lg bg-primary px-4 py-2 opacity-0 transition delay-75 duration-300 group-hover:block group-hover:-translate-y-8 group-hover:opacity-100"
@@ -62,7 +68,7 @@ export default function FormAddProductThumbnail({
             Select
           </label>
           <img
-            className="rounded-xl w-full"
+            className="rounded-xl h-[500px] w-full object-cover"
             src={imagePreview}
             alt="Sản phẩm không có hình ảnh"
           />

@@ -1,3 +1,4 @@
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 
@@ -15,13 +16,13 @@ export default function BookingSection() {
           sóc tại PETZ, nhưng chúng tôi luôn chào đón khách đến trực tiếp tại
           spa của chúng tôi bất kỳ lúc nào
         </p>
-        <Link
-          href="/"
-          className="flex items-center gap-2 rounded-full bg-black px-6 py-2 text-white transition-all delay-75 duration-300"
+        <NormalTransitionLink
+          href="/booking"
+          className="flex items-center gap-2 rounded-full bg-primary px-6 py-2 text-white transition-all delay-75 duration-300"
         >
           Đặt lịch
           <Icon icon="bi:arrow-right" />
-        </Link>
+        </NormalTransitionLink>
       </div>
     </section>
   );

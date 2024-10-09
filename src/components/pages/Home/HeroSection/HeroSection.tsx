@@ -1,11 +1,14 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import HeroSectionImage from "@@/assets/images/here-section-image.jpg";
+import HeroSectionImage from "@@/public/images/hero-section-1.png";
+import HeroSectionImage2 from "@@/public/images/hero-section-2.png";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import { motion } from "framer-motion";
+import TransitionLink from "@/components/ui/NavigateBar/TransitionLink";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 const textAppearVariant = {
   enter: { opacity: 0, y: 10 },
@@ -14,66 +17,46 @@ const textAppearVariant = {
 
 export default function HeroSection() {
   return (
-    <section className="mb-24 h-screen">
-      <div className="block h-full px-4 lg:flex">
-        <div className="flex w-1/2 flex-col self-center text-center text-display">
+    <section className="container">
+      <div className="mb-24 flex h-screen items-center justify-center">
+        <div className="font-serif text-display">
           <div>
-            <p className="text-h4">Chăm sóc thú cưng của bạn</p>
-            <div className="mb-4 font-serif">
-              <motion.h1
-                variants={textAppearVariant}
-                initial="enter"
-                animate="animate"
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="bg-clip-text"
-              >
-                Spa Đẳng Cấp Cho
-              </motion.h1>
-              <motion.h1
-                variants={textAppearVariant}
-                initial="enter"
-                animate="animate"
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="-my-[16px] bg-clip-text"
-              >
-                Những Người Bạn
-              </motion.h1>
-              <motion.h1
-                variants={textAppearVariant}
-                initial="enter"
-                animate="animate"
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="bg-clip-text"
-              >
-                Lông Xù
-              </motion.h1>
+            <h1>Spa đẳng cấp cho</h1>
+          </div>
+          <div className="flex gap-2">
+            <div className="w-28">
+              <ResponsiveImage
+                additionClass="rounded-[10px]"
+                imageSrc={HeroSectionImage}
+                altImage="Hero Section Image 1"
+                imageWidth={500}
+                imageHeight={500}
+              />
+            </div>
+            <div>
+              những <span className="italic">người bạn</span>
             </div>
           </div>
-          <div className="mt-2 flex items-center justify-center gap-2 px-4">
-            <Button additionClass="text-h4 group">
-              Đặt lịch ngay
-              <Icon
-                icon="pajamas:long-arrow"
-                className="mx-auto ml-2 size-8 text-white transition duration-300 group-hover:translate-x-1"
+          <div className="flex gap-4">
+            <div className="flex w-fit flex-col">
+              lông xù
+              <NormalTransitionLink
+                className="w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
+                href="/booking"
+              >
+                Đặt lịch ngay
+              </NormalTransitionLink>
+            </div>
+            <div className="w-24 flex-grow">
+              <ResponsiveImage
+                additionClass="rounded-button"
+                imageSrc={HeroSectionImage2}
+                altImage="Hero Section Image 1"
+                imageWidth={500}
+                imageHeight={500}
               />
-            </Button>
-            <Button
-              textColor="black"
-              additionClass="text-h4 bg-white border border-black hover:bg-black hover:text-white transition duration-300"
-            >
-              Cửa hàng
-            </Button>
+            </div>
           </div>
-        </div>
-
-        <div className="w-1/2 py-4">
-          <ResponsiveImage
-            imageSrc={HeroSectionImage}
-            imageHeight={1000}
-            imageWidth={1000}
-            altImage="Hero Image"
-            additionClass=" object-cover rounded-[30px]"
-          />
         </div>
       </div>
     </section>

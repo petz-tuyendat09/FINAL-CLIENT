@@ -3,7 +3,6 @@ import { useState } from "react";
 export const useCategoryFilter = () => {
   const [filters, setFilters] = useState({
     category: [] as string[], // Array for selected categories
-    type: {} as { [categoryId: string]: string[] }, // Object to track animal types per category
     subCate: {} as { [categoryId: string]: string[] },
   });
 
@@ -26,23 +25,6 @@ export const useCategoryFilter = () => {
         ...prevFilters,
         category: newCategoryList,
         subCate: newSubCate,
-      };
-    });
-  };
-
-  // Toggle animal type selection for a specific category
-  const handleAnimalTypeToggle = (categoryId: string, animalType: string) => {
-    setFilters((prevFilters) => {
-      const currentTypes = prevFilters.type[categoryId] || [];
-
-      return {
-        ...prevFilters,
-        type: {
-          ...prevFilters.type,
-          [categoryId]: currentTypes.includes(animalType)
-            ? currentTypes.filter((type) => type !== animalType) // Remove animal type if already selected
-            : [...currentTypes, animalType], // Add animal type if not selected
-        },
       };
     });
   };
@@ -78,7 +60,6 @@ export const useCategoryFilter = () => {
   return {
     filters,
     handleCategoryToggle,
-    handleAnimalTypeToggle,
     handleSubCategoryToggle,
   };
 };

@@ -1,15 +1,23 @@
-import { useGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
+import { ProductOption } from "@/types/Product";
 
+import calculateSalePrice from "@/utils/caculateSalePrice";
 import { memo } from "react";
 interface ProductInfoProps {
   productName: string;
   subCategoryId: string;
-  productOption: [];
+  salePercent: number;
+  productOption: ProductOption[];
 }
 
 const ProductInfo = memo(
-  ({ productName, subCategoryId, productOption }: ProductInfoProps) => {
-    const { data } = useGetSubCategoriesQuery({ subCategoryId: subCategoryId });
+  ({
+    productName,
+    subCategoryId,
+    productOption,
+    salePercent,
+  }: ProductInfoProps) => {
+    const productPrice = productOption[0].productPrice;
+    const { salePrice } = calculateSalePrice(salePercent, productPrice);
 
     return (
       <div className="absolute bottom-4 left-4 flex items-center justify-between">
@@ -18,8 +26,8 @@ const ProductInfo = memo(
             {productName}
           </h2>
           <h2 className="lg text-[12px] text-gray-500 lg:text-base">
-            {data && data[0].subCategoryName} /
-            <span className="text-gray-400">{productOption[0]}</span>
+            <span>{salePrice}</span>
+            {/* <span className="text-gray-400">{productOption[0]}</span> */}
             <span className="ml-2 text-gray-400">
               {`(${productOption.length} lựa chọn)`}
             </span>

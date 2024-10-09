@@ -30,8 +30,6 @@ const ProductGrid = () => {
     filterSubCategory: filterBySubcategory,
   });
 
-  console.log(products);
-
   // Function to handle changes in search term
   const handleSearchTermChange = (searchTerm: string) => {
     setIsSearching(searchTerm.trim() !== "");

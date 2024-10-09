@@ -28,7 +28,7 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
 
   const { data } = useGetProductsQuery({
     ...filterOption,
-    limit: 25,
+    limit: 8,
     page: 1,
   });
 
@@ -42,29 +42,16 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
         {data?.products?.map((product, index) => (
           <SwiperSlide key={product._id}>
             <motion.div
+              className={`${index == 2 && "hidden"}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 * index }}
             >
               <ProductBox Product={product} />
             </motion.div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
-      <button
-        type="button"
-        className="absolute -right-4 top-1/2 z-10 rounded-full bg-black p-2 text-white"
-        onClick={handleNext}
-      >
-        <Icon icon="tabler:chevron-right" />
-      </button>
-      <button
-        type="button"
-        className="absolute -left-4 top-1/2 z-10 rounded-full bg-black p-2 text-white"
-        onClick={handlePrev}
-      >
-        <Icon icon="tabler:chevron-left" />
-      </button>
+      </div>
     </div>
   );
 }

@@ -53,8 +53,7 @@ const Category = ({ category }: CategoryProps) => {
         </motion.div>
       </button>
       {/* Animal Type */}
-      <FilterSubcategory categoryId={category._id} animalType="Chó" />
-      <FilterSubcategory categoryId={category._id} animalType="Mèo" />
+      <FilterSubcategory categoryId={category._id} />
     </motion.div>
   );
 };

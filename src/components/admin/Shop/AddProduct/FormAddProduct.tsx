@@ -30,19 +30,15 @@ function FormAddProduct() {
 
   const [getSubCategories, { data: subCategories }] =
     useLazyGetSubCategoriesQuery();
-  const { formik, animalType, handleAnimalTypeChange, duplicatedMessage } =
-    useAddProductForm();
+  const { formik, duplicatedMessage } = useAddProductForm();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (animalType) {
-      getSubCategories({
-        animalType: animalType,
-        categoryId: formik.values.productCategory,
-      });
-    }
-  }, [animalType, formik.values.productCategory, getSubCategories]);
+    getSubCategories({
+      categoryId: formik.values.productCategory,
+    });
+  }, [formik.values.productCategory, getSubCategories]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -85,40 +81,33 @@ function FormAddProduct() {
             />
 
             <div className="mt-4 flex gap-4">
-              <div className="h-fit w-1/2 rounded-[20px] bg-gray-50 p-4">
-                <FormAddProductPrice
-                  formik={formik}
-                  errorMessage={formik.errors.productPrice}
-                  visitedInput={formik.touched.productPrice}
-                />
-              </div>
-
-              <div className="w-1/2 space-y-4 rounded-lg bg-gray-50 p-4">
+              <div className="w-full space-y-4 rounded-lg bg-gray-50 p-4">
+                <div className="flex items-center rounded-md border bg-gray-100 px-2 py-1">
+                  <p>%</p>
+                  <input
+                    onChange={formik.handleChange}
+                    name="salePercent"
+                    type="number"
+                    placeholder="Nhập phần trăm giảm"
+                    value={formik.values.salePercent}
+                    className="w-full bg-gray-100 p-1 focus:outline-none"
+                    max={100}
+                    onWheel={(e: React.WheelEvent<HTMLInputElement>) =>
+                      e.currentTarget.blur()
+                    }
+                  />
+                </div>
                 <FormAddProductType
                   visitedInput={formik.touched.productCategory}
                   errorMessage={formik.errors.productCategory}
                   onChangeEvent={formik.handleChange}
                   defaultText="Chọn danh mục"
                   inputName="productCategory"
-                  optionValues={categories?.map((data) => (
+                  optionValues={(categories as any)?.map((data: any) => (
                     <option key={data._id} value={data._id}>
                       {data.categoryName}
                     </option>
                   ))}
-                />
-                <FormAddProductType
-                  visitedInput={formik.touched.animalType}
-                  onChangeEvent={handleAnimalTypeChange}
-                  defaultText="Chọn thú cưng"
-                  inputName="animalType"
-                  optionValues={
-                    formik.values.productCategory && (
-                      <>
-                        <option value="Chó">Chó</option>
-                        <option value="Mèo">Mèo</option>
-                      </>
-                    )
-                  }
                 />
                 <FormAddProductType
                   visitedInput={formik.touched.productSubcategory}

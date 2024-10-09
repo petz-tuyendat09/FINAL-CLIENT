@@ -6,12 +6,10 @@ import { useGetSubCategoriesQuery } from "@/libs/features/services/subcategories
 
 interface FilterSubcategoryProps {
   categoryId: string;
-  animalType: string;
 }
 
 export default function FilterSubcategory({
   categoryId,
-  animalType,
 }: FilterSubcategoryProps) {
   const categoryFilterContext = useContext(CategoryFilterContext);
 
@@ -19,35 +17,16 @@ export default function FilterSubcategory({
     throw new Error("CategoryFilterContext not provided");
   }
 
-  const { filters, handleAnimalTypeToggle, handleSubCategoryToggle } =
-    categoryFilterContext;
-
-  const showSubcategory = filters.type[categoryId]?.includes(animalType);
+  const { filters, handleSubCategoryToggle } = categoryFilterContext;
 
   const { data: subCategories } = useGetSubCategoriesQuery({
     categoryId: categoryId,
   });
 
-  const subCategorySpecific = subCategories?.filter(
-    (subCategory) => subCategory.animalType === animalType,
-  );
-
   return (
-    <motion.div
-      initial={false}
-      animate={{
-        height: showSubcategory ? "fit-content" : "27px",
-      }}
-      className="my-2 ml-6 overflow-y-hidden"
-    >
-      <button
-        className="text-left"
-        onClick={() => handleAnimalTypeToggle(categoryId, animalType)}
-      >
-        {animalType}
-      </button>
+    <motion.div initial={false} className="my-2 ml-6 overflow-y-hidden">
       <div className="ml-3">
-        {subCategorySpecific?.map((subcategory) => (
+        {subCategories?.map((subcategory) => (
           <motion.p
             className="my-2"
             animate={{

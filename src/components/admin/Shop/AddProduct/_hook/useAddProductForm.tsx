@@ -3,36 +3,25 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useAddNewProductMutation } from "@/libs/features/services/product";
 import { useRouter } from "next/navigation";
-import { ModalProvider, useModal } from "../_store/ModalContext"; // Import the ModalProvider
+import { useModal } from "../_store/ModalContext"; // Import the ModalProvider
 
 interface errorsValues {
   productName: string;
-  productThumbail: string;
+  productThumbnail: string;
   productImage: string;
-  productPrice: string;
   salePercent: string;
-  productQuantity: string;
   productCategory: string;
   productSubcategory: string;
-  animalType: string;
   productDescription: string;
   productOption: string;
 }
 
 export default function useAddProductForm() {
   const { setModalText, setModalDisplay } = useModal();
-  const [animalType, setAnimalType] = useState<string>("");
   const [duplicatedMessage, setDuplicatedMessage] = useState<
     string | undefined
   >();
   const router = useRouter();
-
-  const handleAnimalTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const animalTypeSelected = e.target.value;
-    setAnimalType(animalTypeSelected);
-    formik.setFieldValue("animalType", animalTypeSelected);
-    console.log(formik.values.animalType);
-  };
 
   const [addNewProduct, { data: mutationResponse, error: mutationError }] =
     useAddNewProductMutation();
@@ -42,29 +31,37 @@ export default function useAddProductForm() {
       productName: "",
       productThumbnail: null,
       productImages: [],
-      productPrice: 0,
-      salePercent: 0,
-      productQuantity: 0,
       productCategory: "",
       productSubcategory: "",
-      animalType: "",
       productDescription: "",
-      productOption: [],
+      productOption: [], // Each option will now contain price and quantity
       productDetailDescription: "",
+      salePercent: 0,
     },
     onSubmit: (values) => {
       const formData = new FormData();
 
+      console.log(values);
+
       Object.entries(values).forEach(([key, value]) => {
         if (key === "productImages" && Array.isArray(value)) {
-          value.forEach((item: any, index) => {
+          value.forEach((item: any) => {
             if (item instanceof File) {
               formData.append(`productImages`, item);
             }
           });
-        } else if (key === "productOption" && Array.isArray(value)) {
-          value.forEach((option, index) => {
-            formData.append(`productOption[${index}]`, option);
+        } else if (key === "productOption") {
+          // Loop through each option and append it correctly as an array in FormData
+          (value as any)?.forEach((option: any, index: number) => {
+            formData.append(`productOption[${index}][name]`, option.name);
+            formData.append(
+              `productOption[${index}][price]`,
+              option.productPrice,
+            );
+            formData.append(
+              `productOption[${index}][quantity]`,
+              option.productQuantity,
+            );
           });
         } else if (typeof value === "number") {
           formData.append(key, value.toString());
@@ -73,32 +70,32 @@ export default function useAddProductForm() {
         }
       });
 
+      for (let pair of (formData as any).entries()) {
+        console.log(pair[0], pair[1]);
+      }
       addNewProduct(formData);
     },
     validate: (values) => {
       let errors: Partial<errorsValues> = {};
 
+      if (values.productThumbnail == null) {
+        errors.productThumbnail = "Vui lòng thêm thumbnail cho sản phẩm";
+      }
+
       if (!values.productName) {
-        errors.productName = "Required name";
+        errors.productName = "Vui lòng nhập tên sản phẩm";
       }
-      if (!values.productQuantity || values.productQuantity == 0) {
-        errors.productQuantity = "Required quantity";
-      }
-      if (values.productPrice === 0 || !values.productPrice) {
-        errors.productPrice = "Required price";
-      }
-      if (values.productPrice <= 1000 || !values.productPrice) {
-        errors.productPrice = "Invalid price";
-      }
+
       if (!values.productCategory) {
-        errors.productCategory = "Required";
+        errors.productCategory = "Vui lòng nhập danh mục";
       }
+
       if (!values.productSubcategory) {
-        errors.productSubcategory = "Required";
+        errors.productSubcategory = "Vui lòng nhập danh mục";
       }
+
       if (values.salePercent < 0) {
         formik.setFieldValue("salePercent", 0);
-        errors.salePercent = "Sale percent must be between 0 and 100";
       }
 
       if (values.salePercent > 100) {
@@ -106,11 +103,16 @@ export default function useAddProductForm() {
       }
 
       if (!values.productOption || values.productOption.length === 0) {
-        errors.productOption = "Vui lòng nhập ít nhất 1 tùy chọn sản phẩm";
-      } else if (
-        values.productOption.some((option: string) => option.trim() === "")
-      ) {
-        errors.productOption = "Tùy chọn không hợp lệ, không được để trống";
+        errors.productOption = "Option không được bỏ trống";
+      } else {
+        values.productOption.forEach((option, index) => {
+          if (!(option as any).price || (option as any).price <= 20000) {
+            errors.productOption = `Option ${index + 1}: Giá không hợp lệ`;
+          }
+          if (!(option as any).quantity || (option as any).quantity <= 0) {
+            errors.productOption = `Option ${index + 1}: Số lượng không hợp lệ`;
+          }
+        });
       }
 
       return errors;
@@ -135,8 +137,6 @@ export default function useAddProductForm() {
 
   return {
     formik,
-    animalType,
-    handleAnimalTypeChange,
     duplicatedMessage,
   };
 }

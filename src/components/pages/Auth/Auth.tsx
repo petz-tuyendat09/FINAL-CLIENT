@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 export default function Auth() {
   return (
     <AuthProvider>
-      <AuthContent />
+    <AuthContent />
     </AuthProvider>
   );
 }

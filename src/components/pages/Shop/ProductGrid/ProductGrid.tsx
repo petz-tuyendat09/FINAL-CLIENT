@@ -41,9 +41,11 @@ const ProductGrid = () => {
         handleQueryProduct={handleQueryProduct}
         handleSearchTermChange={handleSearchTermChange}
       />
-      <div className="xl:grid-cols- container grid grid-cols-2 gap-4 lg:grid-cols-3">
+      <div className="container grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
         {products?.map((product, index) => (
-          <ProductCard key={index} Product={product} />
+          <div className="h-2/3" key={product._id}>
+            <ProductCard Product={product} />
+          </div>
         ))}
       </div>
       {/* Hide the button when searching */}

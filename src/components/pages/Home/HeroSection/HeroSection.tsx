@@ -6,12 +6,21 @@ import HeroSectionImage2 from "@@/public/images/hero-section-2.png";
 
 import { Icon } from "@iconify/react/dist/iconify.js";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
-import { motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
 import TransitionLink from "@/components/ui/NavigateBar/TransitionLink";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 const textAppearVariant = {
   enter: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+};
+
+const upperText = ["Spa", "đẳng", "cấp", "cho"];
+const middleText = ["những", "người", "bạn"];
+const bottomText = ["lông", "xù"];
+
+const TextVariant = {
+  initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0 },
 };
 
@@ -21,7 +30,30 @@ export default function HeroSection() {
       <div className="mb-24 flex h-screen items-center justify-center">
         <div className="font-serif text-display">
           <div>
-            <h1>Spa đẳng cấp cho</h1>
+            <h1>
+              {upperText.map((word, index) => (
+                <p
+                  key={index}
+                  className={`${index == 0 ? "" : "ml-3"} inline-block`}
+                >
+                  {word.split("").map((char, charIndex) => (
+                    <motion.span
+                      className="inline-block"
+                      key={charIndex}
+                      transition={{
+                        type: "spring",
+                        delay: 0.2 * (charIndex + 0.5),
+                      }}
+                      variants={TextVariant}
+                      initial="initial"
+                      animate="animate"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </p>
+              ))}
+            </h1>
           </div>
           <div className="flex gap-2">
             <div className="w-28">
@@ -34,12 +66,56 @@ export default function HeroSection() {
               />
             </div>
             <div>
-              những <span className="italic">người bạn</span>
+              {middleText.map((word, index) => (
+                <p
+                  key={index}
+                  className={`${index == 0 ? "" : "ml-3 italic"} inline-block`}
+                >
+                  {word.split("").map((char, charIndex) => (
+                    <motion.span
+                      className="inline-block"
+                      key={charIndex}
+                      transition={{
+                        type: "spring",
+                        delay: 0.3 * (charIndex + 0.5),
+                      }}
+                      variants={TextVariant}
+                      initial="initial"
+                      animate="animate"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </p>
+              ))}
             </div>
           </div>
           <div className="flex gap-4">
             <div className="flex w-fit flex-col">
-              lông xù
+              <p>
+                {bottomText.map((word, index) => (
+                  <p
+                    key={index}
+                    className={`${index == 0 ? "" : "ml-3 italic"} inline-block`}
+                  >
+                    {word.split("").map((char, charIndex) => (
+                      <motion.span
+                        className="inline-block"
+                        key={charIndex}
+                        transition={{
+                          type: "spring",
+                          delay: 0.2 * (charIndex + 0.5),
+                        }}
+                        variants={TextVariant}
+                        initial="initial"
+                        animate="animate"
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </p>
+                ))}
+              </p>
               <NormalTransitionLink
                 className="w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
                 href="/booking"

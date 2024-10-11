@@ -12,6 +12,7 @@ export default function page() {
       <HeroSection />
       <ServicesSection />
       <Categories />
+      <SaleSection />
       <MarketSection />
     </>
   );

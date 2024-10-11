@@ -4,9 +4,10 @@ interface ProductDetailDescription {
 }
 
 export interface ProductOption {
+  _id: string;
   name: string;
   productPrice: number;
-  productName: number;
+  productQuantity: number;
 }
 
 export interface Product {
@@ -28,10 +29,6 @@ export interface Product {
 
 export interface PaginateProduct {
   products: Product[];
-  pagination: {
-    currentPage: number;
-    limit: number;
-    totalDocuments: number;
-    totalPages: number;
-  };
+  currentPage: number;
+  totalPages: number;
 }

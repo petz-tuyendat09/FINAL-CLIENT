@@ -32,8 +32,8 @@ export default function Filter({
 
   return (
     <>
-      <div className="bg sticky left-0 top-0 z-40 ml-auto w-full bg-white py-8 text-left text-h4">
-        <div className="container">
+      <div className="glass sticky left-0 top-4 z-40 my-4 ml-[80px] w-fit rounded-full px-6 py-2 text-left text-[14px] text-white">
+        <div>
           <button
             onClick={handleOpenFilter}
             className="flex items-center gap-1"
@@ -69,7 +69,7 @@ export default function Filter({
           handleQueryProduct={handleQueryProduct}
           onSearchTermChange={handleSearchTermChange}
         />
-        {(categories as any)?.map((category: any) => (
+        {categories?.map((category) => (
           <Category key={category._id} category={category} />
         ))}
       </motion.div>

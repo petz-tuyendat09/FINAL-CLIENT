@@ -1,125 +1,71 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "@/types/Product";
-import {
-  useDeleteProductMutation,
-  useGetProductsQuery,
-  useLazyGetProductsQuery,
-} from "@/libs/features/services/product";
+import { getProduct, deleteProduct } from "@/apis/product"; // Your custom API function
+import { useDeleteProductMutation } from "@/libs/features/services/product";
+import { useRouter } from "next/navigation";
 
 interface UseGetProductProps {
+  initialPage: number;
   filterCategory?: string[];
   filterSubCategory?: string[];
 }
 
 export default function useProductActionAdmin({
+  initialPage,
   filterCategory,
   filterSubCategory,
 }: UseGetProductProps) {
-  const { data: PaginateProduct } = useGetProductsQuery({
-    limit: 2,
-    page: 1,
-  });
+  const [pages, setPages] = useState<number>(initialPage);
+  const [totalPages, setTotalPages] = useState<number | undefined>(1);
+  const [productList, setProductList] = useState<Product[]>();
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [deleteProductId, setDeleteProductId] = useState<string>("");
+  const [deleteProductMutation] = useDeleteProductMutation();
+  const [forceReRender, setForceReRender] = useState<boolean>(false);
+  const router = useRouter();
 
-  console.log(PaginateProduct);
-
-  const [triggerGetProducts, { data: lazyData, isFetching, isError }] =
-    useLazyGetProductsQuery();
-
-  const [deleteProduct] = useDeleteProductMutation(); // Mutation để xóa sản phẩm
-
-  const [products, setListProduct] = useState<Product[]>([]);
-  const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
-  const [currPage, setCurrPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(0);
-
+  // Fetch products when pages or forceReRender changes
   useEffect(() => {
-    if (PaginateProduct?.products) {
-      setListProduct(PaginateProduct.products);
-      setPaginatedProducts(PaginateProduct.products);
-      setTotalPages(PaginateProduct.pagination.totalPages);
-      setCurrPage(1); // Reset current page to 1 when filters change
+    const fetchProducts = async () => {
+      const response = await getProduct({ page: pages, limit: 2 });
+      setTotalPages(response?.totalPages);
+      setProductList(response?.products);
+    };
+    fetchProducts();
+  }, [pages, forceReRender]);
+
+  function handleSetPage(page: number) {
+    setPages(page);
+  }
+
+  const handleDeleteProduct = (productId: string) => {
+    setDeleteProductId(productId); // Save the product ID for deletion
+    setDeleteModalOpen(true);
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteModalOpen(false);
+  };
+
+  async function handleConfirmDelete() {
+    if (deleteProductId) {
+      await deleteProduct(deleteProductId);
+      setDeleteModalOpen(false);
+      setProductList((prevList) =>
+        prevList?.filter((product) => product._id !== deleteProductId),
+      );
     }
-  }, [PaginateProduct]);
-
-  const handleFetchMore = useCallback(
-    async (limit: number) => {
-      if (currPage < totalPages) {
-        const nextPage = currPage + 1;
-
-        try {
-          const data = await triggerGetProducts({
-            page: nextPage,
-            limit: limit,
-          }).unwrap();
-
-          if (data?.products) {
-            setListProduct((prevProducts) => [
-              ...prevProducts,
-              ...data.products,
-            ]);
-
-            setPaginatedProducts((prevProducts) => [
-              ...prevProducts,
-              ...data.products,
-            ]);
-
-            setCurrPage(nextPage);
-          }
-        } catch (error) {
-          console.error("Failed to fetch more products:", error);
-        }
-      } else {
-        alert("No more products to load.");
-      }
-    },
-    [currPage, totalPages, triggerGetProducts],
-  );
-
-  const handleQueryProduct = useCallback(
-    async (productName: string) => {
-      if (productName.trim() === "") {
-        setListProduct(paginatedProducts);
-        return;
-      }
-
-      const data = await triggerGetProducts({
-        productName: productName,
-        limit: 1000,
-      }).unwrap();
-
-      if (data?.products) {
-        setListProduct(data.products);
-      } else {
-        setListProduct([]);
-      }
-    },
-    [paginatedProducts, triggerGetProducts],
-  );
-
-  const handleDeleteProduct = useCallback(
-    async (productId: string) => {
-      try {
-        await deleteProduct(productId).unwrap();
-
-        setListProduct((prevProducts) =>
-          prevProducts.filter((product) => product._id !== productId),
-        );
-        setPaginatedProducts((prevProducts) =>
-          prevProducts.filter((product) => product._id !== productId),
-        );
-      } catch (error) {
-        console.error("Failed to delete product:", error);
-      }
-    },
-    [deleteProduct],
-  );
+  }
 
   return {
-    products,
+    productList,
     totalPages,
-    currPage,
-    handleFetchMore,
-    handleQueryProduct,
-    handleDeleteProduct, // Trả về hàm xóa sản phẩm
+    pages,
+    handleSetPage,
+    handleDeleteProduct,
+    handleCancelDelete,
+    handleConfirmDelete,
+    deleteProduct,
+    deleteModalOpen,
   };
 }

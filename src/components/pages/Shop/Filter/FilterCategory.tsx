@@ -52,8 +52,8 @@ const Category = ({ category }: CategoryProps) => {
           <Icon icon="iconamoon:arrow-up-2-duotone" />
         </motion.div>
       </button>
-      {/* Animal Type */}
-      <FilterSubcategory categoryId={category._id} />
+
+      {/* <FilterSubcategory categoryId={category._id} /> */}
     </motion.div>
   );
 };

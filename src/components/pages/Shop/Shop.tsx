@@ -17,7 +17,7 @@ export default function Shop() {
         handleSubCategoryToggle,
       }}
     >
-      <div className="text-md ml-auto max-w-[650px] pt-24 font-bold md:text-h3 xl:max-w-[1050px] xl:text-h1">
+      <div className="text-md container pt-24 font-bold md:text-h3 xl:text-h1">
         <p>MUA SẮM SẢN PHẨM MỚI CỦA CHÚNG TÔI</p>
         <p> VÀ KHÁM PHÁ NHỮNG SẢN PHẨM MỚI NHẤT</p>
       </div>

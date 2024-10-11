@@ -1,33 +1,24 @@
-import { useDeleteSubCategoryMutation } from "@/libs/features/services/subcategories";
+import { useDeleteProductMutation } from "@/libs/features/services/product";
 import {
   Modal,
+  Button,
+  ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalBody,
-  Button,
 } from "@nextui-org/react";
 
-interface ModalAddProps {
+interface ModalDeleteProps {
   isDialogOpen: boolean;
-  subCategoryId?: string;
   handleCloseDialog: () => void;
+  handleConfirmDelete: () => void;
 }
 
 export default function ModalDelete({
   isDialogOpen,
-  subCategoryId,
   handleCloseDialog,
-}: ModalAddProps) {
-  const [deleteCategory, { data }] = useDeleteSubCategoryMutation();
-
-  async function handleDeleteCategory() {
-    if (subCategoryId) {
-      await deleteCategory({ subCategoryId: subCategoryId });
-      handleCloseDialog();
-    }
-  }
-
+  handleConfirmDelete,
+}: ModalDeleteProps) {
   return (
     <Modal
       backdrop="blur"
@@ -41,22 +32,23 @@ export default function ModalDelete({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Xóa danh mục</ModalHeader>
+            <ModalHeader className="text-center">Xóa sản phẩm</ModalHeader>
             <ModalBody>
-              <p>Bạn có chắc chắn muốn xóa danh mục</p>
+              <p>Bạn có chắc muốn xóa sản phẩm.</p>
             </ModalBody>
             <ModalFooter>
               <Button
-                color="danger"
-                variant="light"
                 onPress={handleCloseDialog}
+                color="success"
+                variant="light"
                 className="rounded-full"
               >
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
-                onPress={handleDeleteCategory}
+                onPress={handleConfirmDelete}
+                color="danger"
+                className="rounded-full text-white"
               >
                 Xóa
               </Button>

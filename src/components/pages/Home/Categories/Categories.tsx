@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ProductSlider from "./ProductSlider";
 import CategoryButton from "./CategoryButton";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 type FilterProductState =
   | { productBuy: number }
@@ -37,33 +38,30 @@ export default function Categories() {
   }
 
   return (
-    <div className="container mt-[10%] py-12">
-      <div className="flex justify-between">
-        <h1 className="mb-8 font-serif text-3xl text-h2">
-          Khám phá sản phẩm dành cho bé
-        </h1>
+    <section className="container mt-[200px]">
+      <div className="mb-8">
         <div className="space-x-4">
-          <CategoryButton
-            currentFilter={currentFilter}
-            filterOption="lastest"
-            handleFilter={handleFilterProduct}
-            buttonLabel="Mới nhất"
-          />
-          <CategoryButton
-            currentFilter={currentFilter}
-            filterOption="bestseller"
-            handleFilter={handleFilterProduct}
-            buttonLabel="Bán chạy nhất"
-          />
-          <CategoryButton
-            currentFilter={currentFilter}
-            filterOption="discount"
-            handleFilter={handleFilterProduct}
-            buttonLabel="Giảm giá"
-          />
+          <div className="flex items-center gap-2 text-[26px] font-bold">
+            SẢN PHẨM
+            <CategoryButton
+              currentFilter={currentFilter}
+              filterOption="lastest"
+              handleFilter={handleFilterProduct}
+              buttonLabel="Mới nhất"
+            />
+            <CategoryButton
+              currentFilter={currentFilter}
+              filterOption="bestseller"
+              handleFilter={handleFilterProduct}
+              buttonLabel="Bán chạy nhất"
+            />
+            <NormalTransitionLink href="/shop" className="ml-auto underline">
+              XEM TẤT CẢ
+            </NormalTransitionLink>
+          </div>
         </div>
       </div>
       <ProductSlider filterOption={filterOption} />
-    </div>
+    </section>
   );
 }

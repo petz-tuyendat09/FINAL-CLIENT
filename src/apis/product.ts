@@ -13,7 +13,6 @@ export interface QueryParams {
   productSubCategory?: string | string[];
   salePercent?: number;
   productStatus?: string;
-  animalType?: string | string[];
   productBuy?: number;
 }
 

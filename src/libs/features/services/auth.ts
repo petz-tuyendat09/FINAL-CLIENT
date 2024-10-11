@@ -4,7 +4,7 @@ import { LoginUser, RegisterUser, VerifyEmail } from "@/types/User";
 export const authAPI = createApi({
   reducerPath: "authAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/auth/",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}auth/`,
   }),
 
   endpoints: (builder) => ({

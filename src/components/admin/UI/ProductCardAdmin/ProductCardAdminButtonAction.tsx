@@ -11,6 +11,7 @@ import Dialog from "@/components/ui/Dialog";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 import { useState } from "react";
+import TransitionLinkAdmin from "../TransitionLinkAdmin";
 
 interface ProductCardAdminButtonActionProps {
   productId: string;
@@ -40,16 +41,17 @@ export default function ProductCardAdminButtonAction({
   return (
     <div className="absolute right-4 top-4 z-10 flex flex-col space-y-2 text-2xl transition delay-75 duration-300">
       <button
-        className="rounded-full bg-black p-2 text-white"
+        className="mx-auto w-fit rounded-full bg-black p-1 text-white"
         onClick={handleOpenDialog}
       >
-        <Icon icon="mdi:trash" />
+        <Icon className="size-6" icon="mdi:trash" />
       </button>
-      <button className="rounded-full bg-black p-2 text-white">
-        <Link href={`shop/edit-product/${productSlug}`}>
-          <Icon icon="flowbite:edit-solid" />
-        </Link>
-      </button>
+      <TransitionLinkAdmin
+        className="mx-auto flex w-fit items-center justify-center rounded-full bg-black p-1 text-white"
+        href={`shop/edit-product/${productSlug}`}
+      >
+        <Icon className="size-6" icon="mynaui:edit" />
+      </TransitionLinkAdmin>
 
       <Modal
         backdrop="blur"

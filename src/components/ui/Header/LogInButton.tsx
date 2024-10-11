@@ -7,7 +7,7 @@ export default function LogInButton() {
   const session = useSession();
   const authStatus = session.status;
   const username = session.data?.user.username;
-  console.log(authStatus);
+  console.log(session);
 
   return (
     <>

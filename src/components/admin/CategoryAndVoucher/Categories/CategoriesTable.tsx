@@ -1,5 +1,4 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
 
 import {
   Table,
@@ -62,6 +61,7 @@ export default function CategoriesTable() {
         Thêm danh mục
       </button>
       <Table
+        aria-label="Bảng hiển thị danh mục"
         className="w-full"
         bottomContent={
           <div className="flex w-full justify-center">
@@ -103,6 +103,10 @@ export default function CategoriesTable() {
                     >
                       <Icon className="size-6" icon="mdi:trash-outline" />
                     </button>
+                  </TableCell>
+                ) : columnKey === "_id" ? (
+                  <TableCell className="font-bold">
+                    {item._id.slice(-3).toUpperCase()}
                   </TableCell>
                 ) : (
                   <TableCell>{getKeyValue(item, columnKey)}</TableCell>

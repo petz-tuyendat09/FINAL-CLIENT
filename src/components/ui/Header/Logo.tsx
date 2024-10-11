@@ -1,6 +1,7 @@
 import LogoImage from "@@/assets/images/logo.png";
 import ResponsiveImage from "../ResponsiveImage";
 import Link from "next/link";
+import NormalTransitionLink from "../NormalTransitionLink";
 
 interface LogoProps {
   textColor?: "text-black" | "text-white";
@@ -12,7 +13,7 @@ export default function Logo({
   additionalClasses = "",
 }: LogoProps) {
   return (
-    <Link
+    <NormalTransitionLink
       href="/"
       className={`flex items-center ${textColor} ${additionalClasses}`}
     >
@@ -25,6 +26,6 @@ export default function Logo({
         />
       </div>
       <p className="font-bold tracking-wider">PETZ</p>
-    </Link>
+    </NormalTransitionLink>
   );
 }

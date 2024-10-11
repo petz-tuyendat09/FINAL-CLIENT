@@ -69,7 +69,7 @@ export default function Filter({
           handleQueryProduct={handleQueryProduct}
           onSearchTermChange={handleSearchTermChange}
         />
-        {categories?.map((category) => (
+        {(categories as any)?.map((category: any) => (
           <Category key={category._id} category={category} />
         ))}
       </motion.div>

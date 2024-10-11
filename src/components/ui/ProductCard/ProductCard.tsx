@@ -12,7 +12,6 @@ interface ProductBoxProps {
 }
 
 const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
-  const productOption: string[] = Product.productOption;
   const productThumbnail = Product?.productThumbnail;
 
   return (
@@ -35,6 +34,7 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
         </Link>
         <ProductCardCartButton Product={Product} />
         <ProductInfo
+          salePercent={Product?.salePercent}
           productName={Product?.productName}
           subCategoryId={Product?.productSubCategory}
           productOption={Product?.productOption}

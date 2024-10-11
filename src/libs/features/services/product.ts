@@ -16,14 +16,13 @@ export interface QueryParams {
   productSubCategory?: string | string[];
   salePercent?: number;
   productStatus?: string;
-  animalType?: string | string[];
   productBuy?: number;
 }
 
 export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/product/",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}product/`,
     // Prepare headers dynamically
     // prepareHeaders: (headers, { getState }) => {
     //   // Ensure Content-Type is correctly set

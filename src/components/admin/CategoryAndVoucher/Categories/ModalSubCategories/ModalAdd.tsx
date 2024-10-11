@@ -100,7 +100,7 @@ export default function ModalAdd({
               <Input
                 value={newSubCategoryName}
                 onChange={handleChangeSubCategoryName}
-                placeholder="Nhập tên danh mục mới"
+                label="Nhập tên danh mục mới"
                 errorMessage={errorMessage}
                 isInvalid={errorMessage === "" ? false : true}
               />

@@ -60,22 +60,22 @@ export const subCategoriesAPI = createApi({
           newSubCategoryName: newSubCategoryName,
         },
       }),
-      invalidatesTags: ["SubCategories"], // Correcting to invalidate tags after mutation
+      invalidatesTags: ["SubCategories"],
     }),
     deleteSubCategory: builder.mutation<
       any,
       { subCategoryId: string | string[] }
     >({
       query: ({ subCategoryId }) => ({
-        url: "", // Adjust the URL based on your API structure
+        url: "",
         method: "DELETE",
         body: {
           subCategoryId: Array.isArray(subCategoryId)
             ? subCategoryId
-            : [subCategoryId], // Ensure array format
+            : [subCategoryId],
         },
       }),
-      invalidatesTags: ["SubCategories"], // Invalidate tags after mutation
+      invalidatesTags: ["SubCategories"],
     }),
   }),
 });

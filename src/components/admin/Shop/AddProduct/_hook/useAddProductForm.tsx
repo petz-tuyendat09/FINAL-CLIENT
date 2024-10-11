@@ -106,10 +106,16 @@ export default function useAddProductForm() {
         errors.productOption = "Option không được bỏ trống";
       } else {
         values.productOption.forEach((option, index) => {
-          if (!(option as any).price || (option as any).price <= 20000) {
+          if (
+            !(option as any).productPrice ||
+            (option as any).productPrice <= 20000
+          ) {
             errors.productOption = `Option ${index + 1}: Giá không hợp lệ`;
           }
-          if (!(option as any).quantity || (option as any).quantity <= 0) {
+          if (
+            !(option as any).productQuantity ||
+            (option as any).productQuantity <= 0
+          ) {
             errors.productOption = `Option ${index + 1}: Số lượng không hợp lệ`;
           }
         });

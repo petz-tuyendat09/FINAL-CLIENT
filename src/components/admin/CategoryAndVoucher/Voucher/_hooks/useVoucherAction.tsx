@@ -1,52 +1,55 @@
-import { useGetSubCategoriesPaginateQuery } from "@/libs/features/services/subcategories";
+import { useGetVouchersQuery } from "@/libs/features/services/voucher";
 import { useEffect, useState } from "react";
 
-interface useSubCategoriesActionProps {
+interface useVoucherActionProps {
   initialPage: number;
 }
 
-export default function useSubCategoriesAction({
+export default function useVoucherAction({
   initialPage,
-}: useSubCategoriesActionProps) {
+}: useVoucherActionProps) {
   const [pages, setPages] = useState<number>(initialPage);
-  const { data: subcategories, refetch } =
-    useGetSubCategoriesPaginateQuery(pages);
+  const { data: voucher, refetch } = useGetVouchersQuery({ page: pages });
   const [totalPages, setTotalPages] = useState<number | undefined>(1);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
-  const [editSubCategory, setEditSubCategory] = useState<string>("");
+  const [editVoucher, setEditVoucher] = useState<string>("");
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
-  const [deleteSubCategory, setDeleteSubCategory] = useState<string>("");
+  const [deleteVoucher, setDeleteVoucher] = useState<string>("");
+
+  console.log(voucher);
 
   useEffect(() => {
-    setTotalPages(subcategories?.totalPages);
-  }, [subcategories]);
+    setTotalPages(voucher?.totalPages);
+  }, [voucher]);
 
   function handleSetPage(page: number) {
     setPages(page);
     refetch(); // Refetch data when page changes
   }
 
-  function handleAddSubCategory() {
+  console.log(pages);
+
+  function handleAddVoucher() {
     setAddModalOpen(true);
   }
 
-  function handleCancelAddSubCategory() {
+  function handleCancelAddVoucher() {
     setAddModalOpen(false);
   }
 
-  function handleEditSubCategory(id: string) {
+  function handleEditVoucher(id: string) {
     setEditModalOpen(true);
-    setEditSubCategory(id);
+    setEditVoucher(id);
   }
 
   function handleCancelEdit() {
     setEditModalOpen(false);
   }
 
-  function handleDeleteSubCategory(id: string) {
+  function handleDeleteVoucher(id: string) {
     setDeleteModalOpen(true);
-    setDeleteSubCategory(id);
+    setDeleteVoucher(id);
   }
 
   function handleCancelDelete() {
@@ -54,20 +57,20 @@ export default function useSubCategoriesAction({
   }
 
   return {
-    subcategories,
+    voucher,
     pages,
     totalPages,
     handleSetPage,
-    handleEditSubCategory,
+    handleEditVoucher,
     handleCancelEdit,
-    editSubCategory,
+    editVoucher,
     editModalOpen,
     addModalOpen,
-    handleAddSubCategory,
-    handleCancelAddSubCategory,
+    handleAddVoucher,
+    handleCancelAddVoucher,
     deleteModalOpen,
-    handleDeleteSubCategory,
-    deleteSubCategory,
+    handleDeleteVoucher,
+    deleteVoucher,
     handleCancelDelete,
   };
 }

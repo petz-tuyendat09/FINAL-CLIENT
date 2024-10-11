@@ -1,4 +1,5 @@
 import { useDeleteSubCategoryMutation } from "@/libs/features/services/subcategories";
+import { useDeleteVoucherMutation } from "@/libs/features/services/voucher";
 import {
   Modal,
   ModalContent,
@@ -10,20 +11,20 @@ import {
 
 interface ModalAddProps {
   isDialogOpen: boolean;
-  subCategoryId?: string;
+  voucherId: string;
   handleCloseDialog: () => void;
 }
 
 export default function ModalDelete({
   isDialogOpen,
-  subCategoryId,
+  voucherId,
   handleCloseDialog,
 }: ModalAddProps) {
-  const [deleteCategory, { data }] = useDeleteSubCategoryMutation();
+  const [deleteVoucher, { data }] = useDeleteVoucherMutation();
 
   async function handleDeleteCategory() {
-    if (subCategoryId) {
-      await deleteCategory({ subCategoryId: subCategoryId });
+    if (voucherId) {
+      await deleteVoucher({ deleteVoucherId: voucherId });
       handleCloseDialog();
     }
   }
@@ -41,9 +42,9 @@ export default function ModalDelete({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Xóa danh mục</ModalHeader>
+            <ModalHeader className="text-center">Xóa voucher</ModalHeader>
             <ModalBody>
-              <p>Bạn có chắc chắn muốn xóa danh mục</p>
+              <p>Bạn có chắc chắn muốn xóa voucher</p>
             </ModalBody>
             <ModalFooter>
               <Button

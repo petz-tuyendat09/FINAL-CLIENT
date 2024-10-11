@@ -59,9 +59,14 @@ export default function SubCategoriesTable() {
 
   const [selectedIds, setSelectedIds] = useState<React.Key[]>([]);
 
-  const handleSelectedRows = (selectedKeys: Set<React.Key>) => {
-    const selectedIdsArray = Array.from(selectedKeys);
-    setSelectedIds(selectedIdsArray);
+  const handleSelectedRows = (selectedKeys: any) => {
+    if (selectedKeys === "all") {
+      const allIds = subcategories?.subCategories.map((item) => item._id);
+      setSelectedIds(allIds || []);
+    } else {
+      const selectedIdsArray = Array.from(selectedKeys);
+      setSelectedIds(selectedIdsArray as any);
+    }
   };
 
   function handleDeleteMultiple() {

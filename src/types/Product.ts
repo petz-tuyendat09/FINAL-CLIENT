@@ -7,6 +7,7 @@ export interface ProductOption {
   name: string;
   productPrice: number;
   productName: number;
+  productQuantity: number;
 }
 
 export interface Product {

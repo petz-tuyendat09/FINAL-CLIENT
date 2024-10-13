@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface CartItem {
-  _id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
+import { CartItem } from "@/types/Cart";
 
 interface CartState {
   items: CartItem[];
@@ -26,16 +20,36 @@ const cartSlice = createSlice({
     },
     addToCart(state, action: PayloadAction<CartItem>) {
       const item = action.payload;
-      const existingItem = state.items.find((i) => i._id === item._id);
+      const existingItem = state.items.find(
+        (i) =>
+          i.productId === item.productId &&
+          i.productOption === item.productOption,
+      );
 
       if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.productQuantity += 1;
       } else {
-        state.items.push({ ...item, quantity: 1 });
+        state.items.push({ ...item, productQuantity: 1 });
       }
+    },
+    removeFromCart(
+      state,
+      action: PayloadAction<{ _id: string; productOption: string }>,
+    ) {
+      const { _id, productOption } = action.payload;
+      state.items = state.items.filter(
+        (item) =>
+          item.productId !== _id || item.productOption !== productOption,
+      );
     },
   },
 });
 
 export const cartAction = cartSlice.actions;
+
+// Selectors to access cart data
+export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
+export const selectCartOpen = (state: { cart: CartState }) =>
+  state.cart.openCart;
+
 export default cartSlice;

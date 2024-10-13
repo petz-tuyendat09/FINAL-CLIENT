@@ -4,7 +4,7 @@ import { Categories, CategoriesByPage } from "@/types/Categories";
 export const categoriesAPI = createApi({
   reducerPath: "categoriesAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/categories/",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}categories/`,
   }),
   tagTypes: ["Categories"],
 
@@ -23,14 +23,14 @@ export const categoriesAPI = createApi({
       { categoryId: string; editCategoryName: string }
     >({
       query: ({ categoryId, editCategoryName }) => ({
-        url: "", // Adjust the URL based on your API structure
+        url: "",
         method: "PUT",
         body: {
           categoryId: categoryId,
           editCategoryName: editCategoryName,
         },
       }),
-      invalidatesTags: ["Categories"], // Correcting to invalidate tags after mutation
+      invalidatesTags: ["Categories"], 
     }),
     addCategory: builder.mutation<any, { newCategoryName: string }>({
       query: ({ newCategoryName }) => ({

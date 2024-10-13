@@ -1,70 +1,48 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import ProductBox from "@/components/ui/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import { motion } from "framer-motion";
-import { useCallback, useRef } from "react";
-import SwiperCore from "swiper";
-// CSS
-import "swiper/css";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface ProductSliderProps {
   filterOption?: object;
 }
 
 export default function ProductSlider({ filterOption }: ProductSliderProps) {
-  const sliderRef = useRef<SwiperCore | null>(null);
-
-  const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slidePrev();
-  }, []);
-
-  const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slideNext();
-  }, []);
-
   const { data } = useGetProductsQuery({
     ...filterOption,
-    limit: 25,
+    limit: 8,
     page: 1,
   });
+  console.log(data);
 
   return (
-    <div className="slider-container relative">
-      <Swiper
-        onSwiper={(swiper) => (sliderRef.current = swiper)}
-        spaceBetween={20}
-        slidesPerView={4}
-      >
+    <div>
+      <div className="grid grid-cols-4 gap-4">
         {data?.products.map((product, index) => (
-          <SwiperSlide key={product._id}>
+          <div key={product._id}>
+            {index === 2 && (
+              <div className="relative h-full items-center justify-center text-h1 font-bold uppercase text-black 2xl:text-[72px]">
+                <p>ưu đãi</p>
+                <span className="text-primary">đặc biệt</span>
+                <p>cho</p>
+                <p>khách mới</p>
+                <button className="absolute bottom-4 h-fit w-fit rounded-full bg-primary px-6 py-2 text-base text-white">
+                  Đăng ký ngay
+                </button>
+              </div>
+            )}
+
+            {/* Hiển thị sản phẩm */}
             <motion.div
+              className={`${index == 2 && "hidden"}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 * index }}
             >
               <ProductBox Product={product} />
             </motion.div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
-      <button
-        type="button"
-        className="absolute -right-4 top-1/2 z-10 rounded-full bg-black p-2 text-white"
-        onClick={handleNext}
-      >
-        <Icon icon="tabler:chevron-right" />
-      </button>
-      <button
-        type="button"
-        className="absolute -left-4 top-1/2 z-10 rounded-full bg-black p-2 text-white"
-        onClick={handlePrev}
-      >
-        <Icon icon="tabler:chevron-left" />
-      </button>
+      </div>
     </div>
   );
 }

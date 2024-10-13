@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SubCategories } from "@/types/SubCategories";
+import { SubCategories, SubCategoriesByPage } from "@/types/SubCategories";
 
 interface QueryParams {
-  animalType?: string;
   categoryId?: string;
   subCategoryId?: string;
 }
@@ -10,7 +9,7 @@ interface QueryParams {
 export const subCategoriesAPI = createApi({
   reducerPath: "subCategoriesAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/subcategories/",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}subcategories/`,
   }),
   tagTypes: ["SubCategories"],
 
@@ -26,8 +25,66 @@ export const subCategoriesAPI = createApi({
       },
       providesTags: ["SubCategories"],
     }),
+    getSubCategoriesPaginate: builder.query<SubCategoriesByPage, number>({
+      query: (page: number) => `page?page=${page}`,
+      providesTags: ["SubCategories"],
+    }),
+    editSubCategory: builder.mutation<
+      any,
+      {
+        editSubCategoryId: string;
+        newCategoryId: string;
+        newSubCategoryName: string;
+      }
+    >({
+      query: ({ editSubCategoryId, newCategoryId, newSubCategoryName }) => ({
+        url: "", // Adjust the URL based on your API structure
+        method: "PUT",
+        body: {
+          editSubCategoryId: editSubCategoryId,
+          newCategoryId: newCategoryId,
+          newSubCategoryName: newSubCategoryName,
+        },
+      }),
+      invalidatesTags: ["SubCategories"], // Correcting to invalidate tags after mutation
+    }),
+    addSubCategory: builder.mutation<
+      any,
+      { categoryId: string; newSubCategoryName: string }
+    >({
+      query: ({ categoryId, newSubCategoryName }) => ({
+        url: "", // Adjust the URL based on your API structure
+        method: "POST",
+        body: {
+          categoryId: categoryId,
+          newSubCategoryName: newSubCategoryName,
+        },
+      }),
+      invalidatesTags: ["SubCategories"],
+    }),
+    deleteSubCategory: builder.mutation<
+      any,
+      { subCategoryId: string | string[] }
+    >({
+      query: ({ subCategoryId }) => ({
+        url: "",
+        method: "DELETE",
+        body: {
+          subCategoryId: Array.isArray(subCategoryId)
+            ? subCategoryId
+            : [subCategoryId],
+        },
+      }),
+      invalidatesTags: ["SubCategories"],
+    }),
   }),
 });
 
-export const { useGetSubCategoriesQuery, useLazyGetSubCategoriesQuery } =
-  subCategoriesAPI;
+export const {
+  useGetSubCategoriesQuery,
+  useLazyGetSubCategoriesQuery,
+  useGetSubCategoriesPaginateQuery,
+  useEditSubCategoryMutation,
+  useAddSubCategoryMutation,
+  useDeleteSubCategoryMutation,
+} = subCategoriesAPI;

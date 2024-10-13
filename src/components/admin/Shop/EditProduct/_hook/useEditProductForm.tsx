@@ -16,7 +16,6 @@ interface ErrorsValues {
   productQuantity?: string;
   productCategory?: string;
   productSubcategory?: string;
-  animalType?: string;
   productDescription?: string;
   productOption?: string;
   productDetailDescription?: string;
@@ -24,7 +23,6 @@ interface ErrorsValues {
 
 export default function useEditProductForm({ slug }: { slug: string }) {
   const { data: productBySlug } = useGetProductsQuery({ productSlug: slug });
-  const [animalType, setAnimalType] = useState<string>("");
   const [editProduct, { data, error: mutationError }] =
     useEditProductMutation();
   const [duplicatedMessage, setDuplicatedMessage] = useState();
@@ -38,12 +36,9 @@ export default function useEditProductForm({ slug }: { slug: string }) {
         productName: productBySlug.products[0].productName || "",
         productThumbnail: productBySlug.products[0].productThumbnail || [],
         productImages: productBySlug.products[0].productImages || [],
-        productPrice: productBySlug.products[0].productPrice || 0,
         salePercent: productBySlug.products[0].salePercent || 0,
-        productQuantity: productBySlug.products[0].productQuantity || 0,
         productCategory: productBySlug.products[0].productCategory || "",
         productSubcategory: productBySlug.products[0].productSubCategory || "",
-        animalType: productBySlug.products[0].animalType || "",
         productDescription: productBySlug.products[0].productDescription || "",
         productOption: productBySlug.products[0].productOption || [],
         productDetailDescription:
@@ -58,16 +53,15 @@ export default function useEditProductForm({ slug }: { slug: string }) {
         productName: "",
         productThumbnail: null,
         productImages: [],
-        productPrice: 0,
         salePercent: 0,
-        productQuantity: 0,
         productCategory: "",
         productSubcategory: "",
-        animalType: "",
         productDescription: "",
         productOption: [],
         productDetailDescription: "",
       };
+
+  console.log(initialValues);
 
   const formik = useFormik({
     initialValues,
@@ -94,9 +88,18 @@ export default function useEditProductForm({ slug }: { slug: string }) {
           formData.append(key, value.toString());
         } else if (typeof value === "string") {
           formData.append(key, value);
-        } else if (key === "productOption" && Array.isArray(value)) {
-          value.forEach((option, index) => {
-            formData.append(`productOption[${index}]`, option); // Append each option separately
+        } else if (key === "productOption") {
+          // Loop through each option and append it correctly as an array in FormData
+          (value as any)?.forEach((option: any, index: number) => {
+            formData.append(`productOption[${index}][name]`, option.name);
+            formData.append(
+              `productOption[${index}][price]`,
+              option.productPrice,
+            );
+            formData.append(
+              `productOption[${index}][quantity]`,
+              option.productQuantity,
+            );
           });
         }
       });
@@ -107,18 +110,27 @@ export default function useEditProductForm({ slug }: { slug: string }) {
 
     validate: (values) => {
       let errors: ErrorsValues = {};
+      if (!values.productOption || values.productOption.length === 0) {
+        errors.productOption = "Option không được bỏ trống";
+      } else {
+        values.productOption.forEach((option, index) => {
+          if (
+            !(option as any).productPrice ||
+            (option as any).productPrice <= 20000
+          ) {
+            errors.productOption = `Option ${index + 1}: Giá không hợp lệ`;
+          }
+          if (
+            !(option as any).productQuantity ||
+            (option as any).productQuantity <= 0
+          ) {
+            errors.productOption = `Option ${index + 1}: Số lượng không hợp lệ`;
+          }
+        });
+      }
 
       if (!values.productName) {
         errors.productName = "Required name";
-      }
-      if (!values.productQuantity || values.productQuantity === 0) {
-        errors.productQuantity = "Required quantity";
-      }
-      if (!values.productPrice || values.productPrice === 0) {
-        errors.productPrice = "Required price";
-      }
-      if (values.productPrice <= 1000) {
-        errors.productPrice = "Invalid price";
       }
       if (!values.productCategory) {
         errors.productCategory = "Required";
@@ -132,41 +144,19 @@ export default function useEditProductForm({ slug }: { slug: string }) {
         errors.salePercent = "Sale percent must be between 0 and 100";
       }
 
-      if (
-        !values.productOption ||
-        (Array.isArray(values.productOption) &&
-          values.productOption.length === 0)
-      ) {
-        errors.productOption = "Please enter at least one product option";
-      } else if (
-        Array.isArray(values.productOption) &&
-        values.productOption.some((option: string) => option.trim() === "")
-      ) {
-        errors.productOption = "Invalid option, cannot be empty";
-      }
-
       return errors;
     },
   });
-
-  // Update animalType state when formik's values change
-  useEffect(() => {
-    if (formik.values.animalType) {
-      setAnimalType(formik.values.animalType);
-    }
-  }, [formik.values.animalType]);
-
-  const handleAnimalTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const animalTypeSelected = e.target.value;
-    setAnimalType(animalTypeSelected);
-    formik.setFieldValue("animalType", animalTypeSelected);
-  };
 
   useEffect(() => {
     if (mutationError && "data" in mutationError) {
       setDuplicatedMessage((mutationError.data as any).message);
     }
-  }, [mutationError]);
+    if (data) {
+      setModalDisplay(true); // Show modal on successful product addition
+      setModalText("Thêm sản phẩm thành công quay về sau 3s");
+    }
+  }, [mutationError, data]);
 
   useEffect(() => {
     if (formik.values.productName) {
@@ -176,8 +166,7 @@ export default function useEditProductForm({ slug }: { slug: string }) {
 
   return {
     formik,
-    animalType,
-    handleAnimalTypeChange,
+
     duplicatedMessage,
   };
 }

@@ -5,25 +5,29 @@ interface PageQuery {
   page: number;
   limit: number;
 }
-
+interface Option {
+  name: string;
+  productQuantity: number;
+}
 export interface QueryParams {
   page?: number;
   productName?: string;
   status?: string;
   limit?: number;
+  productQuantity?:number;
   productCategory?: string | string[];
   productSlug?: string;
   productSubCategory?: string | string[];
   salePercent?: number;
   productStatus?: string;
-  animalType?: string | string[];
   productBuy?: number;
+  productOption?: Option[];
 }
 
 export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/product/",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/product`,
     // Prepare headers dynamically
     // prepareHeaders: (headers, { getState }) => {
     //   // Ensure Content-Type is correctly set
@@ -44,7 +48,7 @@ export const productsAPI = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ["Product"],
+  tagTypes: ["Product", "ProductList"],
 
   endpoints: (builder) => ({
     getProducts: builder.query<PaginateProduct, QueryParams>({
@@ -52,29 +56,33 @@ export const productsAPI = createApi({
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
-        console.log(queryParams);
 
         return `?${queryParams}`;
+      },
+      providesTags: ["Product"],
+    }),
+    getProductsByCatId: builder.query<void, string>({
+      query: (categoryId) => {
+        const queryParams = new URLSearchParams({ categoryId }).toString();
+        return `/by-cat-id?${queryParams}`;
       },
     }),
 
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
-        url: "insert-product",
+        url: "/insert-product",
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Product"],
+      // invalidatesTags: ["Product"],
     }),
     deleteProduct: builder.mutation<void, string>({
       query: (productId: string) => ({
         url: `/delete-product`,
         method: "DELETE",
-        body: {
-          productId: productId,
-        },
+        body: { productId },
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: ["ProductList"],
     }),
 
     editProduct: builder.mutation<any, FormData>({
@@ -89,6 +97,7 @@ export const productsAPI = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetProductsByCatIdQuery,
   useLazyGetProductsQuery,
   useAddNewProductMutation,
   useDeleteProductMutation,

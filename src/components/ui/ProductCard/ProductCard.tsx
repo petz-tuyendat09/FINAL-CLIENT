@@ -1,10 +1,8 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import Image from "next/image";
 import ProductInfo from "./ProductInfo";
 import Link from "next/link";
-import ProductCardBuyNow from "./ProductCardBuyNow";
 import { Product } from "@/types/Product";
-import DummyImage from "@@/assets/images/dummy-product.png";
 import ProductCardCartButton from "./ProductCardCartButton";
 interface ProductBoxProps {
   Product: Product;
@@ -12,12 +10,11 @@ interface ProductBoxProps {
 }
 
 const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
-  const productOption: string[] = Product.productOption;
   const productThumbnail = Product?.productThumbnail;
 
   return (
     <div className={additionalClassess}>
-      <div className="relative mb-4 block h-2/3 bg-red-500">
+      <div className="relative mb-4 block">
         <Link href={`shop/${Product?.productSlug}`}>
           <Image
             className="rounded-xl select-none object-cover"
@@ -35,6 +32,7 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
         </Link>
         <ProductCardCartButton Product={Product} />
         <ProductInfo
+          salePercent={Product?.salePercent}
           productName={Product?.productName}
           subCategoryId={Product?.productSubCategory}
           productOption={Product?.productOption}

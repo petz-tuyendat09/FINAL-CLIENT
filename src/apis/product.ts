@@ -13,7 +13,6 @@ export interface QueryParams {
   productSubCategory?: string | string[];
   salePercent?: number;
   productStatus?: string;
-  animalType?: string | string[];
   productBuy?: number;
 }
 
@@ -55,25 +54,27 @@ export const getProductWithPaginate = async (params: QueryParams) => {
   return response.json();
 };
 
-// export const getProductWithPaginate = async (params: QueryParams) => {
-//   const delay = (ms: number) =>
-//     new Promise((resolve) => setTimeout(resolve, ms));
+export const deleteProduct = async (productId: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}product/delete-product`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId: productId }), // Send productId in the body
+      },
+    );
 
-//   const options: any = {
-//     method: "GET",
-//   };
+    if (!response.ok) {
+      throw new Error("Failed to delete product");
+    }
 
-//   const queryParams = new URLSearchParams(
-//     params as Record<string, string>
-//   ).toString();
-
-//   // Thêm độ trễ 2 giây trước khi gọi API
-//   await delay(2000);
-
-//   const response = await fetch(
-//     `${DOMAIN_URL}/product/page?${queryParams}`,
-//     options
-//   );
-
-//   return response.json();
-// };
+    const data = await response.json();
+    return data; // Assuming server returns some data after deletion
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error; // Rethrow the error for handling
+  }
+};

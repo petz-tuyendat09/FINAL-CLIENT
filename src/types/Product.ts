@@ -3,32 +3,34 @@ interface ProductDetailDescription {
   detailContent: string;
 }
 
+export interface ProductOption {
+  _id: string;
+  name: string;
+  productPrice: number;
+  productName: number;
+  productQuantity: number;
+}
+
 export interface Product {
   _id: string;
   productName: string;
-  productPrice: number;
   salePercent: number;
   productBuy: number;
   productSlug: string;
-  productQuantity: number;
   productThumbnail: string;
   productImages: [];
   productDescription: string;
   productDetailDescription: ProductDetailDescription;
   productCategory: string;
   productSubCategory: string;
-  animalType: string;
   productRating: number;
-  productOption: [];
+  productOption: ProductOption[];
   ratingCount: number;
 }
 
 export interface PaginateProduct {
+  productCategory?: string;
   products: Product[];
-  pagination: {
-    currentPage: number;
-    limit: number;
-    totalDocuments: number;
-    totalPages: number;
-  };
+  currentPage: number;
+  totalPages: number;
 }

@@ -1,5 +1,6 @@
 import { FormikProps } from "formik";
 import React, { useState } from "react";
+import { NumericFormat } from "react-number-format"; // Import NumericFormat
 
 interface FormAddProductTagInputProps {
   inputPlaceHolder: string;
@@ -28,24 +29,37 @@ export default function FormAddProductTagInput({
     if (e.key === "Enter" && tagInput.trim() !== "") {
       e.preventDefault();
       // Check if tag already exists
-      if (formik.values[inputName].includes(tagInput.trim())) {
-        setDuplicateError("Tag đã tồn tại!");
+      if (
+        formik.values[inputName].some(
+          (option: any) => option.name === tagInput.trim(),
+        )
+      ) {
+        setDuplicateError("Tag already exists!");
       } else {
         formik.setFieldValue(inputName, [
           ...formik.values[inputName],
-          tagInput.trim(),
+          { name: tagInput.trim(), price: "", quantity: "" }, // Add price and quantity fields
         ]);
         setTagInput("");
       }
     }
   };
 
-  // Function to handle tag removal
   const handleTagRemove = (index: number) => {
-    const updatedTags = formik.values[inputName].filter(
-      (_: string, i: number) => i !== index,
+    const updatedOptions = formik.values[inputName].filter(
+      (_: any, i: number) => i !== index,
     );
-    formik.setFieldValue(inputName, updatedTags);
+    formik.setFieldValue(inputName, updatedOptions);
+  };
+
+  const handleOptionChange = (
+    index: number,
+    field: string,
+    value: string | number,
+  ) => {
+    const updatedOptions = [...formik.values[inputName]];
+    updatedOptions[index] = { ...updatedOptions[index], [field]: value };
+    formik.setFieldValue(inputName, updatedOptions);
   };
 
   return (
@@ -66,20 +80,38 @@ export default function FormAddProductTagInput({
           onKeyDown={handleKeyDown}
         />
       </div>
-      <div className="flex gap-2">
-        {formik.values[inputName].map((tag: string, index: number) => (
-          <div
-            key={index}
-            className="mt-2 flex items-center rounded-lg bg-gray-950 p-2 text-lg text-white"
-          >
-            {tag}
-            <button
-              type="button"
-              className="ml-2 text-white"
-              onClick={() => handleTagRemove(index)}
-            >
-              x
-            </button>
+      <div className="flex flex-col gap-2">
+        {formik.values[inputName].map((option: any, index: number) => (
+          <div key={index} className="mt-2">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{option.name}</span>
+              <button
+                type="button"
+                className="ml-2 text-red-500"
+                onClick={() => handleTagRemove(index)}
+              >
+                x
+              </button>
+            </div>
+            <NumericFormat
+              placeholder="Price"
+              className="mt-1 w-full rounded-lg border p-2"
+              value={option.productPrice}
+              thousandSeparator={true}
+              onValueChange={(values) => {
+                const { floatValue } = values;
+                handleOptionChange(index, "productPrice", floatValue as any);
+              }}
+            />
+            <input
+              type="number"
+              placeholder="Quantity"
+              className="mt-1 w-full rounded-lg border p-2"
+              value={option.productQuantity}
+              onChange={(e) =>
+                handleOptionChange(index, "productQuantity", e.target.value)
+              }
+            />
           </div>
         ))}
       </div>

@@ -1,10 +1,11 @@
 'use client'
-import React from "react";
+import React, { useEffect } from "react";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-
+import "./index.css";
+import SuggestedProducts from "@/components/pages/Details/SuggestedProducts";
 export const Index = () => {
     const { slug } = useParams();
     const productSlug = Array.isArray(slug) ? slug[0] : slug;
@@ -37,7 +38,31 @@ export const Index = () => {
         }
         console.log(cart_obj);
     }
-    return (
+
+    useEffect(() => {
+        const cursor = document.querySelector('.cursor') as HTMLElement;
+        const zone = document.getElementById('this-zone');
+
+        if (!cursor || !zone) return;
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = zone.getBoundingClientRect();
+            if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                cursor.style.left = e.pageX + 'px';
+                cursor.style.top = e.pageY + 'px';
+                cursor.style.opacity = '1'; 
+            } else {
+                cursor.style.opacity = '0'; 
+            }
+        };
+
+        zone.addEventListener('mousemove', handleMouseMove);
+
+        return () => {
+            zone.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
+    return ( 
         <div className="mt-[110px] px-[20px] bg-[#F4F2EE]">
             {data?.products?.map((item, i) => (
                 <div>
@@ -62,6 +87,7 @@ export const Index = () => {
                             <div className="flex flex-row justify-center items-center gap-[10px] mr-[70px] mt-[20px]">
                                 {item?.productOption?.map((option, i) => {
                                     return (
+                                        option?.name && 
                                         <div key={i} onClick={() => {setIndex(i); setMaxQuantity(option?.productQuantity); setOption(option?.name)}}>
                                             <button className={`${index === i ? 'text-white bg-[#D36166]' : ''} border-2 border-[#D36166] rounded-[5px] px-[10px] py-[2px]`}>
                                                 {option?.name}
@@ -88,7 +114,7 @@ export const Index = () => {
                     </div>
                     <div className="flex flex-row gap-[10px] items-center">
                         <div className="w-[35%]">
-                            <h1 className="text-[28px] font-[600]">BỘ SƯU TẬP</h1>
+                            <h1 className="text-[28px] font-[600] mb-[30px]">BỘ SƯU TẬP</h1>
                             <div className="flex flex-wrap gap-[10px]">
                                 {item?.productImages.map((img, i) => {
                                     return (
@@ -108,6 +134,15 @@ export const Index = () => {
                     </div>
                 </div>
             ))}
+            <div id="this-zone">
+                <h1 className="text-[28px] font-[500]">SẢN PHẨM GỢI Ý</h1>
+                <div>
+                    <div>
+                        <SuggestedProducts categoryId={data?.products[0]?.productCategory || ''} />
+                    </div>
+                </div>
+                <div className="cursor"></div>
+            </div>
         </div>
     );
 }

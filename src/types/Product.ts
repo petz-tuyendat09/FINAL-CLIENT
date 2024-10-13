@@ -28,6 +28,7 @@ export interface Product {
 }
 
 export interface PaginateProduct {
+  productCategory?: string;
   products: Product[];
   pagination: {
     currentPage: number;

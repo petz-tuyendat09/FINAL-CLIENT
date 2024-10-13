@@ -61,10 +61,16 @@ export const productsAPI = createApi({
         return `?${queryParams}`;
       },
     }),
+    getProductsByCatId: builder.query<void, string>({
+      query: (categoryId) => {
+        const queryParams = new URLSearchParams({ categoryId }).toString();
+        return `/by-cat-id?${queryParams}`;
+      },
+    }),
 
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
-        url: "insert-product",
+        url: "/insert-product",
         method: "POST",
         body: formData,
       }),
@@ -93,6 +99,7 @@ export const productsAPI = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetProductsByCatIdQuery,
   useLazyGetProductsQuery,
   useAddNewProductMutation,
   useDeleteProductMutation,

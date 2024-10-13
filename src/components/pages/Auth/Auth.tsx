@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 export default function Auth() {
   return (
     <AuthProvider>
-      <AuthContent />
+    <AuthContent />
     </AuthProvider>
   );
 }
@@ -32,12 +32,6 @@ function AuthContent() {
   const router = useRouter();
 
   const session = useSession();
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/");
-  //   }
-  //   return;
-  // }, [session, router]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

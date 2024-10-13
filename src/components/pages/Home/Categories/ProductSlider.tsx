@@ -1,28 +1,12 @@
 import ProductBox from "@/components/ui/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import { motion } from "framer-motion";
-import { useCallback, useRef } from "react";
-import SwiperCore from "swiper";
-// CSS
-import "swiper/css";
 
 interface ProductSliderProps {
   filterOption?: object;
 }
 
 export default function ProductSlider({ filterOption }: ProductSliderProps) {
-  const sliderRef = useRef<SwiperCore | null>(null);
-
-  const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slidePrev();
-  }, []);
-
-  const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slideNext();
-  }, []);
-
   const { data } = useGetProductsQuery({
     ...filterOption,
     limit: 8,
@@ -31,7 +15,7 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
   console.log(data);
 
   return (
-    <div className="relative">
+    <div>
       <div className="grid grid-cols-4 gap-4">
         {data?.products.map((product, index) => (
           <div key={product._id}>

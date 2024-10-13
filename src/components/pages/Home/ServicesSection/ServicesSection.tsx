@@ -3,7 +3,8 @@ import ServicesImageSection from "@@/public/images/services-image-setion.png";
 import ServicesItem from "./ServicesItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import "swiper/css";
 import "./ServicesSection.css";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
@@ -82,15 +83,29 @@ export default function ServicesSection() {
             waitForTransition: true,
           }}
         >
-          {[...images, ...images].map((src, index) => (
-            <SwiperSlide className="h-[600px]" key={index}>
-              <ServicesItem
-                imageSrc={src}
-                servicesText="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, maxime."
-                servicesTitle="Chăm sóc móng"
-              />
-            </SwiperSlide>
-          ))}
+          {[...images, ...images].map((src, index) => {
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true }); // Sử dụng useInView
+
+            return (
+              <SwiperSlide className="h-[600px]" key={index}>
+                <motion.div
+                  ref={ref}
+                  animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
+                  transition={{
+                    type: "spring",
+                    delay: 0.3 * index,
+                  }}
+                >
+                  <ServicesItem
+                    imageSrc={src}
+                    servicesText="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem, maxime."
+                    servicesTitle="Chăm sóc móng"
+                  />
+                </motion.div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </section>

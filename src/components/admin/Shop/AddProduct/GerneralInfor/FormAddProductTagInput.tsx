@@ -96,20 +96,20 @@ export default function FormAddProductTagInput({
             <NumericFormat
               placeholder="Price"
               className="mt-1 w-full rounded-lg border p-2"
-              value={option.price}
+              value={option.productPrice}
               thousandSeparator={true}
               onValueChange={(values) => {
                 const { floatValue } = values;
-                handleOptionChange(index, "price", floatValue as any);
+                handleOptionChange(index, "productPrice", floatValue as any);
               }}
             />
             <input
               type="number"
               placeholder="Quantity"
               className="mt-1 w-full rounded-lg border p-2"
-              value={option.quantity}
+              value={option.productQuantity}
               onChange={(e) =>
-                handleOptionChange(index, "quantity", e.target.value)
+                handleOptionChange(index, "productQuantity", e.target.value)
               }
             />
           </div>

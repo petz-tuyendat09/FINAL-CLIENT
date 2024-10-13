@@ -2,10 +2,16 @@
 
 import { animatePageIn } from "@/utils/animation";
 import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const session = useSession();
+  const router = useRouter();
+
+  const userRole = session?.data?.user.userRole;
+
   const pathname = usePathname();
 
   useEffect(() => {

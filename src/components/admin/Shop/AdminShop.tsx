@@ -1,23 +1,8 @@
 "use client";
-import AdminGrid from "./AdminGrid";
-import Link from "next/link";
-import {
-  ProductActionProvider,
-  useProductActionContext,
-} from "./_store/AdminShopContext"; // Import context
+import ProductTable from "./ProductTable";
 import TransitionLinkAdmin from "../UI/TransitionLinkAdmin";
 
-export default function AdminShopServer() {
-  return (
-    <ProductActionProvider>
-      <AdminShop />
-    </ProductActionProvider>
-  );
-}
-
-function AdminShop() {
-  const { products, handleFetchMore } = useProductActionContext();
-
+export default function AdminShop() {
   return (
     <div>
       <div className="mb-8 flex items-center justify-between">
@@ -28,8 +13,7 @@ function AdminShop() {
           Thêm sản phẩm
         </TransitionLinkAdmin>
       </div>
-      <AdminGrid products={products} />
-      <button onClick={() => handleFetchMore(2)}>Load more</button>
+      <ProductTable />
     </div>
   );
 }

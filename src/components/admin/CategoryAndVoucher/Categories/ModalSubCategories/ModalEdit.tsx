@@ -108,6 +108,7 @@ export default function ModalEdit({
                 )}
               </Select>
               <Input
+                label="Tên danh mục chỉnh sửa"
                 value={editSubCategoryName}
                 onChange={(e) => handleChangeSubCategoryName(e)}
                 errorMessage={errorMessage}

@@ -1,13 +1,13 @@
 import { useGetSubCategoriesPaginateQuery } from "@/libs/features/services/subcategories";
 import { useEffect, useState } from "react";
 
-interface useGetCategoriesByPageProps {
+interface useSubCategoriesActionProps {
   initialPage: number;
 }
 
 export default function useSubCategoriesAction({
   initialPage,
-}: useGetCategoriesByPageProps) {
+}: useSubCategoriesActionProps) {
   const [pages, setPages] = useState<number>(initialPage);
   const { data: subcategories, refetch } =
     useGetSubCategoriesPaginateQuery(pages);

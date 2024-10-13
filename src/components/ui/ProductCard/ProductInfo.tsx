@@ -21,7 +21,7 @@ const ProductInfo = memo(
 
     return (
       <div className="absolute bottom-4 left-4 flex items-center justify-between">
-        <p>
+        <div>
           <h2 className="flex justify-between font-serif text-[14px] lg:text-h4">
             {productName}
           </h2>
@@ -32,7 +32,7 @@ const ProductInfo = memo(
               {`(${productOption.length} lựa chọn)`}
             </span>
           </h2>
-        </p>
+        </div>
       </div>
     );
   },

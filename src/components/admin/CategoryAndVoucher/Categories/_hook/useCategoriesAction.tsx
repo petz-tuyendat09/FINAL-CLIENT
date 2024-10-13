@@ -23,7 +23,7 @@ export default function useCategoriesAction({
 
   function handleSetPage(page: number) {
     setPages(page);
-    refetch(); // Refetch data when page changes
+    refetch();
   }
 
   function handleAddCategory() {

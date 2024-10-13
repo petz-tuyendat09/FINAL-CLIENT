@@ -48,7 +48,7 @@ export const productsAPI = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ["Product"],
+  tagTypes: ["Product", "ProductList"],
 
   endpoints: (builder) => ({
     getProducts: builder.query<PaginateProduct, QueryParams>({
@@ -56,10 +56,10 @@ export const productsAPI = createApi({
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
-        console.log(queryParams);
 
         return `?${queryParams}`;
       },
+      providesTags: ["Product"],
     }),
     getProductsByCatId: builder.query<void, string>({
       query: (categoryId) => {
@@ -74,17 +74,15 @@ export const productsAPI = createApi({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Product"],
+      // invalidatesTags: ["Product"],
     }),
     deleteProduct: builder.mutation<void, string>({
       query: (productId: string) => ({
         url: `/delete-product`,
         method: "DELETE",
-        body: {
-          productId: productId,
-        },
+        body: { productId },
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: ["ProductList"],
     }),
 
     editProduct: builder.mutation<any, FormData>({

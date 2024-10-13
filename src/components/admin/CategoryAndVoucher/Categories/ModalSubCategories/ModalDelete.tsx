@@ -41,7 +41,7 @@ export default function ModalDelete({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center">Xóa danh mục</ModalHeader>
             <ModalBody>
               <p>Bạn có chắc chắn muốn xóa danh mục</p>
             </ModalBody>

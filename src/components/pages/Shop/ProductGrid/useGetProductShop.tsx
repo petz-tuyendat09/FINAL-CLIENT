@@ -35,7 +35,7 @@ export default function useGetProductShop({
     if (PaginateProduct?.products) {
       setListProduct(PaginateProduct.products);
       setPaginatedProducts(PaginateProduct.products);
-      setTotalPages(PaginateProduct.pagination.totalPages);
+      setTotalPages(PaginateProduct.totalPages);
       setCurrPage(1); // Reset current page to 1 when filters change
     }
   }, [PaginateProduct]);

@@ -21,6 +21,12 @@ const CartPage = () => {
     dispatch(cartAction.decreaseQuantity({ productId, productOption }));
   };
 
+  const handleClearCart = () => {
+    dispatch(cartAction.clearCart());
+  };
+
+  console.log(cartItems);
+
   return (
     <div className="flex min-h-screen flex-col items-center bg-gray-50 py-10">
       <div className="w-full max-w-2xl rounded-lg bg-white p-8 shadow-md">
@@ -115,6 +121,12 @@ const CartPage = () => {
           </button>
         </div>
       </div>
+      <button
+        onClick={handleClearCart}
+        className="mt-4 rounded-full bg-primary px-6 py-2 text-white"
+      >
+        Clear giỏ hàng
+      </button>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "@/types/Cart";
 
@@ -42,6 +43,27 @@ const cartSlice = createSlice({
           item.productId !== _id || item.productOption !== productOption,
       );
     },
+
+    decreaseQuantity(state, action: PayloadAction<{ productId: string; productOption: string }>) {
+      const { productId, productOption } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.productId === productId && item.productOption === productOption
+      );
+      if (existingItem && existingItem.productQuantity > 1) {
+        existingItem.productQuantity -= 1;
+      }
+    },
+
+    increaseQuantity(state, action: PayloadAction<{ productId: string; productOption: string }>) {
+      const { productId, productOption } = action.payload;
+      const existingItem = state.items.find(
+        (item) => item.productId === productId && item.productOption === productOption
+      );
+      if (existingItem) {
+        existingItem.productQuantity += 1;
+      }
+    },
+
   },
 });
 
@@ -49,7 +71,6 @@ export const cartAction = cartSlice.actions;
 
 // Selectors to access cart data
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
-export const selectCartOpen = (state: { cart: CartState }) =>
-  state.cart.openCart;
+export const selectCartOpen = (state: { cart: CartState }) => state.cart.openCart;
 
 export default cartSlice;

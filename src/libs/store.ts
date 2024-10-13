@@ -1,14 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { productsAPI } from "./features/services/product";
 import { authAPI } from "./features/services/auth";
 import { categoriesAPI } from "./features/services/categories";
 import { subCategoriesAPI } from "./features/services/subcategories";
 import { vouchersAPI } from "./features/services/voucher";
+import { cartAPI } from "./features/services/cart";
 import cartSlice from "./features/cart/cart";
 import userSlice from "./features/user/user";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import { combineReducers } from "redux";
+import { encryptTransform } from "redux-persist-transform-encrypt";
+
+// Create an encryption transform
+const encryptor = encryptTransform({
+  secretKey: "your-secret-key", // Use a strong secret key here
+  onError: (error) => {
+    console.error("Encryption error:", error);
+  },
+});
 
 // Combine all slice reducers and API reducers into a single rootReducer
 const rootReducer = combineReducers({
@@ -19,16 +28,18 @@ const rootReducer = combineReducers({
   [subCategoriesAPI.reducerPath]: subCategoriesAPI.reducer,
   [authAPI.reducerPath]: authAPI.reducer,
   [vouchersAPI.reducerPath]: vouchersAPI.reducer,
+  [cartAPI.reducerPath]: cartAPI.reducer,
 });
 
-// Configuration for redux-persist
+// Configuration for redux-persist with encryption
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart", "user"],
+  whitelist: ["cart", "user"], // Only persist cart and user state
+  transforms: [encryptor], // Add encryption transform
 };
 
-// Enhance rootReducer with persist capabilities
+// Enhance rootReducer with persist capabilities and encryption
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Initialize the store with the persistedReducer
@@ -45,6 +56,7 @@ export const store = configureStore({
       subCategoriesAPI.middleware,
       authAPI.middleware,
       vouchersAPI.middleware,
+      cartAPI.middleware,
     ),
 });
 

@@ -1,3 +1,5 @@
+import { CartItem } from "./Cart";
+
 interface UserOrder {
   orderDate?: Date;
   orderId: string;
@@ -20,6 +22,11 @@ export interface VerifyEmail {
   otpCode: number;
 }
 
+export interface UserCart {
+  _id: string;
+  cartItems: CartItem[];
+}
+
 // Định nghĩa interface cho User
 export interface User {
   googleId: string | null;
@@ -36,6 +43,7 @@ export interface User {
   userVoucher: string[];
   userImage: string;
   userOrders: any[];
+  userCart: UserCart;
   __v: number;
   token: string;
   refreshToken: string;

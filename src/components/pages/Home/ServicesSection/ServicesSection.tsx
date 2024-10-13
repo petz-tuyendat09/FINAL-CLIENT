@@ -83,7 +83,7 @@ export default function ServicesSection() {
             waitForTransition: true,
           }}
         >
-          {[...images].map((src, index) => {
+          {[...images, ...images].map((src, index) => {
             const ref = useRef(null);
             const isInView = useInView(ref, { once: true }); // Sử dụng useInView
 

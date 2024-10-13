@@ -11,7 +11,9 @@ export default function LogInButton() {
 
   return (
     <>
-      {authStatus === "authenticated" && <Link href="account">{username}</Link>}
+      {authStatus === "authenticated" && (
+        <Link href="/user/profile">{username}</Link>
+      )}
       {authStatus === "unauthenticated" && <Link href="auth">Đăng nhập</Link>}
     </>
   );

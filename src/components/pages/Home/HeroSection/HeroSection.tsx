@@ -92,7 +92,7 @@ export default function HeroSection() {
           </div>
           <div className="flex gap-4">
             <div className="flex w-fit flex-col">
-              <p>
+              <div>
                 {bottomText.map((word, index) => (
                   <p
                     key={index}
@@ -115,7 +115,7 @@ export default function HeroSection() {
                     ))}
                   </p>
                 ))}
-              </p>
+              </div>
               <NormalTransitionLink
                 className="w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
                 href="/booking"

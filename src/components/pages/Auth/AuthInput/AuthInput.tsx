@@ -27,7 +27,7 @@ export default function AuthInput({
           type={typePassword && typePassword ? "password" : "text"}
           id={inputName}
           name={inputName}
-          className="peer block h-full w-full appearance-none rounded-full rounded-t-lg bg-transparent py-[20px] pl-[25px] text-[12px] text-black focus:outline-none focus:ring-0 md:text-[14px]"
+          className="peer block h-full w-full appearance-none rounded-full rounded-t-lg bg-transparent mt-[10px] pb-[10px] pt-[20px] pl-[25px] text-[13px] text-black focus:outline-none focus:ring-0 md:text-[14px]"
           placeholder=""
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}

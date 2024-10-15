@@ -33,6 +33,9 @@ function NavigateName({
       case "/user/profile":
         setPathname("Thông tin");
         break;
+      case "/booking":
+        setPathname("Đặt lịch spa");
+        break;
 
       default:
         break;

@@ -9,7 +9,7 @@ interface QueryParams {
 export const subCategoriesAPI = createApi({
   reducerPath: "subCategoriesAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}subcategories/`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/subcategories`,
   }),
   tagTypes: ["SubCategories"],
 

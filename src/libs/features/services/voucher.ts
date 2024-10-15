@@ -13,7 +13,7 @@ export interface QueryParams {
 export const vouchersAPI = createApi({
   reducerPath: "vouchersAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}voucher`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/voucher`,
   }),
   tagTypes: ["Voucher"],
 

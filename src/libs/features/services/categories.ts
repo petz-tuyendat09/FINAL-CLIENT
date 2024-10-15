@@ -4,7 +4,7 @@ import { Categories, CategoriesByPage } from "@/types/Categories";
 export const categoriesAPI = createApi({
   reducerPath: "categoriesAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}categories/`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/categories`,
   }),
   tagTypes: ["Categories"],
 

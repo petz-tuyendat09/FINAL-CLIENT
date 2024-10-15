@@ -4,7 +4,7 @@ import { CartItem, Cart } from "@/types/Cart";
 export const cartAPI = createApi({
   reducerPath: "cartAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}cart/`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/cart`,
   }),
 
   endpoints: (builder) => ({

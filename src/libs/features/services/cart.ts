@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CartItem, RemoveCartItem } from "@/types/Cart";
+import { AdjustQuantity, CartItem, RemoveCartItem } from "@/types/Cart";
 
 export const cartAPI = createApi({
   reducerPath: "cartAPI",
@@ -24,14 +24,19 @@ export const cartAPI = createApi({
         credentials: "include",
       }),
     }),
-    getCartByUserId: builder.query<CartItem, string>({
-      query: (userId) => ({
-        url: `/${userId}`,
-        method: "GET",
+    adjustQuantity: builder.mutation<AdjustQuantity, AdjustQuantity>({
+      query: (formData: AdjustQuantity) => ({
+        url: "/quantity-adjust",
+        method: "POST",
+        body: formData,
         credentials: "include",
       }),
-    })
+    }),
   }),
 });
 
-export const { useAddItemToCartMutation, useRemoveItemFromCartMutation, useGetCartByUserIdQuery } = cartAPI;
+export const {
+  useAddItemToCartMutation,
+  useRemoveItemFromCartMutation,
+  useAdjustQuantityMutation,
+} = cartAPI;

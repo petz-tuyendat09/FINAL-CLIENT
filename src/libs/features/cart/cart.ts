@@ -34,12 +34,12 @@ const cartSlice = createSlice({
     },
     removeFromCart(
       state,
-      action: PayloadAction<{ _id: string; productOption: string }>,
+      action: PayloadAction<{ productId: string; productOption: string }>,
     ) {
-      const { _id, productOption } = action.payload;
+      const { productId, productOption } = action.payload;
       state.items = state.items.filter(
         (item) =>
-          item.productId !== _id || item.productOption !== productOption,
+          item.productId !== productId || item.productOption !== productOption,
       );
     },
 

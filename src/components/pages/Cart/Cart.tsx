@@ -1,58 +1,74 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/libs/store";
-import { cartAction } from "@/libs/features/cart/cart";
+
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "./index.css";
 import { useSession } from "next-auth/react";
-import { useGetCartByUserIdQuery, useRemoveItemFromCartMutation } from "@/libs/features/services/cart";
+import CartItem from "./CartItem";
+import formatMoney from "@/utils/formatMoney";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/libs/store";
+import { cartAction } from "@/libs/features/cart/cart";
+import { useAdjustQuantityMutation } from "@/libs/features/services/cart";
+import { AdjustQuantity } from "@/types/Cart";
+import { useEffect } from "react";
 const CartPage = () => {
-  const dispatch = useDispatch();
   const session = useSession();
+  const authStatus = session.status;
+
+  const [adjustQuantity, { data: cartAfterAdjust }] =
+    useAdjustQuantityMutation();
+  const { update: sessionUpdate } = useSession();
+
+  const dispatch = useDispatch();
   const userId = session.data?.user?._id;
-  const unauthenticatedCarts = useSelector((state: RootState) => state.cart?.items || []);
-  const cartItemLength = session.data?.user?.userCart?.cartItems.length;
+  const unauthenticatedCarts = useSelector(
+    (state: RootState) => state.cart?.items || [],
+  );
+
   const cartItems = session.data?.user?.userCart?.cartItems;
-  const itemsToDisplay = (cartItemLength !== 0 && cartItems) ? cartItems : (unauthenticatedCarts || []);
-  const [removeItemFromCart, { data: newCart }] = useRemoveItemFromCartMutation();
-  const { data: cart, error, isLoading } = useGetCartByUserIdQuery(userId as string);
-  console.log(cart);
-  const handleIncreaseQuantity = (productId: string, productOption: string) => {
-    dispatch(cartAction.increaseQuantity({ productId, productOption }));
-  };
+  const authenticatedCartId = session.data?.user?.userCart._id;
+  const itemsToDisplay = cartItems || unauthenticatedCarts;
 
-  const handleDecreaseQuantity = (productId: string, productOption: string) => {
-    dispatch(cartAction.decreaseQuantity({ productId, productOption }));
-  };
-
-  const handleClearCart = () => {
-    dispatch(cartAction.clearCart());
-  };
-
-  const formatCurrency = (amount:any) => {
-    return `${amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ`;
-  };
-
-  const handleRemove = (productId:string, productOption:string) => {
-    const removeObj = {
-      productId: productId,
-      productOption: productOption,
-      cartId: session.data?.user?.userCart?._id
+  function handleClearCart() {
+    if (authStatus === "authenticated") {
+      const adjustObject: AdjustQuantity = {
+        adjustOption: "clearAll",
+        cartId: authenticatedCartId,
+      };
+      adjustQuantity(adjustObject);
+    } else {
+      dispatch(cartAction.clearCart());
     }
-    console.log(removeObj);
-    removeItemFromCart(removeObj);
-  };
+  }
+
+  useEffect(() => {
+    const cartData = [cartAfterAdjust];
+    const updatedCart = cartData.find((cart) => cart);
+    if (updatedCart) {
+      sessionUpdate({
+        ...session,
+        user: {
+          _id: session?.data?.user._id,
+          username: session.data?.user.username,
+          ...session?.data?.user,
+          userCart: updatedCart,
+        },
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartAfterAdjust]);
+
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-50 py-10 px-[100px]">
+    <div className="flex min-h-screen flex-col items-center bg-gray-50 px-[100px] py-10">
       <div className="w-full rounded-lg p-8">
         {/* Cart Header */}
-        <h1 className="mb-4 text-center text-[28px] font-semibold font-oriya">
+        <h1 className="mb-4 text-center font-oriya text-[28px] font-semibold">
           Your Cart
         </h1>
         <a
           href="/shop"
-          className="mb-8 flex flex-row items-center justify-center text-center gap-[10px] text-sm text-purple-600 hover:underline"
+          className="mb-8 flex flex-row items-center justify-center gap-[10px] text-center text-sm text-purple-600 hover:underline"
         >
           <span>Continue Shopping</span>
           <Icon icon="mingcute:right-line" className="mt-[1px]" />
@@ -68,67 +84,27 @@ const CartPage = () => {
               </tr>
             </thead>
             <tbody>
-              {itemsToDisplay.map((item, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      <div className="flex flex-row items-center gap-[20px]">
-                        <img src={item?.productImage} width={100} height={100} alt="" />
-                        <div>
-                          <h2>{item?.productName}</h2>
-                          <p className="text-gray-800">{item.productOption}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-center">{formatCurrency(item.productPrice)}</td>
-                    <td>
-                      <div className="flex justify-center">
-                        <div className="flex items-center gap-[5px] rounded-lg border px-3 py-1 w-[80px]">
-                          <button
-                            className="text-gray-600 hover:text-gray-800"
-                            onClick={() =>
-                              handleDecreaseQuantity(item.productId, item.productOption as string)
-                            }
-                          >
-                            -
-                          </button>
-                          <input
-                            type="text"
-                            value={item.productQuantity}
-                            className="w-8 border-none bg-transparent text-center text-gray-700 outline-none"
-                            readOnly
-                          />
-                          <button
-                            className="text-gray-600 hover:text-gray-800"
-                            onClick={() =>
-                              handleIncreaseQuantity(item.productId, item.productOption as string)
-                            }
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-center">
-                      <p className="font-medium text-gray-700">
-                        {formatCurrency((item.productPrice * item.productQuantity))}
-                      </p>
-                    </td>
-                    <td><button onClick={() => handleRemove(item?.productId, item?.productOption as string)}>Delete</button></td>
-                  </tr>
-                );
-              })}
+              {itemsToDisplay.map((item) => (
+                <CartItem
+                  authenticatedCartId={authenticatedCartId}
+                  key={item.productId}
+                  cartItem={item as any}
+                />
+              ))}
               <tr>
                 <td className="border-b-0"></td>
                 <td className="border-b-0"></td>
                 <td colSpan={2}>
-                  <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-row items-center justify-between">
                     <h4 className="font-[500]">Subtotal:</h4>
-                    <h3 className="font-[500] text-[20px]">{formatCurrency(itemsToDisplay
-                        .reduce(
-                          (acc, item) => acc + item.productPrice * item.productQuantity,
+                    <h3 className="text-[20px] font-[500]">
+                      {formatMoney(
+                        itemsToDisplay.reduce(
+                          (acc, item) =>
+                            acc + item.productPrice * item.productQuantity,
                           0,
-                        ))}
+                        ),
+                      )}
                     </h3>
                   </div>
                 </td>
@@ -136,15 +112,30 @@ const CartPage = () => {
               <tr>
                 <td className="border-b-0"></td>
                 <td className="border-b-0"></td>
-                <td className="border-b-0 text-[15px] text-gray-800" colSpan={2}>
+                <td
+                  className="border-b-0 text-[15px] text-gray-800"
+                  colSpan={2}
+                >
                   Tax included and shipping calculated at checkout
                 </td>
               </tr>
+              <tr></tr>
               <tr>
                 <td className="border-b-0"></td>
                 <td className="border-b-0"></td>
-                <td className="border-b-0 text-[15px] text-gray-800" colSpan={2}>
-                  <button className="bg-purple-200 w-full px-[50px] py-[10px] rounded-[20px] font-[500]">Proceed to checkout</button>
+                <td
+                  className="border-b-0 text-[15px] text-gray-800"
+                  colSpan={2}
+                >
+                  <button className="w-full rounded-[20px] bg-primary py-2 font-bold text-white">
+                    Proceed to checkout
+                  </button>
+                  <button
+                    onClick={handleClearCart}
+                    className="mt-4 w-full rounded-full bg-primary px-6 py-2 font-bold text-white"
+                  >
+                    Xóa tất cả
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -156,7 +147,7 @@ const CartPage = () => {
           <div key={item.productId} className="border-b border-gray-200 pb-4">
             <div className="flex items-center justify-between">
               {/* Product Image */}
-              {/* <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
                 <img
                   src={item.productImage}
                   alt={item.productName}
@@ -170,11 +161,11 @@ const CartPage = () => {
                 </div>
               </div> */}
 
-              {/* Price and Quantity */}
-              {/* <div className="flex items-center space-x-4">
+        {/* Price and Quantity */}
+        {/* <div className="flex items-center space-x-4">
                 <p className="text-gray-700">${item.productPrice.toFixed(2)}</p>
                 {/* Quantity Selector */}
-                {/* <div className="flex items-center rounded-lg border px-3 py-1">
+        {/* <div className="flex items-center rounded-lg border px-3 py-1">
                   <button
                     className="text-gray-600 hover:text-gray-800"
                     onClick={() =>
@@ -227,12 +218,6 @@ const CartPage = () => {
           </button>
         </div> */}
       </div>
-      <button
-        onClick={handleClearCart}
-        className="mt-4 rounded-full bg-primary px-6 py-2 text-white"
-      >
-        Clear giỏ hàng
-      </button>
     </div>
   );
 };

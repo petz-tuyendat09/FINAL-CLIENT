@@ -18,3 +18,10 @@ export interface RemoveCartItem {
   productOption: string | undefined;
   cartId: string | undefined;
 }
+
+export interface AdjustQuantity {
+  adjustOption: "increase" | "decrease" | "clearAll"; // Union type for the two possible values
+  cartId: string | undefined;
+  productId?: string;
+  productOption?: string;
+}

@@ -25,12 +25,6 @@ export default function ProductCardCartButton({
 
   const [addToCart, { data: newCart }] = useAddItemToCartMutation();
 
-  // Xem status là gì ở console.log
-  // console.log(authStatus);
-
-  // Lấy Giỏ hàng ra xài ở component Cart route /cart
-  const cartItems = useSelector((state: RootState) => state.cart?.items);
-
   // Hàm thêm sản phẩm vào redux storge
   function handleAddToCart() {
     // Lấy item từ Product ra
@@ -46,11 +40,11 @@ export default function ProductCardCartButton({
       cartId: session.data?.user.userCart._id || null,
     };
 
-    // Việc cần làm, check if nếu status là unauthenticated thì thêm product vào giỏ hàng bằng
-    dispatch(cartAction.addToCart(cartItem));
-    // Còn nếu status là authenticated thì thêm product vào giỏ hàng bằng endpoint
-    // addToCart(cartItem);
-    // nếu thêm giỏ hàng bằng endpoint thì cập nhật lại session
+    if (authStatus === "authenticated") {
+      addToCart(cartItem);
+    } else {
+      dispatch(cartAction.addToCart(cartItem));
+    }
   }
 
   // Khi newCart từ server gửi về, cập nhật session

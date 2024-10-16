@@ -12,7 +12,6 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
     limit: 8,
     page: 1,
   });
-  console.log(data);
 
   return (
     <div>

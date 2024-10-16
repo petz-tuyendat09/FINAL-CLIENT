@@ -9,6 +9,7 @@ export interface ProductOption {
   productPrice: number;
   productName: number;
   productQuantity: number;
+  productThumbnail: string;
 }
 
 export interface Product {

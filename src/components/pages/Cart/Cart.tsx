@@ -1,22 +1,27 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/libs/store";
-import { cartAction, selectCartItems } from "@/libs/features/cart/cart";
+import { cartAction } from "@/libs/features/cart/cart";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "./index.css";
+import { useSession } from "next-auth/react";
+import { useGetCartByUserIdQuery, useRemoveItemFromCartMutation } from "@/libs/features/services/cart";
 const CartPage = () => {
   const dispatch = useDispatch();
-  // const cartItems = useSelector((state: RootState) => selectCartItems(state));
-  // Sử dụng selector an toàn để tránh undefined
-  const cartItems = useSelector((state: RootState) => state.cart?.items || []);
-
-  // Hàm tăng số lượng
+  const session = useSession();
+  const userId = session.data?.user?._id;
+  const unauthenticatedCarts = useSelector((state: RootState) => state.cart?.items || []);
+  const cartItemLength = session.data?.user?.userCart?.cartItems.length;
+  const cartItems = session.data?.user?.userCart?.cartItems;
+  const itemsToDisplay = (cartItemLength !== 0 && cartItems) ? cartItems : (unauthenticatedCarts || []);
+  const [removeItemFromCart, { data: newCart }] = useRemoveItemFromCartMutation();
+  const { data: cart, error, isLoading } = useGetCartByUserIdQuery(userId as string);
+  console.log(cart);
   const handleIncreaseQuantity = (productId: string, productOption: string) => {
     dispatch(cartAction.increaseQuantity({ productId, productOption }));
   };
 
-  // Hàm giảm số lượng
   const handleDecreaseQuantity = (productId: string, productOption: string) => {
     dispatch(cartAction.decreaseQuantity({ productId, productOption }));
   };
@@ -28,8 +33,16 @@ const CartPage = () => {
   const formatCurrency = (amount:any) => {
     return `${amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ`;
   };
-  console.log(cartItems);
 
+  const handleRemove = (productId:string, productOption:string) => {
+    const removeObj = {
+      productId: productId,
+      productOption: productOption,
+      cartId: session.data?.user?.userCart?._id
+    }
+    console.log(removeObj);
+    removeItemFromCart(removeObj);
+  };
   return (
     <div className="flex min-h-screen flex-col items-center bg-gray-50 py-10 px-[100px]">
       <div className="w-full rounded-lg p-8">
@@ -55,14 +68,14 @@ const CartPage = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item, i) => {
+              {itemsToDisplay.map((item, i) => {
                 return (
                   <tr key={i}>
                     <td>
                       <div className="flex flex-row items-center gap-[20px]">
-                        <img src={item.productImage} width={100} height={100} alt="" />
+                        <img src={item?.productImage} width={100} height={100} alt="" />
                         <div>
-                          <h2>{item.productName}</h2>
+                          <h2>{item?.productName}</h2>
                           <p className="text-gray-800">{item.productOption}</p>
                         </div>
                       </div>
@@ -70,11 +83,11 @@ const CartPage = () => {
                     <td className="text-center">{formatCurrency(item.productPrice)}</td>
                     <td>
                       <div className="flex justify-center">
-                        <div className="flex items-center rounded-lg border px-3 py-1 w-[70px]">
+                        <div className="flex items-center gap-[5px] rounded-lg border px-3 py-1 w-[80px]">
                           <button
                             className="text-gray-600 hover:text-gray-800"
                             onClick={() =>
-                              handleDecreaseQuantity(item.productId, item.productOption)
+                              handleDecreaseQuantity(item.productId, item.productOption as string)
                             }
                           >
                             -
@@ -88,7 +101,7 @@ const CartPage = () => {
                           <button
                             className="text-gray-600 hover:text-gray-800"
                             onClick={() =>
-                              handleIncreaseQuantity(item.productId, item.productOption)
+                              handleIncreaseQuantity(item.productId, item.productOption as string)
                             }
                           >
                             +
@@ -101,6 +114,7 @@ const CartPage = () => {
                         {formatCurrency((item.productPrice * item.productQuantity))}
                       </p>
                     </td>
+                    <td><button onClick={() => handleRemove(item?.productId, item?.productOption as string)}>Delete</button></td>
                   </tr>
                 );
               })}
@@ -110,7 +124,7 @@ const CartPage = () => {
                 <td colSpan={2}>
                   <div className="flex flex-row justify-between items-center">
                     <h4 className="font-[500]">Subtotal:</h4>
-                    <h3 className="font-[500] text-[20px]">{formatCurrency(cartItems
+                    <h3 className="font-[500] text-[20px]">{formatCurrency(itemsToDisplay
                         .reduce(
                           (acc, item) => acc + item.productPrice * item.productQuantity,
                           0,
@@ -129,7 +143,7 @@ const CartPage = () => {
               <tr>
                 <td className="border-b-0"></td>
                 <td className="border-b-0"></td>
-                <td colSpan={2}>
+                <td className="border-b-0 text-[15px] text-gray-800" colSpan={2}>
                   <button className="bg-purple-200 w-full px-[50px] py-[10px] rounded-[20px] font-[500]">Proceed to checkout</button>
                 </td>
               </tr>

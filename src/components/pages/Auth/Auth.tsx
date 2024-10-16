@@ -37,10 +37,9 @@ function AuthContent() {
     let timer: NodeJS.Timeout;
 
     if (modalDisplay) {
-      // Set a timer to close the modal and clear the text after 5 seconds
       timer = setTimeout(() => {
         setModalDisplay(false); // Hide the modal
-        setModalText(""); // Clear the modal text
+        setModalText(""); 
       }, 5000);
     }
 

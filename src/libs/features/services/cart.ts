@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CartItem, Cart } from "@/types/Cart";
+import { CartItem, RemoveCartItem } from "@/types/Cart";
 
 export const cartAPI = createApi({
   reducerPath: "cartAPI",
@@ -16,7 +16,22 @@ export const cartAPI = createApi({
         credentials: "include",
       }),
     }),
+    removeItemFromCart: builder.mutation<RemoveCartItem, RemoveCartItem>({
+      query: (formData: RemoveCartItem) => ({
+        url: "/remove-item",
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      }),
+    }),
+    getCartByUserId: builder.query<CartItem, string>({
+      query: (userId) => ({
+        url: `/${userId}`,
+        method: "GET",
+        credentials: "include",
+      }),
+    })
   }),
 });
 
-export const { useAddItemToCartMutation } = cartAPI;
+export const { useAddItemToCartMutation, useRemoveItemFromCartMutation, useGetCartByUserIdQuery } = cartAPI;

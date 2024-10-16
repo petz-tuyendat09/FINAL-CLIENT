@@ -29,6 +29,7 @@ export interface UserCart {
 
 // Định nghĩa interface cho User
 export interface User {
+  _id: string;
   googleId: string | null;
   username: string;
   displayName: string;

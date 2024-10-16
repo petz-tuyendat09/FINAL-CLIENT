@@ -30,7 +30,6 @@ export default function ProductCardCartButton({
 
   // Lấy Giỏ hàng ra xài ở component Cart route /cart
   const cartItems = useSelector((state: RootState) => state.cart?.items);
-  console.log(cartItems);
 
   // Hàm thêm sản phẩm vào redux storge
   function handleAddToCart() {

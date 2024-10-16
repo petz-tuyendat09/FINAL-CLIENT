@@ -6,14 +6,23 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import "./index.css";
 import SuggestedProducts from "@/components/pages/Details/SuggestedProducts";
+import { useDispatch } from "react-redux";
+import { cartAction } from "@/libs/features/cart/cart";
+import { useAddItemToCartMutation } from "@/libs/features/services/cart";
+import { useSession } from "next-auth/react";
 export const Index = () => {
     const { slug } = useParams();
+    const dispatch = useDispatch();
+    const [addToCart, { data: newCart }] = useAddItemToCartMutation();
     const productSlug = Array.isArray(slug) ? slug[0] : slug;
     const {data, error, isLoading} = useGetProductsQuery({ productSlug });
     const [quantity, setQuantity] = useState(1);
     const [index, setIndex] = useState(0);
     const [maxQuantity, setMaxQuantity] = useState(0);
     const [option, setOption] = useState('');
+    const session = useSession();
+    const { update: sessionUpdate } = useSession();
+    const userId = session.data?.user?._id;
     const handleQuantity = (action:string) => {
         if (action === 'increase') {
             if(quantity < maxQuantity) {
@@ -34,11 +43,26 @@ export const Index = () => {
             productId: id, 
             productPrice: price,
             salePercent: salePercent,
-            productOption: option ? option : data?.products[0]?.productOption[0]?.name
+            productQuantity: quantity,
+            productOption: option ? option : data?.products[0]?.productOption[0]?.name,
+            productImage: data?.products[0]?.productOption[0].productThumbnail,
+            cartId: session.data?.user?.userCart?._id || null,
+            userId: userId
         }
-        console.log(cart_obj);
+        addToCart(cart_obj);
     }
 
+    useEffect(() => {
+        if (newCart) {
+          sessionUpdate({
+            ...session,
+            user: {
+              ...session?.data?.user,
+              userCart: newCart,
+            },
+          });
+        }
+      }, [newCart]);
     useEffect(() => {
         const cursor = document.querySelector('.cursor') as HTMLElement;
         const zone = document.getElementById('this-zone');

@@ -11,7 +11,6 @@ export default function CategoryButton({
   buttonLabel,
   currentFilter,
 }: CategoryButtonProps) {
-  console.log(currentFilter);
   return (
     <button
       onClick={() => handleFilter(filterOption)}

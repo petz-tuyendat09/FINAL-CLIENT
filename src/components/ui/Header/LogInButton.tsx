@@ -1,17 +1,21 @@
-import { useSelector } from "react-redux";
-import { RootState } from "@/libs/store";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-export default function LogInButton() {
-  const session = useSession();
-  const authStatus = session.status;
-  const username = session.data?.user.username;
+export default function LoginButton() {
+  const { data: session, status } = useSession();
+
+  if (status === "unauthenticated") {
+    return (
+      <>
+        Not signed in <br />
+        <button onClick={() => signIn()}>Sign in</button>
+      </>
+    );
+  }
 
   return (
     <>
-      {authStatus === "authenticated" && <Link href="/account">{username}</Link>}
-      {authStatus === "unauthenticated" && <Link href="/auth">Đăng nhập</Link>}
+      {session?.user.username} <br />
+      {/* <button onClick={() => signOut()}>Sign out</button> */}
     </>
   );
 }

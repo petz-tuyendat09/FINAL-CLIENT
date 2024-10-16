@@ -21,11 +21,11 @@ const CartPage = () => {
 
   const dispatch = useDispatch();
   const userId = session.data?.user?._id;
+
+  const cartItems = session.data?.user?.userCart?.cartItems;
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-
-  const cartItems = session.data?.user?.userCart?.cartItems;
   const authenticatedCartId = session.data?.user?.userCart._id;
   const itemsToDisplay = cartItems || unauthenticatedCarts;
 

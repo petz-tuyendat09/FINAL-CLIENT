@@ -2,8 +2,16 @@
 
 import { Input, Tab, Tabs, DatePicker } from "@nextui-org/react";
 import ServicesCard from "./ServicesCard";
+import { useGetServicesQuery } from "@/libs/features/services/services";
+import { ServicesType } from "@/types/Services";
+
+const serviceType = ["NAIL_CARE", "CLEAN", "HAIR", "MASSAGE", "COMBO"];
 
 export default function BookingForm() {
+  const { data } = useGetServicesQuery({});
+
+  console.log(data);
+
   return (
     <div className="w-1/2 border-r pb-8">
       <div className="mb-4 border-b border-t px-4">
@@ -24,25 +32,31 @@ export default function BookingForm() {
           <div className="space-y-4 px-4">
             <p>Chọn dịch vụ cho bé</p>
             <Tabs>
-              <Tab title="Chăm sóc móng">
-                <ServicesCard />
-              </Tab>
-              <Tab title="Tắm - Chăm sóc lông">
-                <ServicesCard />
-              </Tab>
-              <Tab title="Massage">
-                <ServicesCard />
-              </Tab>
-              <Tab title="Combo">
-                <ServicesCard />
-              </Tab>
+              {serviceType.map((service) => (
+                <Tab
+                  key={service}
+                  title={ServicesType[service as keyof typeof ServicesType]}
+                >
+                  <div>
+                    {data &&
+                      data
+                        .filter((item: any) => item.serviceType === service)
+                        .map((filteredService: any) => (
+                          <ServicesCard
+                            key={filteredService._id}
+                            service={filteredService}
+                          />
+                        ))}
+                  </div>
+                </Tab>
+              ))}
             </Tabs>
           </div>
         </div>
         <div className="mb-4">
           <div className="space-y-4 px-4">
             <p>Chọn ngày thư giãn cho bé</p>
-            <DatePicker />
+            <DatePicker aria-label="Chọn ngày" />
             <p>Chọn giờ phù hợp với bé</p>
             <Tabs>
               <Tab title="8:00" />

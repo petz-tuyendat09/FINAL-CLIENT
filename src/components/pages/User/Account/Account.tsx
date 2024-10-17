@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 import Image from "next/image";
+import Sidebar from "../Sidebar/Sidebar";
 
 export default function Profile() {
   return (

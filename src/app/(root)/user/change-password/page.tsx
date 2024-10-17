@@ -1,4 +1,4 @@
-import History from "@/components/pages/User/History/History"
+import ChangePassword from "@/components/pages/User/ChangePassword/ChangePassword";
 
 export default function page() {
     return (
@@ -7,7 +7,7 @@ export default function page() {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
             </head>
 
-            <History />
+            <ChangePassword />
         </>
     )
 }

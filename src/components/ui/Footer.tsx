@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <>
       <div className="bg-primary px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
-        <div className="flex justify-between">
+        <div className="flex flex-col justify-between xl:flex-row">
           <div>
             <h1 className="text-5xl font-bold">
               Tham gia bản tin <br /> PETZ để nhận <br /> thông tin khuyến mãi
@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
 
           {/* QUICK LINKS */}
-          <div className="grid w-1/2 grid-cols-1 gap-8 text-center md:grid-cols-3 md:text-left">
+          <div className="grid grid-cols-1 gap-8 text-left md:grid-cols-3 xl:w-1/2 xl:text-left">
             <div>
               <h2 className="text-lg text-gray-200">THÔNG TIN LIỆN HỆ</h2>
               <ul className="mt-4 space-y-2">

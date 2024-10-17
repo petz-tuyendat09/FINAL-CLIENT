@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { useCreateBookingMutation } from "@/libs/features/services/booking";
+import { useSession } from "next-auth/react";
 
 interface errorsValues {
   customerName: string;
@@ -14,9 +16,17 @@ interface errorsValues {
 
 export default function useBookingForm() {
   const router = useRouter();
+  const [createBooking, { data }] = useCreateBookingMutation();
+  const [isModalDisplay, setIsModalDisplay] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
+  const session = useSession();
+
+  console.log(session.data?.user._id);
 
   const formik = useFormik({
     initialValues: {
+      userId: session.data?.user._id || null,
+
       customerName: "",
       customerPhone: "",
       customerEmail: "",
@@ -25,7 +35,9 @@ export default function useBookingForm() {
       bookingHours: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+      // createBooking(values);
+      setIsConfirm(true);
     },
     validate: (values) => {
       let errors: Partial<errorsValues> = {};
@@ -66,23 +78,26 @@ export default function useBookingForm() {
     },
   });
 
-  //   useEffect(() => {
-  //     if (mutationError && "data" in mutationError) {
-  //       setDuplicatedMessage((mutationError.data as any).message);
-  //     }
-  //     if (mutationResponse) {
-  //       setModalDisplay(true); // Show modal on successful product addition
-  //       setModalText("Thêm sản phẩm thành công quay về sau 3s");
-  //     }
-  //   }, [mutationError, mutationResponse]);
+  useEffect(() => {
+    if (data) {
+      router.push("/booking-success");
+    }
+  }, [data]);
 
-  //   useEffect(() => {
-  //     if (formik.values.productName) {
-  //       setDuplicatedMessage(undefined);
-  //     }
-  //   }, [formik.values.productName]);
+  async function handleCreateBooking() {
+    await createBooking(formik.values);
+    setIsConfirm(false);
+  }
+
+  function handleCancelConfirm() {
+    setIsConfirm(false);
+  }
 
   return {
     formik,
+    isModalDisplay,
+    isConfirm,
+    handleCreateBooking,
+    handleCancelConfirm,
   };
 }

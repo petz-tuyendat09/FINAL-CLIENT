@@ -11,14 +11,21 @@ import {
 import ServicesCard from "./ServicesCard";
 import { useGetServicesQuery } from "@/libs/features/services/services";
 import { ServicesType } from "@/types/Services";
-import useBookingForm from "./_hook/useBookingForm";
 import { useLazyGetBookingByDateQuery } from "@/libs/features/services/booking";
 import { useEffect, useState } from "react";
+import { today, isWeekend, getLocalTimeZone } from "@internationalized/date";
+import BookingModal from "./Modal/BookingModal";
 
 const serviceType = ["NAIL_CARE", "CLEAN", "HAIR", "MASSAGE", "COMBO"];
 const TIMES = ["8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
-export default function BookingForm({ formik }: { formik: any }) {
+export default function BookingForm({
+  formik,
+  isModalDisplay,
+}: {
+  formik: any;
+  isModalDisplay: boolean;
+}) {
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState<string | null>(null); // State for Select value
   const { data } = useGetServicesQuery({});
@@ -128,7 +135,7 @@ export default function BookingForm({ formik }: { formik: any }) {
                   key={service}
                   title={ServicesType[service as keyof typeof ServicesType]}
                 >
-                  <div className="grid grid-cols-1 justify-center gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  <div className="grid grid-cols-1 justify-center gap-3 md:grid-cols-2 2xl:grid-cols-3">
                     {data &&
                       data
                         .filter((item: any) => item.serviceType === service)
@@ -156,6 +163,7 @@ export default function BookingForm({ formik }: { formik: any }) {
               </p>
             </div>
             <DatePicker
+              minValue={today(getLocalTimeZone())}
               aria-label="Chọn ngày"
               onBlur={formik.handleBlur}
               onChange={(date) =>
@@ -189,6 +197,9 @@ export default function BookingForm({ formik }: { formik: any }) {
           </div>
         </div>
       </form>
+      {/* {isModalDisplay && (
+        <BookingModal isDialogOpen={isModalDisplay} formik={formik} />
+      )} */}
     </div>
   );
 }

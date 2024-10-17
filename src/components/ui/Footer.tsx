@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 export default function Footer() {
   return (
     <>
-      <div className="bg-primary px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
+      <div className="mt-[200px] bg-primary px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
         <div className="flex flex-col justify-between xl:flex-row">
           <div>
             <h1 className="text-5xl font-bold">

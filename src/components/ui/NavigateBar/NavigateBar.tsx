@@ -36,6 +36,9 @@ function NavigateName({
       case "/booking":
         setPathname("Đặt lịch spa");
         break;
+      case "/user/account":
+        setPathname("Tài khoản");
+        break;
 
       default:
         break;

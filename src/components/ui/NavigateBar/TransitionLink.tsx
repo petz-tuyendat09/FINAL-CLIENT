@@ -11,9 +11,6 @@ interface TransitionLinkProps {
 const variant = {
   hidden: {
     opacity: 0,
-    // transition: {
-    //   delay: 0.7,
-    // },
   },
   show: {
     opacity: 100,

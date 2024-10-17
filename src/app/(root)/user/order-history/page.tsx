@@ -1,4 +1,4 @@
-import Profile from "@/components/pages/User/Profile/Profile"
+import OrderHistory from "@/components/pages/User/OrderHistory/OrderHistory"
 
 export default function page() {
     return (
@@ -7,8 +7,7 @@ export default function page() {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
             </head>
 
-            <Profile />
+            <OrderHistory />
         </>
-
     )
 }

@@ -1,7 +1,8 @@
+import HistoryImage from "@@/assets/images/history-img.png";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import Sidebar from "../Sidebar/Sidebar";
 
-export default function ServicesList() {
+export default function History() {
     return (
         <>
             <div className="flex min-h-screen mt-36">
@@ -11,7 +12,7 @@ export default function ServicesList() {
                 {/* <!-- Main Content --> */}
                 <div className="w-3/4 p-6">
                     <h1 className="text-2xl font-semibold mb-6">
-                        Danh sách dịch vụ đã đặt
+                        Lịch sử đơn hàng
                     </h1>
                     <div className="mb-6">
                         <div className="relative">
@@ -23,7 +24,7 @@ export default function ServicesList() {
                     <div className="bg-white shadow rounded-lg p-6">
                         <div className="grid grid-cols-4 gap-4 text-center font-semibold text-white bg-black p-3 rounded-lg">
                             <div>
-                                Tên dịch vụ
+                                Tên sản phẩm
                             </div>
                             <div>
                                 Giá (VND)

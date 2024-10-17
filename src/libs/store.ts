@@ -6,6 +6,8 @@ import { subCategoriesAPI } from "./features/services/subcategories";
 import { vouchersAPI } from "./features/services/voucher";
 import { cartAPI } from "./features/services/cart";
 import { servicesAPI } from "./features/services/services";
+import { bookingsAPI } from "./features/services/booking";
+
 import cartSlice from "./features/cart/cart";
 import userSlice from "./features/user/user";
 import storage from "redux-persist/lib/storage";
@@ -31,6 +33,7 @@ const rootReducer = combineReducers({
   [vouchersAPI.reducerPath]: vouchersAPI.reducer,
   [cartAPI.reducerPath]: cartAPI.reducer,
   [servicesAPI.reducerPath]: servicesAPI.reducer,
+  [bookingsAPI.reducerPath]: bookingsAPI.reducer,
 });
 
 // Configuration for redux-persist with encryption
@@ -60,6 +63,7 @@ export const store = configureStore({
       vouchersAPI.middleware,
       cartAPI.middleware,
       servicesAPI.middleware,
+      bookingsAPI.middleware,
     ),
 });
 

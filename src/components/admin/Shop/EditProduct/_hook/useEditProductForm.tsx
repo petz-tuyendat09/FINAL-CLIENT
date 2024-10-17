@@ -152,9 +152,11 @@ export default function useEditProductForm({ slug }: { slug: string }) {
     if (mutationError && "data" in mutationError) {
       setDuplicatedMessage((mutationError.data as any).message);
     }
-  }, [mutationError]);
-
-  console.log(mutationError);
+    if (data) {
+      setModalDisplay(true); // Show modal on successful product addition
+      setModalText("Thêm sản phẩm thành công quay về sau 3s");
+    }
+  }, [mutationError, data]);
 
   useEffect(() => {
     if (formik.values.productName) {

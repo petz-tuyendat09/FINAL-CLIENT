@@ -7,7 +7,9 @@ export interface ProductOption {
   _id: string;
   name: string;
   productPrice: number;
+  productName: number;
   productQuantity: number;
+  productThumbnail: string;
 }
 
 export interface Product {
@@ -28,6 +30,7 @@ export interface Product {
 }
 
 export interface PaginateProduct {
+  productCategory?: string;
   products: Product[];
   currentPage: number;
   totalPages: number;

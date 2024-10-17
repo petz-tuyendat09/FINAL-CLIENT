@@ -5,24 +5,29 @@ interface PageQuery {
   page: number;
   limit: number;
 }
-
+interface Option {
+  name: string;
+  productQuantity: number;
+}
 export interface QueryParams {
   page?: number;
   productName?: string;
   status?: string;
   limit?: number;
+  productQuantity?: number;
   productCategory?: string | string[];
   productSlug?: string;
   productSubCategory?: string | string[];
   salePercent?: number;
   productStatus?: string;
   productBuy?: number;
+  productOption?: Option[];
 }
 
 export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}product/`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/product`,
     // Prepare headers dynamically
     // prepareHeaders: (headers, { getState }) => {
     //   // Ensure Content-Type is correctly set
@@ -56,10 +61,16 @@ export const productsAPI = createApi({
       },
       providesTags: ["Product"],
     }),
+    getProductsByCatId: builder.query<void, string>({
+      query: (categoryId) => {
+        const queryParams = new URLSearchParams({ categoryId }).toString();
+        return `/by-cat-id?${queryParams}`;
+      },
+    }),
 
     addNewProduct: builder.mutation<any, FormData>({
       query: (formData: FormData) => ({
-        url: "insert-product",
+        url: "/insert-product",
         method: "POST",
         body: formData,
       }),
@@ -86,6 +97,7 @@ export const productsAPI = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetProductsByCatIdQuery,
   useLazyGetProductsQuery,
   useAddNewProductMutation,
   useDeleteProductMutation,

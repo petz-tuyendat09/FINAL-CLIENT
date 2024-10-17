@@ -6,7 +6,7 @@ import CartModal from "../CartModal/CartModal";
 
 export default function HeaderCartButton() {
   const dispatch = useDispatch();
-  const toggleCart = useSelector((state: RootState) => state.cart.openCart);
+  const toggleCart = useSelector((state: RootState) => state.cart?.openCart);
 
   function handleToggleCart() {
     dispatch(cartAction.toggle());

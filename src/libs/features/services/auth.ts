@@ -4,13 +4,13 @@ import { LoginUser, RegisterUser, VerifyEmail } from "@/types/User";
 export const authAPI = createApi({
   reducerPath: "authAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}auth/`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/auth`,
   }),
 
   endpoints: (builder) => ({
     logIn: builder.mutation<LoginUser, LoginUser>({
       query: (formData: LoginUser) => ({
-        url: "login",
+        url: "/login",
         method: "POST",
         body: formData,
         credentials: "include",
@@ -19,7 +19,7 @@ export const authAPI = createApi({
 
     signUp: builder.mutation<RegisterUser, RegisterUser>({
       query: (formData: RegisterUser) => ({
-        url: "signup",
+        url: "/signup",
         method: "POST",
         body: formData,
       }),
@@ -27,14 +27,14 @@ export const authAPI = createApi({
 
     verifyEmail: builder.mutation<VerifyEmail, VerifyEmail>({
       query: (formData: VerifyEmail) => ({
-        url: "verify-otp",
+        url: "/verify-otp",
         method: "POST",
         body: formData,
       }),
     }),
     resendOTP: builder.mutation<any, string>({
       query: (email: string) => ({
-        url: "resend-otp",
+        url: "/resend-otp",
         method: "POST",
         body: { email: email },
       }),

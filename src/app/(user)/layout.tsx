@@ -4,6 +4,7 @@ import StoreProvider from "../StoreProvider";
 import Header from "@/components/ui/Header/Header";
 import Footer from "@/components/ui/Footer";
 import NavigateBar from "@/components/ui/NavigateBar/NavigateBar";
+import Sidebar from "@/components/pages/User/Sidebar/Sidebar";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -30,7 +31,12 @@ const App = async ({ children }: { children: React.ReactNode }) => {
       <body>
         <StoreProvider>
           <Header />
-          <main>{children}</main>
+          <main className="mt-24">
+            <div className="flex">
+              <Sidebar />
+              <div className="mx-auto w-3/4 px-12">{children}</div>
+            </div>
+          </main>
           <NavigateBar />
           <Footer />
         </StoreProvider>

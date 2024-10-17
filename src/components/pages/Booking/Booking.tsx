@@ -5,7 +5,13 @@ import BookingDetail from "./BookingDetail";
 import BookingForm from "./BookingForm";
 
 export default function Booking() {
-  const { formik } = useBookingForm();
+  const {
+    formik,
+    isModalDisplay,
+    isConfirm,
+    handleCreateBooking,
+    handleCancelConfirm,
+  } = useBookingForm();
 
   return (
     <section className="mt-14">
@@ -15,8 +21,13 @@ export default function Booking() {
             Đặt lịch spa
           </h1>
           <div className="xl:flex">
-            <BookingForm formik={formik} />
-            <BookingDetail formik={formik} />
+            <BookingForm isModalDisplay={isModalDisplay} formik={formik} />
+            <BookingDetail
+              handleCancelConfirm={handleCancelConfirm}
+              isConfirm={isConfirm}
+              handleCreateBooking={handleCreateBooking}
+              formik={formik}
+            />
           </div>
         </div>
       </div>

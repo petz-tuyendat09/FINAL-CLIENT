@@ -1,4 +1,5 @@
 import Logo from "@/components/ui/Header/Logo";
+import { useCreateBookingMutation } from "@/libs/features/services/booking";
 import formatMoney from "@/utils/formatMoney";
 import {
   Card,
@@ -6,15 +7,27 @@ import {
   CardBody,
   CardFooter,
   Divider,
-  Link,
 } from "@nextui-org/react";
+import { useState } from "react";
+import ConfirmBooking from "./Modal/ConfirmBooking";
 
-export default function BookingDetail({ formik }: { formik: any }) {
-  // Extract service names and format them
+interface BookingDetailProps {
+  formik: any;
+  isConfirm: boolean;
+  handleCreateBooking: () => void;
+  handleCancelConfirm: () => void;
+}
+
+export default function BookingDetail({
+  formik,
+  isConfirm,
+  handleCreateBooking,
+  handleCancelConfirm,
+}: BookingDetailProps) {
   const selectedServiceNames = Object.values(formik.values.selectedServices)
-    .filter((service: any) => service && service.serviceName) // Ensure valid services
+    .filter((service: any) => service && service.serviceName)
     .map((service: any) => service.serviceName)
-    .join(" - "); // Join services with a hyphen
+    .join(" - ");
 
   const totalPrice = Object.values(formik.values.selectedServices).reduce(
     (total, service: any) => total + service.servicePrice,
@@ -81,6 +94,14 @@ export default function BookingDetail({ formik }: { formik: any }) {
           </CardFooter>
         </Card>
       </div>
+      {isConfirm && (
+        <ConfirmBooking
+          isDialogOpen={isConfirm}
+          handleCloseDialog={handleCancelConfirm}
+          formik={formik}
+          handleCreateBooking={handleCreateBooking}
+        />
+      )}
     </div>
   );
 }

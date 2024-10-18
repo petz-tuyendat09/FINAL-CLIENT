@@ -25,8 +25,6 @@ export default function useBookingForm() {
 
   const formik = useFormik({
     initialValues: {
-      userId: session.data?.user._id || null,
-
       customerName: "",
       customerPhone: "",
       customerEmail: "",
@@ -85,7 +83,16 @@ export default function useBookingForm() {
   }, [data]);
 
   async function handleCreateBooking() {
-    await createBooking(formik.values);
+    const totalPrice = Object.values(formik.values.selectedServices).reduce(
+      (total, service: any) => total + service.servicePrice,
+      0,
+    ) as number;
+    const bookingObject = {
+      userId: session.data?.user._id || null,
+      ...formik.values,
+      totalPrice: totalPrice,
+    };
+    await createBooking(bookingObject);
     setIsConfirm(false);
   }
 

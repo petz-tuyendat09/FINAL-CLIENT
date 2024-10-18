@@ -13,10 +13,10 @@ import {
   Tab,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import TransitionLinkAdmin from "../UI/TransitionLinkAdmin";
 import useProductActionAdmin from "./_hooks/useProductActionAdmin";
 import { ProductOption } from "@/types/Product";
 import ModalDelete from "./Modal/ModalDelete";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 const columns = [
   {
@@ -98,11 +98,11 @@ export default function ProductTable() {
                       <button onClick={() => handleDeleteProduct(item._id)}>
                         <Icon className="size-6" icon="mdi:trash" />
                       </button>
-                      <TransitionLinkAdmin
+                      <NormalTransitionLink
                         href={`shop/edit-product/${item.productSlug}`}
                       >
                         <Icon className="size-6" icon="mynaui:edit" />
-                      </TransitionLinkAdmin>
+                      </NormalTransitionLink>
                     </TableCell>
                   );
                 } else if (columnKey === "productOption") {

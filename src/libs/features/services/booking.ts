@@ -1,3 +1,4 @@
+import { PaginateBooking } from "@/types/Booking";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface BookingInformation {
@@ -8,6 +9,15 @@ interface BookingInformation {
   selectedServices: {};
   bookingDate: string;
   bookingHours: string;
+  totalPrice: Number;
+}
+
+interface BookingUserIdQueryParams {
+  userId?: string;
+  year?: number;
+  month?: number;
+  day?: number;
+  status?: string;
 }
 
 export const bookingsAPI = createApi({
@@ -35,6 +45,21 @@ export const bookingsAPI = createApi({
       }),
       invalidatesTags: ["Booking"],
     }),
+    getBookingByUserId: builder.query<
+      PaginateBooking,
+      BookingUserIdQueryParams
+    >({
+      query: (params) => {
+        const queryParams = new URLSearchParams(
+          params as Record<string, string>,
+        ).toString();
+
+        console.log(queryParams);
+
+        return `/booking-userId/?${queryParams}`;
+      },
+      providesTags: ["Booking"],
+    }),
   }),
 });
 
@@ -42,4 +67,5 @@ export const {
   useGetBookingByDateQuery,
   useLazyGetBookingByDateQuery,
   useCreateBookingMutation,
+  useGetBookingByUserIdQuery,
 } = bookingsAPI;

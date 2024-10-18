@@ -13,21 +13,18 @@ import { useGetServicesQuery } from "@/libs/features/services/services";
 import { ServicesType } from "@/types/Services";
 import { useLazyGetBookingByDateQuery } from "@/libs/features/services/booking";
 import { useEffect, useState } from "react";
-import { today, isWeekend, getLocalTimeZone } from "@internationalized/date";
-import BookingModal from "./Modal/BookingModal";
+import { today, getLocalTimeZone } from "@internationalized/date";
 
 const serviceType = ["NAIL_CARE", "CLEAN", "HAIR", "MASSAGE", "COMBO"];
 const TIMES = ["8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
 export default function BookingForm({
   formik,
-  isModalDisplay,
 }: {
   formik: any;
   isModalDisplay: boolean;
 }) {
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null); // State for Select value
   const { data } = useGetServicesQuery({});
   const [triggerGetBookingByDate, { data: bookings }] =
     useLazyGetBookingByDateQuery();
@@ -63,6 +60,8 @@ export default function BookingForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookings]);
+
+  console.log(bookedTimes);
 
   return (
     <div className="border-r pb-8 xl:w-1/2">
@@ -197,9 +196,6 @@ export default function BookingForm({
           </div>
         </div>
       </form>
-      {/* {isModalDisplay && (
-        <BookingModal isDialogOpen={isModalDisplay} formik={formik} />
-      )} */}
     </div>
   );
 }

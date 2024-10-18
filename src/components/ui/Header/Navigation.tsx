@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Link from "next/link";
+import NormalTransitionLink from "../NormalTransitionLink";
 
 const links = [
   {
@@ -8,7 +8,7 @@ const links = [
   },
   {
     label: "Đặt lịch",
-    to: "/shop",
+    to: "/booking",
   },
 ];
 
@@ -24,7 +24,9 @@ export default function Navigation() {
           }}
           exit={{ opacity: 0 }}
         >
-          <Link href={link.to}>{link.label}</Link>
+          <NormalTransitionLink href={link.to}>
+            {link.label}
+          </NormalTransitionLink>
         </motion.li>
       ))}
     </ul>

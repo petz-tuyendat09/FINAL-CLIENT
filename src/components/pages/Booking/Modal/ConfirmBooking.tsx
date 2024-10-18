@@ -22,8 +22,6 @@ export default function ConfirmBooking({
   handleCloseDialog,
   handleCreateBooking,
 }: ModalAddProps) {
-  const router = useRouter();
-
   const selectedServiceNames = Object.values(formik.values.selectedServices)
     .filter((service: any) => service && service.serviceName)
     .map((service: any) => service.serviceName)
@@ -57,7 +55,7 @@ export default function ConfirmBooking({
             </ModalHeader>
             <ModalBody>
               <p>
-                <span className="font-bold">Giờ:</span>{" "}
+                <span className="font-bold">Tên khách hàng:</span>{" "}
                 {formik.values.customerName}
               </p>
               <p>
@@ -65,12 +63,12 @@ export default function ConfirmBooking({
                 {selectedServiceNames || "Chưa chọn dịch vụ"}
               </p>
               <p>
-                <span className="font-bold">Giờ:</span>{" "}
+                <span className="font-bold">Giờ đặt:</span>{" "}
                 {formik.values.bookingHours || "Chưa chọn giờ"}
               </p>
 
               <p>
-                <span className="font-bold">Ngày:</span>{" "}
+                <span className="font-bold">Ngày đặt:</span>{" "}
                 {formik.values.bookingDate
                   ? formik.values.bookingDate.split("T")[0]
                   : "Chưa chọn ngày"}

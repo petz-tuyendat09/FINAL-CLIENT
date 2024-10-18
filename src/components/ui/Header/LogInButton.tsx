@@ -11,11 +11,6 @@ import {
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
-
-  function handleOpen() {
-    setIsOpen((prevState) => !prevState);
-  }
 
   if (status === "unauthenticated") {
     return (
@@ -55,8 +50,10 @@ export default function LoginButton() {
             }}
             aria-label="Link Actions"
           >
-            <DropdownItem key="home" href="/user/account">
-              Thông tin
+            <DropdownItem key="/user/account">
+              <NormalTransitionLink href="/user/account">
+                Thông tin
+              </NormalTransitionLink>
             </DropdownItem>
             <DropdownItem
               key="logout"

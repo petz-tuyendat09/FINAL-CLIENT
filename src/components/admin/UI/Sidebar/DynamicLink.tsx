@@ -1,10 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { links } from "./link";
-import { animatePageOut } from "@/utils/animation";
-import TransitionLinkAdmin from "../TransitionLinkAdmin";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 interface DynamicLink {
   children: React.ReactNode;
   url: string;
@@ -23,9 +21,9 @@ export default function DynamicLink() {
           } rounded-xl flex items-center gap-1 rounded-full px-8 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white`}
         >
           <span>{link.icon}</span>
-          <TransitionLinkAdmin href={link.url}>
+          <NormalTransitionLink href={link.url}>
             {link.label}
-          </TransitionLinkAdmin>
+          </NormalTransitionLink>
         </li>
       ))}
     </ul>

@@ -7,6 +7,7 @@ import { useAddItemToCartMutation } from "@/libs/features/services/cart";
 import { useEffect } from "react";
 import { message } from "antd";
 import Link from "next/link";
+import NormalTransitionLink from "../NormalTransitionLink";
 interface ProductCardSelectWeightProps {
   Product: Product;
 }
@@ -22,11 +23,14 @@ export default function ProductCardCartButton({
 
   const [addToCart, { data: newCart }] = useAddItemToCartMutation();
   const success = () => {
-      message.success(
-          <div>
-              Thêm giỏ hàng thành công. <Link href="/cart" className="text-blue-400">Xem giỏ hàng</Link>
-          </div>
-      );
+    message.success(
+      <div>
+        Thêm giỏ hàng thành công.{" "}
+        <NormalTransitionLink href="/cart" className="text-blue-400">
+          Xem giỏ hàng
+        </NormalTransitionLink>
+      </div>,
+    );
   };
   function handleAddToCart() {
     const cartItem = {

@@ -13,11 +13,11 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
   const productThumbnail = Product?.productThumbnail;
 
   return (
-    <div className={additionalClassess}>
+    <div className={`${additionalClassess}`}>
       <div className="relative mb-4 block">
         <Link href={`shop/${Product?.productSlug}`}>
           <Image
-            className="rounded-xl select-none object-cover"
+            className="rounded-xl select-none rounded-md object-cover"
             src={productThumbnail}
             alt="Product Image"
             width={500}

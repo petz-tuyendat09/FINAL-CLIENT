@@ -57,7 +57,7 @@ export const getProductWithPaginate = async (params: QueryParams) => {
 export const deleteProduct = async (productId: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}product/delete-product`,
+      `${process.env.NEXT_PUBLIC_API_URL}/product/delete-product`,
       {
         method: "DELETE",
         headers: {

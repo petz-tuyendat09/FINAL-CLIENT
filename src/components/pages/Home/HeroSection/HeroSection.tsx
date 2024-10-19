@@ -1,13 +1,8 @@
 "use client";
-
-import Button from "@/components/ui/Button";
 import HeroSectionImage from "@@/public/images/hero-section-1.png";
 import HeroSectionImage2 from "@@/public/images/hero-section-2.png";
-
-import { Icon } from "@iconify/react/dist/iconify.js";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
-import { animate, motion } from "framer-motion";
-import TransitionLink from "@/components/ui/NavigateBar/TransitionLink";
+import { motion } from "framer-motion";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 const textAppearVariant = {

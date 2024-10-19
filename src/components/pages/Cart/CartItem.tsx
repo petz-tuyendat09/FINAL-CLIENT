@@ -153,11 +153,12 @@ export default function CartItem({
       </td>
       <td>
         <button
+          className="p-[10px] rounded-[10px] bg-slate-200 hover:bg-slate-300"
           onClick={() =>
             handleRemove(cartItem?.productId, cartItem?.productOption as string)
           }
         >
-          Xóa
+          <Icon icon="iconamoon:trash" width={20} />
         </button>
       </td>
     </tr>

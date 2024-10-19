@@ -2,7 +2,6 @@
 import { DateInput, Input, Card, CardBody, Button } from "@nextui-org/react";
 import AddressInput from "./AddressInput";
 import UserCard from "./UserCard";
-import ChangePasswordInput from "./ChangePasswordInput";
 
 export default function Profile() {
   return (

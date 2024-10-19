@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useMemo } from "react";
 import Link from "next/link";
 import calculateSalePrice from "@/utils/caculateSalePrice";
+import formatMoney from "@/utils/formatMoney";
 
 interface SearchProductProps {
   productImg: string;
@@ -38,7 +39,7 @@ export default function SearchProduct({
       </Link>
       <div>
         <p className="text-xl">{productName}</p>
-        <span className="text-sm">{salePrice}$</span>
+        <span className="text-sm">{formatMoney(salePrice)}</span>
       </div>
     </div>
   );

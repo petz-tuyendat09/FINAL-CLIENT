@@ -61,8 +61,6 @@ export default function BookingForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookings]);
 
-  console.log(bookedTimes);
-
   return (
     <div className="border-r pb-8 xl:w-1/2">
       <div className="mb-4 border-b border-t px-4">

@@ -1,6 +1,7 @@
 import { ProductOption } from "@/types/Product";
 
 import calculateSalePrice from "@/utils/caculateSalePrice";
+import formatMoney from "@/utils/formatMoney";
 import { memo } from "react";
 interface ProductInfoProps {
   productName: string;
@@ -26,7 +27,7 @@ const ProductInfo = memo(
             {productName}
           </h2>
           <h2 className="lg text-[12px] text-gray-500 lg:text-base">
-            <span>{salePrice}</span>
+            <span>{formatMoney(salePrice)}</span>
             {/* <span className="text-gray-400">{productOption[0]}</span> */}
             <span className="ml-2 text-gray-400">
               {`(${productOption.length} lựa chọn)`}

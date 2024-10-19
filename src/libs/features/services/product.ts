@@ -59,7 +59,7 @@ export const productsAPI = createApi({
 
         return `?${queryParams}`;
       },
-      providesTags: ["Product"],
+      providesTags: ["ProductList"],
     }),
     getProductsByCatId: builder.query<void, string>({
       query: (categoryId) => {
@@ -74,7 +74,6 @@ export const productsAPI = createApi({
         method: "POST",
         body: formData,
       }),
-      // invalidatesTags: ["Product"],
     }),
     deleteProduct: builder.mutation<void, string>({
       query: (productId: string) => ({
@@ -82,7 +81,7 @@ export const productsAPI = createApi({
         method: "DELETE",
         body: { productId },
       }),
-      invalidatesTags: ["ProductList"],
+      // invalidatesTags: ["ProductList"],
     }),
 
     editProduct: builder.mutation<any, FormData>({

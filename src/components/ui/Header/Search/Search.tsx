@@ -27,7 +27,7 @@ export default function Search() {
           <SearchProduct
             key={product._id}
             productImg={product.productThumbnail}
-            productPrice={product.productPrice}
+            productPrice={product.productOption[0].productPrice}
             productSalePercent={product.salePercent}
             productName={product.productName}
             productSlug={product.productSlug}

@@ -40,7 +40,9 @@ export default function useBookingForm() {
     validate: (values) => {
       let errors: Partial<errorsValues> = {};
       const hasSelectedService =
-        Object.keys(values.selectedServices).length >= 0;
+        Object.keys(values.selectedServices).length > 0;
+
+      console.log({ ...values.selectedServices });
 
       const phoneRegex = /^[0-9]{10}$/;
 
@@ -99,6 +101,8 @@ export default function useBookingForm() {
   function handleCancelConfirm() {
     setIsConfirm(false);
   }
+
+  console.log(formik.errors);
 
   return {
     formik,

@@ -1,3 +1,10 @@
+import Bookings from "./Bookings/Bookings";
+import BookingsTable from "./Bookings/BookingsTable";
+
 export default function BookingsAndOrders() {
-  return <div>BookingsAndOrders</div>;
+  return (
+    <>
+      <Bookings />
+    </>
+  );
 }

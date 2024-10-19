@@ -9,6 +9,7 @@ import {
   Input,
 } from "@nextui-org/react";
 import usePreviewUploadImage from "./_hooks/usePreviewImage";
+import ChangePasswordInput from "./ChangePasswordInput";
 
 export default function App() {
   const { imagePreview, handlePreviewImg } = usePreviewUploadImage({});
@@ -47,25 +48,7 @@ export default function App() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="px-3 text-small">
-        <div>
-          <div className="mb-6 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold">Đổi mật khẩu</h1>
-            </div>
-            <button
-              type="submit"
-              className="rounded-full bg-primary px-6 py-2 text-white"
-            >
-              Lưu thay đổi
-            </button>
-          </div>
-          <form className="space-y-4">
-            <Input label="Đổi mật khẩu" />
-            <Input label="Nhập lại mật khẩu" />
-          </form>
-        </div>
-      </CardBody>
+      <ChangePasswordInput />
     </Card>
   );
 }

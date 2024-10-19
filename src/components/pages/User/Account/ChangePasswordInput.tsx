@@ -1,27 +1,64 @@
-import { Card, CardBody, Input } from "@nextui-org/react";
+import { useEditUserMutation } from "@/libs/features/services/user";
+import { CardBody, Input, Checkbox } from "@nextui-org/react";
+import useChangePassword from "./_hooks/useChangePassword";
+import { useState } from "react";
 
 export default function ChangePasswordInput() {
+  const { formik } = useChangePassword();
+
+  const [isHidden, setIsHidden] = useState(false);
+
+
   return (
-    <Card className="flex-grow">
-      <CardBody>
-        <div>
-          <div className="mb-6 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold">Đổi mật khẩu</h1>
-            </div>
-            <button
-              type="submit"
-              className="rounded-full bg-primary px-6 py-2 text-white"
-            >
-              Lưu thay đổi
-            </button>
+    <CardBody className="px-3 text-small">
+      <div>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold">Đổi mật khẩu</h1>
           </div>
-          <form className="space-y-4">
-            <Input label="Họ và tên" />
-            <Input label="Họ và tên" />
-          </form>
+          <button
+            onClick={formik.handleSubmit as any}
+            type="button"
+            className="rounded-full bg-primary px-6 py-2 text-white"
+          >
+            Lưu thay đổi
+          </button>
         </div>
-      </CardBody>
-    </Card>
+        <form className="space-y-4">
+          <Input
+            type={!isHidden ? "password" : "text"}
+            label="Đổi mật khẩu"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            name="newPassword"
+            errorMessage={
+              formik.touched.newPassword && formik.errors.newPassword
+                ? formik.errors.newPassword
+                : undefined
+            }
+            isInvalid={
+              formik.touched.newPassword && !!formik.errors.newPassword
+            }
+          />
+          <Input
+            type={!isHidden ? "password" : "text"}
+            label="Nhập lại mật khẩu"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            name="confirmPassword"
+            errorMessage={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+                ? formik.errors.confirmPassword
+                : undefined
+            }
+            isInvalid={
+              formik.touched.confirmPassword && !!formik.errors.confirmPassword
+            }
+          />
+
+          <Checkbox onValueChange={setIsHidden} isSelected={isHidden}>Hiện mật khẩu</Checkbox>
+        </form>
+      </div>
+    </CardBody>
   );
 }

@@ -41,7 +41,7 @@ export default function Categories() {
     <section className="container mt-[200px]">
       <div className="mb-8">
         <div className="space-x-4">
-          <div className="flex items-center gap-2 text-[26px] font-bold">
+          <div className="flex items-center gap-2 text-[30px] font-bold">
             SẢN PHẨM
             <CategoryButton
               currentFilter={currentFilter}

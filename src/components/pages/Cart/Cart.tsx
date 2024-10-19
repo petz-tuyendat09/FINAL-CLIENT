@@ -153,7 +153,7 @@ const CartPage = () => {
                   colSpan={2}
                 >
                   <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
-                    Proceed to checkout
+                    THANH TOÁN
                   </button>
                 </td>
               </tr>

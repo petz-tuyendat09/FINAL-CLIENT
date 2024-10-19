@@ -14,7 +14,7 @@ export default function CategoryButton({
   return (
     <button
       onClick={() => handleFilter(filterOption)}
-      className={`${currentFilter === filterOption ? "bg-primary text-white" : "border-black-900"} rounded-full border px-4 py-2 transition duration-300 hover:bg-primary hover:text-white`}
+      className={`${currentFilter === filterOption ? "bg-primary text-white shadow-badget" : "border-black-900"} rounded-full border px-[20px] py-[7px] transition duration-300 hover:bg-primary hover:text-white text-[24px]`}
     >
       {buttonLabel}
     </button>

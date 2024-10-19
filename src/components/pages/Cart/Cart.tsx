@@ -26,7 +26,7 @@ const CartPage = () => {
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-  const authenticatedCartId = session.data?.user?.userCart._id;
+  const authenticatedCartId = session.data?.user?.userCart?._id;
   const itemsToDisplay = cartItems || unauthenticatedCarts;
 
   function handleClearCart() {
@@ -127,7 +127,7 @@ const CartPage = () => {
                   className="border-b-0 text-[15px] text-gray-800"
                   colSpan={2}
                 >
-                  <button className="w-full rounded-[20px] bg-primary py-2 font-bold text-white">
+                  <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
                     Proceed to checkout
                   </button>
                   <button

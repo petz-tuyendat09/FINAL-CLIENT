@@ -1,13 +1,12 @@
 import { Product } from "@/types/Product";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/libs/store";
+import { useDispatch } from "react-redux";
 import { cartAction } from "@/libs/features/cart/cart";
 import { useSession } from "next-auth/react";
 import { useAddItemToCartMutation } from "@/libs/features/services/cart";
 import { useEffect } from "react";
-import { Cart } from "@/types/Cart";
-
+import { message } from "antd";
+import Link from "next/link";
 interface ProductCardSelectWeightProps {
   Product: Product;
 }
@@ -15,19 +14,21 @@ interface ProductCardSelectWeightProps {
 export default function ProductCardCartButton({
   Product,
 }: ProductCardSelectWeightProps) {
-  // Use Dispach để dùng action ở redux
   const dispatch = useDispatch();
-  // Session
   const session = useSession();
   const { update: sessionUpdate } = useSession();
-
+  const [messageApi, contextHolder] = message.useMessage();
   const authStatus = session?.status;
 
   const [addToCart, { data: newCart }] = useAddItemToCartMutation();
-
-  // Hàm thêm sản phẩm vào redux storge
+  const success = () => {
+      message.success(
+          <div>
+              Thêm giỏ hàng thành công. <Link href="/cart" className="text-blue-400">Xem giỏ hàng</Link>
+          </div>
+      );
+  };
   function handleAddToCart() {
-    // Lấy item từ Product ra
     const cartItem = {
       productId: Product._id,
       productName: Product.productName,
@@ -37,17 +38,19 @@ export default function ProductCardCartButton({
       salePercent: Product.salePercent,
       productImage: Product.productThumbnail,
       productSlug: Product.productSlug,
-      cartId: session.data?.user.userCart._id || null,
+      cartId: session.data?.user?.userCart?._id || null,
     };
 
     if (authStatus === "authenticated") {
       addToCart(cartItem);
+      if (newCart) {
+        success();
+      }
     } else {
       dispatch(cartAction.addToCart(cartItem));
     }
   }
 
-  // Khi newCart từ server gửi về, cập nhật session
   useEffect(() => {
     if (newCart) {
       sessionUpdate({
@@ -58,7 +61,6 @@ export default function ProductCardCartButton({
         },
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newCart]);
 
   return (
@@ -69,6 +71,7 @@ export default function ProductCardCartButton({
       >
         <Icon className="size-4 lg:size-5" icon="icon-park-outline:mall-bag" />
       </button>
+      {contextHolder}
     </div>
   );
 }

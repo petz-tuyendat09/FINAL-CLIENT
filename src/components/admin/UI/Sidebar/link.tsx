@@ -17,9 +17,9 @@ export const links = [
     label: "Danh mục",
   },
   {
-    url: "/admin/orders",
+    url: "/admin/bookings-orders",
     icon: <Icon className="size-6" icon="lets-icons:order" />,
-    label: "Đơn hàng",
+    label: "Đơn hàng và lịch đặt",
   },
   {
     url: "/admin/feedback",

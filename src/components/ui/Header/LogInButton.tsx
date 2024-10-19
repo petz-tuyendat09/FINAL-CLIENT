@@ -50,7 +50,7 @@ export default function LoginButton() {
             }}
             aria-label="Link Actions"
           >
-            <DropdownItem key="/user/account">
+            <DropdownItem href="/user/account" key="/user/account">
               <NormalTransitionLink href="/user/account">
                 Thông tin
               </NormalTransitionLink>

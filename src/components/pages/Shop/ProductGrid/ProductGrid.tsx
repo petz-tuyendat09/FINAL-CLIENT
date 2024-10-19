@@ -22,13 +22,13 @@ const ProductGrid = () => {
   const filterByCategory = filters.category || null;
   const filterBySubcategory = Object.values(filters.subCate).flat();
 
-  // State to track if a search is active
   const [isSearching, setIsSearching] = useState(false);
 
-  const { products, handleFetchMore, handleQueryProduct } = useGetProductShop({
-    filterCategory: filterByCategory,
-    filterSubCategory: filterBySubcategory,
-  });
+  const { products, handleFetchMore, handleQueryProduct, noMoreProduct } =
+    useGetProductShop({
+      filterCategory: filterByCategory,
+      filterSubCategory: filterBySubcategory,
+    });
 
   // Function to handle changes in search term
   const handleSearchTermChange = (searchTerm: string) => {
@@ -41,17 +41,23 @@ const ProductGrid = () => {
         handleQueryProduct={handleQueryProduct}
         handleSearchTermChange={handleSearchTermChange}
       />
-      <div className="container grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
-        {products?.map((product, index) => (
-          <div className="h-2/3" key={product._id}>
-            <ProductCard Product={product} />
-          </div>
-        ))}
+      <div className="container flex flex-col">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
+          {products?.map((product, index) => (
+            <div className="h-2/3" key={product._id}>
+              <ProductCard Product={product} />
+            </div>
+          ))}
+        </div>
+        {!isSearching && (
+          <button
+            className="mx-auto w-fit rounded-full bg-primary px-6 py-2 text-white"
+            onClick={() => handleFetchMore(2)}
+          >
+            {noMoreProduct ? "Đã hết sản phẩm" : "Tải thêm"}
+          </button>
+        )}
       </div>
-      {/* Hide the button when searching */}
-      {!isSearching && (
-        <button onClick={() => handleFetchMore(2)}>Tải thêm</button>
-      )}
     </div>
   );
 };

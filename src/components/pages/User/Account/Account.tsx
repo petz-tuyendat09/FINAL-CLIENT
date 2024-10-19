@@ -2,8 +2,10 @@
 import { DateInput, Input, Card, CardBody, Button } from "@nextui-org/react";
 import AddressInput from "./AddressInput";
 import UserCard from "./UserCard";
+import { useSession } from "next-auth/react";
 
 export default function Profile() {
+  const session = useSession();
   return (
     <main className="space-y-4">
       <UserCard />
@@ -25,7 +27,11 @@ export default function Profile() {
             <form className="space-y-4">
               <Input label="Họ và tên" />
               <DateInput label="Birth date" isRequired />
-              <Input label="Email" />
+              <Input
+                isDisabled
+                value={session.data?.user.userEmail}
+                label="Email"
+              />
               <Input label="Số điện thoại" />
               <AddressInput />
             </form>

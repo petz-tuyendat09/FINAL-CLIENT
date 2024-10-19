@@ -6,7 +6,7 @@ export enum BookingStatus {
 
 export interface Booking {
   _id: string;
-  userId: string;
+  userId: string | null;
   customerName: string;
   customerEmail: string;
   customerPhone: string;

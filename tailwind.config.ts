@@ -13,8 +13,7 @@ const config: Config = {
       serif: ["var(--font-lora)", "Georgia", "serif"],
       mono: ["ui-monospace", "SFMono-Regular", "monospace"],
       display: ["var(--font-roboto)", "system-ui", "sans-serif"],
-      body: ["var(--font-roboto)", "system-ui", "sans-serif"],
-      oriya: ["Noto Serif Oriya", "serif"],
+      body: ["var(--font-roboto)", "system-ui", "sans-serif"]
     },
     borderRadius: {
       button: "20px",

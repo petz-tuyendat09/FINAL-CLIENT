@@ -1,9 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import AuthInput from "../AuthInput/AuthInput";
 import useSignUp from "./_hook/useSignUpForm";
-import { useEffect, useState } from "react";
-import AuthModal from "../../../ui/NoActionModal";
-import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
 export default function SignUpForm() {
   const { formik, isLoading } = useSignUp();
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -45,7 +43,7 @@ export default function SignUpForm() {
         errorMessage={formik.errors.confirmPassword}
         formik={formik}
         inputName="confirmPassword"
-        labelText="Mật khẩu"
+        labelText="Nhập lại mật khẩu"
         typePassword={!showPassword}
       />
       <div className="flex items-center gap-1">

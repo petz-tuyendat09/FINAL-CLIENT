@@ -1,6 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import NormalTransitionLink from "../NormalTransitionLink";
-import { useState } from "react";
 import {
   Dropdown,
   DropdownMenu,

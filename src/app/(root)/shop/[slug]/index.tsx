@@ -6,13 +6,12 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import "./index.css";
 import SuggestedProducts from "@/components/pages/Details/SuggestedProducts";
-import { useDispatch } from "react-redux";
-import { cartAction } from "@/libs/features/cart/cart";
 import { useAddItemToCartMutation } from "@/libs/features/services/cart";
 import { useSession } from "next-auth/react";
+import { message } from "antd";
+import Link from "next/link";
 export const Index = () => {
     const { slug } = useParams();
-    const dispatch = useDispatch();
     const [addToCart, { data: newCart }] = useAddItemToCartMutation();
     const productSlug = Array.isArray(slug) ? slug[0] : slug;
     const {data, error, isLoading} = useGetProductsQuery({ productSlug });
@@ -23,6 +22,14 @@ export const Index = () => {
     const session = useSession();
     const { update: sessionUpdate } = useSession();
     const userId = session.data?.user?._id;
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        message.success(
+            <div>
+                Thêm giỏ hàng thành công. <Link href="/cart" className="text-blue-400">Xem giỏ hàng</Link>
+            </div>
+        );
+    };
     const handleQuantity = (action:string) => {
         if (action === 'increase') {
             if(quantity < maxQuantity) {
@@ -45,11 +52,12 @@ export const Index = () => {
             salePercent: salePercent,
             productQuantity: quantity,
             productOption: option ? option : data?.products[0]?.productOption[0]?.name,
-            productImage: data?.products[0]?.productOption[0].productThumbnail,
+            productImage: data?.products[0]?.productThumbnail,
             cartId: session.data?.user?.userCart?._id || null,
             userId: userId
         }
         addToCart(cart_obj);
+        success();
     }
 
     useEffect(() => {
@@ -167,6 +175,7 @@ export const Index = () => {
                 </div>
                 <div className="cursor"></div>
             </div>
+            {contextHolder}
         </div>
     );
 }

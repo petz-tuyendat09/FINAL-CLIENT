@@ -11,6 +11,9 @@ import { cartAction } from "@/libs/features/cart/cart";
 import { useAdjustQuantityMutation } from "@/libs/features/services/cart";
 import { AdjustQuantity } from "@/types/Cart";
 import { useEffect } from "react";
+import cartImg from '@@/assets/images/cartImg.png';
+import cartImg2 from '@@/public/images/cartImg2.png';
+import Image from "next/image";
 const CartPage = () => {
   const session = useSession();
   const authStatus = session.status;
@@ -26,7 +29,7 @@ const CartPage = () => {
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-  const authenticatedCartId = session.data?.user?.userCart._id;
+  const authenticatedCartId = session.data?.user?.userCart?._id;
   const itemsToDisplay = cartItems || unauthenticatedCarts;
 
   function handleClearCart() {
@@ -55,24 +58,46 @@ const CartPage = () => {
         },
       });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartAfterAdjust]);
-
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-50 px-[100px] py-10">
+    <div className="flex min-h-screen flex-col items-center px-[100px] py-10">
       <div className="w-full rounded-lg p-8">
-        {/* Cart Header */}
-        <h1 className="mb-4 text-center font-oriya text-[28px] font-semibold">
-          Your Cart
-        </h1>
+        <div className="flex flex-row justify-between items-center">
+          <div className="text-center flex flex-col justify-end px-[50px] w-[60%]">
+            <h2>Cửa hàng thức ăn thú cưng</h2>
+            <h1 className="text-black font-[500] text-[50px] leading-[60px] mt-[20px]">Cửa hàng thú cưng cho Những Người Bạn Lông Xù</h1>
+            <div className="flex justify-center mt-[30px]"> 
+              <button className="flex flex-row items-center gap-[7px] border-2 border-black px-[15px] py-[7px] rounded-[30px]">
+                <span className="font-[500]">Nhận nuôi</span>
+                <Icon icon="mingcute:arrow-right-line" />
+              </button>
+            </div>
+            <div className="flex justify-center mt-[70px]">
+              <Image src={cartImg2} width={250} height={400} alt="" />
+            </div>
+          </div>
+          <div className="w-[40%]">
+            <Image src={cartImg} width={600} height={400} alt="" />
+          </div>
+        </div>
+        <div className="flex justify-center mt-[20px]"> 
+          <div className="mb-4 flex flex-row items-center">
+            <Icon icon="uil:cart" width={50} />
+            <h1 className="text-[30px] font-semibold mt-[10px]">Giỏ hàng</h1>
+          </div>
+        </div>
         <a
           href="/shop"
           className="mb-8 flex flex-row items-center justify-center gap-[10px] text-center text-sm text-purple-600 hover:underline"
         >
-          <span>Continue Shopping</span>
+          <span>Tiếp tục mua sắm</span>
           <Icon icon="mingcute:right-line" className="mt-[1px]" />
         </a>
+        <div className="flex justify-end">
+          <button className="border-b-2 border-primary text-primary" onClick={handleClearCart}>
+              Xóa tất cả
+          </button>
+        </div>
         <div>
           <table className="w-full">
             <thead>
@@ -127,96 +152,14 @@ const CartPage = () => {
                   className="border-b-0 text-[15px] text-gray-800"
                   colSpan={2}
                 >
-                  <button className="w-full rounded-[20px] bg-primary py-2 font-bold text-white">
+                  <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
                     Proceed to checkout
-                  </button>
-                  <button
-                    onClick={handleClearCart}
-                    className="mt-4 w-full rounded-full bg-primary px-6 py-2 font-bold text-white"
-                  >
-                    Xóa tất cả
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        {/* Product List */}
-        {/* {cartItems.map((item) => (
-          <div key={item.productId} className="border-b border-gray-200 pb-4">
-            <div className="flex items-center justify-between">
-              {/* Product Image */}
-        {/* <div className="flex items-center space-x-4">
-                <img
-                  src={item.productImage}
-                  alt={item.productName}
-                  className="h-12 w-12 object-cover"
-                />
-                <div>
-                  <p className="font-medium text-gray-700">
-                    {item.productName}
-                  </p>
-                  <p className="text-sm text-gray-500">{item.productOption}</p>
-                </div>
-              </div> */}
-
-        {/* Price and Quantity */}
-        {/* <div className="flex items-center space-x-4">
-                <p className="text-gray-700">${item.productPrice.toFixed(2)}</p>
-                {/* Quantity Selector */}
-        {/* <div className="flex items-center rounded-lg border px-3 py-1">
-                  <button
-                    className="text-gray-600 hover:text-gray-800"
-                    onClick={() =>
-                      handleDecreaseQuantity(item.productId, item.productOption)
-                    }
-                  >
-                    -
-                  </button>
-                  <input
-                    type="text"
-                    value={item.productQuantity}
-                    className="w-8 border-none bg-transparent text-center text-gray-700 outline-none"
-                    readOnly
-                  />
-                  <button
-                    className="text-gray-600 hover:text-gray-800"
-                    onClick={() =>
-                      handleIncreaseQuantity(item.productId, item.productOption)
-                    }
-                  >
-                    +
-                  </button>
-                </div>
-                <p className="font-medium text-gray-700">
-                  ${(item.productPrice * item.productQuantity).toFixed(2)}
-                </p>
-              </div>
-            </div>
-          </div> */}
-        {/* ))} */}
-
-        {/* Subtotal */}
-        {/* <div className="mt-6 flex justify-between">
-          <span className="text-lg font-medium text-gray-800">Subtotal</span>
-          <span className="text-lg font-semibold text-gray-800">
-            $
-            {cartItems
-              .reduce(
-                (acc, item) => acc + item.productPrice * item.productQuantity,
-                0,
-              )
-              .toFixed(2)}
-          </span>
-        </div> */}
-
-        {/* Proceed to Checkout Button */}
-        {/* <div className="mt-6">
-          <button className="w-full rounded-lg bg-purple-500 py-3 text-center font-semibold text-white hover:bg-[#AD3E39]">
-            Proceed to checkout
-          </button>
-        </div> */}
       </div>
     </div>
   );

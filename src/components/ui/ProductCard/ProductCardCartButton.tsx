@@ -43,9 +43,7 @@ export default function ProductCardCartButton({
 
     if (authStatus === "authenticated") {
       addToCart(cartItem);
-      if (newCart) {
-        success();
-      }
+      success();
     } else {
       dispatch(cartAction.addToCart(cartItem));
     }

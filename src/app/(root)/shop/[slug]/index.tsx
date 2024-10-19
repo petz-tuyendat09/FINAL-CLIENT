@@ -57,9 +57,7 @@ export const Index = () => {
             userId: userId
         }
         addToCart(cart_obj);
-        if (newCart) {
-            success();
-        }
+        success();
     }
 
     useEffect(() => {

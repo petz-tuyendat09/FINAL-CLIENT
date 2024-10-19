@@ -24,8 +24,10 @@ export default function NormalTransitionLink({
   }
 
   return (
-    <button onClick={handleClick} className={className}>
-      {children}
-    </button>
+    <div>
+      <button onClick={handleClick} className={className}>
+        {children}
+      </button>
+    </div>
   );
 }

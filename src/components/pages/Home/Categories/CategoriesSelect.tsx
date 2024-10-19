@@ -33,7 +33,7 @@ export default function CategoriesSelect({
     <div className="relative w-1/5">
       <motion.div
         animate={{
-          top: position + "px",
+          top: position.toString() + "px",
         }}
         className="absolute -top-[70px] flex translate-y-[54px] items-center gap-4"
       >
@@ -42,7 +42,7 @@ export default function CategoriesSelect({
       </motion.div>
 
       <ul className="flex flex-col gap-8 text-h3">
-        {categoriesList?.map((category, index) => (
+        {categoriesList?.map((category:any, index:any) => (
           <li key={category._id} className="flex items-center gap-4">
             <button
               ref={(el) => {

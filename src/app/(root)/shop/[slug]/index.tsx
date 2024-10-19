@@ -97,19 +97,24 @@ export const Index = () => {
     return ( 
         <div className="mt-[110px] px-[20px] bg-[#F4F2EE]">
             {data?.products?.map((item, i) => {
+                const originalPrice = Math.round(item?.productOption[index]?.productPrice / ((100 - item.salePercent)/100));
                 return (
                     <div>
                         <div className="flex flex-row justify-between items-center" key={i}>
                             <div className="w-[35%]">
-                                <h1 className="text-[40px] font-black leading-[40px]">{item.productName}</h1>
+                                <div className="flex flex-row justify-between items-center">
+                                    <p className="text-[32px] text-black font-[500] leading-[40px] uppercase ">{item.productName} </p>
+                                    {item?.salePercent > 0 && <span className="bg-[#dc633a] text-white px-[12px] py-[5px] font-[600] text-[12px]">-{item.salePercent}%</span>}
+                                </div>
                                 <div className="bg-black rounded-[25px] text-white w-[500px] mt-[50px] flex flex-row justify-between items-center pr-[30px]">
                                     <div className="flex flex-row items-center gap-[5px] px-[30px] py-[12px]">
                                         <button onClick={() => handleQuantity('decrease')}>-</button>
                                         <input className="w-[20px] outline-none bg-black ml-[10px]" value={quantity} />
                                         <button onClick={() => {handleQuantity('increase'); setMaxQuantity(item?.productOption[index]?.productQuantity)}}>+</button>
                                     </div>
-                                    <div>
+                                    <div className="flex flex-row gap-[10px] items-center">
                                         <p>{formatCurrency(item?.productOption[index]?.productPrice)}</p>
+                                        {item?.salePercent > 0 && <del className="text-[15px] text-gray-500">{formatCurrency(originalPrice)}</del>}
                                     </div>
                                     <div>
                                         {item?.productOption[index]?.productQuantity === 0 ? 

@@ -9,7 +9,7 @@ export default function SuggestedProducts ({ categoryId }: { categoryId: string 
     };
     return (
         <div>
-            <div className="flex flex-row justify-between gap-[10px]">
+            <div className="flex flex-row gap-[10px]">
                 {data?.slice(0,4).map((item:any, i:number) => {
                     return (
                         <div>

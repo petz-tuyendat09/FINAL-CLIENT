@@ -14,7 +14,10 @@ import { useEffect } from "react";
 import cartImg from '@@/assets/images/cartImg.png';
 import cartImg2 from '@@/public/images/cartImg2.png';
 import Image from "next/image";
+import Link from "next/link";
+import CartStepper from "./CartStepper";
 const CartPage = () => {
+  const activeStep = 0;
   const session = useSession();
   const authStatus = session.status;
   const [adjustQuantity, { data: cartAfterAdjust }] =
@@ -75,19 +78,24 @@ const CartPage = () => {
             <Image src={cartImg} width={600} height={400} alt="" />
           </div>
         </div>
-        <div className="flex justify-center mt-[20px]"> 
-          <div className="mb-4 flex flex-row items-center">
-            <Icon icon="uil:cart" width={50} />
-            <h1 className="text-[30px] font-semibold mt-[10px]">Giỏ hàng</h1>
+        <div className="flex flex-row justify-between mt-[20px]"> 
+          <div className="mb-4">
+            <div className="flex flex-row items-center mb-[10px]">
+              <Icon icon="uil:cart" width={50} />
+              <h1 className="text-[30px] font-semibold mt-[10px]">Giỏ hàng</h1>
+            </div>
+            <a
+              href="/shop"
+              className="mb-8 flex flex-row items-center gap-[10px] text-sm text-purple-600 hover:underline"
+            >
+              <span>Tiếp tục mua sắm</span>
+              <Icon icon="mingcute:right-line" className="mt-[1px]" />
+            </a>
+          </div>
+          <div>
+            <CartStepper activeStep={activeStep} />
           </div>
         </div>
-        <a
-          href="/shop"
-          className="mb-8 flex flex-row items-center justify-center gap-[10px] text-center text-sm text-purple-600 hover:underline"
-        >
-          <span>Tiếp tục mua sắm</span>
-          <Icon icon="mingcute:right-line" className="mt-[1px]" />
-        </a>
         <div className="flex justify-end">
           <button className="border-b-2 border-primary text-primary" onClick={handleClearCart}>
               Xóa tất cả
@@ -116,7 +124,7 @@ const CartPage = () => {
                 <td className="border-b-0"></td>
                 <td colSpan={2}>
                   <div className="flex flex-row items-center justify-between">
-                    <h4 className="font-[500]">Subtotal:</h4>
+                    <h4 className="font-[500]">Thành tiền:</h4>
                     <h3 className="text-[20px] font-[500]">
                       {formatMoney(
                         itemsToDisplay.reduce(
@@ -147,9 +155,11 @@ const CartPage = () => {
                   className="border-b-0 text-[15px] text-gray-800"
                   colSpan={2}
                 >
-                  <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
-                    THANH TOÁN
-                  </button>
+                  <Link href="/cart/place-order">
+                    <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
+                      THANH TOÁN
+                    </button>
+                  </Link>
                 </td>
               </tr>
             </tbody>

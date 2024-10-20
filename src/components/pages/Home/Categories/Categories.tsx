@@ -68,6 +68,6 @@ export default function Categories() {
         </div>
       </div>
       <ProductSlider filterOption={filterOption} />
-    </section>
+    </section> 
   );
 }

@@ -1,5 +1,4 @@
 import CartHeader from "./CartHeader";
-import CartItems from "./CartiIems";
 import CartFooter from "./CartFooter";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";

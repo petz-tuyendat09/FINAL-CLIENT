@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "@/libs/features/cart/cart";
 import { RootState } from "@/libs/store";
-import { AnimatePresence } from "framer-motion";
-import CartModal from "../CartModal/CartModal";
 
 export default function HeaderCartButton() {
   const dispatch = useDispatch();

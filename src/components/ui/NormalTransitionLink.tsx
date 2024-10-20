@@ -22,7 +22,6 @@ export default function NormalTransitionLink({
       animatePageOut(href, router);
     }
   }
-
   return (
     <div>
       <button onClick={handleClick} className={className}>

@@ -17,21 +17,16 @@ import Image from "next/image";
 const CartPage = () => {
   const session = useSession();
   const authStatus = session.status;
-
   const [adjustQuantity, { data: cartAfterAdjust }] =
     useAdjustQuantityMutation();
   const { update: sessionUpdate } = useSession();
-
   const dispatch = useDispatch();
-  const userId = session.data?.user?._id;
-
   const cartItems = session.data?.user?.userCart?.cartItems;
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-  const authenticatedCartId = session.data?.user?.userCart?._id;
   const itemsToDisplay = cartItems || unauthenticatedCarts;
-
+  const authenticatedCartId = session.data?.user?.userCart?._id;
   function handleClearCart() {
     if (authStatus === "authenticated") {
       const adjustObject: AdjustQuantity = {
@@ -67,7 +62,7 @@ const CartPage = () => {
             <h2>Cửa hàng thức ăn thú cưng</h2>
             <h1 className="text-black font-[500] text-[50px] leading-[60px] mt-[20px]">Cửa hàng thú cưng cho Những Người Bạn Lông Xù</h1>
             <div className="flex justify-center mt-[30px]"> 
-              <button className="flex flex-row items-center gap-[7px] border-2 border-black px-[15px] py-[7px] rounded-[30px]">
+              <button className="hover:bg-black hover:text-white transition duration-200 ease-in flex flex-row items-center gap-[7px] border-2 border-black px-[15px] py-[7px] rounded-[30px]">
                 <span className="font-[500]">Nhận nuôi</span>
                 <Icon icon="mingcute:arrow-right-line" />
               </button>

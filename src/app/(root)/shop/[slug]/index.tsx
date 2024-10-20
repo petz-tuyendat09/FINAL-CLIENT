@@ -111,23 +111,29 @@ export const Index = () => {
     }, []);
     return ( 
         <div className="mt-[110px] px-[20px] bg-[#F4F2EE]">
-            {data?.products?.map((item, i) => (
+            {data?.products?.map((item, i) => {
+              const originalPrice = Math.round(item?.productOption[index]?.productPrice / ((100 - item.salePercent) / 100));
+              return (
                 <div>
                     <div className="flex flex-row justify-between items-center" key={i}>
-                        <div className="w-[32%]">
-                            <h1 className="text-[40px] font-black leading-[40px]">{item.productName}</h1>
-                            <div className="bg-black rounded-[25px] text-white w-[400px] mt-[50px] flex flex-row justify-between items-center pr-[30px]">
+                        <div className="w-[35%]">
+                            <div className="flex flex-row justify-between gap-[20px] items-center">
+                              <h1 className="text-[40px] font-black leading-[40px]">{item.productName}</h1>
+                              <span className="bg-[#dc633a] text-white text-[14px] font-[500] px-[15px] py-[4px]">-{item.salePercent}%</span>
+                            </div>
+                            <div className="bg-black rounded-[25px] text-white w-[500px] mt-[50px] flex flex-row justify-between items-center pr-[30px]">
                                 <div className="flex flex-row items-center gap-[5px] px-[30px] py-[12px]">
                                     <button onClick={() => handleQuantity('decrease')}>-</button>
                                     <input className="w-[20px] outline-none bg-black ml-[10px]" value={quantity} />
                                     <button onClick={() => {handleQuantity('increase'); setMaxQuantity(item?.productOption[index]?.productQuantity)}}>+</button>
                                 </div>
-                                <div>
+                                <div className="flex flex-row gap-[7px]">
                                     <p>{formatCurrency(item?.productOption[index]?.productPrice)}</p>
+                                    <del className="text-gray-400 text-[15px]">{formatCurrency(originalPrice)}</del>
                                 </div>
                                 <div>
                                     {item?.productOption[index]?.productQuantity === 0 ? 
-                                        <button className="text-[14px] font-[500]">OUT OF STOCK</button> : 
+                                        <button className="text-[14px] font-[500] text-primary">OUT OF STOCK</button> : 
                                         <button className="text-[14px] tracking-[0.5px] hover:text-primary font-[500]" onClick={() => handleAddToCart(item.productName, item._id, item?.productOption[index]?.productPrice, item.salePercent)}>ADD TO CART</button>}
                                 </div>
                             </div>
@@ -147,7 +153,7 @@ export const Index = () => {
                         <div className="w-[38%]">
                             <Image src={item.productThumbnail} width="500" height="400" alt="" />
                         </div>
-                        <div className="w-[30%]">
+                        <div className="w-[27%]">
                             <div className="flex flex-row gap-[30px]">
                                 <h6 className="text-[12px]">DESCRIPTION</h6>
                                 <div
@@ -180,7 +186,8 @@ export const Index = () => {
                         </div>
                     </div>
                 </div>
-            ))}
+              );
+            })}
             <div id="this-zone">
                 <h1 className="text-[28px] font-[500]">SẢN PHẨM GỢI Ý</h1>
                 <div>

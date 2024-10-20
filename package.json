@@ -11,8 +11,11 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^43.2.0",
     "@ckeditor/ckeditor5-react": "^9.3.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@firebase/firestore": "^4.7.3",
     "@internationalized/date": "^3.5.6",
+    "@mui/material": "^6.1.4",
     "@nextui-org/react": "^2.4.8",
     "@react-google-maps/api": "^2.20.3",
     "@reduxjs/toolkit": "^2.2.7",

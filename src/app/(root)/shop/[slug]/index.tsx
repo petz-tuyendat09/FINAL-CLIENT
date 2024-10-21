@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect } from "react";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import Image from "next/image";
@@ -6,81 +6,104 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import "./index.css";
 import SuggestedProducts from "@/components/pages/Details/SuggestedProducts";
-import { useDispatch } from "react-redux";
-import { cartAction } from "@/libs/features/cart/cart";
 import { useAddItemToCartMutation } from "@/libs/features/services/cart";
 import { useSession } from "next-auth/react";
+import { message } from "antd";
+import Link from "next/link";
 export const Index = () => {
-    const { slug } = useParams();
-    const dispatch = useDispatch();
-    const [addToCart, { data: newCart }] = useAddItemToCartMutation();
-    const productSlug = Array.isArray(slug) ? slug[0] : slug;
-    const {data, error, isLoading} = useGetProductsQuery({ productSlug });
-    const [quantity, setQuantity] = useState(1);
-    const [index, setIndex] = useState(0);
-    const [maxQuantity, setMaxQuantity] = useState(0);
-    const [option, setOption] = useState('');
-    const session = useSession();
-    const { update: sessionUpdate } = useSession();
-    const userId = session.data?.user?._id;
-    const handleQuantity = (action:string) => {
-        if (action === 'increase') {
-            if(quantity < maxQuantity) {
-                setQuantity(quantity + 1);
-            }
-        }else {
-            if(quantity > 1) {
-                setQuantity(quantity - 1);
-            }
-        }
+  const { slug } = useParams();
+  const [addToCart, { data: newCart }] = useAddItemToCartMutation();
+  const productSlug = Array.isArray(slug) ? slug[0] : slug;
+  const { data, error, isLoading } = useGetProductsQuery({ productSlug });
+  const [quantity, setQuantity] = useState(1);
+  const [index, setIndex] = useState(0);
+  const [maxQuantity, setMaxQuantity] = useState(0);
+  const [option, setOption] = useState("");
+  const session = useSession();
+  const { update: sessionUpdate } = useSession();
+  const userId = session.data?.user?._id;
+  const [messageApi, contextHolder] = message.useMessage();
+  const success = () => {
+    message.success(
+      <div>
+        Thêm giỏ hàng thành công.{" "}
+        <Link href="/cart" className="text-blue-400">
+          Xem giỏ hàng
+        </Link>
+      </div>,
+    );
+  };
+  const handleQuantity = (action: string) => {
+    if (action === "increase") {
+      if (quantity < maxQuantity) {
+        setQuantity(quantity + 1);
+      }
+    } else {
+      if (quantity > 1) {
+        setQuantity(quantity - 1);
+      }
     }
-    const formatCurrency = (amount:any) => {
-        return `${amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ`;
+  };
+  const formatCurrency = (amount: any) => {
+    return `${amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}đ`;
+  };
+  const handleAddToCart = (
+    name: string,
+    id: string,
+    price: number,
+    salePercent: number,
+  ) => {
+    const cart_obj = {
+      productName: name,
+      productId: id,
+      productPrice: price,
+      salePercent: salePercent,
+      productQuantity: quantity,
+      productOption: option
+        ? option
+        : data?.products[0]?.productOption[0]?.name,
+      productImage: data?.products[0]?.productThumbnail,
+      cartId: session.data?.user?.userCart?._id || null,
+      userId: userId,
     };
-    const handleAddToCart = (name:string, id:string, price:number, salePercent:number) => {
-        const cart_obj = {
-            productName: name,
-            productId: id, 
-            productPrice: price,
-            salePercent: salePercent,
-            productQuantity: quantity,
-            productOption: option ? option : data?.products[0]?.productOption[0]?.name,
-            productImage: data?.products[0]?.productOption[0].productThumbnail,
-            cartId: session.data?.user?.userCart?._id || null,
-            userId: userId
-        }
-        addToCart(cart_obj);
+    addToCart(cart_obj);
+    success();
+  };
+
+  useEffect(() => {
+    if (newCart) {
+      sessionUpdate({
+        ...session,
+        user: {
+          ...session?.data?.user,
+          userCart: newCart,
+        },
+      });
     }
+  }, [newCart]);
+  useEffect(() => {
+    const cursor = document.querySelector(".cursor") as HTMLElement;
+    const zone = document.getElementById("this-zone");
 
-    useEffect(() => {
-        if (newCart) {
-          sessionUpdate({
-            ...session,
-            user: {
-              ...session?.data?.user,
-              userCart: newCart,
-            },
-          });
-        }
-      }, [newCart]);
-    useEffect(() => {
-        const cursor = document.querySelector('.cursor') as HTMLElement;
-        const zone = document.getElementById('this-zone');
+    if (!cursor || !zone) return;
 
-        if (!cursor || !zone) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = zone.getBoundingClientRect();
+      if (
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom
+      ) {
+        cursor.style.left = e.pageX + "px";
+        cursor.style.top = e.pageY + "px";
+        cursor.style.opacity = "1";
+      } else {
+        cursor.style.opacity = "0";
+      }
+    };
 
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = zone.getBoundingClientRect();
-            if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
-                cursor.style.left = e.pageX + 'px';
-                cursor.style.top = e.pageY + 'px';
-                cursor.style.opacity = '1'; 
-            } else {
-                cursor.style.opacity = '0'; 
-            }
-        };
-
-        zone.addEventListener('mousemove', handleMouseMove);
+    zone.addEventListener("mousemove", handleMouseMove);
 
         return () => {
             zone.removeEventListener('mousemove', handleMouseMove);
@@ -88,23 +111,29 @@ export const Index = () => {
     }, []);
     return ( 
         <div className="mt-[110px] px-[20px] bg-[#F4F2EE]">
-            {data?.products?.map((item, i) => (
+            {data?.products?.map((item, i) => {
+              const originalPrice = Math.round(item?.productOption[index]?.productPrice / ((100 - item.salePercent) / 100));
+              return (
                 <div>
                     <div className="flex flex-row justify-between items-center" key={i}>
-                        <div className="w-[32%]">
-                            <h1 className="text-[40px] font-black leading-[40px]">{item.productName}</h1>
-                            <div className="bg-black rounded-[25px] text-white w-[400px] mt-[50px] flex flex-row justify-between items-center pr-[30px]">
+                        <div className="w-[35%]">
+                            <div className="flex flex-row justify-between gap-[20px] items-center">
+                              <h1 className="text-[40px] font-black leading-[40px]">{item.productName}</h1>
+                              <span className="bg-[#dc633a] text-white text-[14px] font-[500] px-[15px] py-[4px]">-{item.salePercent}%</span>
+                            </div>
+                            <div className="bg-black rounded-[25px] text-white w-[500px] mt-[50px] flex flex-row justify-between items-center pr-[30px]">
                                 <div className="flex flex-row items-center gap-[5px] px-[30px] py-[12px]">
                                     <button onClick={() => handleQuantity('decrease')}>-</button>
                                     <input className="w-[20px] outline-none bg-black ml-[10px]" value={quantity} />
                                     <button onClick={() => {handleQuantity('increase'); setMaxQuantity(item?.productOption[index]?.productQuantity)}}>+</button>
                                 </div>
-                                <div>
+                                <div className="flex flex-row gap-[7px]">
                                     <p>{formatCurrency(item?.productOption[index]?.productPrice)}</p>
+                                    <del className="text-gray-400 text-[15px]">{formatCurrency(originalPrice)}</del>
                                 </div>
                                 <div>
                                     {item?.productOption[index]?.productQuantity === 0 ? 
-                                        <button className="text-[14px] font-[500]">OUT OF STOCK</button> : 
+                                        <button className="text-[14px] font-[500] text-primary">OUT OF STOCK</button> : 
                                         <button className="text-[14px] tracking-[0.5px] hover:text-primary font-[500]" onClick={() => handleAddToCart(item.productName, item._id, item?.productOption[index]?.productPrice, item.salePercent)}>ADD TO CART</button>}
                                 </div>
                             </div>
@@ -124,7 +153,7 @@ export const Index = () => {
                         <div className="w-[38%]">
                             <Image src={item.productThumbnail} width="500" height="400" alt="" />
                         </div>
-                        <div className="w-[30%]">
+                        <div className="w-[27%]">
                             <div className="flex flex-row gap-[30px]">
                                 <h6 className="text-[12px]">DESCRIPTION</h6>
                                 <div
@@ -157,7 +186,8 @@ export const Index = () => {
                         </div>
                     </div>
                 </div>
-            ))}
+              );
+            })}
             <div id="this-zone">
                 <h1 className="text-[28px] font-[500]">SẢN PHẨM GỢI Ý</h1>
                 <div>
@@ -167,6 +197,7 @@ export const Index = () => {
                 </div>
                 <div className="cursor"></div>
             </div>
+            {contextHolder}
         </div>
     );
 }

@@ -36,7 +36,7 @@ const ProductGrid = () => {
   };
 
   return (
-    <div>
+    <div className="mb-[150px]">
       <Filter
         handleQueryProduct={handleQueryProduct}
         handleSearchTermChange={handleSearchTermChange}

@@ -1,8 +1,13 @@
-import HistoryImage from "@@/assets/images/history-img.png";
-import ResponsiveImage from "@/components/ui/ResponsiveImage";
-import Sidebar from "../Sidebar/Sidebar";
+"use client";
+import { useGetOrdersByUserIdQuery } from "@/libs/features/services/order";
+import { useSession } from "next-auth/react";
 
 export default function History() {
+  const session = useSession();
+  const userId = session?.data?.user._id;
+
+  const { data } = useGetOrdersByUserIdQuery({ userId: userId });
+  console.log(data);
   return (
     <>
       <div className="">

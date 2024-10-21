@@ -14,7 +14,6 @@ export const servicesAPI = createApi({
   tagTypes: ["Services"],
 
   endpoints: (builder) => ({
-    // Modified getProducts endpoint to accept a params object
     getServices: builder.query<Services[], QueryParams>({
       query: (params: QueryParams) => {
         const queryParams = new URLSearchParams(params as any).toString();

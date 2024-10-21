@@ -5,7 +5,6 @@ import useSearchMap from "./_hooks/useSearchMap";
 
 export default function AddressInput() {
   const [suggestions, setSuggestions] = useState<MapSearchType[]>([]);
-  console.log(suggestions);
 
   const { handleAutoComplete } = useSearchMap();
   const handleKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -15,16 +14,18 @@ export default function AddressInput() {
     }
   };
 
-  console.log(suggestions);
   return (
     <Autocomplete
       defaultItems={suggestions}
       label="Nhập địa chỉ"
       className="w-full"
       onKeyUp={(e) => handleKeyUp(e)}
+      onSelectionChange={(value) => {
+        console.log(value);
+      }}
     >
       {(suggestion) => (
-        <AutocompleteItem key={suggestion.id}>
+        <AutocompleteItem key={suggestion.label}>
           {suggestion.label}
         </AutocompleteItem>
       )}

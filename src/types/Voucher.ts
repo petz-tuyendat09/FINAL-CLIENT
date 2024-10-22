@@ -11,6 +11,27 @@ export interface Voucher {
   voucherDescription: string;
 }
 
+interface VoucherId {
+  _id: string;
+  voucherPoint: number;
+  voucherType: "PER_ITEM_SAVINGS" | "ON_ORDER_SAVINGS";
+  voucherDescription: string;
+  salePercent: number;
+  updatedAt?: string;
+}
+
+interface HeldVoucher {
+  voucherId: VoucherId;
+  quantity: number;
+  _id: string;
+}
+
+export interface HeldVouchersResponse {
+  vouchers: HeldVoucher[];
+  currentPage: number;
+  totalPages: number;
+}
+
 export interface VoucherPaginate {
   currentPage: number;
   totalPages: number;

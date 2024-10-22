@@ -31,7 +31,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
       <body>
         <StoreProvider>
           <Header />
-          <main className="mt-24">
+          <main className="my-24">
             <div className="flex">
               <Sidebar />
               <div className="mx-auto w-3/4 px-12">{children}</div>

@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 export default function History() {
   const session = useSession();
   const userId = session?.data?.user._id;
-
   const { data } = useGetOrdersByUserIdQuery({ userId: userId });
   console.log(data);
   return (

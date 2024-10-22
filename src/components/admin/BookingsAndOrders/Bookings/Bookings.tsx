@@ -4,19 +4,11 @@ import { BookingProvider } from "./store/BookingContext";
 import BookingsTable from "./BookingsTable";
 import BookingsFilter from "./BookingsFilter";
 
-function Bookings() {
-  return (
-    <>
-      <BookingsFilter />
-      <BookingsTable />
-    </>
-  );
-}
-
-export default function BookingsPage() {
+export default function Bookings() {
   return (
     <BookingProvider>
-      <Bookings />
+      <BookingsFilter />
+      <BookingsTable />
     </BookingProvider>
   );
 }

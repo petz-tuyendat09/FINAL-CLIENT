@@ -1,6 +1,11 @@
 import { Product } from "./Product";
 
 export interface Order {
+  createdAt(createdAt: any): import("react").ReactNode;
+  createAt(createAt: any): import("react").ReactNode;
+  date(date: any): import("react").ReactNode;
+  price(price: any): import("react").ReactNode;
+  orderDate(orderDate: any): import("react").ReactNode;
   _id: string;
   customerName: string;
   customerPhone: string;
@@ -27,3 +32,10 @@ export interface User {
   userEmail: string;
   userPhone: string;
 }
+
+export enum OrderStatus {
+  PENDING = "Đang chờ",
+  COMPLETED = "Hoàn thành",
+  CANCELLED = "Đã hủy",
+}
+

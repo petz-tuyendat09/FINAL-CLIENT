@@ -13,6 +13,8 @@ export interface ProductOption {
 }
 
 export interface Product {
+  length: any;
+  name: any;
   _id: string;
   productName: string;
   salePercent: number;

@@ -33,6 +33,7 @@ export default function useServicesListAction() {
     if (session) {
       setUserId(session?.user._id as any);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedKeys, session]);
 
   console.log(queryParams);

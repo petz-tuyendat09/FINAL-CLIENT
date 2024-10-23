@@ -7,17 +7,18 @@ import ProductCardCartButton from "./ProductCardCartButton";
 interface ProductBoxProps {
   Product: Product;
   additionalClassess?: string;
+  status: string | undefined;
 }
 
-const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
+const ProductCard = memo(({ Product, additionalClassess, status }: ProductBoxProps) => {
   const productThumbnail = Product?.productThumbnail;
 
   return (
-    <div className={additionalClassess}>
+    <div className={`${additionalClassess}`}>
       <div className="relative mb-4 block">
         <Link href={`shop/${Product?.productSlug}`}>
           <Image
-            className="rounded-xl select-none object-cover"
+            className="rounded-xl select-none rounded-md object-cover"
             src={productThumbnail}
             alt="Product Image"
             width={500}
@@ -25,9 +26,14 @@ const ProductCard = memo(({ Product, additionalClassess }: ProductBoxProps) => {
             style={{ width: "100%", height: "100%" }}
           />
           {Product.salePercent >= 1 && (
-            <p className="absolute left-2 top-2 rounded-lg bg-black px-4 py-1 text-[10px] text-white md:text-base">
-              {Product.salePercent}%
-            </p>
+            <>
+              <p className="absolute left-2 top-2 rounded-lg bg-black px-4 py-1 text-[10px] text-white md:text-base">
+                {Product.salePercent}%
+              </p>
+            </>
+          )}
+          {status === 'latest' && (
+            <i className="absolute top-[20%] px-[46px] py-[3px] text-[20px] right-0 font-cormorant bg-[#feeae7]">New</i>
           )}
         </Link>
         <ProductCardCartButton Product={Product} />

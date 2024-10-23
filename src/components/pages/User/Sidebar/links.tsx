@@ -19,8 +19,8 @@ export const links = [
   },
 
   {
-    url: "/user/change-password",
+    url: "/user/change-voucher",
     icon: <Icon className="size-6" icon="ci:settings" />,
-    label: "Thay đổi mật khẩu",
+    label: "Đổi voucher",
   },
 ];

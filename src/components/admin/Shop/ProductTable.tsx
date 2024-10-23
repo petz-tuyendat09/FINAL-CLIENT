@@ -11,6 +11,7 @@ import {
   getKeyValue,
   Tabs,
   Tab,
+  Input,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import useProductActionAdmin from "./_hooks/useProductActionAdmin";
@@ -59,11 +60,14 @@ export default function ProductTable() {
     deleteModalOpen,
     handleCancelDelete,
     handleConfirmDelete,
-    deleteProduct,
+    handleSearchProduct,
   } = useProductActionAdmin({ initialPage: 1 });
 
   return (
     <div>
+      <div className="mb-4">
+        <Input onValueChange={handleSearchProduct} label="Tên sản phẩm" />
+      </div>
       <Table
         aria-label="Product Table"
         bottomContent={

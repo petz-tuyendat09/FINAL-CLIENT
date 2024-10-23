@@ -2,10 +2,12 @@ import ProductBox from "@/components/ui/ProductCard/ProductCard";
 import { useGetProductsQuery } from "@/libs/features/services/product";
 import { motion } from "framer-motion";
 
-interface ProductSliderProps {
-  filterOption?: object;
+interface FilterOption {
+  productStatus?: string;
 }
-
+interface ProductSliderProps {
+  filterOption?: FilterOption;
+}
 export default function ProductSlider({ filterOption }: ProductSliderProps) {
   const { data } = useGetProductsQuery({
     ...filterOption,
@@ -37,7 +39,7 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 * index }}
             >
-              <ProductBox Product={product} />
+              <ProductBox Product={product} status={filterOption?.productStatus} />
             </motion.div>
           </div>
         ))}

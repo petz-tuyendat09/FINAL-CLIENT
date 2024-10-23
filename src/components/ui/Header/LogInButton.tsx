@@ -1,6 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import NormalTransitionLink from "../NormalTransitionLink";
-import { useState } from "react";
 import {
   Dropdown,
   DropdownMenu,
@@ -51,7 +50,10 @@ export default function LoginButton() {
             aria-label="Link Actions"
           >
             <DropdownItem key="/user/account">
-              <NormalTransitionLink href="/user/account">
+              <NormalTransitionLink
+                className="w-full text-left"
+                href="/user/account"
+              >
                 Thông tin
               </NormalTransitionLink>
             </DropdownItem>

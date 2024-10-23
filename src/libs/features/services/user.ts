@@ -5,6 +5,8 @@ interface ChangePasswordParams {
     userId: string,
     newPassword?: string,
     displayName?: string,
+    birthDay?: string,
+    userEmail?: string,
     userPhone?: string,
     userImage?: any,
     userAddress?: string,
@@ -18,6 +20,10 @@ export const userAPI = createApi({
     tagTypes: ["User"],
 
     endpoints: (builder) => ({
+        getUser: builder.query<ChangePasswordParams, string>({
+            query: (userId: string) => `/${userId}`, // lấy thông tin người dùng theo userId
+            providesTags: ["User"],
+        }),
         editUser: builder.mutation<
             any, ChangePasswordParams
         >({
@@ -32,5 +38,6 @@ export const userAPI = createApi({
 });
 
 export const {
+    useGetUserQuery,
     useEditUserMutation,
 } = userAPI;

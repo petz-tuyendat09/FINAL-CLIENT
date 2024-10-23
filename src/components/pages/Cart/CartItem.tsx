@@ -32,7 +32,6 @@ export default function CartItem({
   cartItem,
   authenticatedCartId,
 }: CartItemProps) {
-  console.log(cartItem);
   const dispatch = useDispatch();
   const session = useSession();
   const authStatus = session.status;

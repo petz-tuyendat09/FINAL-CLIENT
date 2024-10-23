@@ -68,9 +68,7 @@ const handler = NextAuth({
       return session;
     },
   },
-  pages: {
-    signIn: "/auth",
-  },
+  pages: {},
   secret: process.env.NEXTAUTH_SECRET,
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,

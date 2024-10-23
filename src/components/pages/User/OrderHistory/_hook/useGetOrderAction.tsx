@@ -1,8 +1,9 @@
-import { useGetBookingByUserIdQuery } from "@/libs/features/services/booking";
+"use client";
+import { useGetOrdersByUserIdQuery } from "@/libs/features/services/order";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 
-export default function useServicesListAction() {
+export default function useOrdersHistoryAction() {
   const { data: session, status } = useSession();
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Status"]));
   const [userId, setUserId] = useState();
@@ -28,23 +29,20 @@ export default function useServicesListAction() {
 
   useEffect(() => {
     if (selectedValue !== "Status") {
-      setQueryParams((prev) => ({ ...prev, bookingStatus: selectedValue }));
+      setQueryParams((prev) => ({ ...prev, orderStatus: selectedValue }));
     }
     if (session) {
       setUserId(session?.user._id as any);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedKeys, session]);
 
-  console.log(queryParams);
-
-  const { data: bookingList } = useGetBookingByUserIdQuery({
+  const { data: orderList = [] } = useGetOrdersByUserIdQuery({
     userId: userId && userId,
     ...queryParams,
   });
 
   return {
-    bookingList,
+    orderList,
     handleDateChange,
     setSelectedKeys,
     selectedValue,

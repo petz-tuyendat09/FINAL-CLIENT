@@ -2,12 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { VoucherPaginate } from "@/types/Voucher";
 
 export interface QueryParams {
-  voucherId?: string;
   page?: number;
   salePercentSort?: string; // asc || desc
   pointSort?: string; // asc || desc
   typeFilter?: string; // ON_ORDER_SAVINGS || PER_ITEM_SAVINGS
   limit?: number;
+}
+
+export interface ChangeVoucherParams {
+  voucherPoint: number;
+  voucherId: string;
+  userId: string;
 }
 
 export const vouchersAPI = createApi({
@@ -98,6 +103,14 @@ export const vouchersAPI = createApi({
       }),
       invalidatesTags: ["Voucher"],
     }),
+    changeVoucher: builder.mutation<any, ChangeVoucherParams>({
+      query: (formData: ChangeVoucherParams) => ({
+        url: "/change-voucher",
+        method: "post",
+        body: formData,
+      }),
+      invalidatesTags: ["Voucher"],
+    }),
   }),
 });
 
@@ -106,4 +119,5 @@ export const {
   useInsertVoucherMutation,
   useDeleteVoucherMutation,
   useEditVoucherMutation,
+  useChangeVoucherMutation,
 } = vouchersAPI;

@@ -22,15 +22,20 @@ export default function ProductCardCartButton({
   const authStatus = session?.status;
 
   const [addToCart, { data: newCart }] = useAddItemToCartMutation();
+
   const success = () => {
-    message.success(
-      <div>
-        Thêm giỏ hàng thành công.{" "}
-        <NormalTransitionLink href="/cart" className="text-blue-400">
-          Xem giỏ hàng
-        </NormalTransitionLink>
-      </div>,
-    );
+    message.success({
+      content: (
+        <div>
+          Thêm giỏ hàng thành công.{" "}
+          <Link href="/cart" className="text-blue-400">
+            Xem giỏ hàng
+          </Link>
+        </div>
+      ),
+      duration: 30,
+      className: "custom-message", // Optionally for further styling if needed
+    });
   };
   function handleAddToCart() {
     const cartItem = {
@@ -50,6 +55,7 @@ export default function ProductCardCartButton({
       success();
     } else {
       dispatch(cartAction.addToCart(cartItem));
+      success();
     }
   }
 

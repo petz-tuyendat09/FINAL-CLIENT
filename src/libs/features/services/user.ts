@@ -2,14 +2,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HeldVouchersResponse } from "@/types/Voucher";
 
 interface ChangePasswordParams {
-    userId: string,
-    newPassword?: string,
-    displayName?: string,
-    birthDay?: string,
-    userEmail?: string,
-    userPhone?: string,
-    userImage?: any,
-    userAddress?: string,
+  userId: string;
+  newPassword?: string;
+  displayName?: string;
+  birthDay?: string;
+  userEmail?: string;
+  userPhone?: string;
+  userImage?: any;
+  userAddress?: string;
 }
 
 export interface HeldVoucherQueryParams {
@@ -28,6 +28,10 @@ export const userAPI = createApi({
   tagTypes: ["User"],
 
   endpoints: (builder) => ({
+    getUser: builder.query<ChangePasswordParams, string>({
+      query: (userId: string) => `/${userId}`,
+      providesTags: ["User"],
+    }),
     editUser: builder.mutation<any, ChangePasswordParams>({
       query: (formData: ChangePasswordParams) => ({
         url: ``,
@@ -47,28 +51,8 @@ export const userAPI = createApi({
         return `/voucher-held?${queryParams}`;
       },
     }),
-    endpoints: (builder) => ({
-        getUser: builder.query<ChangePasswordParams, string>({
-            query: (userId: string) => `/${userId}`, // lấy thông tin người dùng theo userId
-            providesTags: ["User"],
-        }),
-        editUser: builder.mutation<
-            any, ChangePasswordParams
-        >({
-            query: (formData: ChangePasswordParams) => ({
-                url: ``,
-                method: "PUT",
-                body: formData
-            }),
-            invalidatesTags: ["User"],
-        }),
   }),
 });
 
-
-export const {
-    useGetUserQuery,
-    useEditUserMutation,
-    useGetVouchersHeldQuery
-} = userAPI;
-
+export const { useGetUserQuery, useEditUserMutation, useGetVouchersHeldQuery } =
+  userAPI;

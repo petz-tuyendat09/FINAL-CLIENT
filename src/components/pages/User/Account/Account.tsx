@@ -9,7 +9,6 @@ import useChangeProfile from "./_hooks/useChangeProfile";
 
 interface User {
   displayName: string;
-  birthDay: string;
   userEmail: string;
   userPhone: string;
   userAddress: string;
@@ -25,7 +24,6 @@ export default function Profile() {
     if (userData) {
       formik.setValues({
         displayName: userData.displayName || "",
-        birthDay: userData.birthDay || "",
         userEmail: userData.userEmail || "",
         userPhone: userData.userPhone || "",
         userAddress: userData.userAddress || "",
@@ -72,19 +70,7 @@ export default function Profile() {
                   formik.touched.displayName && !!formik.errors.displayName
                 }
               />
-              <Input
-                label="Ngày sinh"
-                name="birthDay"
-                value={formik.values.birthDay}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                errorMessage={
-                  formik.touched.birthDay && formik.errors.birthDay
-                    ? formik.errors.birthDay
-                    : undefined
-                }
-                isInvalid={formik.touched.birthDay && !!formik.errors.birthDay}
-              />
+              <DateInput></DateInput>
               <Input
                 isDisabled
                 label="Email"

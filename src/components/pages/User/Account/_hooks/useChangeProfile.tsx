@@ -8,7 +8,6 @@ import { useEditUserMutation } from "@/libs/features/services/user";
 
 interface errorsValues {
     displayName: string;
-    birthDay: string;
     userEmail: string;
     userPhone: string;
     userAddress: string;
@@ -23,7 +22,6 @@ export default function useChangeProfile() {
     const formik = useFormik({
         initialValues: {
             displayName: "",
-            birthDay: "",
             userEmail: "",
             userPhone: "",
             userAddress: "",
@@ -35,7 +33,6 @@ export default function useChangeProfile() {
             changeProfile({
                 userId: userId as any,
                 displayName: values.displayName,
-                birthDay: values.birthDay,
                 userEmail: values.userEmail,
                 userPhone: values.userPhone,
                 userAddress: values.userAddress,

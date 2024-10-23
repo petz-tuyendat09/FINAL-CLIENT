@@ -46,7 +46,7 @@ export default function BookingDetail({
       </div>
 
       <div className="px-4">
-        <Card className="max-w-[400px]" shadow="sm">
+        <Card className="w-full" shadow="sm">
           <CardHeader className="flex gap-3">
             <Logo />
             <div className="flex flex-col">

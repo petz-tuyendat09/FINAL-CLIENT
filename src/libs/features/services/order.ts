@@ -3,6 +3,7 @@ import { Order } from "@/types/Order";
 
 interface QueryParams {
   userId?: string;
+  orderId?: string;
   serviceType?: string;
   bookingAmount?: "desc" | "asc";
 }
@@ -29,7 +30,18 @@ export const orderAPI = createApi({
       },
       providesTags: ["Orders"],
     }),
+    getOrdersByOrderId: builder.query<Order[], QueryParams>({
+      query: (params: QueryParams) => {
+        const queryParams = new URLSearchParams(params as any).toString();
+        return `/order-id?${queryParams}`; // Return the URL with the query string
+      },
+      providesTags: ["Orders"],
+    }),
   }),
 });
 
-export const { useGetOrdersQuery, useGetOrdersByUserIdQuery } = orderAPI;
+export const {
+  useGetOrdersQuery,
+  useGetOrdersByUserIdQuery,
+  useGetOrdersByOrderIdQuery,
+} = orderAPI;

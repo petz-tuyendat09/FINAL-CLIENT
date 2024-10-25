@@ -120,6 +120,8 @@ export default function ModalAdd({
     }
   }, [mutationError, data, handleCloseDialog]);
 
+  console.log(serviceType);
+
   return (
     <Modal
       backdrop="blur"
@@ -142,7 +144,7 @@ export default function ModalAdd({
                 className="w-full"
                 errorMessage={typeErrorMessage}
                 isInvalid={typeErrorMessage !== ""}
-                selectedKeys={serviceType}
+                selectedKeys={[serviceType]}
                 onSelectionChange={(key) => {
                   setServiceType((key as any).currentKey);
                   setTypeErrorMessage("");

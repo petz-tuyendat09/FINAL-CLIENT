@@ -70,7 +70,6 @@ export default function Profile() {
                   formik.touched.displayName && !!formik.errors.displayName
                 }
               />
-              <DateInput></DateInput>
               <Input
                 isDisabled
                 label="Email"

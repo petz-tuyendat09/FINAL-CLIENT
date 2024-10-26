@@ -13,6 +13,7 @@ interface BookingInformation {
 }
 
 export interface BookingQueryParams {
+  bookingId?: string;
   userId?: string;
   customerName?: string;
   year?: number;
@@ -57,6 +58,14 @@ export const bookingsAPI = createApi({
       }),
       invalidatesTags: ["Booking"],
     }),
+    cancelBooking: builder.mutation<any, { bookingId: string }>({
+      query: ({ bookingId }) => ({
+        url: "/cancel-booking",
+        method: "PUT",
+        body: { bookingId: bookingId },
+      }),
+      invalidatesTags: ["Booking"],
+    }),
     getBookingByUserId: builder.query<PaginateBooking, BookingQueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams(
@@ -76,4 +85,5 @@ export const {
   useLazyGetBookingByDateQuery,
   useCreateBookingMutation,
   useGetBookingByUserIdQuery,
+  useCancelBookingMutation,
 } = bookingsAPI;

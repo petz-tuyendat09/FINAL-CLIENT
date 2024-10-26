@@ -47,8 +47,10 @@ export const userAPI = createApi({
   }),
 });
 
+
 export const {
   useGetUserQuery,
   useEditUserMutation,
   useGetVouchersHeldQuery,
 } = userAPI;
+

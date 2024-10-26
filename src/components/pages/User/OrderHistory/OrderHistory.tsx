@@ -1,44 +1,3 @@
-// "use client";
-// import { useGetOrdersByUserIdQuery } from "@/libs/features/services/order";
-// import { useSession } from "next-auth/react";
-
-// export default function History() {
-//   const session = useSession();
-//   const userId = session?.data?.user._id;
-
-//   const { data } = useGetOrdersByUserIdQuery({ userId: userId });
-//   console.log(data);
-//   return (
-//     <>
-//       <div className="">
-//         <h1 className="mb-6 text-2xl font-semibold">Lịch sử đơn hàng</h1>
-//         <div className="mb-6">
-//           <div className="relative">
-//             <input
-//               className="w-full rounded-lg border border-gray-300 p-3"
-//               placeholder="Tìm tên sản phẩm..."
-//               type="text"
-//             />
-//             <i className="fas fa-search absolute right-3 top-3 text-gray-500"></i>
-//           </div>
-//         </div>
-//         <div className="rounded-lg bg-white p-6 shadow">
-//           <div className="grid grid-cols-4 gap-4 rounded-lg bg-black p-3 text-center font-semibold text-white">
-//             <div>Tên sản phẩm</div>
-//             <div>Giá (VND)</div>
-//             <div>Ngày đặt</div>
-//             <div>Trạng thái</div>
-//           </div>
-//           <div className="mt-10 flex flex-col items-center justify-center">
-//             {/* image here  */}
-//             <p className="text-gray-500">Chưa có lịch sử</p>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 "use client";
 import {
   DatePicker,
@@ -59,6 +18,8 @@ import { today, getLocalTimeZone } from "@internationalized/date";
 import useOrdersHistoryAction from "./_hook/useGetOrderAction";
 import { OrderStatus } from "@/types/Order";
 import formatMoney from "@/utils/formatMoney";
+import formatDate from "@/utils/formatDate";
+import Link from "next/link";
 
 const columns = [
   {
@@ -102,28 +63,6 @@ export default function OrdersHistory() {
     );
     return order < current;
   };
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) {
-      return "Invalid Date";
-    }
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      return "Invalid Date";
-    }
-    return date.toISOString().split("T")[0];
-  };
-
-  const formatMoney = (amount: number | undefined): string => {
-    if (amount === undefined || amount === null) {
-      return "0";
-    }
-    return amount.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-  };
-
 
   return (
     <>
@@ -174,57 +113,53 @@ export default function OrdersHistory() {
                 {(columnKey) => {
                   if (columnKey === "createdAt") {
                     return (
-                      <TableCell>
-                        {formatDate(orderItem.createdAt)}
-                      </TableCell>
+                      <TableCell>{formatDate(orderItem.createdAt)}</TableCell>
                     );
                   }
                   if (columnKey === "productCount") {
                     return (
-                      <TableCell>
-                        {orderItem.productId?.length || 0} {/* Show count of products */}
-                      </TableCell>
+                      <TableCell>{orderItem.productId?.length || 0} </TableCell>
                     );
                   }
                   if (columnKey === "paymentMethod") {
-                    // return <TableCell>{orderItem.paymentMethod}</TableCell>;
-                    return <TableCell>
-                          {
-                          orderItem.paymentMethod === 'COD'
-                          ? 'Thanh toán khi nhận hàng'
-                          : orderItem.paymentMethod === 'BANKING'
-                          ? 'Thanh toán bằng ngân hàng'
-                          : orderItem.paymentMethod
-                          }
-                    </TableCell>;
+                    return (
+                      <TableCell>
+                        {orderItem.paymentMethod === "COD"
+                          ? "Thanh toán khi nhận hàng"
+                          : orderItem.paymentMethod === "BANKING"
+                            ? "Thanh toán bằng ngân hàng"
+                            : orderItem.paymentMethod}
+                      </TableCell>
+                    );
                   }
                   if (columnKey === "totalPrice") {
                     return (
                       <TableCell>
-                        {formatMoney(orderItem.orderAfterDiscout)}
+                        {formatMoney((orderItem as any).orderAfterDiscout)}
                       </TableCell>
                     );
                   }
                   if (columnKey === "orderStatus") {
                     return (
                       <TableCell>
-                        {OrderStatus[orderItem.orderStatus]}
+                        {
+                          OrderStatus[
+                            orderItem.orderStatus as keyof typeof OrderStatus
+                          ]
+                        }
                       </TableCell>
                     );
                   }
                   if (columnKey === "action") {
-                    const pastDate = isPastDate(orderItem.createdAt);
+                    const pastDate = isPastDate(orderItem.createdAt as any);
                     return (
                       <TableCell className="space-x-2">
-                        <Button
-                          variant="flat"
-                          size="sm"
-                          onClick={() => {
-                            console.log("Viewing order", orderItem._id);
-                          }}
-                        >
-                          Xem
+                        <Button variant="flat" size="sm" color="default">
+                          <Link href={`order-history/${orderItem._id}`}>
+                            Xem
+                          </Link>
                         </Button>
+
                         <Button
                           variant="flat"
                           size="sm"

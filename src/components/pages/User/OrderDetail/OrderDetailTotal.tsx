@@ -33,7 +33,7 @@ export default function OrderDetailTotal({ order }: OrderDetailTotalProps) {
           Tổng tiền
         </p>
         <p className="text-base font-semibold leading-4 text-gray-600">
-          {formatMoney(order && order.orderAfterDiscout)}
+          {formatMoney(order && order.totalAfterDiscount)}
         </p>
       </div>
     </div>

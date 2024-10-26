@@ -9,6 +9,7 @@ export default function useServicesListAction() {
   const [viewDetail, setViewDetail] = useState(false);
   const [cancelBooking, setCancelBooking] = useState(false);
   const [cancelBookingId, setCancelBookingId] = useState("");
+  const [isReview, setIsReview] = useState(false);
   const [bookingDetailId, setBookingDetailId] = useState("");
 
   const [queryParams, setQueryParams] = useState<{
@@ -32,6 +33,16 @@ export default function useServicesListAction() {
 
   const handleCloseDetail = () => {
     setViewDetail(false);
+    setBookingDetailId("");
+  };
+
+  const handleReview = (bookingId: string) => {
+    setIsReview(true);
+    setBookingDetailId(bookingId);
+  };
+
+  const handleCancelReview = () => {
+    setIsReview(false);
     setBookingDetailId("");
   };
 
@@ -74,6 +85,9 @@ export default function useServicesListAction() {
     viewDetail,
     bookingDetailId,
     handleCloseDetail,
+    handleReview,
+    isReview,
+    handleCancelReview,
     handleCancelBooking,
     cancelBookingId,
     cancelBooking,

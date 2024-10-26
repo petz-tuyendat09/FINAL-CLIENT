@@ -22,6 +22,7 @@ import formatMoney from "@/utils/formatMoney"; // Import the formatMoney functio
 import ModalBookingDetail from "./Modal/ModalBookingDetail";
 import formatDate from "@/utils/formatDate";
 import ModalCancelBooking from "./Modal/ModalCancelBooking";
+import ModalReview from "./Modal/ModalReview";
 
 const columns = [
   {
@@ -59,7 +60,10 @@ export default function ServicesList() {
     handleCancelBooking,
     cancelBookingId,
     cancelBooking,
+    handleReview,
+    handleCancelReview,
     handleCloseCancelBooking,
+    isReview,
   } = useServicesListAction();
 
   // Get the local time zone
@@ -165,19 +169,33 @@ export default function ServicesList() {
                         >
                           Xem
                         </Button>
-                        <Button
-                          variant="flat"
-                          size="sm"
-                          color="danger"
-                          isDisabled={
-                            pastDate || bookingItem.bookingStatus == "Canceled"
-                          }
-                          onClick={() => {
-                            handleCancelBooking(bookingItem._id);
-                          }}
-                        >
-                          Hủy
-                        </Button>
+                        {!pastDate &&
+                          bookingItem.bookingStatus !== "Canceled" && (
+                            <Button
+                              variant="flat"
+                              size="sm"
+                              color="danger"
+                              isDisabled={pastDate}
+                              onClick={() => {
+                                handleCancelBooking(bookingItem._id);
+                              }}
+                            >
+                              Hủy
+                            </Button>
+                          )}
+                        {bookingItem.bookingStatus === "Done" &&
+                          !bookingItem.reviewStatus && (
+                            <Button
+                              onClick={() => {
+                                handleReview(bookingItem._id);
+                              }}
+                              variant="flat"
+                              size="sm"
+                              color="success"
+                            >
+                              Đánh giá
+                            </Button>
+                          )}
                       </TableCell>
                     );
                   }
@@ -201,6 +219,13 @@ export default function ServicesList() {
             isDialogOpen={cancelBooking}
             handleCloseDialog={handleCloseCancelBooking}
             bookingId={cancelBookingId}
+          />
+        )}
+        {isReview && (
+          <ModalReview
+            isDialogOpen={isReview}
+            handleCloseDialog={handleCancelReview}
+            bookingId={bookingDetailId}
           />
         )}
       </div>

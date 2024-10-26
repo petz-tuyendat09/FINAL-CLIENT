@@ -10,6 +10,7 @@ import {
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
+  console.log(session);
 
   if (status === "unauthenticated") {
     return (
@@ -30,7 +31,7 @@ export default function LoginButton() {
         >
           <DropdownTrigger>
             <Button className="text-white" variant="flat">
-              {session?.user.username}
+              {session?.user.displayName}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
@@ -59,7 +60,7 @@ export default function LoginButton() {
             </DropdownItem>
             {session?.user.userRole === "admin" &&
               ((
-                <DropdownItem textValue="Trang Admin" key="/user/account">
+                <DropdownItem textValue="Trang Admin" key="/admin/dashboard">
                   <NormalTransitionLink
                     className="w-full text-left"
                     href="/admin/dashboard"

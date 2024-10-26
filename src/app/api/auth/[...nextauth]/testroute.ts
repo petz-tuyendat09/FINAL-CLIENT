@@ -13,6 +13,7 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials) return null;
+
         try {
           const response = await fetch(`http://localhost:8888/api/auth/login`, {
             method: "POST",
@@ -29,9 +30,9 @@ const handler = NextAuth({
 
           if (response.ok && data.canLogin) {
             return {
-              ...data.user,
-              token: data.token,
-              refreshToken: data.refreshToken,
+              ...data.data.user,
+              token: data.data.token,
+              refreshToken: data.data.refreshToken,
             };
           } else {
             throw new Error(data);
@@ -68,8 +69,8 @@ const handler = NextAuth({
             },
           );
           const data = await response.json();
+          console.log(data);
           if (response.ok && data.canLogin) {
-            (account as any).userData = data.data;
             return {
               ...data.data.user,
               token: data.data.token,
@@ -85,15 +86,8 @@ const handler = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user, session, trigger, account }) {
-      if (account?.provider === "google" && user) {
-        console.log(account);
-        token.user = {
-          ...(account as any).userData.user,
-          token: (account as any).userData.token,
-          refreshToken: (account as any).userData.refreshToken,
-        };
-      } else if (user) {
+    async jwt({ token, user, session, trigger }) {
+      if (user) {
         token.user = {
           ...user,
           token: (user as any).token,
@@ -113,9 +107,7 @@ const handler = NextAuth({
       return session;
     },
   },
-  pages: {
-    signIn: "/auth", // Custom path for sign-in page
-  },
+  pages: {},
   secret: process.env.NEXTAUTH_SECRET,
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,

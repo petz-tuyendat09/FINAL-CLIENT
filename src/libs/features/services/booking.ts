@@ -24,6 +24,15 @@ export interface BookingQueryParams {
   limit?: number;
 }
 
+interface ReviewPayload {
+  userId: string;
+  customerName: string;
+  bookingId: string;
+  rating: number;
+  review?: string;
+  services: string[];
+}
+
 export const bookingsAPI = createApi({
   reducerPath: "bookingsAPI",
   baseQuery: fetchBaseQuery({
@@ -76,6 +85,14 @@ export const bookingsAPI = createApi({
       },
       providesTags: ["Booking"],
     }),
+    reviewBooking: builder.mutation<void, ReviewPayload>({
+      query: (payload) => ({
+        url: `/review-booking`,
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["Booking"],
+    }),
   }),
 });
 
@@ -86,4 +103,5 @@ export const {
   useCreateBookingMutation,
   useGetBookingByUserIdQuery,
   useCancelBookingMutation,
+  useReviewBookingMutation,
 } = bookingsAPI;

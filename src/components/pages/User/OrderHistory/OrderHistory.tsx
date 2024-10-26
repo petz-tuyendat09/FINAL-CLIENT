@@ -20,6 +20,7 @@ import { OrderStatus } from "@/types/Order";
 import formatMoney from "@/utils/formatMoney";
 import formatDate from "@/utils/formatDate";
 import Link from "next/link";
+import ModalCancelOrder from "./Modal/ModalCancelOrder";
 
 const columns = [
   {
@@ -49,19 +50,29 @@ const columns = [
 ];
 
 export default function OrdersHistory() {
-  const { orderList, handleDateChange, selectedValue, setSelectedKeys } =
-    useOrdersHistoryAction();
+  const {
+    orderList,
+    handleDateChange,
+    selectedValue,
+    setSelectedKeys,
+    handleCancelOrder,
+    cancelOrder,
+    cancelOrderId,
+    handleCloseCancel,
+  } = useOrdersHistoryAction();
 
   const currentDate = today(getLocalTimeZone());
 
-  const isPastDate = (orderItem: string) => {
-    const order = new Date(orderItem);
-    const current = new Date(
-      currentDate.year,
-      currentDate.month - 1,
-      currentDate.day,
-    );
-    return order < current;
+  const isPastDate = (createdAt: string) => {
+    const orderDate = new Date(createdAt);
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    const differenceInTime = todayDate.getTime() - orderDate.getTime();
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+    return differenceInDays >= 1;
   };
 
   return (
@@ -135,7 +146,7 @@ export default function OrdersHistory() {
                   if (columnKey === "totalPrice") {
                     return (
                       <TableCell>
-                        {formatMoney((orderItem as any).orderAfterDiscout)}
+                        {formatMoney((orderItem as any).totalAfterDiscount)}
                       </TableCell>
                     );
                   }
@@ -159,18 +170,19 @@ export default function OrdersHistory() {
                             Xem
                           </Link>
                         </Button>
-
-                        <Button
-                          variant="flat"
-                          size="sm"
-                          color="danger"
-                          isDisabled={pastDate}
-                          onClick={() => {
-                            console.log("Canceling order", orderItem._id);
-                          }}
-                        >
-                          Hủy
-                        </Button>
+                        {!pastDate && orderItem.orderStatus !== "CANCELLED" && (
+                          <Button
+                            variant="flat"
+                            size="sm"
+                            color="danger"
+                            isDisabled={pastDate}
+                            onClick={() => {
+                              handleCancelOrder(orderItem._id);
+                            }}
+                          >
+                            Hủy
+                          </Button>
+                        )}
                       </TableCell>
                     );
                   }
@@ -182,6 +194,13 @@ export default function OrdersHistory() {
             )}
           </TableBody>
         </Table>
+        {cancelOrder && (
+          <ModalCancelOrder
+            isDialogOpen={cancelOrder}
+            orderId={cancelOrderId}
+            handleCloseDialog={handleCloseCancel}
+          />
+        )}
       </div>
     </>
   );

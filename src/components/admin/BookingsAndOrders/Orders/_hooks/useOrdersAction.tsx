@@ -1,30 +1,30 @@
-import { useGetBookingQuery } from "@/libs/features/services/booking";
+import { useGetOrdersQuery } from "@/libs/features/services/order";
+import { BaseOrderQuery } from "@/libs/features/services/order";
 import { useEffect, useMemo, useState } from "react";
-import { BookingQueryParams } from "@/libs/features/services/booking";
-
-interface useBookingActionProps {
+interface useOrdergActionProps {
   initialPage: number;
 }
 
-export default function useBookingAction({
-  initialPage,
-}: useBookingActionProps) {
+export default function useOrdergAction({ initialPage }: useOrdergActionProps) {
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Status"]));
-  const [queryParams, setQueryParams] = useState<BookingQueryParams>({});
+  const [queryParams, setQueryParams] = useState<BaseOrderQuery>({});
+  const [viewDetail, setViewDetail] = useState(false);
+  const [orderId, setOrderId] = useState("");
 
   const [page, setPage] = useState(initialPage);
-  const { data: bookingList } = useGetBookingQuery({
+  const { data: orderList } = useGetOrdersQuery({
     ...queryParams,
-    limit: 4,
+    totalPriceSort: "asc",
+    limit: 6,
     page: page,
   });
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    if (bookingList) {
-      setTotalPages(bookingList.totalPages);
+    if (orderList) {
+      setTotalPages(orderList?.totalPages);
     }
-  }, [bookingList]);
+  }, [orderList]);
 
   const handleSetPage = (page: number) => {
     setPage(page);
@@ -69,8 +69,18 @@ export default function useBookingAction({
     }
   };
 
+  const handleViewOrderDetail = (orderId: string) => {
+    setViewDetail(true);
+    setOrderId(orderId);
+  };
+
+  const handleCancelViewOrderDetail = () => {
+    setViewDetail(false);
+    setOrderId("");
+  };
+
   return {
-    bookingList,
+    orderList,
     handleDateChange,
     setSelectedKeys,
     selectedValue,
@@ -79,5 +89,9 @@ export default function useBookingAction({
     handleSetPage,
     page,
     totalPages,
+    handleViewOrderDetail,
+    viewDetail,
+    orderId,
+    handleCancelViewOrderDetail,
   };
 }

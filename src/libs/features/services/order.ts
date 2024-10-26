@@ -1,5 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Order } from "@/types/Order";
+import { Order, PaginateOrder } from "@/types/Order";
+
+export interface BaseOrderQuery {
+  page?: number;
+  limit?: number;
+  year?: number;
+  month?: number;
+  day?: number;
+  userId?: string;
+  customerName?: string;
+  totalPriceSort?: string;
+  productQuantitySort?: string;
+}
 
 interface QueryParams {
   userId?: string;
@@ -16,8 +28,8 @@ export const orderAPI = createApi({
   tagTypes: ["Orders"],
 
   endpoints: (builder) => ({
-    getOrders: builder.query<Order[], QueryParams>({
-      query: (params: QueryParams) => {
+    getOrders: builder.query<PaginateOrder, BaseOrderQuery>({
+      query: (params: BaseOrderQuery) => {
         const queryParams = new URLSearchParams(params as any).toString();
         return `?${queryParams}`; // Return the URL with the query string
       },
@@ -37,11 +49,21 @@ export const orderAPI = createApi({
       },
       providesTags: ["Orders"],
     }),
+    cancelOrder: builder.mutation<Order, { orderId: string }>({
+      query: ({ orderId }) => ({
+        url: `/cancel-order`,
+        method: "POST",
+        body: { orderId },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
   }),
 });
 
 export const {
   useGetOrdersQuery,
   useGetOrdersByUserIdQuery,
+  useLazyGetOrdersByUserIdQuery,
   useGetOrdersByOrderIdQuery,
+  useCancelOrderMutation,
 } = orderAPI;

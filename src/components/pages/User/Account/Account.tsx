@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { DateInput, Input, Card, CardBody } from "@nextui-org/react";
 import AddressInput from "./AddressInput";
@@ -24,11 +25,10 @@ export default function Profile() {
   useEffect(() => {
     if (userData) {
       formik.setValues({
-        displayName: userData.displayName || "",
-        birthDay: userData.birthDay || "",
-        userEmail: userData.userEmail || "",
-        userPhone: userData.userPhone || "",
-        userAddress: userData.userAddress || "",
+        displayName: userData?.displayName || "",
+        userEmail: userData?.userEmail || "",
+        userPhone: userData?.userPhone || "",
+        userAddress: userData?.userAddress || "",
       });
     }
   }, [userData]);
@@ -36,6 +36,8 @@ export default function Profile() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  console.log(userData);
 
   return (
     <main className="space-y-4">
@@ -72,32 +74,18 @@ export default function Profile() {
                   formik.touched.displayName && !!formik.errors.displayName
                 }
               />
-              <Input
-                label="Ngày sinh"
-                name="birthDay"
-                value={formik.values.birthDay}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                errorMessage={
-                  formik.touched.birthDay && formik.errors.birthDay
-                    ? formik.errors.birthDay
-                    : undefined
-                }
-                isInvalid={formik.touched.birthDay && !!formik.errors.birthDay}
-              />
+
               <Input
                 isDisabled
                 label="Email"
                 name="userEmail"
                 value={formik.values.userEmail}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                errorMessage={
-                  formik.touched.userEmail && formik.errors.userEmail
-                    ? formik.errors.userEmail
-                    : undefined
-                }
-                isInvalid={formik.touched.userEmail && !!formik.errors.userEmail}
+              />
+              <Input
+                isDisabled
+                label="Địa chỉ hiện tại"
+                name="userAddress"
+                value={formik.values.userAddress}
               />
               <Input
                 label="Số điện thoại"
@@ -110,9 +98,11 @@ export default function Profile() {
                     ? formik.errors.userPhone
                     : undefined
                 }
-                isInvalid={formik.touched.userPhone && !!formik.errors.userPhone}
+                isInvalid={
+                  formik.touched.userPhone && !!formik.errors.userPhone
+                }
               />
-              <AddressInput />
+              <AddressInput formik={formik} />
             </form>
           </div>
         </CardBody>

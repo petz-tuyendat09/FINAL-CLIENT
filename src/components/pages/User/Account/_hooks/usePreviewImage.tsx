@@ -14,7 +14,7 @@ export default function usePreviewUploadImage(
   }: ImageUploadProps,
 ) {
   const [imagePreview, setImagePreview] = useState(
-    "https://nextui.org/avatars/avatar-1.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx_DVDju34ygSyxCFLiCiat_DQoyUusJHXdw&s",
   );
 
   function handlePreviewImg(event: React.ChangeEvent<HTMLInputElement>) {

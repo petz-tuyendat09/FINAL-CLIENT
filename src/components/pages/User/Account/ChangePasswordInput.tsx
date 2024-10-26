@@ -8,7 +8,6 @@ export default function ChangePasswordInput() {
 
   const [isHidden, setIsHidden] = useState(false);
 
-
   return (
     <CardBody className="px-3 text-small">
       <div>
@@ -31,6 +30,7 @@ export default function ChangePasswordInput() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             name="newPassword"
+            autoComplete="false"
             errorMessage={
               formik.touched.newPassword && formik.errors.newPassword
                 ? formik.errors.newPassword
@@ -41,6 +41,7 @@ export default function ChangePasswordInput() {
             }
           />
           <Input
+            autoComplete="false"
             type={!isHidden ? "password" : "text"}
             label="Nhập lại mật khẩu"
             onChange={formik.handleChange}
@@ -56,7 +57,9 @@ export default function ChangePasswordInput() {
             }
           />
 
-          <Checkbox onValueChange={setIsHidden} isSelected={isHidden}>Hiện mật khẩu</Checkbox>
+          <Checkbox onValueChange={setIsHidden} isSelected={isHidden}>
+            Hiện mật khẩu
+          </Checkbox>
         </form>
       </div>
     </CardBody>

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HeldVouchersResponse } from "@/types/Voucher";
+import { User } from "@/types/User";
 
 interface ChangePasswordParams {
   userId: string;
@@ -28,7 +29,7 @@ export const userAPI = createApi({
   tagTypes: ["User"],
 
   endpoints: (builder) => ({
-    getUser: builder.query<ChangePasswordParams, string>({
+    getUser: builder.query<User, string>({
       query: (userId: string) => `/${userId}`,
       providesTags: ["User"],
     }),

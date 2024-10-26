@@ -39,6 +39,15 @@ function NavigateName({
       case "/user/account":
         setPathname("Tài khoản");
         break;
+      case "/user/service-list":
+        setPathname("Dịch vụ");
+        break;
+      case "/user/order-history":
+        setPathname("Đơn hàng");
+        break;
+      case "/user/change-voucher":
+        setPathname("Đổi voucher");
+        break;
 
       default:
         break;

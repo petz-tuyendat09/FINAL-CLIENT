@@ -1,10 +1,15 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import Link from "next/link";
 import useLogin from "./_hook/useLogin";
 import AuthInput from "../AuthInput/AuthInput";
+import { useAuth } from "../_store/AuthContext";
 
 export default function LoginForm() {
   const { formik, logInWithGoogle } = useLogin();
+  const { setSignUp, setForgotPassword } = useAuth();
+
+  function handleForgotPassword() {
+    setForgotPassword(true);
+  }
 
   return (
     <form
@@ -35,12 +40,13 @@ export default function LoginForm() {
         <Icon className="size-6" icon="flat-color-icons:google" />
         Đăng nhập với Google
       </button>
-      <Link
+      <button
+        type="button"
+        onClick={handleForgotPassword}
         className="block w-full text-center text-gray-400"
-        href="forgot-password"
       >
         Quên mật khẩu?
-      </Link>
+      </button>
     </form>
   );
 }

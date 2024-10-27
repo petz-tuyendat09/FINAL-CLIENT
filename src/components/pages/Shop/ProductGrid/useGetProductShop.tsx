@@ -30,8 +30,6 @@ export default function useGetProductShop({
   const [totalPages, setTotalPages] = useState<number>(0);
   const [noMoreProduct, setNoMoreProduct] = useState(false);
 
-  console.log(paginatedProducts);
-
   useEffect(() => {
     if (PaginateProduct?.products) {
       setListProduct(PaginateProduct.products);

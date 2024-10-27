@@ -49,8 +49,6 @@ export default function FormAddProductThumbnail({
     (sliderRef.current as any).swiper.slideNext();
   }, []);
 
-  console.log(formik.errors.productThumbnail);
-
   return (
     <div className="form-group h-fit w-2/4 max-w-[560px] rounded-[20px] bg-gray-50 px-4 py-8">
       <h1 className="text-xl font-bold">Thêm hình</h1>

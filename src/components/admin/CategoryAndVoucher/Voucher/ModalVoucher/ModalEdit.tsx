@@ -96,7 +96,6 @@ export default function ModalEdit({
       return;
     }
     if (!voucherType) {
-      console.log("123");
       setTypeErrorMessage("Vui lòng nhập đầy đủ thông tin hợp lệ");
     }
     if (!voucherDescription) {

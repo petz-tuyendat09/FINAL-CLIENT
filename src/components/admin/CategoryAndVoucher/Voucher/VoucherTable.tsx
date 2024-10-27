@@ -80,8 +80,6 @@ export default function VoucherTable() {
     }
   };
 
-  console.log(selectedIds);
-
   function handleDeleteMultiple() {
     deleteVoucherMutation({ deleteVoucherId: selectedIds as any });
   }
@@ -109,7 +107,6 @@ export default function VoucherTable() {
         aria-label="Bảng hiển thị danh mục"
         className="w-full"
         onSelectionChange={(selectedKeys: any) => {
-          console.log(selectedKeys);
           handleSelectedRows(selectedKeys);
         }}
         checkboxesProps={{

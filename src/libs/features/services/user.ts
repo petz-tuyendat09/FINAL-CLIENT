@@ -26,7 +26,7 @@ export const userAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/users`,
   }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "HeldVouchers"],
 
   endpoints: (builder) => ({
     getUser: builder.query<User, string>({
@@ -51,6 +51,7 @@ export const userAPI = createApi({
         ).toString();
         return `/voucher-held?${queryParams}`;
       },
+      providesTags: ["HeldVouchers"], // Cung cấp tags HeldVouchers
     }),
   }),
 });

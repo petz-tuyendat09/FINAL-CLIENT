@@ -40,7 +40,7 @@ interface OrderDetailProductProps {
 export default function OrderDetailProduct({
   product,
 }: OrderDetailProductProps) {
-  console.log(product);
+  product;
   return (
     <>
       {product &&

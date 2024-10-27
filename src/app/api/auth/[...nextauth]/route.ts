@@ -25,7 +25,6 @@ const handler = NextAuth({
           });
 
           const data = await response.json();
-          console.log(data);
 
           if (response.ok && data.canLogin) {
             return {
@@ -87,7 +86,6 @@ const handler = NextAuth({
     },
     async jwt({ token, user, session, trigger, account }) {
       if (account?.provider === "google" && user) {
-        console.log(account);
         token.user = {
           ...(account as any).userData.user,
           token: (account as any).userData.token,

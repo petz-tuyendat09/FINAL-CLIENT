@@ -54,8 +54,6 @@ export default function ChangeVoucherTable() {
     session,
   } = useVoucherContext();
 
-  console.log(userPoint);
-
   return (
     <div className="mt-4 space-y-2">
       <p>

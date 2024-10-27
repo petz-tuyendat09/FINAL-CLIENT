@@ -10,7 +10,6 @@ import {
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
-  console.log(session);
 
   if (status === "unauthenticated") {
     return (

@@ -41,8 +41,6 @@ export default function useAddProductForm() {
     onSubmit: (values) => {
       const formData = new FormData();
 
-      console.log(values);
-
       Object.entries(values).forEach(([key, value]) => {
         if (key === "productImages" && Array.isArray(value)) {
           value.forEach((item: any) => {
@@ -70,9 +68,6 @@ export default function useAddProductForm() {
         }
       });
 
-      for (let pair of (formData as any).entries()) {
-        console.log(pair[0], pair[1]);
-      }
       addNewProduct(formData);
     },
     validate: (values) => {

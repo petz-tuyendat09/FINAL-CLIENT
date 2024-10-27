@@ -20,7 +20,7 @@ export const vouchersAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/voucher`,
   }),
-  tagTypes: ["Voucher"],
+  tagTypes: ["Voucher", "HeldVouchers"],
 
   endpoints: (builder) => ({
     getVouchers: builder.query<VoucherPaginate, QueryParams>({
@@ -109,7 +109,7 @@ export const vouchersAPI = createApi({
         method: "post",
         body: formData,
       }),
-      invalidatesTags: ["Voucher"],
+      invalidatesTags: ["HeldVouchers"],
     }),
   }),
 });

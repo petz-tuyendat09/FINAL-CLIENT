@@ -93,8 +93,6 @@ export default function useServicesAction({
     setSelectedKeys(new Set(["Loại dịch vụ"]));
   }
 
-  console.log(bookingOrderSelect);
-
   return {
     services,
     pages,

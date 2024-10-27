@@ -21,6 +21,7 @@ import formatMoney from "@/utils/formatMoney";
 import formatDate from "@/utils/formatDate";
 import Link from "next/link";
 import ModalCancelOrder from "./Modal/ModalCancelOrder";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 const columns = [
   {
@@ -165,11 +166,12 @@ export default function OrdersHistory() {
                     const pastDate = isPastDate(orderItem.createdAt as any);
                     return (
                       <TableCell className="space-x-2">
-                        <Button variant="flat" size="sm" color="default">
-                          <Link href={`order-history/${orderItem._id}`}>
+                        <Link href={`order-history/${orderItem._id}`}>
+                          <Button variant="flat" size="sm" color="default">
                             Xem
-                          </Link>
-                        </Button>
+                          </Button>
+                        </Link>
+
                         {!pastDate && orderItem.orderStatus !== "CANCELLED" && (
                           <Button
                             variant="flat"

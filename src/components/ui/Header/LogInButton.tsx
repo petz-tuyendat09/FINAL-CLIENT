@@ -31,7 +31,9 @@ export default function LoginButton() {
         >
           <DropdownTrigger>
             <Button className="text-white" variant="flat">
-              {session?.user.displayName}
+              {session?.user.displayName !== ""
+                ? session?.user.displayName
+                : "Tài khoản"}
             </Button>
           </DropdownTrigger>
           <DropdownMenu

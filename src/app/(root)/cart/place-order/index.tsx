@@ -84,8 +84,8 @@ export const Index = () => {
                         <div className="w-[60%]">
                             <h1 className="text-[24px] font-[600] mb-[20px]">Địa chỉ giao hàng</h1>
                             <div className="flex flex-row gap-[10px]">
-                                <Link href="/auth" className="bg-black text-white px-[40px] py-[10px] rounded-tl-[10px] border border-black rounded-br-[10px] text-[15px] font-[500] hover:bg-white hover:text-black transition duration-200 ease-in-out">ĐĂNG NHẬP</Link>
-                                <Link href="/auth" className="hover:bg-black hover:text-white border border-black px-[40px] py-[10px] rounded-tl-[10px] rounded-br-[10px] text-[15px] font-[500] transition duration-200 ease-in-out">ĐĂNG KÝ</Link>
+                                <Link href="/auth" className="bg-black text-white px-[40px] h-[44px] border border-black text-[15px] font-[500] hover:bg-white hover:text-black transition duration-200 ease-in-out rounded-[10px] flex justify-center items-center">ĐĂNG NHẬP</Link>
+                                <Link href="/auth" className="hover:bg-black hover:text-white border border-black px-[40px] h-[44px] rounded-[10px] text-[15px] font-[500] transition duration-200 ease-in-out flex justify-center items-center">ĐĂNG KÝ</Link>
                             </div>
                             <p className="text-[13px] mt-[10px]">Đăng nhập/ Đăng ký tài khoản để được tích điểm và nhận thêm nhiều ưu đãi từ PETZ.</p>
                             <div className="mt-[30px]">
@@ -145,7 +145,7 @@ export const Index = () => {
                         </div>
 
                         <div className="mt-[30px]">
-                            <button onClick={() => setIsDisplay(!isDisplay)} className="hover:bg-white hover:text-black transition duration-200 ease-in-out border border-black bg-black text-white px-[45px] py-[12px] text-[15px] rounded-tl-[15px] rounded-br-[15px] tracking-[0.8px] flex justify-center items-center">HIỂN THỊ SẢN PHẨM</button>
+                            <button onClick={() => setIsDisplay(!isDisplay)} className="hover:bg-white hover:text-black transition duration-200 ease-in-out border border-black bg-black text-white px-[45px] py-[10px] text-[15px] rounded-[25px] tracking-[0.8px] flex justify-center items-center">HIỂN THỊ SẢN PHẨM</button>
                         </div>
 
                         <div className={`${isDisplay ? 'block' : 'hidden'} mt-[30px]`}>

@@ -1,19 +1,61 @@
 import { useGetVouchersHeldQuery } from "@/libs/features/services/user";
-import { Modal } from "antd";
+import { Modal, Radio } from "antd";
 import { useSession } from "next-auth/react";
-
+import type { RadioChangeEvent } from 'antd';
+import Link from "next/link";
+import voucherImg from '@@/public/images/voucher.svg';
+import Image from "next/image";
 export default function Voucher ({ isModalOpen, handleOk, handleCancel }: any) {
     const session = useSession();
     const userId = session?.data?.user?._id;
-    console.log(userId);
-    const { data: vouchers } = useGetVouchersHeldQuery({ userId: userId, page: 1 })
-    console.log(vouchers);
-    return (
+    const { data } = useGetVouchersHeldQuery({ userId: userId, page: 1 })
+    const onChange = (e: RadioChangeEvent) => {
+        console.log(e.target.value);
+    }
+    return ( 
         <>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+            <Modal title="Chọn Voucher" open={isModalOpen} footer={null} onCancel={handleCancel}>
+                <hr className="mt-[15px]"/>
+                <div>
+                    { data?.vouchers?.length === 0 && (
+                        <div className="flex flex-row items-center gap-[10px] mt-[10px]">
+                            <span className="text-[17px] text-gray-500">Rất tiếc, bạn không có voucher nào !</span>
+                            <Link href="/user/change-voucher">
+                                <i className="text-primary text-[16px] font-[600] underline">Đổi voucher ngay.</i>
+                            </Link>
+                        </div>
+                    )}
+
+                    <div className="flex flex-col gap-[20px] mt-[20px]">
+                        {
+                            data?.vouchers.map((item, i) => {
+                                console.log(item);
+                                return (
+                                    <div key={i} className="bg-primary flex flex-row gap-[10px]">
+                                        <div className="relative">
+                                            <Image src={voucherImg} width={220} height={100} alt="" />
+                                            <div className="absolute top-[20%] left-[34%] flex flex-row items-center gap-[10px]">
+                                                <h1 className="text-[#633939] text-[24px] font-[700]">{item.voucherId.salePercent}%</h1>
+                                            </div>
+                                        </div>
+                                        <div className="py-[10px] w-full relative">
+                                            <div className=" w-[90%] flex flex-col justify-center text-center">
+                                                <h1 className="text-white">{item.voucherId.voucherDescription}</h1>
+                                                <p className="text-white">Điểm: <span className="text-[#FFFADD]">{item.voucherId.voucherPoint}</span></p>
+                                            </div>
+                                            <div className="absolute right-0 bottom-0 top-0 bg-gray-100 pl-[5px] flex justify-center"> 
+                                                <Radio value={item.voucherId._id} onChange={onChange}></Radio>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                    <div className="flex justify-end mt-[30px]">
+                        <button className="bg-primary text-white w-[120px] rounded-[5px] h-[44px] font-[600]">OK</button>
+                    </div>
+                </div>
             </Modal>
         </>
     )

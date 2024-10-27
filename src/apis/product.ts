@@ -26,8 +26,6 @@ export const getProduct = async (params: QueryParams) => {
     params as Record<string, string>,
   ).toString();
 
-  console.log(queryParams);
-
   const response = await fetch(
     `${DOMAIN_URL}/product/?${queryParams}`,
     options,

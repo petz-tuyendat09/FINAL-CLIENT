@@ -37,8 +37,6 @@ export default function Profile() {
     return <div>Loading...</div>;
   }
 
-  console.log(userData);
-
   return (
     <main className="space-y-4">
       <UserCard />

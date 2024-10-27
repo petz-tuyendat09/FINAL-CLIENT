@@ -45,7 +45,6 @@ export default function ModalEdit({
 
   function handleChangeSubCategoryName(e: React.ChangeEvent<HTMLInputElement>) {
     setEditSubCategoryName(e.target.value);
-    console.log(editSubCategoryName);
   }
 
   function handleEditSubCategoryName() {

@@ -61,8 +61,6 @@ export default function useEditProductForm({ slug }: { slug: string }) {
         productDetailDescription: "",
       };
 
-  console.log(initialValues);
-
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,

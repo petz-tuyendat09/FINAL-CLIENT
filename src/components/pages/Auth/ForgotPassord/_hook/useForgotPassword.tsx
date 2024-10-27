@@ -59,8 +59,6 @@ export default function useForgotPassword() {
     }
   }, [sendOTPError, sendOTPResponse]);
 
-  console.log(sendOTPError);
-
   return {
     formik,
   };

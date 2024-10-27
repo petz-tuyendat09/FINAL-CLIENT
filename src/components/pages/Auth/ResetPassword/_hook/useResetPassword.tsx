@@ -46,7 +46,7 @@ export default function useResetPassword() {
       setModalText("Đổi mật khẩu thành công");
     }
   }, [data]);
-  console.log(data);
+  data;
 
   return {
     formik,

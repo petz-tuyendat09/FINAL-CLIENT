@@ -27,7 +27,7 @@ export default function useHeldVoucherAction({
   );
 
   // Query
-  const { data: voucher } = useGetVouchersHeldQuery({
+  const { refetch, data: voucher } = useGetVouchersHeldQuery({
     userId: session?.user._id,
     page: pages,
     ...queryParams,
@@ -64,15 +64,15 @@ export default function useHeldVoucherAction({
     if (selectedType !== "Lọc theo kiểu giảm giá") {
       setQueryParams((prev) => ({ ...prev, typeFilter: selectedType }));
     }
+    refetch();
   }, [selectedValue, selectedType]);
 
   function clearQuery() {
+    refetch();
     setQueryParams({});
     setSelectedKeys(new Set(["Sắp xếp theo điểm"]));
     setTypeSelected(new Set(["Lọc theo kiểu giảm giá"]));
   }
-
-  console.log(queryParams);
 
   return {
     voucher,

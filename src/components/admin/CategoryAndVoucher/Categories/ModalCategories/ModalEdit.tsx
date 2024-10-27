@@ -62,8 +62,6 @@ export default function ModalEdit({
     }
   }, [mutationResponse, mutationError, handleCloseDialog]);
 
-  console.log(mutationError);
-
   return (
     <Modal
       backdrop="blur"

@@ -48,8 +48,6 @@ export default function ModalAdd({
     }
   }, [mutationError, data, handleCloseDialog]);
 
-  console.log(mutationError);
-
   return (
     <Modal
       backdrop="blur"

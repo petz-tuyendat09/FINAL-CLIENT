@@ -55,7 +55,6 @@ export default function ModalReview({
           userPoint: (reviewResponse as any).userPoint,
         },
       });
-      console.log(session?.user.userPoint);
     }
   }, [data, reviewResponse]);
 
@@ -77,8 +76,6 @@ export default function ModalReview({
     const serviceIds = bookingDetail?.service.map(
       (service: any) => service._id,
     );
-
-    console.log(bookingDetail?.customerName);
 
     createReview({
       userId: userId as any,

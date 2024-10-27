@@ -1,68 +1,46 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
-import { useCreateBookingMutation } from "@/libs/features/services/booking";
 import { useSession } from "next-auth/react";
 import { useEditUserMutation } from "@/libs/features/services/user";
+import { successModal } from "@/utils/callModalANTD";
 
-interface errorsValues {
-    displayName: string;
-    birthDay: string;
-    userEmail: string;
-    userPhone: string;
-    userAddress: string;
+interface ErrorsValues {
+  displayName: string;
+  userEmail: string;
+  userPhone: string;
+  userAddress: string;
 }
 
 export default function useChangeProfile() {
-    const [changeProfile, { data }] = useEditUserMutation();
+  const { data: session } = useSession();
+  const [changeProfile, { data, error }] = useEditUserMutation();
 
-    const session = useSession();
+  const formik = useFormik({
+    initialValues: {
+      displayName: "",
+      userEmail: "",
+      userPhone: "",
+      userAddress: "",
+    },
+    onSubmit: (values) => {
+      const userId = session?.user?._id;
+      if (userId) {
+        changeProfile({
+          userId,
+          displayName: values.displayName,
+          userEmail: values.userEmail,
+          userPhone: values.userPhone,
+          userAddress: values.userAddress,
+        });
+      }
+    },
+  });
 
+  useEffect(() => {
+    if (data) {
+      successModal({ content: <p>Cập nhật thành công</p>, duration: 3 });
+    }
+  }, [data]);
 
-    const formik = useFormik({
-        initialValues: {
-            displayName: "",
-            birthDay: "",
-            userEmail: "",
-            userPhone: "",
-            userAddress: "",
-        },
-        onSubmit: (values) => {
-            console.log(values);
-            const userId = session?.data?.user._id
-
-            changeProfile({
-                userId: userId as any,
-                displayName: values.displayName,
-                birthDay: values.birthDay,
-                userEmail: values.userEmail,
-                userPhone: values.userPhone,
-                userAddress: values.userAddress,
-            });
-
-        },
-        // validate: (values) => {
-        //     let errors: Partial<errorsValues> = {};
-
-        //     if (!values.displayName) {
-        //         errors.displayName = "Vui lòng Không để trống!";
-        //     }
-
-        //     if (values.userEmail) {
-        //         errors.userEmail = "Vui lòng Không để trống!";
-        //     }
-
-        //     if (values.userPhone) {
-        //         errors.userPhone = "Vui lòng Không để trống!";
-        //     }
-
-        //     return errors;
-        // },
-    });
-
-
-    return {
-        formik,
-    };
+  return { formik };
 }

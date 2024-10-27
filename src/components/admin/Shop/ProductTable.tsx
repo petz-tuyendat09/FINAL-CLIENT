@@ -11,12 +11,14 @@ import {
   getKeyValue,
   Tabs,
   Tab,
+  Input,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import useProductActionAdmin from "./_hooks/useProductActionAdmin";
 import { ProductOption } from "@/types/Product";
 import ModalDelete from "./Modal/ModalDelete";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
+import formatMoney from "@/utils/formatMoney";
 
 const columns = [
   {
@@ -59,11 +61,14 @@ export default function ProductTable() {
     deleteModalOpen,
     handleCancelDelete,
     handleConfirmDelete,
-    deleteProduct,
+    handleSearchProduct,
   } = useProductActionAdmin({ initialPage: 1 });
 
   return (
     <div>
+      <div className="mb-4">
+        <Input onValueChange={handleSearchProduct} label="Tên sản phẩm" />
+      </div>
       <Table
         aria-label="Product Table"
         bottomContent={
@@ -95,9 +100,11 @@ export default function ProductTable() {
                 if (columnKey === "action") {
                   return (
                     <TableCell>
-                      <button onClick={() => handleDeleteProduct(item._id)}>
-                        <Icon className="size-6" icon="mdi:trash" />
-                      </button>
+                      <div>
+                        <button onClick={() => handleDeleteProduct(item._id)}>
+                          <Icon className="size-6" icon="mdi:trash" />
+                        </button>
+                      </div>
                       <NormalTransitionLink
                         href={`shop/edit-product/${item.productSlug}`}
                       >
@@ -111,7 +118,7 @@ export default function ProductTable() {
                       <Tabs aria-label="Options">
                         {item.productOption.map((option: ProductOption) => (
                           <Tab key={option._id} title={option.name}>
-                            <p>Giá: {formatCurrency(option.productPrice)}</p>
+                            <p>Giá: {formatMoney(option.productPrice)}</p>
                             <p>Số lượng: {option.productQuantity}</p>
                           </Tab>
                         ))}
@@ -151,11 +158,4 @@ export default function ProductTable() {
       )}
     </div>
   );
-}
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "VND",
-  }).format(amount);
 }

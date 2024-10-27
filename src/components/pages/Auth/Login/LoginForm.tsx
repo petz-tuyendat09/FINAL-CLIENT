@@ -4,7 +4,7 @@ import useLogin from "./_hook/useLogin";
 import AuthInput from "../AuthInput/AuthInput";
 
 export default function LoginForm() {
-  const { formik } = useLogin();
+  const { formik, logInWithGoogle } = useLogin();
 
   return (
     <form
@@ -27,12 +27,16 @@ export default function LoginForm() {
       <button className="w-full rounded-full bg-black py-[1rem] font-semibold text-white">
         Đăng nhập
       </button>
-      <button className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-[1rem] font-semibold text-white">
+      <button
+        type="button"
+        onClick={logInWithGoogle}
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-black py-[1rem] font-semibold text-white"
+      >
         <Icon className="size-6" icon="flat-color-icons:google" />
         Đăng nhập với Google
       </button>
       <Link
-        className="text-gray-400 block w-full text-center"
+        className="block w-full text-center text-gray-400"
         href="forgot-password"
       >
         Quên mật khẩu?

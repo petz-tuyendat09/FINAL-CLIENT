@@ -15,7 +15,7 @@ import { useLazyGetBookingByDateQuery } from "@/libs/features/services/booking";
 import { useEffect, useState } from "react";
 import { today, getLocalTimeZone } from "@internationalized/date";
 
-const serviceType = ["NAIL_CARE", "CLEAN", "HAIR", "MASSAGE", "COMBO"];
+const SERVICES_TYPE = ["NAIL_CARE", "CLEAN", "HAIR", "MASSAGE", "COMBO"];
 const TIMES = ["8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
 export default function BookingForm({
@@ -25,6 +25,8 @@ export default function BookingForm({
   isModalDisplay: boolean;
 }) {
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [pastTimes, setPastTimes] = useState<string[]>([]);
+
   const { data } = useGetServicesQuery({});
   const [triggerGetBookingByDate, { data: bookings }] =
     useLazyGetBookingByDateQuery();
@@ -42,13 +44,32 @@ export default function BookingForm({
     const month = date.month - 1;
     const day = date.day;
 
-    const selectedDate = new Date(Date.UTC(year, month, day, 0, 0, 0));
+    const selectedDate = new Date(year, month, day);
 
     const formattedDate = selectedDate.toISOString();
 
     setFieldValue("bookingDate", formattedDate);
 
     triggerGetBookingByDate({ year, month: month + 1, day });
+
+    // Check if selected date is today
+    const todayDate = new Date();
+    if (
+      selectedDate.getFullYear() === todayDate.getFullYear() &&
+      selectedDate.getMonth() === todayDate.getMonth() &&
+      selectedDate.getDate() === todayDate.getDate()
+    ) {
+      // It's today, disable times in the past
+      const currentTime = todayDate.getHours() + todayDate.getMinutes() / 60;
+      const timesInPast = TIMES.filter((time) => {
+        const [hourStr, minuteStr] = time.split(":");
+        const timeValue = parseInt(hourStr) + parseInt(minuteStr) / 60;
+        return timeValue <= currentTime;
+      });
+      setPastTimes(timesInPast);
+    } else {
+      setPastTimes([]);
+    }
   };
 
   useEffect(() => {
@@ -60,8 +81,6 @@ export default function BookingForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookings]);
-
-  console.log(bookedTimes);
 
   return (
     <div className="border-r pb-8 xl:w-1/2">
@@ -129,7 +148,7 @@ export default function BookingForm({
               </p>
             </div>
             <Tabs isVertical>
-              {serviceType.map((service) => (
+              {SERVICES_TYPE.map((service) => (
                 <Tab
                   key={service}
                   title={ServicesType[service as keyof typeof ServicesType]}
@@ -162,7 +181,7 @@ export default function BookingForm({
               </p>
             </div>
             <DatePicker
-              minValue={today(getLocalTimeZone())}
+              minValue={today(getLocalTimeZone()) as any}
               aria-label="Chọn ngày"
               onBlur={formik.handleBlur}
               onChange={(date) =>
@@ -182,15 +201,20 @@ export default function BookingForm({
               </p>
             </div>
             <Select
-              disabledKeys={bookedTimes}
               label="Chọn giờ"
-              selectedKeys={[formik.values.bookingHours]}
-              onChange={(value: any) => {
-                formik.setFieldValue("bookingHours", value.target.value); // Set bookingHours in Formik
+              disabledKeys={[...bookedTimes, ...pastTimes]}
+              selectedKeys={
+                formik.values.bookingHours
+                  ? new Set([formik.values.bookingHours])
+                  : new Set()
+              }
+              onSelectionChange={(selected) => {
+                const selectedValue = Array.from(selected)[0];
+                formik.setFieldValue("bookingHours", selectedValue);
               }}
             >
               {TIMES.map((time) => (
-                <SelectItem key={time} title={time}></SelectItem>
+                <SelectItem key={time}>{time}</SelectItem>
               ))}
             </Select>
           </div>

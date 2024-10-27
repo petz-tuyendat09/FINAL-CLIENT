@@ -28,6 +28,7 @@ export default function useGetProductShop({
   const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
   const [currPage, setCurrPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [noMoreProduct, setNoMoreProduct] = useState(false);
 
   console.log(paginatedProducts);
 
@@ -70,7 +71,7 @@ export default function useGetProductShop({
           console.error("Failed to fetch more products:", error);
         }
       } else {
-        alert("No more products to load.");
+        setNoMoreProduct(true);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,5 +112,6 @@ export default function useGetProductShop({
     currPage,
     handleFetchMore,
     handleQueryProduct,
+    noMoreProduct,
   };
 }

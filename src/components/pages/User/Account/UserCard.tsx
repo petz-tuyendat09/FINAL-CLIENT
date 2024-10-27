@@ -9,9 +9,15 @@ import {
   Input,
 } from "@nextui-org/react";
 import usePreviewUploadImage from "./_hooks/usePreviewImage";
+import { useSession } from "next-auth/react";
 import ChangePasswordInput from "./ChangePasswordInput";
+import { useGetUserQuery } from "@/libs/features/services/user";
 
 export default function App() {
+  const { data: session } = useSession();
+  const userId = session?.user?._id;
+  const { data: userData, isLoading } = useGetUserQuery(userId || "");
+
   const { imagePreview, handlePreviewImg } = usePreviewUploadImage({});
   return (
     <Card className="">
@@ -25,7 +31,7 @@ export default function App() {
               size="lg"
               src={imagePreview}
             />
-            <Button>
+            {/* <Button>
               <label htmlFor="userImage">Sửa</label>
               <Input
                 onChange={handlePreviewImg}
@@ -33,17 +39,17 @@ export default function App() {
                 className="hidden"
                 id="userImage"
               />
-            </Button>
+            </Button> */}
           </div>
           <div className="flex flex-col items-start justify-center gap-1">
             <h4 className="text-small font-semibold leading-none text-default-600">
-              Nguyễn Phúc Thiện
+              {userData?.displayName || "Chưa có tên hiển thị"}
             </h4>
             <h5 className="text-small tracking-tight text-default-400">
-              phucthien@gmail.com
+              {userData?.userEmail}
             </h5>
             <h5 className="text-[12px] tracking-tight text-default-400">
-              500 điểm
+              Điểm: {userData?.userPoint}
             </h5>
           </div>
         </div>

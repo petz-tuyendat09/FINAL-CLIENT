@@ -14,7 +14,7 @@ const config: Config = {
       mono: ["ui-monospace", "SFMono-Regular", "monospace"],
       display: ["var(--font-roboto)", "system-ui", "sans-serif"],
       body: ["var(--font-roboto)", "system-ui", "sans-serif"],
-      oriya: ["Noto Serif Oriya", "serif"],
+      cormorant: ["Cormorant", "serif"]
     },
     borderRadius: {
       button: "20px",
@@ -84,6 +84,8 @@ const config: Config = {
       boxShadow: {
         custom:
           "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em",
+        badget: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
+        input: "0 0 0 .2rem rgba(0,123,255,.25)"
       },
     },
   },

@@ -12,12 +12,25 @@ interface BookingInformation {
   totalPrice: Number;
 }
 
-interface BookingUserIdQueryParams {
+export interface BookingQueryParams {
+  bookingId?: string;
   userId?: string;
+  customerName?: string;
   year?: number;
   month?: number;
   day?: number;
   status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface ReviewPayload {
+  userId: string;
+  customerName: string;
+  bookingId: string;
+  rating: number;
+  review?: string;
+  services: string[];
 }
 
 export const bookingsAPI = createApi({
@@ -28,7 +41,6 @@ export const bookingsAPI = createApi({
   tagTypes: ["Booking"],
 
   endpoints: (builder) => ({
-    // Modified getProducts endpoint to accept a params object
     getBookingByDate: builder.query<
       string,
       { year: number; month: number; day: number }
@@ -37,35 +49,59 @@ export const bookingsAPI = createApi({
         `/booking-by-date?year=${year}&month=${month}&day=${day}`,
       providesTags: ["Booking"],
     }),
-    createBooking: builder.mutation<any, BookingInformation>({
-      query: (formData: BookingInformation) => ({
-        url: "", // Adjust the URL based on your API structure
-        method: "POST",
-        body: formData,
-      }),
-      invalidatesTags: ["Booking"],
-    }),
-    getBookingByUserId: builder.query<
-      PaginateBooking,
-      BookingUserIdQueryParams
-    >({
+    getBooking: builder.query<PaginateBooking, BookingQueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
 
-        console.log(queryParams);
+        return `?${queryParams}`;
+      },
+      providesTags: ["Booking"],
+    }),
+    createBooking: builder.mutation<any, BookingInformation>({
+      query: (formData: BookingInformation) => ({
+        url: "",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Booking"],
+    }),
+    cancelBooking: builder.mutation<any, { bookingId: string }>({
+      query: ({ bookingId }) => ({
+        url: "/cancel-booking",
+        method: "PUT",
+        body: { bookingId: bookingId },
+      }),
+      invalidatesTags: ["Booking"],
+    }),
+    getBookingByUserId: builder.query<PaginateBooking, BookingQueryParams>({
+      query: (params) => {
+        const queryParams = new URLSearchParams(
+          params as Record<string, string>,
+        ).toString();
 
         return `/booking-userId/?${queryParams}`;
       },
       providesTags: ["Booking"],
     }),
+    reviewBooking: builder.mutation<void, ReviewPayload>({
+      query: (payload) => ({
+        url: `/review-booking`,
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["Booking"],
+    }),
   }),
 });
 
 export const {
+  useGetBookingQuery,
   useGetBookingByDateQuery,
   useLazyGetBookingByDateQuery,
   useCreateBookingMutation,
   useGetBookingByUserIdQuery,
+  useCancelBookingMutation,
+  useReviewBookingMutation,
 } = bookingsAPI;

@@ -22,12 +22,12 @@ export default function Search() {
     >
       <SearchInput handleSearch={handleSearch} />
       <SearchBody productAmount={products ? products?.products.length : 0}>
-        {products?.products.length === 0 && <p>No product match your search</p>}
+        {products?.products.length === 0 && <p className="text-[15px] text-gray-700">No product match your search.</p>}
         {products?.products.map((product) => (
           <SearchProduct
             key={product._id}
             productImg={product.productThumbnail}
-            productPrice={product.productPrice}
+            productPrice={product.productOption[0].productPrice}
             productSalePercent={product.salePercent}
             productName={product.productName}
             productSlug={product.productSlug}

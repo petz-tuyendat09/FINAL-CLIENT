@@ -6,7 +6,7 @@ export enum BookingStatus {
 
 export interface Booking {
   _id: string;
-  userId: string;
+  userId: string | null;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -15,6 +15,7 @@ export interface Booking {
   bookingStatus: string; // Enum type for booking status
   totalPrice: number;
   bookingHours: string; // Time in "HH:MM" format
+  reviewStatus: boolean;
   __v: number;
 }
 

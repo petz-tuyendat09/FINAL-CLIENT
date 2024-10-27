@@ -10,6 +10,7 @@ import {
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect } from "react";
 import { AdjustQuantity } from "@/types/Cart";
+import Link from "next/link";
 
 interface CartItem {
   productId: string;
@@ -101,15 +102,15 @@ export default function CartItem({
   return (
     <tr>
       <td>
-        <div className="flex flex-row items-center gap-[20px]">
+        <Link href={`shop/${cartItem?.productSlug}`} className="flex flex-row items-center gap-[20px]">
           <Image src={cartItem?.productImage} width={100} height={100} alt="" />
           <div>
             <h2>{cartItem?.productName}</h2>
             <p className="text-gray-800">{cartItem.productOption}</p>
           </div>
-        </div>
+        </Link>
       </td>
-      <td className="text-center">{formatMoney(cartItem.productPrice)}</td>
+      <td className="text-center">{cartItem?.productPrice && formatMoney(cartItem?.productPrice)}</td>
       <td>
         <div className="flex justify-center">
           <div className="flex items-center gap-[5px] rounded-lg border px-3 py-1">
@@ -151,11 +152,12 @@ export default function CartItem({
       </td>
       <td>
         <button
+          className="p-[10px] rounded-[10px] bg-slate-200 hover:bg-slate-300"
           onClick={() =>
             handleRemove(cartItem?.productId, cartItem?.productOption as string)
           }
         >
-          Xóa
+          <Icon icon="iconamoon:trash" width={20} />
         </button>
       </td>
     </tr>

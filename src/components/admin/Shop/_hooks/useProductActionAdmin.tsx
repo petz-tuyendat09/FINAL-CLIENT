@@ -1,38 +1,38 @@
 import { useEffect, useState } from "react";
 import { Product } from "@/types/Product";
 import { getProduct, deleteProduct } from "@/apis/product"; // Your custom API function
-import { useDeleteProductMutation } from "@/libs/features/services/product";
-import { useRouter } from "next/navigation";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "@/libs/features/services/product";
 
 interface UseGetProductProps {
   initialPage: number;
-  filterCategory?: string[];
-  filterSubCategory?: string[];
 }
 
 export default function useProductActionAdmin({
   initialPage,
-  filterCategory,
-  filterSubCategory,
 }: UseGetProductProps) {
   const [pages, setPages] = useState<number>(initialPage);
   const [totalPages, setTotalPages] = useState<number | undefined>(1);
   const [productList, setProductList] = useState<Product[]>();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [deleteProductId, setDeleteProductId] = useState<string>("");
-  const [deleteProductMutation] = useDeleteProductMutation();
-  const [forceReRender, setForceReRender] = useState<boolean>(false);
-  const router = useRouter();
+  const [queryParams, setQueryParams] = useState<{}>({});
 
   // Fetch products when pages or forceReRender changes
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await getProduct({ page: pages, limit: 2 });
+      const response = await getProduct({
+        page: pages,
+        limit: 2,
+        ...queryParams,
+      });
       setTotalPages(response?.totalPages);
       setProductList(response?.products);
     };
     fetchProducts();
-  }, [pages, forceReRender]);
+  }, [pages, queryParams]);
 
   function handleSetPage(page: number) {
     setPages(page);
@@ -57,6 +57,20 @@ export default function useProductActionAdmin({
     }
   }
 
+  const handleSearchProduct = (value: string) => {
+    if (value === "") {
+      setQueryParams((prev) => {
+        const { productName, ...rest } = prev; //
+        return rest;
+      });
+    } else {
+      setQueryParams((prev) => ({
+        ...prev,
+        productName: value,
+      }));
+    }
+  };
+
   return {
     productList,
     totalPages,
@@ -67,5 +81,6 @@ export default function useProductActionAdmin({
     handleConfirmDelete,
     deleteProduct,
     deleteModalOpen,
+    handleSearchProduct,
   };
 }

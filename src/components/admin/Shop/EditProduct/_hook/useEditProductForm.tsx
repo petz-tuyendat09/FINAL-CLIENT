@@ -153,8 +153,6 @@ export default function useEditProductForm({ slug }: { slug: string }) {
       setDuplicatedMessage((mutationError.data as any).message);
     }
     if (data) {
-      setModalDisplay(true); // Show modal on successful product addition
-      setModalText("Thêm sản phẩm thành công quay về sau 3s");
     }
   }, [mutationError, data]);
 

@@ -2,7 +2,6 @@
 
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
-import { authenticate } from "./action";
 import { useAuth } from "../../_store/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -22,10 +21,6 @@ export default function useLogin() {
     onSubmit: async (values) => {
       const loginkey = values.loginkey;
       const password = values.password;
-      // let result = await authenticate(loginkey, password);
-      // console.log(result);
-      // setModalDisplay(true);
-      // setModalText(result?.error as any);
       const reponse = await signIn("credentials", {
         loginkey: loginkey,
         password: password,
@@ -54,7 +49,14 @@ export default function useLogin() {
     },
   });
 
+  function logInWithGoogle() {
+    signIn("google", {
+      redirect: false,
+    });
+  }
+
   return {
     formik,
+    logInWithGoogle,
   };
 }

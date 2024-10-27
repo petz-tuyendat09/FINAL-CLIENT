@@ -9,13 +9,13 @@ export default function SaleSection() {
     <section>
       <div className="container">
         <div>
-          <div className="text-display font-bold uppercase">
-            <h1 className="mt-[200px]">
+          <div className="text-display font-bold uppercase leading-[70px]">
+            <div className="mt-[200px]">
               <span className="text-primary">Ưu đãi</span> tốt
-            </h1>
-            <h1>Cho bạn</h1>
+            </div>
+            <div>Cho bạn</div>
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-4 mt-[30px]">
             {Products?.products.map((product) => (
               <ProductCard key={product._id} Product={product} />
             ))}

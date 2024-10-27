@@ -1,6 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import NormalTransitionLink from "../NormalTransitionLink";
-import { useState } from "react";
 import {
   Dropdown,
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
+  console.log(session);
 
   if (status === "unauthenticated") {
     return (
@@ -31,7 +31,7 @@ export default function LoginButton() {
         >
           <DropdownTrigger>
             <Button className="text-white" variant="flat">
-              {session?.user.username}
+              {session?.user.displayName}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
@@ -50,12 +50,28 @@ export default function LoginButton() {
             }}
             aria-label="Link Actions"
           >
-            <DropdownItem key="/user/account">
-              <NormalTransitionLink href="/user/account">
+            <DropdownItem textValue="Thông tin" key="/user/account">
+              <NormalTransitionLink
+                className="w-full text-left"
+                href="/user/account"
+              >
                 Thông tin
               </NormalTransitionLink>
             </DropdownItem>
+            {session?.user.userRole === "admin" &&
+              ((
+                <DropdownItem textValue="Trang Admin" key="/admin/dashboard">
+                  <NormalTransitionLink
+                    className="w-full text-left"
+                    href="/admin/dashboard"
+                  >
+                    Trang Admin
+                  </NormalTransitionLink>
+                </DropdownItem>
+              ) as any)}
+
             <DropdownItem
+              textValue="Đăng xuất"
               key="logout"
               onClick={() => signOut({ callbackUrl: "/" })}
             >

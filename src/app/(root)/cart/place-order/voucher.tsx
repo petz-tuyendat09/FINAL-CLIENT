@@ -5,12 +5,16 @@ import type { RadioChangeEvent } from 'antd';
 import Link from "next/link";
 import voucherImg from '@@/public/images/voucher.svg';
 import Image from "next/image";
-export default function Voucher ({ isModalOpen, handleOk, handleCancel }: any) {
+export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleCancel }: any) {
     const session = useSession();
     const userId = session?.data?.user?._id;
     const { data } = useGetVouchersHeldQuery({ userId: userId, page: 1 })
+    
     const onChange = (e: RadioChangeEvent) => {
-        console.log(e.target.value);
+        setVoucherId(e.target.value);
+    }
+    const handleChangeVoucher = () => {
+        
     }
     return ( 
         <>
@@ -44,7 +48,13 @@ export default function Voucher ({ isModalOpen, handleOk, handleCancel }: any) {
                                                 <p className="text-white">Điểm: <span className="text-[#FFFADD]">{item.voucherId.voucherPoint}</span></p>
                                             </div>
                                             <div className="absolute right-0 bottom-0 top-0 bg-gray-100 pl-[5px] flex justify-center"> 
-                                                <Radio value={item.voucherId._id} onChange={onChange}></Radio>
+                                                <Radio 
+                                                    value={item.voucherId._id} 
+                                                    checked={voucherId === item.voucherId._id} 
+                                                    onChange={onChange}
+                                                    className="custom-radio"
+                                                >
+                                                </Radio>
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +63,7 @@ export default function Voucher ({ isModalOpen, handleOk, handleCancel }: any) {
                         }
                     </div>
                     <div className="flex justify-end mt-[30px]">
-                        <button className="bg-primary text-white w-[120px] rounded-[5px] h-[44px] font-[600]">OK</button>
+                        <button className="bg-primary text-white w-[120px] rounded-[5px] h-[44px] font-[600]" onClick={handleChangeVoucher}>OK</button>
                     </div>
                 </div>
             </Modal>

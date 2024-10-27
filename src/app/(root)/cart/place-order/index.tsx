@@ -35,7 +35,7 @@ export const Index = () => {
     const activeStep = 1;
     const [addresses, setAddresses] = useState<MapSearchType[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [voucherId, setVoucherId] = useState('');
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -52,7 +52,6 @@ export const Index = () => {
     };
 
     const onChange = (e: RadioChangeEvent) => {
-        console.log('payment method', e.target.value);
         setPaymentMethod(e.target.value);
     };
 
@@ -227,7 +226,7 @@ export const Index = () => {
                     </div>
                 </div>
             </div>
-            <Voucher isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk} />
+            <Voucher voucherId={voucherId} setVoucherId={setVoucherId} isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk} />
         </>
     );
 }

@@ -6,6 +6,11 @@ export default function useServicesListAction() {
   const { data: session, status } = useSession();
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Status"]));
   const [userId, setUserId] = useState();
+  const [viewDetail, setViewDetail] = useState(false);
+  const [cancelBooking, setCancelBooking] = useState(false);
+  const [cancelBookingId, setCancelBookingId] = useState("");
+  const [isReview, setIsReview] = useState(false);
+  const [bookingDetailId, setBookingDetailId] = useState("");
 
   const [queryParams, setQueryParams] = useState<{
     year?: number;
@@ -19,6 +24,36 @@ export default function useServicesListAction() {
     const day = date.day;
 
     setQueryParams({ year, month: month + 1, day });
+  };
+
+  const handleViewDetail = (bookingId: string) => {
+    setViewDetail(true);
+    setBookingDetailId(bookingId);
+  };
+
+  const handleCloseDetail = () => {
+    setViewDetail(false);
+    setBookingDetailId("");
+  };
+
+  const handleReview = (bookingId: string) => {
+    setIsReview(true);
+    setBookingDetailId(bookingId);
+  };
+
+  const handleCancelReview = () => {
+    setIsReview(false);
+    setBookingDetailId("");
+  };
+
+  const handleCancelBooking = (cancelBookingId: string) => {
+    setCancelBooking(true);
+    setCancelBookingId(cancelBookingId);
+  };
+
+  const handleCloseCancelBooking = () => {
+    setCancelBooking(false);
+    setCancelBookingId("");
   };
 
   const selectedValue = useMemo(
@@ -36,8 +71,6 @@ export default function useServicesListAction() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedKeys, session]);
 
-  console.log(queryParams);
-
   const { data: bookingList } = useGetBookingByUserIdQuery({
     userId: userId && userId,
     ...queryParams,
@@ -48,5 +81,16 @@ export default function useServicesListAction() {
     handleDateChange,
     setSelectedKeys,
     selectedValue,
+    handleViewDetail,
+    viewDetail,
+    bookingDetailId,
+    handleCloseDetail,
+    handleReview,
+    isReview,
+    handleCancelReview,
+    handleCancelBooking,
+    cancelBookingId,
+    cancelBooking,
+    handleCloseCancelBooking,
   };
 }

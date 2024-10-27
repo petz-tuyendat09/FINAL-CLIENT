@@ -7,6 +7,8 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { message } from "antd";
 import { useSession } from "next-auth/react";
+import { errorModal, successModal } from "@/utils/callModalANTD";
+import { duration } from "@mui/material";
 
 export interface useVoucherActionProps {
   initialPage: number;
@@ -52,7 +54,7 @@ export default function useChangeVoucherAction({
 
   useEffect(() => {
     if (changeVoucherResponse) {
-      success();
+      successModal({ content: "Đổi voucher thành công", duration: 3 });
 
       sessionUpdate({
         ...session,
@@ -65,7 +67,7 @@ export default function useChangeVoucherAction({
     }
 
     if (changeVoucherError) {
-      error();
+      errorModal({ content: "Không đủ điểm đổi voucher", duration: 3 });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,22 +97,6 @@ export default function useChangeVoucherAction({
       setQueryParams((prev) => ({ ...prev, typeFilter: selectedType }));
     }
   }, [selectedValue, selectedType]);
-
-  const success = () => {
-    message.success({
-      content: <span>Đổi voucher thành công</span>,
-      duration: 5,
-      className: "custom-message", // Optionally for further styling if needed
-    });
-  };
-
-  const error = () => {
-    message.error({
-      content: <span>Không đủ điểm đổi voucher</span>,
-      duration: 5,
-      className: "custom-message", // Optionally for further styling if needed
-    });
-  };
 
   function clearQuery() {
     setQueryParams({});

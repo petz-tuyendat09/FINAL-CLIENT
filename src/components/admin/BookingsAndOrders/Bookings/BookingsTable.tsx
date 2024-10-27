@@ -15,6 +15,7 @@ import { today, getLocalTimeZone } from "@internationalized/date";
 import { Booking, BookingStatus } from "@/types/Booking";
 import formatMoney from "@/utils/formatMoney";
 import { useBookingContext } from "./store/BookingContext";
+import formatDate from "@/utils/formatDate";
 
 const columns = [
   {
@@ -61,11 +62,6 @@ export default function BookingsTable() {
       currentDate.day,
     );
     return booking < current;
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
   };
 
   // Format userId to show the first 3 characters in uppercase, or "Khách lẻ" if null
@@ -131,7 +127,6 @@ export default function BookingsTable() {
                     );
                   }
                   if (columnKey === "action") {
-                    const pastDate = isPastDate(bookingItem.bookingDate);
                     return (
                       <TableCell className="space-x-2">
                         <Button
@@ -143,18 +138,6 @@ export default function BookingsTable() {
                         >
                           Xem
                         </Button>
-                        {bookingItem.bookingStatus === "Booked" && (
-                          <Button
-                            variant="flat"
-                            size="sm"
-                            color="success"
-                            onClick={() => {
-                              console.log("Canceling booking", bookingItem._id);
-                            }}
-                          >
-                            Hoàn thành
-                          </Button>
-                        )}
                       </TableCell>
                     );
                   }

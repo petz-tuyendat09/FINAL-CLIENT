@@ -8,6 +8,12 @@ export interface Services {
   serviceType: string;
 }
 
+export interface PaginateServices {
+  services: Services[];
+  currentPage: number;
+  totalPages: number;
+}
+
 export enum ServicesType {
   NAIL_CARE = "Chăm sóc móng",
   CLEAN = "Tắm - Vệ sinh",

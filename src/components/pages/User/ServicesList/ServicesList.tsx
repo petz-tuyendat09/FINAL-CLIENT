@@ -19,6 +19,10 @@ import { today, getLocalTimeZone } from "@internationalized/date";
 import useServicesListAction from "./_hook/useServicesListAction";
 import { BookingStatus } from "@/types/Booking";
 import formatMoney from "@/utils/formatMoney"; // Import the formatMoney function
+import ModalBookingDetail from "./Modal/ModalBookingDetail";
+import formatDate from "@/utils/formatDate";
+import ModalCancelBooking from "./Modal/ModalCancelBooking";
+import ModalReview from "./Modal/ModalReview";
 
 const columns = [
   {
@@ -44,8 +48,23 @@ const columns = [
 ];
 
 export default function ServicesList() {
-  const { bookingList, handleDateChange, selectedValue, setSelectedKeys } =
-    useServicesListAction();
+  const {
+    bookingList,
+    handleDateChange,
+    selectedValue,
+    setSelectedKeys,
+    handleViewDetail,
+    bookingDetailId,
+    viewDetail,
+    handleCloseDetail,
+    handleCancelBooking,
+    cancelBookingId,
+    cancelBooking,
+    handleReview,
+    handleCancelReview,
+    handleCloseCancelBooking,
+    isReview,
+  } = useServicesListAction();
 
   // Get the local time zone
   const currentDate = today(getLocalTimeZone());
@@ -58,12 +77,6 @@ export default function ServicesList() {
       currentDate.day,
     );
     return booking < current;
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    // Format the date to YYYY-MM-DD
-    return date.toISOString().split("T")[0];
   };
 
   return (
@@ -123,6 +136,18 @@ export default function ServicesList() {
                       </TableCell>
                     );
                   }
+                  if (columnKey === "bookingStatus") {
+                    // Format the booking date to YYYY-MM-DD
+                    return (
+                      <TableCell>
+                        {
+                          BookingStatus[
+                            bookingItem?.bookingStatus as keyof typeof BookingStatus
+                          ]
+                        }
+                      </TableCell>
+                    );
+                  }
                   if (columnKey === "totalPrice") {
                     // Format totalPrice using formatMoney function
                     return (
@@ -139,24 +164,38 @@ export default function ServicesList() {
                           variant="flat"
                           size="sm"
                           onClick={() => {
-                            // Handle View logic
-                            console.log("Viewing booking", bookingItem._id);
+                            handleViewDetail(bookingItem._id);
                           }}
                         >
                           Xem
                         </Button>
-                        <Button
-                          variant="flat"
-                          size="sm"
-                          color="danger"
-                          isDisabled={pastDate}
-                          onClick={() => {
-                            // Handle Cancel logic
-                            console.log("Canceling booking", bookingItem._id);
-                          }}
-                        >
-                          Hủy
-                        </Button>
+                        {!pastDate &&
+                          bookingItem.bookingStatus !== "Canceled" && (
+                            <Button
+                              variant="flat"
+                              size="sm"
+                              color="danger"
+                              isDisabled={pastDate}
+                              onClick={() => {
+                                handleCancelBooking(bookingItem._id);
+                              }}
+                            >
+                              Hủy
+                            </Button>
+                          )}
+                        {bookingItem.bookingStatus === "Done" &&
+                          !bookingItem.reviewStatus && (
+                            <Button
+                              onClick={() => {
+                                handleReview(bookingItem._id);
+                              }}
+                              variant="flat"
+                              size="sm"
+                              color="success"
+                            >
+                              Đánh giá
+                            </Button>
+                          )}
                       </TableCell>
                     );
                   }
@@ -168,6 +207,27 @@ export default function ServicesList() {
             )}
           </TableBody>
         </Table>
+        {viewDetail && (
+          <ModalBookingDetail
+            isDialogOpen={viewDetail}
+            handleCloseDialog={handleCloseDetail}
+            bookingId={bookingDetailId}
+          />
+        )}
+        {cancelBooking && (
+          <ModalCancelBooking
+            isDialogOpen={cancelBooking}
+            handleCloseDialog={handleCloseCancelBooking}
+            bookingId={cancelBookingId}
+          />
+        )}
+        {isReview && (
+          <ModalReview
+            isDialogOpen={isReview}
+            handleCloseDialog={handleCancelReview}
+            bookingId={bookingDetailId}
+          />
+        )}
       </div>
     </>
   );

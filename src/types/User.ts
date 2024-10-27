@@ -39,7 +39,6 @@ export interface User {
   userPhone: string;
   userRole: "user" | "admin";
   userPoint: number;
-  userLevel: number;
   userExperiments: number;
   userVoucher: string[];
   userImage: string;

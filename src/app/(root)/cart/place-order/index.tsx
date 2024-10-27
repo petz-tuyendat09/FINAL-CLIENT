@@ -187,7 +187,7 @@ export const Index = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-[38%] bg-slate-50 h-full">
+                <div className="w-[38%] bg-gray-50 h-full">
                     <div>
                         <div className="p-[22px]">
                             <h1 className="text-[24px]">Tóm tắt đơn hàng</h1>

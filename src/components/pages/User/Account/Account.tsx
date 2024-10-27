@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import { DateInput, Input, Card, CardBody } from "@nextui-org/react";
 import AddressInput from "./AddressInput";
 import UserCard from "./UserCard";
@@ -6,13 +7,6 @@ import { useSession } from "next-auth/react";
 import { useGetUserQuery } from "@/libs/features/services/user";
 import { useEffect } from "react";
 import useChangeProfile from "./_hooks/useChangeProfile";
-
-interface User {
-  displayName: string;
-  userEmail: string;
-  userPhone: string;
-  userAddress: string;
-}
 
 export default function Profile() {
   const { formik } = useChangeProfile();
@@ -75,14 +69,12 @@ export default function Profile() {
                 label="Email"
                 name="userEmail"
                 value={formik.values.userEmail}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                errorMessage={
-                  formik.touched.userEmail && formik.errors.userEmail
-                    ? formik.errors.userEmail
-                    : undefined
-                }
-                isInvalid={formik.touched.userEmail && !!formik.errors.userEmail}
+              />
+              <Input
+                isDisabled
+                label="Địa chỉ hiện tại"
+                name="userAddress"
+                value={formik.values.userAddress}
               />
               <Input
                 label="Số điện thoại"
@@ -95,9 +87,11 @@ export default function Profile() {
                     ? formik.errors.userPhone
                     : undefined
                 }
-                isInvalid={formik.touched.userPhone && !!formik.errors.userPhone}
+                isInvalid={
+                  formik.touched.userPhone && !!formik.errors.userPhone
+                }
               />
-              <AddressInput />
+              <AddressInput formik={formik} />
             </form>
           </div>
         </CardBody>

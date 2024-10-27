@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HeldVouchersResponse } from "@/types/Voucher";
+import { User } from "@/types/User";
 
 interface ChangePasswordParams {
   userId: string;

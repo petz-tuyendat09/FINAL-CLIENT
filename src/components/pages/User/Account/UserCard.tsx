@@ -11,9 +11,13 @@ import {
 import usePreviewUploadImage from "./_hooks/usePreviewImage";
 import { useSession } from "next-auth/react";
 import ChangePasswordInput from "./ChangePasswordInput";
+import { useGetUserQuery } from "@/libs/features/services/user";
 
 export default function App() {
-  const session = useSession();
+  const { data: session } = useSession();
+  const userId = session?.user?._id;
+  const { data: userData, isLoading } = useGetUserQuery(userId || "");
+
   const { imagePreview, handlePreviewImg } = usePreviewUploadImage({});
   return (
     <Card className="">
@@ -27,7 +31,7 @@ export default function App() {
               size="lg"
               src={imagePreview}
             />
-            <Button>
+            {/* <Button>
               <label htmlFor="userImage">Sửa</label>
               <Input
                 onChange={handlePreviewImg}
@@ -35,17 +39,17 @@ export default function App() {
                 className="hidden"
                 id="userImage"
               />
-            </Button>
+            </Button> */}
           </div>
           <div className="flex flex-col items-start justify-center gap-1">
             <h4 className="text-small font-semibold leading-none text-default-600">
-              {session.data?.user.displayName || "Chưa có tên hiển thị"}
+              {userData?.displayName || "Chưa có tên hiển thị"}
             </h4>
             <h5 className="text-small tracking-tight text-default-400">
-              {session.data?.user.userEmail}
+              {userData?.userEmail}
             </h5>
             <h5 className="text-[12px] tracking-tight text-default-400">
-              Điểm: {session.data?.user.userPoint}
+              Điểm: {userData?.userPoint}
             </h5>
           </div>
         </div>

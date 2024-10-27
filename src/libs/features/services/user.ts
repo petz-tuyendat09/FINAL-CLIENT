@@ -1,10 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HeldVouchersResponse } from "@/types/Voucher";
+import { User } from "@/types/User";
 
 interface ChangePasswordParams {
   userId: string;
   newPassword?: string;
   displayName?: string;
+  birthDay?: string;
+  userEmail?: string;
   userPhone?: string;
   userImage?: any;
   userAddress?: string;
@@ -26,6 +29,10 @@ export const userAPI = createApi({
   tagTypes: ["User"],
 
   endpoints: (builder) => ({
+    getUser: builder.query<User, string>({
+      query: (userId: string) => `/${userId}`,
+      providesTags: ["User"],
+    }),
     editUser: builder.mutation<any, ChangePasswordParams>({
       query: (formData: ChangePasswordParams) => ({
         url: ``,
@@ -42,11 +49,11 @@ export const userAPI = createApi({
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
-
         return `/voucher-held?${queryParams}`;
       },
     }),
   }),
 });
 
-export const { useEditUserMutation, useGetVouchersHeldQuery } = userAPI;
+export const { useGetUserQuery, useEditUserMutation, useGetVouchersHeldQuery } =
+  userAPI;

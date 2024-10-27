@@ -15,6 +15,7 @@ export interface Booking {
   bookingStatus: string; // Enum type for booking status
   totalPrice: number;
   bookingHours: string; // Time in "HH:MM" format
+  reviewStatus: boolean;
   __v: number;
 }
 

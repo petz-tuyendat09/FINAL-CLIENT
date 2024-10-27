@@ -8,13 +8,3 @@ export default function Voucher ({ isModalOpen, handleOk, handleCancel }: any) {
     console.log(userId);
     const { data: vouchers } = useGetVouchersHeldQuery({ userId: userId, page: 1 })
     console.log(vouchers);
-    return (
-        <>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
-        </>
-    )
-}

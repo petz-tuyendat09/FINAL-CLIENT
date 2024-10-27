@@ -69,8 +69,6 @@ export default function useBookingAction({
     }
   };
 
-  console.log(bookingList);
-
   return {
     bookingList,
     handleDateChange,

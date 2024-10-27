@@ -18,6 +18,7 @@ import useProductActionAdmin from "./_hooks/useProductActionAdmin";
 import { ProductOption } from "@/types/Product";
 import ModalDelete from "./Modal/ModalDelete";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
+import formatMoney from "@/utils/formatMoney";
 
 const columns = [
   {
@@ -99,9 +100,11 @@ export default function ProductTable() {
                 if (columnKey === "action") {
                   return (
                     <TableCell>
-                      <button onClick={() => handleDeleteProduct(item._id)}>
-                        <Icon className="size-6" icon="mdi:trash" />
-                      </button>
+                      <div>
+                        <button onClick={() => handleDeleteProduct(item._id)}>
+                          <Icon className="size-6" icon="mdi:trash" />
+                        </button>
+                      </div>
                       <NormalTransitionLink
                         href={`shop/edit-product/${item.productSlug}`}
                       >
@@ -115,7 +118,7 @@ export default function ProductTable() {
                       <Tabs aria-label="Options">
                         {item.productOption.map((option: ProductOption) => (
                           <Tab key={option._id} title={option.name}>
-                            <p>Giá: {formatCurrency(option.productPrice)}</p>
+                            <p>Giá: {formatMoney(option.productPrice)}</p>
                             <p>Số lượng: {option.productQuantity}</p>
                           </Tab>
                         ))}
@@ -155,11 +158,4 @@ export default function ProductTable() {
       )}
     </div>
   );
-}
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "VND",
-  }).format(amount);
 }

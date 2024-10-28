@@ -5,16 +5,34 @@ import type { RadioChangeEvent } from 'antd';
 import Link from "next/link";
 import voucherImg from '@@/public/images/voucher.svg';
 import Image from "next/image";
-export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleCancel }: any) {
+import { useDispatch } from "react-redux";
+import userSlice from "@/libs/features/user/user";
+import { useState } from "react";
+interface VoucherProps {
+    voucherId: string | null;
+    setVoucherId: (id: string) => void;
+    isModalOpen: boolean;
+    handleCancel: () => void;
+}
+export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleCancel }: VoucherProps) {
     const session = useSession();
     const userId = session?.data?.user?._id;
-    const { data } = useGetVouchersHeldQuery({ userId: userId, page: 1 })
-    
-    const onChange = (e: RadioChangeEvent) => {
+    const { data, error, isLoading } = useGetVouchersHeldQuery({ userId, page: 1 });
+    const [salePercent, setSalePercent] = useState(0);
+    const dispatch = useDispatch();
+    const onChange = (e: RadioChangeEvent, salePercent: number) => {
         setVoucherId(e.target.value);
+        setSalePercent(salePercent);
     }
     const handleChangeVoucher = () => {
-        
+        const voucher = {
+            voucherId: voucherId,
+            discount: salePercent
+        }
+        dispatch(userSlice.actions.setVoucher(voucher));
+    }
+    if (isLoading) {
+        return <div>Loading vouchers...</div>;
     }
     return ( 
         <>
@@ -33,7 +51,6 @@ export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleC
                     <div className="flex flex-col gap-[20px] mt-[20px]">
                         {
                             data?.vouchers.map((item, i) => {
-                                console.log(item);
                                 return (
                                     <div key={i} className="bg-primary flex flex-row gap-[10px]">
                                         <div className="relative">
@@ -51,7 +68,7 @@ export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleC
                                                 <Radio 
                                                     value={item.voucherId._id} 
                                                     checked={voucherId === item.voucherId._id} 
-                                                    onChange={onChange}
+                                                    onChange={(e) => onChange(e, item.voucherId.salePercent)}
                                                     className="custom-radio"
                                                 >
                                                 </Radio>

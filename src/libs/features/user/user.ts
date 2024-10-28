@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SecureUser } from "@/types/User";
 
+interface Voucher {
+  voucherId: string | null;
+  discount: number | null;
+}
 interface UserState {
   user: SecureUser | null;
   token: string | null;
+  voucher: Voucher | null;
 }
 
 const initialState: UserState = {
   user: null,
   token: null,
+  voucher: null
 };
 
 const userSlice = createSlice({
@@ -27,6 +33,10 @@ const userSlice = createSlice({
       state.token = null;
       state.user = null;
     },
+
+    setVoucher(state, action: PayloadAction<Voucher>) {
+      state.voucher = action.payload;
+    }
   },
 });
 

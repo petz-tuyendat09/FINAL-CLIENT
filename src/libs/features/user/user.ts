@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SecureUser } from "@/types/User";
-
-interface Voucher {
-  voucherId: string | null;
-  discount: number | null;
-}
-interface UserState {
-  user: SecureUser | null;
-  token: string | null;
-  voucher: Voucher | null;
-}
+import { SecureUser, UserState } from "@/types/User";
+import { VoucherOrder } from "@/types/Voucher";
 
 const initialState: UserState = {
   user: null,
@@ -34,7 +25,7 @@ const userSlice = createSlice({
       state.user = null;
     },
 
-    setVoucher(state, action: PayloadAction<Voucher>) {
+    setVoucher(state, action: PayloadAction<VoucherOrder>) {
       state.voucher = action.payload;
     }
   },

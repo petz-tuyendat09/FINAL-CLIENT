@@ -25,6 +25,10 @@ interface HeldVoucher {
   quantity: number;
   _id: string;
 }
+export interface VoucherOrder {
+  voucherId: string | null;
+  discount: number | null;
+}
 
 export interface HeldVouchersResponse {
   vouchers: HeldVoucher[];

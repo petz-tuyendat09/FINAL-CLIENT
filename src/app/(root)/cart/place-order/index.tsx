@@ -15,6 +15,7 @@ import Image from "next/image";
 import Voucher from "./voucher";
 import { Field, FieldProps, Form, Formik } from "formik";
 import * as Yup from 'yup';
+import { SecureUser, UserState } from "@/types/User";
 interface CartItem {
     productId: string;
     productName: string;
@@ -31,13 +32,14 @@ export const Index = () => {
     const [paymentMethod, setPaymentMethod] = useState('BANKING');
     const [isDisplay, setIsDisplay] = useState(false);
     const [total, setTotal] = useState(0);
-    const [voucher, setVoucher] = useState(0);
     const [itemsToDisplay, setItemsToDisplay] = useState<CartItem[]>([]);
     const activeStep = 1;
     const [addresses, setAddresses] = useState<MapSearchType[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [voucherId, setVoucherId] = useState('');
+    const [discount, setDiscount] = useState(0);
     const [addressSelected, setAddressSelected] =  useState<string | null>(null);
+    const voucher = useSelector((state: { user: UserState }) => state.user.voucher);
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -67,8 +69,14 @@ export const Index = () => {
         setItemsToDisplay(data);
 
         const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0);
-        const discountedTotal = initialTotal - voucher;
-        setTotal(discountedTotal < 0 ? 0 : discountedTotal);
+        if (!(voucher?.discount)) {
+            setTotal(initialTotal);
+        } else {
+            const afterDiscount = (initialTotal * (100 - voucher?.discount)) / 100;
+            const discount = initialTotal - afterDiscount;
+            setDiscount(discount);
+            setTotal(afterDiscount);
+        }
     }, [voucher, session.status, session.data, unauthenticatedCarts]);
 
     const validationSchema = Yup.object().shape({
@@ -246,7 +254,7 @@ export const Index = () => {
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <span>Giảm giá voucher:</span>
-                                                <span>{formatCurrency(voucher)}</span>
+                                                <span className="text-primary">-{formatCurrency(discount)}</span>
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <span>Phí vận chuyển:</span>

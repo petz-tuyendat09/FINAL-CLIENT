@@ -1,4 +1,5 @@
 import { CartItem } from "./Cart";
+import { VoucherOrder } from "./Voucher";
 
 interface UserOrder {
   orderDate?: Date;
@@ -53,4 +54,10 @@ export interface SecureUser {
   username: string;
   displayName: string;
   userImage: string;
+}
+
+export interface UserState {
+  user: SecureUser | null;
+  token: string | null;
+  voucher: VoucherOrder | null;
 }

@@ -5,31 +5,21 @@ import type { RadioChangeEvent } from 'antd';
 import Link from "next/link";
 import voucherImg from '@@/public/images/voucher.svg';
 import Image from "next/image";
-import { useDispatch } from "react-redux";
-import userSlice from "@/libs/features/user/user";
-import { useState } from "react";
 interface VoucherProps {
     voucherId: string | null;
     setVoucherId: (id: string) => void;
     isModalOpen: boolean;
     handleCancel: () => void;
+    setSalePercent: (id: number) => void;
+    handleChangeVoucher: () => void;
 }
-export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleCancel }: VoucherProps) {
+export default function Voucher ({ setSalePercent, handleChangeVoucher, voucherId, setVoucherId, isModalOpen, handleCancel }: VoucherProps) {
     const session = useSession();
     const userId = session?.data?.user?._id;
     const { data, error, isLoading } = useGetVouchersHeldQuery({ userId, page: 1 });
-    const [salePercent, setSalePercent] = useState(0);
-    const dispatch = useDispatch();
     const onChange = (e: RadioChangeEvent, salePercent: number) => {
         setVoucherId(e.target.value);
         setSalePercent(salePercent);
-    }
-    const handleChangeVoucher = () => {
-        const voucher = {
-            voucherId: voucherId,
-            discount: salePercent
-        }
-        dispatch(userSlice.actions.setVoucher(voucher));
     }
     if (isLoading) {
         return <div>Loading vouchers...</div>;
@@ -49,6 +39,9 @@ export default function Voucher ({ voucherId, setVoucherId, isModalOpen, handleC
                     )}
 
                     <div className="flex flex-col gap-[20px] mt-[20px]">
+                        <div className="flex justify-end ">
+                            <button className="text-red-300 hover:text-red-600" onClick={() => { setVoucherId(''); setSalePercent(0); }}>Xóa voucher</button>
+                        </div>
                         {
                             data?.vouchers.map((item, i) => {
                                 return (

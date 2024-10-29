@@ -7,7 +7,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import "./index.css";
-import { Radio, RadioChangeEvent } from "antd";
+import { Radio, RadioChangeEvent, message } from "antd";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/libs/store";
@@ -15,7 +15,9 @@ import Image from "next/image";
 import Voucher from "./voucher";
 import { Field, FieldProps, Form, Formik } from "formik";
 import * as Yup from 'yup';
-import { SecureUser, UserState } from "@/types/User";
+import { UserState } from "@/types/User";
+import { useDispatch } from "react-redux";
+import userSlice from "@/libs/features/user/user";
 interface CartItem {
     productId: string;
     productName: string;
@@ -38,6 +40,8 @@ export const Index = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [voucherId, setVoucherId] = useState('');
     const [discount, setDiscount] = useState(0);
+    const dispatch = useDispatch();
+    const [salePercent, setSalePercent] = useState(0);
     const [addressSelected, setAddressSelected] =  useState<string | null>(null);
     const voucher = useSelector((state: { user: UserState }) => state.user.voucher);
     const handleCancel = () => {
@@ -60,24 +64,37 @@ export const Index = () => {
     };
 
     const unauthenticatedCarts = useSelector((state: RootState) => state.cart?.items || []);
-
+    const success = () => {
+        message.success(
+          <div>Voucher đã áp dụng thành công</div>
+        );
+    };
+    const handleChangeVoucher = () => {
+        const voucher = {
+            voucherId: voucherId,
+            discount: salePercent
+        }
+        dispatch(userSlice.actions.setVoucher(voucher));
+        success();
+    }
     useEffect(() => {
         const authStatus = session.status;
         const cartItems = session.data?.user?.userCart?.cartItems || [];
         const data = (authStatus === 'authenticated' ? cartItems : unauthenticatedCarts) as CartItem[];
-
+    
         setItemsToDisplay(data);
-
-        const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0);
-        if (!(voucher?.discount)) {
-            setTotal(initialTotal);
-        } else {
-            const afterDiscount = (initialTotal * (100 - voucher?.discount)) / 100;
-            const discount = initialTotal - afterDiscount;
-            setDiscount(discount);
-            setTotal(afterDiscount);
+        
+        const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0) - 38000;
+        const discount = voucher?.discount ?? 0;
+        
+        let finalTotal = initialTotal;
+        if (voucherId !== '' && discount > 0) {
+            finalTotal = initialTotal * (100 - discount) / 100;
         }
-    }, [voucher, session.status, session.data, unauthenticatedCarts]);
+        
+        setTotal(finalTotal);
+        setDiscount(voucherId !== '' && discount > 0 ? initialTotal - finalTotal : 0);
+    }, [voucherId, handleChangeVoucher, session]);
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Họ và tên là bắt buộc.'),
@@ -96,7 +113,7 @@ export const Index = () => {
                     onSubmit={(values, { resetForm }) => {
                         const formData = {
                             ...values,
-                            address: addressSelected,
+                            customerAddress: addressSelected,
                             paymentMethod: paymentMethod
                         }
                         console.log(formData);
@@ -121,7 +138,7 @@ export const Index = () => {
                                                 <p className="font-[600]">Thông tin</p>
                                             </div>
                                             <div className="flex flex-row justify-between gap-[25px] mt-[10px]">
-                                                <Field name="name">
+                                                <Field name="customerName">
                                                     {({ field, meta }: FieldProps) => (
                                                         <div className="w-[50%]">
                                                             <input
@@ -135,7 +152,7 @@ export const Index = () => {
                                                         </div>
                                                     )}
                                                 </Field>
-                                                <Field name="phone">
+                                                <Field name="customerPhone">
                                                     {({ field, meta }: FieldProps) => (
                                                         <div className="w-[50%]">
                                                             <input
@@ -154,7 +171,7 @@ export const Index = () => {
                                                 <Autocomplete
                                                     defaultItems={addresses}
                                                     label="Địa chỉ"
-                                                    name="address"
+                                                    name="customerAddress"
                                                     className="w-full custom-autocomplete"
                                                     onKeyUp={(e) => handleKeyUp(e)}
                                                     onSelectionChange={(value) => {
@@ -254,7 +271,7 @@ export const Index = () => {
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <span>Giảm giá voucher:</span>
-                                                <span className="text-primary">-{formatCurrency(discount)}</span>
+                                                <span className="text-primary">{discount !== 0 ? '-' + formatCurrency(discount) : '0đ'}</span>
                                             </div>
                                             <div className="flex flex-row justify-between">
                                                 <span>Phí vận chuyển:</span>
@@ -280,7 +297,7 @@ export const Index = () => {
                     )}
                 </Formik>
             </div>
-            <Voucher voucherId={voucherId} setVoucherId={setVoucherId} isModalOpen={isModalOpen} handleCancel={handleCancel} />
+            <Voucher setSalePercent={setSalePercent} handleChangeVoucher={handleChangeVoucher} voucherId={voucherId} setVoucherId={setVoucherId} isModalOpen={isModalOpen} handleCancel={handleCancel} />
         </>
     );
 }

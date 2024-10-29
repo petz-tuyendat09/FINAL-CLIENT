@@ -18,6 +18,7 @@ import * as Yup from 'yup';
 import { UserState } from "@/types/User";
 import { useDispatch } from "react-redux";
 import userSlice from "@/libs/features/user/user";
+import { useInsertOrderMutation } from "@/libs/features/services/order";
 interface CartItem {
     productId: string;
     productName: string;
@@ -42,6 +43,7 @@ export const Index = () => {
     const [discount, setDiscount] = useState(0);
     const dispatch = useDispatch();
     const [salePercent, setSalePercent] = useState(0);
+    const [insertOrder] = useInsertOrderMutation();
     const [addressSelected, setAddressSelected] =  useState<string | null>(null);
     const voucher = useSelector((state: { user: UserState }) => state.user.voucher);
     const handleCancel = () => {
@@ -77,14 +79,12 @@ export const Index = () => {
         dispatch(userSlice.actions.setVoucher(voucher));
         success();
     }
+    const authStatus = session.status;
+    const cartItems = session.data?.user?.userCart?.cartItems || [];
+    const data = (authStatus === 'authenticated' ? cartItems : unauthenticatedCarts) as CartItem[];
+    const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0) - 38000;
     useEffect(() => {
-        const authStatus = session.status;
-        const cartItems = session.data?.user?.userCart?.cartItems || [];
-        const data = (authStatus === 'authenticated' ? cartItems : unauthenticatedCarts) as CartItem[];
-    
         setItemsToDisplay(data);
-        
-        const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0) - 38000;
         const discount = voucher?.discount ?? 0;
         
         let finalTotal = initialTotal;
@@ -97,8 +97,8 @@ export const Index = () => {
     }, [voucherId, handleChangeVoucher, session]);
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Họ và tên là bắt buộc.'),
-        phone: Yup.string()
+        customerName: Yup.string().required('Họ và tên là bắt buộc.'),
+        customerPhone: Yup.string()
         .required('Số điện thoại là bắt buộc.')
         .matches(/^[0-9]+$/, 'Phone must be a number') 
         .min(10, 'Số điện thoại ít nhất 10 số') 
@@ -108,15 +108,28 @@ export const Index = () => {
         <>
             <div className="mt-[100px] px-[30px] pb-[50px]">
                 <Formik
-                    initialValues={{ name: '', phone: '', address: '' }}
+                    initialValues={{ customerName: '', customerPhone: '', customerAddress: '' }}
                     validationSchema={validationSchema}
                     onSubmit={(values, { resetForm }) => {
                         const formData = {
                             ...values,
+                            customerEmail: session.data?.user?.userEmail,
                             customerAddress: addressSelected,
-                            paymentMethod: paymentMethod
+                            paymentMethod: paymentMethod,
+                            orderTotal: initialTotal,
+                            voucherId: voucherId,
+                            orderDiscount: discount,
+                            userId: session.data?.user?._id,
+                            totalAfterDiscount: total,
+                            orderStatus: 'PENDING',
+                            products: data,
+                            createdAt: new Date().toISOString(), 
+                            updatedAt: new Date().toISOString(), 
+                            orderDate: new Date().toISOString()
                         }
-                        console.log(formData);
+                        if (paymentMethod === 'COD') {
+                            insertOrder(formData);
+                        }
                         resetForm();
                     }}
                 >

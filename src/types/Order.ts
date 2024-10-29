@@ -1,21 +1,21 @@
+import { CartItem } from "./Cart";
+
 export interface Order {
-  createdAt(createdAt: any): import("react").ReactNode;
-  createAt(createAt: any): import("react").ReactNode;
-  date(date: any): import("react").ReactNode;
-  price(price: any): import("react").ReactNode;
-  orderDate(orderDate: any): import("react").ReactNode;
-  _id: string;
   customerName: string;
   customerPhone: string;
-  customerEmail: string;
-  customerAddress: string;
-  productId: OrderProduct[];
+  customerEmail: string | undefined;
+  customerAddress: string | null;
+  products: CartItem[];
   orderTotal: number;
   voucherId: string;
-  userId: User;
-  orderAfterDiscount: number;
-  paymentMethod: "COD" | "BANKING";
-  orderStatus: "PENDING" | "DELIVERING" | "CANCELLED";
+  orderDiscount: number;
+  userId: string | undefined;
+  totalAfterDiscount: number;
+  paymentMethod: string;
+  orderStatus: string;
+  createdAt: string; 
+  updatedAt: string; 
+  orderDate: string; 
 }
 
 export interface OrderProduct {

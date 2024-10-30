@@ -65,6 +65,15 @@ export const orderAPI = createApi({
         url: `/edit-order-status`,
         method: "PUT",
         body: { orderId, newStatus },
+    insertOrder: builder.mutation<Order[], Order>({
+      query: (payload) => ({
+        url: `/`,
+        method: "POST",
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+
       }),
       invalidatesTags: ["Orders"],
     }),
@@ -78,4 +87,6 @@ export const {
   useGetOrdersByOrderIdQuery,
   useCancelOrderMutation,
   useEditOrderStatusMutation,
+  useInsertOrderMutation
+ main
 } = orderAPI;

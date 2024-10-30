@@ -49,6 +49,12 @@ const columns = [
   },
 ];
 
+const statusColors = {
+  [BookingStatus.Done]: "text-green-600",
+  [BookingStatus.Booked]: "text-amber-500	",
+  [BookingStatus.Canceled]: "text-red-600",
+};
+
 export default function BookingsTable() {
   const { bookingList, page, totalPages, handleSetPage } = useBookingContext();
 
@@ -64,10 +70,11 @@ export default function BookingsTable() {
     return booking < current;
   };
 
-  // Format userId to show the first 3 characters in uppercase, or "Khách lẻ" if null
+  console.log(bookingList);
+
   const formatUserId = (userId: string | null) => {
-    if (!userId) return "Khách lẻ"; // Display "Khách lẻ" if userId is null
-    return userId.slice(0, 3).toUpperCase(); // Slice first 3 chars and convert to uppercase
+    if (!userId) return "Khách lẻ";
+    return userId.slice(-3).toUpperCase();
   };
 
   return (
@@ -142,13 +149,15 @@ export default function BookingsTable() {
                     );
                   }
                   if (columnKey === "bookingStatus") {
+                    const statusLabel =
+                      BookingStatus[
+                        bookingItem.bookingStatus as keyof typeof BookingStatus
+                      ];
+                    const statusClass = statusColors[statusLabel];
+
                     return (
-                      <TableCell className="space-x-2">
-                        {
-                          BookingStatus[
-                            bookingItem.bookingStatus as keyof typeof BookingStatus
-                          ]
-                        }
+                      <TableCell className={`space-x-2 ${statusClass}`}>
+                        {statusLabel}
                       </TableCell>
                     );
                   }

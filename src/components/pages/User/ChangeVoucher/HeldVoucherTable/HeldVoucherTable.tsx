@@ -66,7 +66,10 @@ export default function ChangeVoucherTable() {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={voucher?.vouchers || []}>
+        <TableBody
+          emptyContent={"Bạn chưa có voucher nào."}
+          items={voucher?.vouchers || []}
+        >
           {(item) => (
             <TableRow key={item._id}>
               {(columnKey) => {

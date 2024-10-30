@@ -13,12 +13,15 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { useGetOrdersByOrderIdQuery } from "@/libs/features/services/order";
+import {
+  useEditOrderStatusMutation,
+  useGetOrdersByOrderIdQuery,
+} from "@/libs/features/services/order";
 import { Order, OrderStatus } from "@/types/Order";
 import Image from "next/image";
+import { errorModal, successModal } from "@/utils/callModalANTD";
 
 interface ModalOrderDetailProps {
   isDialogOpen: boolean;
@@ -53,11 +56,27 @@ export default function ModalOrderDetail({
 }: ModalOrderDetailProps) {
   const { data } = useGetOrdersByOrderIdQuery({ orderId: orderId });
   const [orderDetail, setOrderDetail] = useState<Order>();
+  const [editOrderStatus, { data: editResponse, error: editError }] =
+    useEditOrderStatusMutation();
+
+  const handleStatusChange = (orderId: any, newStatus: string) => {
+    editOrderStatus({ orderId: orderId, newStatus: newStatus });
+  };
+
   useEffect(() => {
     if (data) {
       setOrderDetail(data[0]);
     }
-  }, [data]);
+  }, [data, editResponse, editError]);
+
+  useEffect(() => {
+    if (editResponse) {
+      successModal({ content: "Cập nhật trạng thái thành công", duration: 3 });
+    }
+    if (editError) {
+      errorModal({ content: "Cập nhật trạng thái thất bại", duration: 3 });
+    }
+  }, [editResponse, editError]);
 
   return (
     <Modal
@@ -95,7 +114,7 @@ export default function ModalOrderDetail({
                     <TableColumn key={column.key}>{column.label}</TableColumn>
                   )}
                 </TableHeader>
-                <TableBody items={orderDetail?.productId || []}>
+                <TableBody items={orderDetail?.products || []}>
                   {(data) => {
                     const selectedOption = (
                       data as any
@@ -126,7 +145,6 @@ export default function ModalOrderDetail({
                         </TableCell>
                         <TableCell>{formatMoney(salePrice)}</TableCell>
                         <TableCell>
-                          {" "}
                           {(data as any)?.productQuantity} x{" "}
                           {selectedOption?.name}
                         </TableCell>
@@ -161,15 +179,41 @@ export default function ModalOrderDetail({
                 {formatDate(orderDetail?.createdAt)}
               </p>
               <div className="flex gap-4">
-                <Button color="danger" onPress={handleCloseDialog}>
+                <Button
+                  color="danger"
+                  isDisabled={orderDetail?.orderStatus !== "DELIVERING"}
+                  onPress={() => {
+                    handleStatusChange(orderDetail?._id, "CANCELLED");
+                  }}
+                >
                   Hủy đơn
                 </Button>
                 <Button
                   color="success"
-                  className="text-white"
-                  onPress={handleCloseDialog}
+                  className="bg-blue-700 text-white"
+                  isDisabled={
+                    orderDetail?.orderStatus === "CANCELLED" ||
+                    (orderDetail as any)?.orderStatus === "DELIVERED" ||
+                    (orderDetail as any)?.orderStatus === "DELIVERING"
+                  }
+                  onPress={() => {
+                    handleStatusChange(orderDetail?._id, "DELIVERING");
+                  }}
                 >
-                  Giao thành công
+                  Đang giao hàng
+                </Button>
+                <Button
+                  color="success"
+                  className="text-white"
+                  isDisabled={
+                    orderDetail?.orderStatus === "CANCELLED" ||
+                    (orderDetail as any)?.orderStatus === "DELIVERED"
+                  }
+                  onPress={() => {
+                    handleStatusChange(orderDetail?._id, "DELIVERED");
+                  }}
+                >
+                  Đã giao hàng
                 </Button>
               </div>
             </ModalBody>

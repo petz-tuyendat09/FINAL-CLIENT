@@ -37,7 +37,7 @@ export default function OrderDetail({ orderId }: OrderDetailProps) {
       </div>
       <div className="jusitfy-center mt-10 flex w-full flex-col items-stretch space-y-4 md:space-y-6 xl:flex-row xl:space-x-8 xl:space-y-0">
         <OrderSumary
-          products={orderById && (orderById[0].productId as any)}
+          products={orderById && (orderById[0].products as any)}
           order={orderById && (orderById as any)}
         />
 

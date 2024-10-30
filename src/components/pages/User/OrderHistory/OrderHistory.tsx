@@ -119,7 +119,10 @@ export default function OrdersHistory() {
               <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
           </TableHeader>
-          <TableBody items={orderList || []}>
+          <TableBody
+            emptyContent={"Bạn chưa đặt đơn hàng nào."}
+            items={orderList || []}
+          >
             {(orderItem) => (
               <TableRow key={orderItem._id}>
                 {(columnKey) => {
@@ -130,7 +133,7 @@ export default function OrdersHistory() {
                   }
                   if (columnKey === "productCount") {
                     return (
-                      <TableCell>{orderItem.productId?.length || 0} </TableCell>
+                      <TableCell>{orderItem.products?.length || 0} </TableCell>
                     );
                   }
                   if (columnKey === "paymentMethod") {

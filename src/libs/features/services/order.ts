@@ -57,6 +57,14 @@ export const orderAPI = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    editOrderStatus: builder.mutation<
+      Order,
+      { orderId: string; newStatus: string }
+    >({
+      query: ({ orderId, newStatus }) => ({
+        url: `/edit-order-status`,
+        method: "PUT",
+        body: { orderId, newStatus },
     insertOrder: builder.mutation<Order[], Order>({
       query: (payload) => ({
         url: `/`,
@@ -65,6 +73,7 @@ export const orderAPI = createApi({
         headers: {
           'Content-Type': 'application/json', 
         },
+
       }),
       invalidatesTags: ["Orders"],
     }),
@@ -77,5 +86,7 @@ export const {
   useLazyGetOrdersByUserIdQuery,
   useGetOrdersByOrderIdQuery,
   useCancelOrderMutation,
+  useEditOrderStatusMutation,
   useInsertOrderMutation
+ main
 } = orderAPI;

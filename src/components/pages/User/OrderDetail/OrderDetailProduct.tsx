@@ -45,9 +45,11 @@ export default function OrderDetailProduct({
     <>
       {product &&
         product.map((data) => {
-          const selectedOption = data.productId.productOption.find(
-            (option) => option.name === (data as any).productOption,
-          );
+          const selectedOption =
+            data &&
+            data?.productId?.productOption.find(
+              (option) => option.name === (data as any).productOption,
+            );
 
           const isOnSale = data.productId.salePercent > 0;
           const salePrice = isOnSale

@@ -17,6 +17,10 @@ export default withAuth(
       if (pathname.startsWith("/user")) {
         return NextResponse.redirect(new URL("/auth", req.url));
       }
+      // Logic mới: Nếu không có session và cố truy cập vào "/admin/*", navigate về "/"
+      if (pathname.startsWith("/admin")) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
     }
 
     return NextResponse.next();
@@ -27,6 +31,7 @@ export default withAuth(
     },
   },
 );
+
 export const config = {
   matcher: ["/user/:path*", "/admin/:path*", "/auth"],
 };

@@ -124,7 +124,10 @@ export default function ServicesList() {
               <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
           </TableHeader>
-          <TableBody items={bookingList?.bookings || []}>
+          <TableBody
+            emptyContent={"Bạn chưa đặt dịch vụ nào."}
+            items={bookingList?.bookings || []}
+          >
             {(bookingItem) => (
               <TableRow key={bookingItem._id}>
                 {(columnKey) => {
@@ -170,7 +173,7 @@ export default function ServicesList() {
                           Xem
                         </Button>
                         {!pastDate &&
-                          bookingItem.bookingStatus !== "Canceled" && (
+                          bookingItem.bookingStatus === "Booked" && (
                             <Button
                               variant="flat"
                               size="sm"

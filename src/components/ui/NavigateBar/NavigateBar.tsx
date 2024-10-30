@@ -126,11 +126,7 @@ export default function NavigateBar({ onTop }: NavigateBarProps) {
         />
         <TransitionLink isHidden={isHidden} href="/" label="Trang chủ" />
         <TransitionLink isHidden={isHidden} href="/shop" label="Cửa hàng" />
-        <TransitionLink
-          isHidden={isHidden}
-          href="/marketplace"
-          label="Tìm bạn"
-        />
+        <TransitionLink isHidden={isHidden} href="/booking" label="Đặt lịch" />
       </div>
     </motion.div>
   );

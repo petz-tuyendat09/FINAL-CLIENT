@@ -1,4 +1,3 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import { useOrderContext } from "./store/OrderContext";
 
 import {
@@ -49,6 +48,13 @@ const columns = [
   },
 ];
 
+const statusColors = {
+  [OrderStatus.DELIVERED]: "text-green-600",
+  [OrderStatus.DELIVERING]: "text-blue-600	",
+  [OrderStatus.CANCELLED]: "text-red-600",
+  [OrderStatus.PENDING]: "text-amber-500",
+};
+
 export default function OrderTable() {
   const {
     orderList,
@@ -61,21 +67,9 @@ export default function OrderTable() {
     handleCancelViewOrderDetail,
   } = useOrderContext();
 
-  const currentDate = today(getLocalTimeZone());
-
-  const isPastDate = (bookingDate: string) => {
-    const booking = new Date(bookingDate);
-    const current = new Date(
-      currentDate.year,
-      currentDate.month - 1,
-      currentDate.day,
-    );
-    return booking < current;
-  };
-
   const formatUserId = (userId: string | null) => {
     if (!userId) return "Khách lẻ";
-    return userId.slice(0, 3).toUpperCase();
+    return userId.slice(-3).toUpperCase();
   };
 
   return (
@@ -110,7 +104,6 @@ export default function OrderTable() {
             <TableRow key={orderItem._id}>
               {(columnKey) => {
                 if (columnKey === "userId") {
-                  // Format the userId to the first 3 uppercase characters or "Khách lẻ"
                   return (
                     <TableCell className="font-bold">
                       {formatUserId(orderItem.userId)}
@@ -130,7 +123,6 @@ export default function OrderTable() {
                   );
                 }
                 if (columnKey === "action") {
-                  const pastDate = isPastDate(orderItem.createdAt);
                   return (
                     <TableCell className="space-x-2">
                       <Button
@@ -146,17 +138,19 @@ export default function OrderTable() {
                   );
                 }
                 if (columnKey === "productId") {
-                  return <TableCell>{orderItem.productId.length}</TableCell>;
+                  return <TableCell>{orderItem.products.length}</TableCell>;
                 }
 
                 if (columnKey === "orderStatus") {
+                  const statusLabel =
+                    OrderStatus[
+                      orderItem.orderStatus as keyof typeof OrderStatus
+                    ];
+                  const statusClass = statusColors[statusLabel];
+
                   return (
-                    <TableCell className="space-x-2">
-                      {
-                        OrderStatus[
-                          orderItem.orderStatus as keyof typeof OrderStatus
-                        ]
-                      }
+                    <TableCell className={`space-x-2 ${statusClass}`}>
+                      {statusLabel}
                     </TableCell>
                   );
                 }

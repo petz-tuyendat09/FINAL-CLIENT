@@ -12,14 +12,14 @@ export default function ServicesCard({ service, formik }: ServicesCardProps) {
     formik.values.selectedServices[service.serviceType]?.serviceId ===
     service._id;
 
-  const handleSelect = () => {
+  const handleSelect = async () => {
     if (isSelected) {
       formik.setFieldValue(
         `selectedServices.${service.serviceType}`,
         undefined,
       );
     } else {
-      formik.setFieldValue(`selectedServices.${service.serviceType}`, {
+      await formik.setFieldValue(`selectedServices.${service.serviceType}`, {
         serviceId: service._id,
         serviceName: service.serviceName,
         servicePrice: service.servicePrice,

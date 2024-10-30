@@ -9,7 +9,7 @@ export interface Order {
   customerPhone: string;
   customerEmail: string;
   customerAddress: string;
-  productId: OrderProduct[];
+  products: OrderProduct[];
   orderTotal: number;
   voucherId: string;
   userId: User;
@@ -33,7 +33,8 @@ export interface User {
 
 export enum OrderStatus {
   PENDING = "Đang chờ",
-  COMPLETED = "Hoàn thành",
+  DELIVERING = "Đang giao",
+  DELIVERED = "Đã giao",
   CANCELLED = "Đã hủy",
 }
 
@@ -50,7 +51,7 @@ export interface OrderAdmin {
   customerPhone: string;
   customerEmail: string;
   customerAddress: string;
-  productId: Product[];
+  products: Product[];
   orderTotal: number;
   voucherId: string;
   orderDiscount: number;

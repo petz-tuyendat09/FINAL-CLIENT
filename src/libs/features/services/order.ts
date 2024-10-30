@@ -57,6 +57,17 @@ export const orderAPI = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    insertOrder: builder.mutation<Order[], Order>({
+      query: (payload) => ({
+        url: `/`,
+        method: "POST",
+        body: payload,
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
   }),
 });
 
@@ -66,4 +77,5 @@ export const {
   useLazyGetOrdersByUserIdQuery,
   useGetOrdersByOrderIdQuery,
   useCancelOrderMutation,
+  useInsertOrderMutation
 } = orderAPI;

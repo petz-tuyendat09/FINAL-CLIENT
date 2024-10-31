@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useAddNewProductMutation } from "@/libs/features/services/product";
 import { useRouter } from "next/navigation";
-import { useModal } from "../_store/ModalContext"; // Import the ModalProvider
+import { successModal } from "@/utils/callModalANTD";
 
 interface errorsValues {
   productName: string;
@@ -17,7 +17,6 @@ interface errorsValues {
 }
 
 export default function useAddProductForm() {
-  const { setModalText, setModalDisplay } = useModal();
   const [duplicatedMessage, setDuplicatedMessage] = useState<
     string | undefined
   >();
@@ -125,8 +124,8 @@ export default function useAddProductForm() {
       setDuplicatedMessage((mutationError.data as any).message);
     }
     if (mutationResponse) {
-      setModalDisplay(true); // Show modal on successful product addition
-      setModalText("Thêm sản phẩm thành công quay về sau 3s");
+      successModal({ content: "Thêm sản phẩm thành công", duration: 3 });
+      router.push("/admin/shop");
     }
   }, [mutationError, mutationResponse]);
 

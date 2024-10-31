@@ -7,6 +7,14 @@ interface UserOrder {
   orderTotal: number;
 }
 
+export enum UserRole {
+  admin = "Admin",
+  user = "Người dùng",
+  spa = "Nhân viên spa",
+  manager = "Quản lý",
+  seller = "Nhân viên",
+}
+
 export interface RegisterUser {
   email: string;
   username: string;
@@ -38,22 +46,20 @@ export interface User {
   userAddress: string;
   userEmail: string;
   userPhone: string;
-  userRole: "user" | "admin";
+  userRole: "admin" | "user" | "spa" | "manager" | "seller";
   userPoint: number;
-  userExperiments: number;
   userVoucher: string[];
-  userImage: string;
-  userOrders: any[];
+  userOrders: UserOrder[];
   userCart: UserCart;
   __v: number;
   token: string;
   refreshToken: string;
 }
 
-export interface SecureUser {
-  username: string;
-  displayName: string;
-  userImage: string;
+export interface PaginateUser {
+  data: User[];
+  currentPage: number;
+  totalPages: number;
 }
 
 export interface UserState {

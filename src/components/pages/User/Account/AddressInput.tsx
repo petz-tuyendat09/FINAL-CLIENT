@@ -29,9 +29,11 @@ export default function AddressInput({ formik }: AddressInputProps) {
       listboxProps={{
         emptyContent: "Không tìm thấy địa chỉ.",
       }}
+      allowsCustomValue={true}
       onSelectionChange={(value) => {
         formik.setFieldValue("userAddress", value);
       }}
+      onInputChange={formik.handleChange}
     >
       {(suggestion) => (
         <AutocompleteItem key={suggestion.label}>

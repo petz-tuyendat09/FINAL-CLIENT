@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HeldVouchersResponse } from "@/types/Voucher";
-import { User } from "@/types/User";
+import { PaginateUser, User } from "@/types/User";
 
 interface ChangePasswordParams {
   userId: string;
@@ -11,6 +11,19 @@ interface ChangePasswordParams {
   userPhone?: string;
   userImage?: any;
   userAddress?: string;
+}
+
+interface ChangeUserRoleParams {
+  userId: string;
+  newRole?: string;
+}
+
+export interface QueryUserParams {
+  page?: number;
+  limit?: number;
+  userRole?: string;
+  username?: string;
+  userEmail?: string;
 }
 
 export interface HeldVoucherQueryParams {
@@ -33,9 +46,27 @@ export const userAPI = createApi({
       query: (userId: string) => `/${userId}`,
       providesTags: ["User"],
     }),
+    getUserPaginate: builder.query<PaginateUser, QueryUserParams>({
+      query: (params) => {
+        const queryParams = new URLSearchParams(
+          params as unknown as Record<string, string>,
+        ).toString();
+
+        return `/paginate?${queryParams}`;
+      },
+      providesTags: ["User"],
+    }),
     editUser: builder.mutation<any, ChangePasswordParams>({
       query: (formData: ChangePasswordParams) => ({
         url: ``,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    editUserRole: builder.mutation<any, ChangeUserRoleParams>({
+      query: (formData: ChangeUserRoleParams) => ({
+        url: `/change-role`,
         method: "PUT",
         body: formData,
       }),
@@ -56,5 +87,10 @@ export const userAPI = createApi({
   }),
 });
 
-export const { useGetUserQuery, useEditUserMutation, useGetVouchersHeldQuery } =
-  userAPI;
+export const {
+  useGetUserQuery,
+  useEditUserMutation,
+  useGetVouchersHeldQuery,
+  useGetUserPaginateQuery,
+  useEditUserRoleMutation,
+} = userAPI;

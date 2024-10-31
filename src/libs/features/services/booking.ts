@@ -75,6 +75,14 @@ export const bookingsAPI = createApi({
       }),
       invalidatesTags: ["Booking"],
     }),
+    doneBooking: builder.mutation<any, { bookingId: string }>({
+      query: ({ bookingId }) => ({
+        url: "/done-booking",
+        method: "PUT",
+        body: { bookingId: bookingId },
+      }),
+      invalidatesTags: ["Booking"],
+    }),
     getBookingByUserId: builder.query<PaginateBooking, BookingQueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams(
@@ -104,4 +112,5 @@ export const {
   useGetBookingByUserIdQuery,
   useCancelBookingMutation,
   useReviewBookingMutation,
+  useDoneBookingMutation,
 } = bookingsAPI;

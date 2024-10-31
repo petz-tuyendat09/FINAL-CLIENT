@@ -23,14 +23,13 @@ export default function BookingsFilter() {
     <div className="flex items-center gap-4">
       <DatePicker
         className="w-1/2"
-        label="Chọn ngày"
         aria-label="Chọn ngày"
         onChange={(date) => handleDateChange(date as any)}
       />
       <Input
         onValueChange={handleCustomerNameSearch}
         className="w-1/2"
-        label="Tên khách hàng"
+        placeholder="Tên khách hàng"
       />
 
       <Dropdown className="h-full">

@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { VoucherPaginate } from "@/types/Voucher";
 
 export interface QueryParams {
+  voucherId?: string;
   page?: number;
   salePercentSort?: string; // asc || desc
   pointSort?: string; // asc || desc

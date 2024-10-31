@@ -83,7 +83,7 @@ export default function Profile() {
                 isDisabled
                 label="Địa chỉ hiện tại"
                 name="userAddress"
-                value={formik.values.userAddress}
+                value={userData?.userAddress}
               />
               <Input
                 label="Số điện thoại"

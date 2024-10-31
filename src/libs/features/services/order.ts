@@ -11,6 +11,7 @@ export interface BaseOrderQuery {
   customerName?: string;
   totalPriceSort?: string;
   productQuantitySort?: string;
+  orderStatus?: string;
 }
 
 interface QueryParams {
@@ -68,6 +69,17 @@ export const orderAPI = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    insertOrder: builder.mutation<Order[], Order>({
+      query: (payload) => ({
+        url: `/`,
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
   }),
 });
 
@@ -78,4 +90,5 @@ export const {
   useGetOrdersByOrderIdQuery,
   useCancelOrderMutation,
   useEditOrderStatusMutation,
+  useInsertOrderMutation,
 } = orderAPI;

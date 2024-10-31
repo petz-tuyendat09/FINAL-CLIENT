@@ -5,6 +5,7 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
 } from "@/libs/features/services/product";
+import { errorModal, successModal } from "@/utils/callModalANTD";
 
 interface UseGetProductProps {
   initialPage: number;
@@ -49,11 +50,16 @@ export default function useProductActionAdmin({
 
   async function handleConfirmDelete() {
     if (deleteProductId) {
-      await deleteProduct(deleteProductId);
-      setDeleteModalOpen(false);
-      setProductList((prevList) =>
-        prevList?.filter((product) => product._id !== deleteProductId),
-      );
+      try {
+        await deleteProduct(deleteProductId);
+        setDeleteModalOpen(false);
+        setProductList((prevList) =>
+          prevList?.filter((product) => product._id !== deleteProductId),
+        );
+        successModal({ content: "Xóa sản phẩm thành công", duration: 3 });
+      } catch (error) {
+        errorModal({ content: "Xóa sản phẩm thất bại", duration: 3 });
+      }
     }
   }
 

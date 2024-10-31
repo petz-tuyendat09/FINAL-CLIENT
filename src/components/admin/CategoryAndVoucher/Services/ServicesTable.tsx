@@ -11,6 +11,7 @@ import {
   TableCell,
   Pagination,
   getKeyValue,
+  Button,
 } from "@nextui-org/react";
 import useServicesAction from "./_hook/useServicesAction";
 import { ServicesType } from "@/types/Services";
@@ -82,12 +83,12 @@ export default function ServicesTable() {
           setSelectedKeys={setSelectedKeys}
           clearQueryParams={clearQueryParams}
         />
-        <button
+        <Button
           onClick={handleAddServices}
-          className="mb-4 ml-auto block w-fit rounded-full bg-black px-4 py-2 text-white"
+          className="mb-4 ml-auto block w-fit px-4 py-2 text-black"
         >
-          Thêm dịch vụ
-        </button>
+          + Thêm dịch vụ
+        </Button>
       </div>
       <Table
         aria-label="Bảng hiển thị danh mục"

@@ -1,5 +1,6 @@
+"use client";
+
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -12,6 +13,7 @@ import {
   Tabs,
   Tab,
   Input,
+  Button,
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import useProductActionAdmin from "./_hooks/useProductActionAdmin";
@@ -19,6 +21,7 @@ import { ProductOption } from "@/types/Product";
 import ModalDelete from "./Modal/ModalDelete";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 import formatMoney from "@/utils/formatMoney";
+import { useSession } from "next-auth/react";
 
 const columns = [
   {
@@ -64,10 +67,24 @@ export default function ProductTable() {
     handleSearchProduct,
   } = useProductActionAdmin({ initialPage: 1 });
 
+  const session = useSession();
+  const userRole = session.data?.user.userRole;
+
   return (
     <div>
-      <div className="mb-4">
-        <Input onValueChange={handleSearchProduct} label="Tên sản phẩm" />
+      <div className="mb-4 flex items-center gap-2">
+        <Input onValueChange={handleSearchProduct} placeholder="Tên sản phẩm" />
+        {userRole === "admin" ||
+          (userRole === "manager" && (
+            <Button
+              className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+              color="default"
+            >
+              <NormalTransitionLink href="/admin/add-product">
+                + Thêm sản phẩm
+              </NormalTransitionLink>
+            </Button>
+          ))}
       </div>
       <Table
         aria-label="Product Table"
@@ -100,16 +117,20 @@ export default function ProductTable() {
                 if (columnKey === "action") {
                   return (
                     <TableCell>
-                      <div>
-                        <button onClick={() => handleDeleteProduct(item._id)}>
-                          <Icon className="size-6" icon="mdi:trash" />
-                        </button>
-                      </div>
-                      <NormalTransitionLink
-                        href={`shop/edit-product/${item.productSlug}`}
-                      >
-                        <Icon className="size-6" icon="mynaui:edit" />
-                      </NormalTransitionLink>
+                      {userRole === "seller" ? (
+                        <Button>Thông báo hết hàng</Button>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => handleDeleteProduct(item._id)}>
+                            <Icon className="size-6" icon="mdi:trash" />
+                          </button>
+                          <NormalTransitionLink
+                            href={`shop/edit-product/${item.productSlug}`}
+                          >
+                            <Icon className="size-6" icon="mynaui:edit" />
+                          </NormalTransitionLink>
+                        </div>
+                      )}
                     </TableCell>
                   );
                 } else if (columnKey === "productOption") {

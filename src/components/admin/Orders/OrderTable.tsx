@@ -49,10 +49,10 @@ const columns = [
 ];
 
 const statusColors = {
-  [OrderStatus.DELIVERED]: "text-green-600",
-  [OrderStatus.DELIVERING]: "text-blue-600	",
-  [OrderStatus.CANCELLED]: "text-red-600",
-  [OrderStatus.PENDING]: "text-amber-500",
+  [OrderStatus.DELIVERED]: "bg-green-600",
+  [OrderStatus.DELIVERING]: "bg-blue-600	",
+  [OrderStatus.CANCELLED]: "bg-red-600",
+  [OrderStatus.PENDING]: "bg-amber-500",
 };
 
 export default function OrderTable() {
@@ -73,8 +73,7 @@ export default function OrderTable() {
   };
 
   return (
-    <div className="">
-      <h1 className="mb-6 text-2xl font-semibold">Danh sách dịch vụ đã đặt</h1>
+    <div className="mt-4">
       <Table
         bottomContent={
           <div className="flex w-full justify-center">
@@ -99,7 +98,10 @@ export default function OrderTable() {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={orderList?.orders || []}>
+        <TableBody
+          emptyContent="Không tìm thấy đơn hàng nào"
+          items={orderList?.orders || []}
+        >
           {(orderItem: OrderAdmin) => (
             <TableRow key={orderItem._id}>
               {(columnKey) => {
@@ -149,8 +151,12 @@ export default function OrderTable() {
                   const statusClass = statusColors[statusLabel];
 
                   return (
-                    <TableCell className={`space-x-2 ${statusClass}`}>
-                      {statusLabel}
+                    <TableCell className={`space-x-2`}>
+                      <span
+                        className={`rounded-full px-4 py-2 text-white ${statusClass}`}
+                      >
+                        {statusLabel}
+                      </span>
                     </TableCell>
                   );
                 }

@@ -178,7 +178,8 @@ export default function ModalOrderDetail({
                 <span className="font-bold">Ngày tạo:</span>{" "}
                 {formatDate(orderDetail?.createdAt)}
               </p>
-              <div className="flex gap-4">
+              <div className="flex items-center gap-4">
+                <p>Cập nhật trạng thái: </p>
                 <Button
                   color="danger"
                   isDisabled={orderDetail?.orderStatus !== "DELIVERING"}

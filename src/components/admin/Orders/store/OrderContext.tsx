@@ -6,8 +6,8 @@ import { PaginateOrder } from "@/types/Order";
 interface OrderContextProps {
   orderList: PaginateOrder | undefined;
   handleDateChange: (date: Date) => void;
-  selectedValue: string | null;
-  setSelectedKeys: (keys: any) => void;
+  statusFilter: any;
+  setStatusFilter: (keys: any) => void;
   handleClearDate: () => void;
   handleCustomerNameSearch: (value: string) => void;
   handleSetPage: (page: number) => void;
@@ -17,6 +17,12 @@ interface OrderContextProps {
   viewDetail: boolean;
   orderId: string;
   handleCancelViewOrderDetail: () => void;
+  orderTotalFilter: any;
+  productQuantityFilter: any;
+  userFilter: any;
+  setProductQuantityFilter: (keys: any) => void;
+  setOrderTotalFilter: (keys: any) => void;
+  setUserFilter: (keys: any) => void;
 }
 
 // Create the context
@@ -28,8 +34,8 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     orderList,
     handleDateChange,
     handleClearDate,
-    selectedValue,
-    setSelectedKeys,
+    statusFilter,
+    setStatusFilter,
     handleCustomerNameSearch,
     handleSetPage,
     page,
@@ -38,6 +44,12 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     viewDetail,
     orderId,
     handleCancelViewOrderDetail,
+    orderTotalFilter,
+    productQuantityFilter,
+    userFilter,
+    setProductQuantityFilter,
+    setOrderTotalFilter,
+    setUserFilter,
   } = useOrderAction({ initialPage: 1 });
 
   return (
@@ -46,8 +58,8 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         orderList,
         handleDateChange,
         handleClearDate,
-        selectedValue,
-        setSelectedKeys,
+        statusFilter,
+        setStatusFilter,
         handleCustomerNameSearch,
         handleSetPage,
         page,
@@ -56,6 +68,12 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         viewDetail,
         orderId,
         handleCancelViewOrderDetail,
+        orderTotalFilter,
+        productQuantityFilter,
+        userFilter,
+        setProductQuantityFilter,
+        setOrderTotalFilter,
+        setUserFilter,
       }}
     >
       {children}

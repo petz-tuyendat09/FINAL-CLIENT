@@ -9,6 +9,7 @@ import {
   TableCell,
   Pagination,
   getKeyValue,
+  Button,
 } from "@nextui-org/react";
 import useCategoriesAction from "./_hook/useCategoriesAction";
 import ModalEdit from "./ModalCategories/ModalEdit";
@@ -54,12 +55,12 @@ export default function CategoriesTable() {
 
   return (
     <div className="w-1/2">
-      <button
+      <Button
         onClick={handleAddCategory}
-        className="mb-4 ml-auto block w-fit rounded-full bg-black px-4 py-2 text-white"
+        className="mb-4 ml-auto block w-fit px-4 py-2 text-black"
       >
-        Thêm danh mục
-      </button>
+        + Thêm danh mục
+      </Button>
       <Table
         aria-label="Bảng hiển thị danh mục"
         className="w-full"

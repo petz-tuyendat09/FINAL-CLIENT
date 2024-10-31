@@ -12,6 +12,10 @@ interface BookingContextProps {
   handleSetPage: (page: number) => void;
   page: number;
   totalPages: number;
+  handleViewBookingDetail: (bookingId: string) => void;
+  handleCancelBookingDetail: () => void;
+  viewDetail: any;
+  bookingId: any;
 }
 
 // Create the context
@@ -31,6 +35,10 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
     handleSetPage,
     page,
     totalPages,
+    handleViewBookingDetail,
+    handleCancelBookingDetail,
+    viewDetail,
+    bookingId,
   } = useBookingAction({ initialPage: 1 });
 
   return (
@@ -45,6 +53,10 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
         handleSetPage,
         page,
         totalPages,
+        handleViewBookingDetail,
+        handleCancelBookingDetail,
+        viewDetail,
+        bookingId,
       }}
     >
       {children}

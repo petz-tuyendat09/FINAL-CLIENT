@@ -11,11 +11,11 @@ import {
   Button,
   Pagination,
 } from "@nextui-org/react";
-import { today, getLocalTimeZone } from "@internationalized/date";
 import { Booking, BookingStatus } from "@/types/Booking";
 import formatMoney from "@/utils/formatMoney";
 import { useBookingContext } from "./store/BookingContext";
 import formatDate from "@/utils/formatDate";
+import ModalBookingDetail from "./Modal/ModalBookingDetail";
 
 const columns = [
   {
@@ -50,27 +50,22 @@ const columns = [
 ];
 
 const statusColors = {
-  [BookingStatus.Done]: "text-green-600",
-  [BookingStatus.Booked]: "text-amber-500	",
-  [BookingStatus.Canceled]: "text-red-600",
+  [BookingStatus.Done]: "bg-green-600",
+  [BookingStatus.Booked]: "bg-amber-500	",
+  [BookingStatus.Canceled]: "bg-red-600",
 };
 
 export default function BookingsTable() {
-  const { bookingList, page, totalPages, handleSetPage } = useBookingContext();
-
-  const currentDate = today(getLocalTimeZone());
-
-  const isPastDate = (bookingDate: string) => {
-    const booking = new Date(bookingDate);
-    const current = new Date(
-      currentDate.year,
-      currentDate.month - 1,
-      currentDate.day,
-    );
-    return booking < current;
-  };
-
-  console.log(bookingList);
+  const {
+    bookingList,
+    page,
+    totalPages,
+    handleSetPage,
+    handleViewBookingDetail,
+    viewDetail,
+    bookingId,
+    handleCancelBookingDetail,
+  } = useBookingContext();
 
   const formatUserId = (userId: string | null) => {
     if (!userId) return "Khách lẻ";
@@ -79,10 +74,7 @@ export default function BookingsTable() {
 
   return (
     <>
-      <div className="">
-        <h1 className="mb-6 text-2xl font-semibold">
-          Danh sách dịch vụ đã đặt
-        </h1>
+      <div className="mt-4">
         <Table
           bottomContent={
             <div className="flex w-full justify-center">
@@ -107,7 +99,10 @@ export default function BookingsTable() {
               <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
           </TableHeader>
-          <TableBody items={bookingList?.bookings || []}>
+          <TableBody
+            emptyContent="Không tìm thấy lịch đặt nào"
+            items={bookingList?.bookings || []}
+          >
             {(bookingItem: Booking) => (
               <TableRow key={bookingItem._id}>
                 {(columnKey) => {
@@ -140,7 +135,7 @@ export default function BookingsTable() {
                           variant="flat"
                           size="sm"
                           onClick={() => {
-                            console.log("Viewing booking", bookingItem._id);
+                            handleViewBookingDetail(bookingItem._id);
                           }}
                         >
                           Xem
@@ -156,8 +151,12 @@ export default function BookingsTable() {
                     const statusClass = statusColors[statusLabel];
 
                     return (
-                      <TableCell className={`space-x-2 ${statusClass}`}>
-                        {statusLabel}
+                      <TableCell className={`space-x-2`}>
+                        <span
+                          className={`rounded-full px-4 py-2 text-white ${statusClass}`}
+                        >
+                          {statusLabel}
+                        </span>
                       </TableCell>
                     );
                   }
@@ -170,6 +169,13 @@ export default function BookingsTable() {
           </TableBody>
         </Table>
       </div>
+      {viewDetail && (
+        <ModalBookingDetail
+          handleCloseDialog={handleCancelBookingDetail}
+          bookingId={bookingId}
+          isDialogOpen={viewDetail}
+        />
+      )}
     </>
   );
 }

@@ -11,11 +11,13 @@ export default function useBookingAction({
 }: useBookingActionProps) {
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Status"]));
   const [queryParams, setQueryParams] = useState<BookingQueryParams>({});
+  const [viewDetail, setViewDetail] = useState(false);
+  const [bookingId, setBookingId] = useState("");
 
   const [page, setPage] = useState(initialPage);
   const { data: bookingList } = useGetBookingQuery({
     ...queryParams,
-    limit: 4,
+    limit: 15,
     page: page,
   });
   const [totalPages, setTotalPages] = useState(1);
@@ -69,6 +71,16 @@ export default function useBookingAction({
     }
   };
 
+  function handleViewBookingDetail(bookingId: string) {
+    setViewDetail(true);
+    setBookingId(bookingId);
+  }
+
+  function handleCancelBookingDetail() {
+    setViewDetail(false);
+    setBookingId("");
+  }
+
   return {
     bookingList,
     handleDateChange,
@@ -79,5 +91,9 @@ export default function useBookingAction({
     handleSetPage,
     page,
     totalPages,
+    handleViewBookingDetail,
+    handleCancelBookingDetail,
+    viewDetail,
+    bookingId,
   };
 }

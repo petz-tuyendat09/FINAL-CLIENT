@@ -5,8 +5,7 @@ export interface Order {
   customerPhone: string;
   customerEmail: string;
   customerAddress: string;
-  customerEmail: string | undefined;
-  customerAddress: string | null;
+
   products: CartItem[];
   orderTotal: number;
   voucherId: string;
@@ -15,9 +14,9 @@ export interface Order {
   totalAfterDiscount: number;
   paymentMethod: string;
   orderStatus: string;
-  createdAt: string; 
-  updatedAt: string; 
-  orderDate: string; 
+  createdAt: string;
+  updatedAt: string;
+  orderDate: string;
 }
 
 export interface OrderProduct {
@@ -41,7 +40,7 @@ export enum OrderStatus {
 }
 
 interface Product {
-  productId: string;
+  _id: string;
   productQuantity: number;
   productOption: string;
   productPrice: number;

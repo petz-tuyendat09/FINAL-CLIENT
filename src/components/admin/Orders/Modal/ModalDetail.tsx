@@ -19,7 +19,7 @@ import {
   useEditOrderStatusMutation,
   useGetOrdersByOrderIdQuery,
 } from "@/libs/features/services/order";
-import { Order, OrderStatus } from "@/types/Order";
+import { OrderAdmin, OrderStatus } from "@/types/Order";
 import Image from "next/image";
 import { errorModal, successModal } from "@/utils/callModalANTD";
 
@@ -55,7 +55,7 @@ export default function ModalOrderDetail({
   orderId,
 }: ModalOrderDetailProps) {
   const { data } = useGetOrdersByOrderIdQuery({ orderId: orderId });
-  const [orderDetail, setOrderDetail] = useState<Order>();
+  const [orderDetail, setOrderDetail] = useState<OrderAdmin>();
   const [editOrderStatus, { data: editResponse, error: editError }] =
     useEditOrderStatusMutation();
 
@@ -66,7 +66,7 @@ export default function ModalOrderDetail({
 
   useEffect(() => {
     if (data) {
-      setOrderDetail(data[0]);
+      setOrderDetail((data as any)[0]);
     }
   }, [data, editResponse, editError]);
 

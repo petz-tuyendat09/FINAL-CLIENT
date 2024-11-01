@@ -14,7 +14,7 @@ export const animatePageIn = () => {
       yPercent: 0,
     }).to([col1, col2, col3, col4], {
       yPercent: 120,
-      stagger: 0.3,
+      stagger: 0.2,
     });
   }
 };
@@ -31,7 +31,7 @@ export const animatePageOut = (href: string, router: AppRouterInstance) => {
       yPercent: -100,
     }).to([col1, col2, col3, col4], {
       yPercent: 0,
-      stagger: 0.3,
+      stagger: 0.2,
       onComplete: () => {
         router.push(href);
       },

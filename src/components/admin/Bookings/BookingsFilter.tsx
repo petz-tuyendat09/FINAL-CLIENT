@@ -33,8 +33,11 @@ export default function BookingsFilter() {
       />
 
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            variant="bordered"
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+          >
             {BookingStatus[selectedValue as keyof typeof BookingStatus] ||
               "Status"}
           </Button>

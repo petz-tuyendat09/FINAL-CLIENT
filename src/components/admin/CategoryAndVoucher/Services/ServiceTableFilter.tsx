@@ -25,8 +25,11 @@ export default function ServiceTableFilter({
   return (
     <div className="flex items-center gap-4">
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+            variant="bordered"
+          >
             {ServicesType[selectedValue as keyof typeof ServicesType] ||
               "Loại dịch vụ"}
           </Button>
@@ -47,8 +50,11 @@ export default function ServiceTableFilter({
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+            variant="bordered"
+          >
             Sắp xếp theo lượt đặt
           </Button>
         </DropdownTrigger>
@@ -64,7 +70,11 @@ export default function ServiceTableFilter({
           <DropdownItem key="desc">Lượt booking giảm dần</DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Button variant="flat" onClick={clearQueryParams}>
+      <Button
+        className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+        variant="flat"
+        onClick={clearQueryParams}
+      >
         Xóa lọc
       </Button>
     </div>

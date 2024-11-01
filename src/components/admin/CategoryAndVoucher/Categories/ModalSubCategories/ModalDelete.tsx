@@ -1,4 +1,5 @@
 import { useDeleteSubCategoryMutation } from "@/libs/features/services/subcategories";
+import { errorModal, successModal } from "@/utils/callModalANTD";
 import {
   Modal,
   ModalContent,
@@ -7,6 +8,7 @@ import {
   ModalBody,
   Button,
 } from "@nextui-org/react";
+import { useEffect } from "react";
 
 interface ModalAddProps {
   isDialogOpen: boolean;
@@ -19,14 +21,25 @@ export default function ModalDelete({
   subCategoryId,
   handleCloseDialog,
 }: ModalAddProps) {
-  const [deleteCategory, { data }] = useDeleteSubCategoryMutation();
+  const [deleteCategory, { data, error: deleteError }] =
+    useDeleteSubCategoryMutation();
 
   async function handleDeleteCategory() {
     if (subCategoryId) {
-      await deleteCategory({ subCategoryId: subCategoryId });
-      handleCloseDialog();
+      deleteCategory({ subCategoryId: subCategoryId });
     }
   }
+
+  useEffect(() => {
+    if (data) {
+      successModal({ content: "Xóa danh mục con thành công" });
+      handleCloseDialog();
+    }
+
+    if (deleteError) {
+      errorModal({ content: "Xóa danh mục con thất bại", duration: 3 });
+    }
+  }, [data, deleteError]);
 
   return (
     <Modal

@@ -1,5 +1,6 @@
 import { useGetSubCategoriesPaginateQuery } from "@/libs/features/services/subcategories";
 import { useEffect, useState } from "react";
+import { useRefetchContext } from "../_store/reFetchContext";
 
 interface useSubCategoriesActionProps {
   initialPage: number;
@@ -8,8 +9,9 @@ interface useSubCategoriesActionProps {
 export default function useSubCategoriesAction({
   initialPage,
 }: useSubCategoriesActionProps) {
+  const { refetch } = useRefetchContext();
   const [pages, setPages] = useState<number>(initialPage);
-  const { data: subcategories, refetch } =
+  const { data: subcategories, refetch: refetchData } =
     useGetSubCategoriesPaginateQuery(pages);
   const [totalPages, setTotalPages] = useState<number | undefined>(1);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
@@ -19,12 +21,16 @@ export default function useSubCategoriesAction({
   const [deleteSubCategory, setDeleteSubCategory] = useState<string>("");
 
   useEffect(() => {
+    refetchData();
+    console.log("123");
+  }, [refetch]);
+
+  useEffect(() => {
     setTotalPages(subcategories?.totalPages);
   }, [subcategories]);
 
   function handleSetPage(page: number) {
     setPages(page);
-    refetch(); // Refetch data when page changes
   }
 
   function handleAddSubCategory() {

@@ -40,19 +40,21 @@ export default function OrderFilter() {
     <div className="flex items-center gap-4">
       <DatePicker
         className="w-1/2"
-        label="Chọn ngày"
         aria-label="Chọn ngày"
         onChange={(date) => handleDateChange(date as any)}
       />
       <Input
         onValueChange={handleCustomerNameSearch}
         className="w-1/2"
-        label="Tên khách hàng"
+        placeholder="Tên khách hàng"
       />
 
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+            variant="bordered"
+          >
             {OrderStatus[
               formatSelectedKeys(statusFilter) as keyof typeof OrderStatus
             ] || "Status"}
@@ -75,8 +77,11 @@ export default function OrderFilter() {
       </Dropdown>
 
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            variant="bordered"
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+          >
             {SortValue[
               formatSelectedKeys(
                 productQuantityFilter,
@@ -97,8 +102,11 @@ export default function OrderFilter() {
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            variant="bordered"
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+          >
             {SortValue[
               formatSelectedKeys(orderTotalFilter) as keyof typeof SortValue
             ] || "Tổng tiền"}
@@ -117,8 +125,11 @@ export default function OrderFilter() {
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
-        <DropdownTrigger>
-          <Button variant="bordered" className="capitalize">
+        <DropdownTrigger className="border-none">
+          <Button
+            variant="bordered"
+            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+          >
             {userType[
               formatSelectedKeys(userFilter) as keyof typeof userType
             ] || "Khách"}

@@ -1,5 +1,6 @@
 import { useGetCategoriesPaginateQuery } from "@/libs/features/services/categories";
 import { useEffect, useState } from "react";
+import { useRefetchContext } from "../_store/reFetchContext";
 
 interface useGetCategoriesByPageProps {
   initialPage: number;
@@ -9,7 +10,7 @@ export default function useCategoriesAction({
   initialPage,
 }: useGetCategoriesByPageProps) {
   const [pages, setPages] = useState<number>(initialPage);
-  const { data: categories, refetch } = useGetCategoriesPaginateQuery(pages);
+  const { data: categories } = useGetCategoriesPaginateQuery(pages);
   const [totalPages, setTotalPages] = useState<number | undefined>(1);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
@@ -23,7 +24,6 @@ export default function useCategoriesAction({
 
   function handleSetPage(page: number) {
     setPages(page);
-    refetch();
   }
 
   function handleAddCategory() {

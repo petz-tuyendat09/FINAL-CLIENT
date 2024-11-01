@@ -23,7 +23,7 @@ export default function ChangePasswordInput() {
             Lưu thay đổi
           </button>
         </div>
-        <form className="space-y-4">
+        <form onSubmit={formik.handleSubmit as any} className="space-y-4">
           <Input
             type={!isHidden ? "password" : "text"}
             label="Đổi mật khẩu"
@@ -60,6 +60,7 @@ export default function ChangePasswordInput() {
           <Checkbox onValueChange={setIsHidden} isSelected={isHidden}>
             Hiện mật khẩu
           </Checkbox>
+          <button onClick={formik.handleSubmit as any} />
         </form>
       </div>
     </CardBody>

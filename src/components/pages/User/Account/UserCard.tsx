@@ -10,7 +10,7 @@ export default function App() {
   const userId = session?.user?._id;
   const { data: userData, isLoading } = useGetUserQuery(userId || "");
 
-  const { imagePreview, handlePreviewImg } = usePreviewUploadImage({});
+  const { imagePreview } = usePreviewUploadImage({});
   return (
     <Card className="">
       <CardHeader className="justify-between">

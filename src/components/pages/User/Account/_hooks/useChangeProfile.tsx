@@ -18,7 +18,7 @@ interface errorsValues {
 export default function useChangeProfile() {
   const [changeProfile, { data, error }] = useEditUserMutation();
 
-  const session = useSession();
+  const { data: sessionData, update: sessionUpdate } = useSession();
 
   const formik = useFormik({
     initialValues: {
@@ -28,8 +28,7 @@ export default function useChangeProfile() {
       userAddress: "",
     },
     onSubmit: (values) => {
-      const userId = session?.data?.user._id;
-
+      const userId = sessionData?.user._id;
       changeProfile({
         userId: userId as any,
         displayName: values.displayName,
@@ -42,9 +41,18 @@ export default function useChangeProfile() {
 
   useEffect(() => {
     if (data) {
-      successModal({ content: <p>Cập nhật thành công</p>, duration: 3 });
+      successModal({ content: "Cập nhật thành công" });
+      sessionUpdate({
+        ...sessionData,
+        user: {
+          ...sessionData?.user,
+          displayName: data.displayName,
+        },
+      });
     }
   }, [data]);
+
+  console.log(sessionData);
 
   return {
     formik,

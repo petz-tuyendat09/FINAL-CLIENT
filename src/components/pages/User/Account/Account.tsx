@@ -56,7 +56,7 @@ export default function Profile() {
                 Lưu thay đổi
               </button>
             </div>
-            <form className="space-y-4">
+            <form onSubmit={formik.handleSubmit} className="space-y-4">
               <Input
                 label="Họ và tên"
                 name="displayName"
@@ -101,6 +101,7 @@ export default function Profile() {
                 }
               />
               <AddressInput formik={formik} />
+              <button onClick={formik.handleSubmit as any} />
             </form>
           </div>
         </CardBody>

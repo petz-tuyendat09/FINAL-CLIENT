@@ -83,31 +83,6 @@ export default function OrderFilter() {
             className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
           >
             {SortValue[
-              formatSelectedKeys(
-                productQuantityFilter,
-              ) as keyof typeof SortValue
-            ] || "Số lượng đặt"}
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label="Multiple selection example"
-          variant="flat"
-          closeOnSelect={false}
-          disallowEmptySelection
-          selectionMode="single"
-          onSelectionChange={setProductQuantityFilter as any}
-        >
-          <DropdownItem key="desc">Số sản phẩm giảm dần</DropdownItem>
-          <DropdownItem key="asc">Số sản phẩm tăng dần</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <Dropdown className="h-full">
-        <DropdownTrigger className="border-none">
-          <Button
-            variant="bordered"
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-          >
-            {SortValue[
               formatSelectedKeys(orderTotalFilter) as keyof typeof SortValue
             ] || "Tổng tiền"}
           </Button>

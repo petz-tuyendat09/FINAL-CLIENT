@@ -32,21 +32,21 @@ export const orderAPI = createApi({
     getOrders: builder.query<PaginateOrder, BaseOrderQuery>({
       query: (params: BaseOrderQuery) => {
         const queryParams = new URLSearchParams(params as any).toString();
-        return `?${queryParams}`; // Return the URL with the query string
+        return `?${queryParams}`;
       },
       providesTags: ["Orders"],
     }),
     getOrdersByUserId: builder.query<Order[], QueryParams>({
       query: (params: QueryParams) => {
         const queryParams = new URLSearchParams(params as any).toString();
-        return `/order-userId?${queryParams}`; // Return the URL with the query string
+        return `/order-userId?${queryParams}`;
       },
       providesTags: ["Orders"],
     }),
     getOrdersByOrderId: builder.query<Order[], QueryParams>({
       query: (params: QueryParams) => {
         const queryParams = new URLSearchParams(params as any).toString();
-        return `/order-id?${queryParams}`; // Return the URL with the query string
+        return `/order-id?${queryParams}`;
       },
       providesTags: ["Orders"],
     }),
@@ -66,15 +66,6 @@ export const orderAPI = createApi({
         url: `/edit-order-status`,
         method: "PUT",
         body: { orderId, newStatus },
-    insertOrder: builder.mutation<Order[], Order>({
-      query: (payload) => ({
-        url: `/`,
-        method: "POST",
-        body: payload,
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-
       }),
       invalidatesTags: ["Orders"],
     }),

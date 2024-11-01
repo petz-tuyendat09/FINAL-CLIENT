@@ -23,21 +23,23 @@ export default function SiteLink() {
   const itemsToDisplay = cartItems || unauthenticatedCarts;
   const dispatch = useDispatch();
 
-  function handleToggleCart () {
+  function handleToggleCart() {
     dispatch(cartAction.toggle());
   }
   return (
     <div className="fixed right-0 top-5 text-[12px] lg:right-16">
-      <ul className="glass flex items-center justify-center gap-4 rounded-full px-8 py-3 text-white lg:gap-12 lg:text-base">
+      <ul className="glass flex items-center justify-center gap-4 rounded-full px-4 py-2 text-white lg:gap-12 lg:px-8 lg:py-3 lg:text-base">
         <HeaderSearchButton />
         <LogInButton />
         <NormalTransitionLink href="/cart">
-            <div className="flex flex-row gap-[7px]" onMouseEnter={handleToggleCart}>
-              <p>Giỏ hàng</p>
-              <span className="text-[12px]">( {itemsToDisplay.length} )</span>
-            </div>
+          <div
+            className="flex flex-row gap-[7px]"
+            onMouseEnter={handleToggleCart}
+          >
+            <p>Giỏ hàng</p>
+            <span className="text-[12px]">( {itemsToDisplay.length} )</span>
+          </div>
         </NormalTransitionLink>
-        <NavBarIcon />
       </ul>
 
       <AnimatePresence>{openMenu && <Menu />}</AnimatePresence>

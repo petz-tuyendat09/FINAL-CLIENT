@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCreateBookingMutation } from "@/libs/features/services/booking";
 import { useSession } from "next-auth/react";
 import { useEditUserMutation } from "@/libs/features/services/user";
+import { successModal } from "@/utils/callModalANTD";
 
 interface errorsValues {
   newPassword: string;
@@ -44,20 +45,11 @@ export default function useChangePassword() {
     },
   });
 
-  // const handleChangePassword = () => {
-  //     const changePasswordObject = {
-  // userId: session?.data?.user._id,
-  //         newPassword: formik.values.newPassword,
-  //     }
-
-  //     changePassword({user})
-
-  // }
-  // useEffect(() => {
-  //     if (data) {
-  //         router.push("/booking-success");
-  //     }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      successModal({ content: "Đổi mật khẩu thành công" });
+    }
+  }, [data]);
 
   return {
     formik,

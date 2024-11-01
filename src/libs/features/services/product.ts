@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaginateProduct, Product } from "@/types/Product";
 
-interface PageQuery {
-  page: number;
-  limit: number;
-}
 interface Option {
   name: string;
   productQuantity: number;
@@ -22,6 +18,8 @@ export interface QueryParams {
   productStatus?: string;
   productBuy?: number;
   productOption?: Option[];
+  lowStock?: boolean;
+  sortBy?: "productBuyAsc" | "productBuyDesc" | "latest" | "oldest";
 }
 
 export const productsAPI = createApi({

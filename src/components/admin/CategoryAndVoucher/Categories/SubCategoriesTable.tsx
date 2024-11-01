@@ -87,7 +87,7 @@ export default function SubCategoriesTable() {
         )}
         <Button
           onClick={handleAddSubCategory}
-          className="mb-4 ml-auto block w-fit px-4 py-2 text-black"
+          className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
         >
           + Thêm danh mục con
         </Button>

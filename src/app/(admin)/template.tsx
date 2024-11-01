@@ -11,7 +11,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       animatePageIn();
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, [pathname]);

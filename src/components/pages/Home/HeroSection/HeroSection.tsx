@@ -5,11 +5,6 @@ import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import { motion } from "framer-motion";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
-const textAppearVariant = {
-  enter: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0 },
-};
-
 const upperText = ["Spa", "đẳng", "cấp", "cho"];
 const middleText = ["những", "người", "bạn"];
 const bottomText = ["lông", "xù"];
@@ -23,7 +18,7 @@ export default function HeroSection() {
   return (
     <section className="container">
       <div className="mb-24 flex h-screen items-center justify-center">
-        <div className="font-serif text-display">
+        <div className="font-serif text-[32px] md:text-[52px] xl:text-display">
           <div>
             <h1>
               {upperText.map((word, index) => (
@@ -51,7 +46,7 @@ export default function HeroSection() {
             </h1>
           </div>
           <div className="flex gap-2">
-            <div className="w-28">
+            <div className="w-16 md:w-28">
               <ResponsiveImage
                 additionClass="rounded-[10px]"
                 imageSrc={HeroSectionImage}

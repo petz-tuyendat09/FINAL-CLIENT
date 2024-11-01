@@ -22,6 +22,7 @@ import ModalDelete from "./Modal/ModalDelete";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 import formatMoney from "@/utils/formatMoney";
 import { useSession } from "next-auth/react";
+import ProductTableFilter from "./ProductTableFilter";
 
 const columns = [
   {
@@ -44,10 +45,7 @@ const columns = [
     key: "productOption",
     label: "OPTION",
   },
-  {
-    key: "productRating",
-    label: "ĐÁNH GIÁ",
-  },
+
   {
     key: "action",
     label: "ACTION",
@@ -65,6 +63,15 @@ export default function ProductTable() {
     handleCancelDelete,
     handleConfirmDelete,
     handleSearchProduct,
+    setSaleFilter,
+    saleFilter,
+    outStockFilter,
+    setOutStockFilter,
+    handleClearQueryParams,
+    setProductBuyFilter,
+    productBuyFilter,
+    subCateFilter,
+    setSubCateFilter,
   } = useProductActionAdmin({ initialPage: 1 });
 
   const session = useSession();
@@ -73,18 +80,37 @@ export default function ProductTable() {
   return (
     <div>
       <div className="mb-4 flex items-center gap-2">
-        <Input onValueChange={handleSearchProduct} placeholder="Tên sản phẩm" />
-        {userRole === "admin" ||
-          (userRole === "manager" && (
-            <Button
-              className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-              color="default"
-            >
-              <NormalTransitionLink href="/admin/add-product">
-                + Thêm sản phẩm
-              </NormalTransitionLink>
-            </Button>
-          ))}
+        <Input
+          className="w-2/3"
+          onValueChange={handleSearchProduct}
+          placeholder="Tên sản phẩm"
+        />
+        <ProductTableFilter
+          setSaleFilter={setSaleFilter}
+          saleFilter={saleFilter}
+          setOutStockFilter={setOutStockFilter}
+          outStockFilter={outStockFilter}
+          setProductBuyFilter={setProductBuyFilter}
+          productBuyFilter={productBuyFilter}
+          subCateFilter={subCateFilter}
+          setSubCateFilter={setSubCateFilter}
+        />
+        <Button
+          className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+          onClick={handleClearQueryParams}
+        >
+          Xóa lọc
+        </Button>
+
+        <Button
+          isDisabled={userRole === "seller"}
+          className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+          color="default"
+        >
+          <NormalTransitionLink href="/admin/add-product">
+            + Thêm sản phẩm
+          </NormalTransitionLink>
+        </Button>
       </div>
       <Table
         aria-label="Product Table"

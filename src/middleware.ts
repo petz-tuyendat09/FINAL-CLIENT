@@ -20,7 +20,11 @@ function isAuthorized(session: any, pathname: any) {
     }
 
     if (userRole === "spa") {
-      if (!pathname.startsWith("/admin/bookings")) return false;
+      if (pathname.startsWith("/user")) {
+        return true;
+      } else if (!pathname.startsWith("/admin/bookings")) {
+        return false;
+      }
     }
 
     if (userRole === "manager" && pathname.startsWith("/admin/users")) {

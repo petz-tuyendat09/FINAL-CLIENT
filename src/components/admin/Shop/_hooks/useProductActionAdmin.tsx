@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Product } from "@/types/Product";
 import { getProduct, deleteProduct } from "@/apis/product"; // Your custom API function
-import {
-  useDeleteProductMutation,
-  useGetProductsQuery,
-} from "@/libs/features/services/product";
 import { errorModal, successModal } from "@/utils/callModalANTD";
+import formatSelectedKeys from "@/utils/formatSelectedValue";
+import { QueryParams } from "@/libs/features/services/product";
 
 interface UseGetProductProps {
   initialPage: number;
@@ -19,9 +17,14 @@ export default function useProductActionAdmin({
   const [productList, setProductList] = useState<Product[]>();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [deleteProductId, setDeleteProductId] = useState<string>("");
-  const [queryParams, setQueryParams] = useState<{}>({});
+  const [queryParams, setQueryParams] = useState<QueryParams>({});
+  const [saleFilter, setSaleFilter] = useState(new Set(["Giảm giá"]));
+  const [outStockFilter, setOutStockFilter] = useState(new Set(["Tình trạng"]));
+  const [productBuyFilter, setProductBuyFilter] = useState(
+    new Set(["Lượt mua"]),
+  );
+  const [subCateFilter, setSubCateFilter] = useState(new Set(["Danh mục"]));
 
-  // Fetch products when pages or forceReRender changes
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await getProduct({
@@ -77,6 +80,43 @@ export default function useProductActionAdmin({
     }
   };
 
+  useEffect(() => {
+    if (formatSelectedKeys(saleFilter) !== "Giảm giá") {
+      setQueryParams((prev) => ({
+        ...prev,
+        salePercent: formatSelectedKeys(saleFilter) as any,
+      }));
+    }
+    if (formatSelectedKeys(outStockFilter) !== "Tình trạng") {
+      setQueryParams((prev) => ({
+        ...prev,
+        lowStock: (formatSelectedKeys(outStockFilter) as any) == 1 && true,
+      }));
+    }
+    if (formatSelectedKeys(productBuyFilter) !== "Lượt mua") {
+      setQueryParams((prev) => ({
+        ...prev,
+        sortBy: formatSelectedKeys(productBuyFilter) as any,
+      }));
+    }
+    if (formatSelectedKeys(subCateFilter) !== "Danh mục") {
+      setQueryParams((prev) => ({
+        ...prev,
+        productSubCategory: formatSelectedKeys(subCateFilter) as any,
+      }));
+    }
+  }, [saleFilter, outStockFilter, productBuyFilter, subCateFilter]);
+
+  function handleClearQueryParams() {
+    setQueryParams({});
+    setSaleFilter(new Set(["Giảm giá"]));
+    setOutStockFilter(new Set(["Tình trạng"]));
+    setProductBuyFilter(new Set(["Lượt mua"]));
+    setSubCateFilter(new Set(["Danh mục"]));
+  }
+
+  console.log(queryParams);
+
   return {
     productList,
     totalPages,
@@ -88,5 +128,14 @@ export default function useProductActionAdmin({
     deleteProduct,
     deleteModalOpen,
     handleSearchProduct,
+    setSaleFilter,
+    saleFilter,
+    outStockFilter,
+    setOutStockFilter,
+    handleClearQueryParams,
+    setProductBuyFilter,
+    productBuyFilter,
+    subCateFilter,
+    setSubCateFilter,
   };
 }

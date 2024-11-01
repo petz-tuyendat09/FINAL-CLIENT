@@ -60,6 +60,7 @@ export default function ModalOrderDetail({
     useEditOrderStatusMutation();
 
   const handleStatusChange = (orderId: any, newStatus: string) => {
+    console.log("hủy thành công");
     editOrderStatus({ orderId: orderId, newStatus: newStatus });
   };
 

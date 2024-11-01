@@ -133,7 +133,7 @@ export const Index = () => {
                         resetForm();
                     }}
                 >
-                    {({ handleSubmit }) => (
+                    {({ handleChange, handleSubmit }) => (
                         <Form onSubmit={handleSubmit} className="flex flex-row gap-[20px]">
                             <div className="w-[62%]">
                                 <CartStepper activeStep={activeStep} />
@@ -190,6 +190,8 @@ export const Index = () => {
                                                     onSelectionChange={(value) => {
                                                         setAddressSelected(value as string | null);
                                                     }}
+                                                    onInputChange={handleChange}
+                                                    allowsCustomValue={true}
                                                 >
                                                     {(suggestion) => (
                                                         <AutocompleteItem key={suggestion.label}>

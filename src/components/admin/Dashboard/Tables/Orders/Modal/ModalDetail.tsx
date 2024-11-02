@@ -95,7 +95,7 @@ export default function ModalOrderDetail({
                     <TableColumn key={column.key}>{column.label}</TableColumn>
                   )}
                 </TableHeader>
-                <TableBody items={orderDetail?.productId || []}>
+                <TableBody items={orderDetail?.products || []}>
                   {(data) => {
                     const selectedOption = (
                       data as any
@@ -107,11 +107,11 @@ export default function ModalOrderDetail({
                     const isOnSale = (data as any).productId.salePercent > 0;
                     const salePrice = isOnSale
                       ? (selectedOption?.productPrice || 0) *
-                        ((100 - (data as any).productId.salePercent) / 100)
+                      ((100 - (data as any).productId.salePercent) / 100)
                       : selectedOption?.productPrice || 0;
 
                     return (
-                      <TableRow key={data._id}>
+                      <TableRow key={data.productId}>
                         <TableCell>
                           {(data as any).productId.productName}
                         </TableCell>
@@ -151,8 +151,8 @@ export default function ModalOrderDetail({
                 <span className="font-bold">Trạng thái:</span>{" "}
                 {
                   OrderStatus[
-                    (orderDetail as any)
-                      ?.orderStatus as keyof typeof OrderStatus
+                  (orderDetail as any)
+                    ?.orderStatus as keyof typeof OrderStatus
                   ]
                 }
               </p>

@@ -50,9 +50,10 @@ const columns = [
 ];
 
 const statusColors = {
-  [OrderStatus.COMPLETED]: "text-green-600",
-  [OrderStatus.PENDING]: "text-amber-500",
+  [OrderStatus.DELIVERED]: "text-green-600",
+  [OrderStatus.DELIVERING]: "text-blue-600	",
   [OrderStatus.CANCELLED]: "text-red-600",
+  [OrderStatus.PENDING]: "text-amber-500",
 };
 
 export default function OrderTable() {
@@ -153,7 +154,7 @@ export default function OrderTable() {
                   );
                 }
                 if (columnKey === "productId") {
-                  return <TableCell>{orderItem.productId.length}</TableCell>;
+                  return <TableCell>{orderItem.products.length}</TableCell>;
                 }
 
                 if (columnKey === "orderStatus") {

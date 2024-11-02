@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import CartStepper from "@/components/pages/Cart/CartStepper";
 import useSearchMap from "@/components/pages/User/Account/_hooks/useSearchMap";
@@ -20,6 +21,8 @@ import { useDispatch } from "react-redux";
 import userSlice from "@/libs/features/user/user";
 import { useInsertOrderMutation } from "@/libs/features/services/order";
 import { useDeleteCartByUserMutation } from "@/libs/features/services/user";
+import { successModal } from "@/utils/callModalANTD";
+import { useRouter } from "next/navigation";
 interface CartItem {
   productId: string;
   productName: string;
@@ -44,8 +47,10 @@ export const Index = () => {
   const [discount, setDiscount] = useState(0);
   const dispatch = useDispatch();
   const [salePercent, setSalePercent] = useState(0);
-  const [insertOrder, { data: insertResponse, isLoading }] =
+
+  const [insertOrder, { data: insertResponse, isLoading, error: insertError }] =
     useInsertOrderMutation();
+
   const [addressSelected, setAddressSelected] = useState<string | null>(null);
   const voucher = useSelector(
     (state: { user: UserState }) => state.user.voucher,
@@ -86,6 +91,7 @@ export const Index = () => {
     success();
   };
   const authStatus = session.status;
+  const router = useRouter();
   const cartItems = session.data?.user?.userCart?.cartItems || [];
   const data = (
     authStatus === "authenticated" ? cartItems : unauthenticatedCarts
@@ -109,6 +115,34 @@ export const Index = () => {
       voucherId !== "" && discount > 0 ? initialTotal - finalTotal : 0,
     );
   }, [voucherId, handleChangeVoucher, session]);
+  console.log(insertResponse);
+
+  useEffect(() => {
+    if (insertResponse) {
+      console.log(insertResponse);
+      deleteCartByUser(session.data?.user?._id as string);
+      sessionUpdate({
+        ...session,
+        user: {
+          ...session?.data?.user,
+          userCart: {
+            _id: session?.data?.user.userCart._id,
+            cartItems: [],
+          },
+        },
+      });
+      successModal({ content: "Đặt hàng thành công về trang chủ sau 3s" });
+
+      // Navigate to "/" after 3 seconds
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
+    }
+
+    if (insertError) {
+      console.log(insertError);
+    }
+  }, [insertError, insertResponse]);
 
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required("Họ và tên là bắt buộc."),
@@ -128,7 +162,7 @@ export const Index = () => {
             customerAddress: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={async (values, { resetForm }) => {
+          onSubmit={async (values, {}) => {
             const formData = {
               ...values,
               customerEmail: session.data?.user?.userEmail,
@@ -146,26 +180,7 @@ export const Index = () => {
               orderDate: new Date().toISOString(),
             };
 
-            try {
-              if (paymentMethod === "COD") {
-                const res = await insertOrder(formData);
-                if (res) {
-                  await deleteCartByUser(session.data?.user?._id as string);
-                  sessionUpdate({
-                    ...session,
-                    user: {
-                      ...session?.data?.user,
-                      userCart: [],
-                    },
-                  });
-                  resetForm();
-                }
-
-                resetForm();
-              }
-            } catch (error) {
-              console.error("Order submission failed:", error);
-            }
+            insertOrder(formData as any);
           }}
         >
           {({ handleChange, handleSubmit }) => (

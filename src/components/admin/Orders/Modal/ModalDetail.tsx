@@ -98,7 +98,7 @@ export default function ModalOrderDetail({
           {(onClose) => (
             <>
               <ModalHeader className="text-center">
-                Xác nhận thông tin
+                Chi tiết đơn hàng
               </ModalHeader>
               <ModalBody>
                 <div className="space-y-3">
@@ -156,9 +156,7 @@ export default function ModalOrderDetail({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">
-              Xác nhận thông tin
-            </ModalHeader>
+            <ModalHeader className="text-center">Chi tiết đơn hàng</ModalHeader>
             <ModalBody>
               <p>
                 <span className="font-bold">Tên khách hàng:</span>{" "}
@@ -223,7 +221,9 @@ export default function ModalOrderDetail({
               </p>
               <p>
                 <span className="font-bold">Giảm giá:</span>{" "}
-                {formatMoney((orderDetail as any)?.orderDiscount)}
+                {formatMoney(
+                  (orderDetail as any)?.orderDiscount || "Không giảm",
+                )}
               </p>
               <p>
                 <span className="font-bold">Thành tiền sau giảm:</span>{" "}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import ServicesImageSection from "@@/public/images/services-image-setion.png";
 import ServicesItem from "./ServicesItem";
@@ -18,8 +19,6 @@ export default function ServicesSection() {
     "/images/services-image-4.png",
     "/images/services-image-5.png" as any,
   ];
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
 
   return (
     <section className="mt-[150px] overflow-hidden">
@@ -76,6 +75,8 @@ export default function ServicesSection() {
             }}
           >
             {[...images, ...images].map((src, index) => {
+              const ref = useRef(null);
+              const isInView = useInView(ref, { once: true });
               return (
                 <SwiperSlide className="h-[600px]" key={index}>
                   <motion.div

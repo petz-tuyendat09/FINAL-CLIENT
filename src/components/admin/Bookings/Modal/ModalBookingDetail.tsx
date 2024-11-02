@@ -12,6 +12,7 @@ import {
   ModalHeader,
   ModalBody,
   Button,
+  Skeleton,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Booking, BookingStatus } from "@/types/Booking";
@@ -29,7 +30,7 @@ export default function ModalBookingDetail({
 
   bookingId,
 }: ModalBookingDetailProps) {
-  const { data } = useGetBookingQuery({ bookingId: bookingId });
+  const { data, isLoading } = useGetBookingQuery({ bookingId: bookingId });
   const [bookingDetail, setBookingDetail] = useState<Booking>();
 
   const [cancelBooking, { data: cancelResponse }] = useCancelBookingMutation();
@@ -52,6 +53,60 @@ export default function ModalBookingDetail({
       successModal({ content: doneResponse.message, duration: 3 });
     }
   }, [doneResponse]);
+
+  if (isLoading) {
+    return (
+      <Modal
+        backdrop="blur"
+        onClose={handleCloseDialog}
+        isOpen={isDialogOpen}
+        classNames={{
+          backdrop:
+            "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="text-center">
+                Chi tiết lịch đặt
+              </ModalHeader>
+              <ModalBody>
+                <div className="space-y-3">
+                  <Skeleton className="w-3/5 rounded-lg">
+                    <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+                  </Skeleton>
+                  <Skeleton className="w-4/5 rounded-lg">
+                    <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+                  </Skeleton>
+                  <Skeleton className="w-2/5 rounded-lg">
+                    <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                  </Skeleton>
+                  <Skeleton className="w-2/5 rounded-lg">
+                    <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                  </Skeleton>
+                  <Skeleton className="w-2/5 rounded-lg">
+                    <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                  </Skeleton>
+                  <Skeleton className="w-2/5 rounded-lg">
+                    <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+                  </Skeleton>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  className="rounded-full bg-black text-white"
+                  onPress={handleCloseDialog}
+                >
+                  Hủy
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    );
+  }
 
   return (
     <Modal

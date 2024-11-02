@@ -15,7 +15,7 @@ export default function useBookingAction({
   const [bookingId, setBookingId] = useState("");
 
   const [page, setPage] = useState(initialPage);
-  const { data: bookingList } = useGetBookingQuery({
+  const { data: bookingList, isLoading } = useGetBookingQuery({
     ...queryParams,
     limit: 15,
     page: page,
@@ -82,6 +82,7 @@ export default function useBookingAction({
   }
 
   return {
+    isLoading,
     bookingList,
     handleDateChange,
     setSelectedKeys,

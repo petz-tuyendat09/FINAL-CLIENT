@@ -3,6 +3,7 @@ import useBookingAction from "../_hooks/useBookingsAction";
 
 // Define the shape of your context
 interface BookingContextProps {
+  isLoading: boolean;
   bookingList: any;
   handleDateChange: (date: Date) => void;
   selectedValue: string | null;
@@ -26,6 +27,7 @@ const BookingContext = createContext<BookingContextProps | undefined>(
 // Create a provider component
 export const BookingProvider = ({ children }: { children: ReactNode }) => {
   const {
+    isLoading,
     bookingList,
     handleDateChange,
     handleClearDate,
@@ -44,6 +46,7 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
   return (
     <BookingContext.Provider
       value={{
+        isLoading,
         bookingList,
         handleDateChange,
         handleClearDate,

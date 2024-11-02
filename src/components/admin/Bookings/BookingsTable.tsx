@@ -10,6 +10,7 @@ import {
   getKeyValue,
   Button,
   Pagination,
+  Spinner,
 } from "@nextui-org/react";
 import { Booking, BookingStatus } from "@/types/Booking";
 import formatMoney from "@/utils/formatMoney";
@@ -57,6 +58,7 @@ const statusColors = {
 
 export default function BookingsTable() {
   const {
+    isLoading,
     bookingList,
     page,
     totalPages,
@@ -71,6 +73,8 @@ export default function BookingsTable() {
     if (!userId) return "Khách lẻ";
     return userId.slice(-3).toUpperCase();
   };
+
+  const loadingState = isLoading ? "loading" : "idle";
 
   return (
     <>
@@ -100,6 +104,8 @@ export default function BookingsTable() {
             )}
           </TableHeader>
           <TableBody
+            loadingContent={<Spinner />}
+            loadingState={loadingState}
             emptyContent="Không tìm thấy lịch đặt nào"
             items={bookingList?.bookings || []}
           >

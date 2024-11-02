@@ -64,6 +64,7 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+
     editUserRole: builder.mutation<any, ChangeUserRoleParams>({
       query: (formData: ChangeUserRoleParams) => ({
         url: `/change-role`,
@@ -87,10 +88,13 @@ export const userAPI = createApi({
   }),
 });
 
+
 export const {
   useGetUserQuery,
   useEditUserMutation,
   useGetVouchersHeldQuery,
   useGetUserPaginateQuery,
   useEditUserRoleMutation,
+  useDeleteCartByUserMutation,
 } = userAPI;
+

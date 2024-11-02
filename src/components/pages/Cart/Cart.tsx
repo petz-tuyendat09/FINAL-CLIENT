@@ -16,7 +16,6 @@ import cartImg2 from '@@/public/images/cartImg2.png';
 import Image from "next/image";
 import Link from "next/link";
 import CartStepper from "./CartStepper";
-import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 const CartPage = () => {
   const activeStep = 0;
   const session = useSession();
@@ -156,9 +155,11 @@ const CartPage = () => {
                   className="border-b-0 text-[15px] text-gray-800"
                   colSpan={2}
                 >
-                  <NormalTransitionLink href="/cart/place-order" className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
-                    THANH TOÁN
-                  </NormalTransitionLink>
+                  <Link href="/cart/place-order">
+                    <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
+                      THANH TOÁN
+                    </button>
+                  </Link>
                 </td>
               </tr>
             </tbody>

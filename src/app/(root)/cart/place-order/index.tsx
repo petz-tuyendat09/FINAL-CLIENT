@@ -19,6 +19,7 @@ import { UserState } from "@/types/User";
 import { useDispatch } from "react-redux";
 import userSlice from "@/libs/features/user/user";
 import { useInsertOrderMutation } from "@/libs/features/services/order";
+import { useDeleteCartByUserMutation } from "@/libs/features/services/user";
 interface CartItem {
     productId: string;
     productName: string;
@@ -46,6 +47,7 @@ export const Index = () => {
     const [insertOrder] = useInsertOrderMutation();
     const [addressSelected, setAddressSelected] =  useState<string | null>(null);
     const voucher = useSelector((state: { user: UserState }) => state.user.voucher);
+    const [deleteCartByUser] = useDeleteCartByUserMutation();
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -82,7 +84,7 @@ export const Index = () => {
     const authStatus = session.status;
     const cartItems = session.data?.user?.userCart?.cartItems || [];
     const data = (authStatus === 'authenticated' ? cartItems : unauthenticatedCarts) as CartItem[];
-    const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0) - 38000;
+    const initialTotal = data.reduce((acc, item) => acc + item.productPrice * item.productQuantity, 0) + 38000;
     useEffect(() => {
         setItemsToDisplay(data);
         const discount = voucher?.discount ?? 0;
@@ -110,7 +112,7 @@ export const Index = () => {
                 <Formik
                     initialValues={{ customerName: '', customerPhone: '', customerAddress: '' }}
                     validationSchema={validationSchema}
-                    onSubmit={(values, { resetForm }) => {
+                    onSubmit={async (values, { resetForm }) => {
                         const formData = {
                             ...values,
                             customerEmail: session.data?.user?.userEmail,
@@ -126,12 +128,24 @@ export const Index = () => {
                             createdAt: new Date().toISOString(), 
                             updatedAt: new Date().toISOString(), 
                             orderDate: new Date().toISOString()
+                        };
+                    
+                        try {
+                            if (paymentMethod === 'COD') {
+                                const res = await insertOrder(formData);
+                                console.log(res);
+                                await deleteCartByUser(session.data?.user?._id as string);
+                                if (session.data?.user?.userCart) {
+                                    session.data.user.userCart.cartItems = [];
+                                }
+                        
+                                resetForm();
+                            }
+                        } catch (error) {
+                            console.error('Order submission failed:', error);
                         }
-                        if (paymentMethod === 'COD') {
-                            insertOrder(formData);
-                        }
-                        resetForm();
                     }}
+                    
                 >
                     {({ handleChange, handleSubmit }) => (
                         <Form onSubmit={handleSubmit} className="flex flex-row gap-[20px]">

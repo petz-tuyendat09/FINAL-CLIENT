@@ -11,11 +11,12 @@ import { cartAction } from "@/libs/features/cart/cart";
 import { useAdjustQuantityMutation } from "@/libs/features/services/cart";
 import { AdjustQuantity } from "@/types/Cart";
 import { useEffect } from "react";
-import cartImg from '@@/assets/images/cartImg.png';
-import cartImg2 from '@@/public/images/cartImg2.png';
+import cartImg from "@@/assets/images/cartImg.png";
+import cartImg2 from "@@/public/images/cartImg2.png";
 import Image from "next/image";
 import Link from "next/link";
 import CartStepper from "./CartStepper";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 const CartPage = () => {
   const activeStep = 0;
   const session = useSession();
@@ -60,8 +61,8 @@ const CartPage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center px-[100px] py-10">
       <div className="w-full rounded-lg p-8">
-        <div className="flex flex-row justify-between items-center">
-          <div className="text-center flex flex-col justify-end px-[50px] w-[60%]">
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex w-[60%] flex-col justify-end px-[50px] text-center">
             <h2>Cửa hàng thức ăn thú cưng</h2>
             <h1 className="text-black font-[500] text-[50px] leading-[60px] mt-[20px]">Cửa hàng thú cưng cho Những Người Bạn Lông Xù</h1>
             <div className="flex justify-center mt-[30px]"> 
@@ -70,7 +71,7 @@ const CartPage = () => {
                 <Icon icon="mingcute:arrow-right-line" />
               </button>
             </div>
-            <div className="flex justify-center mt-[70px]">
+            <div className="mt-[70px] flex justify-center">
               <Image src={cartImg2} width={250} height={400} alt="" />
             </div>
           </div>
@@ -78,19 +79,12 @@ const CartPage = () => {
             <Image src={cartImg} width={600} height={400} alt="" />
           </div>
         </div>
-        <div className="flex flex-row justify-between mt-[20px]"> 
+        <div className="mt-[20px] flex flex-row justify-between">
           <div className="mb-4">
-            <div className="flex flex-row items-center mb-[10px]">
+            <div className="mb-[10px] flex flex-row items-center">
               <Icon icon="uil:cart" width={50} />
-              <h1 className="text-[30px] font-semibold mt-[10px]">Giỏ hàng</h1>
+              <h1 className="mt-[10px] text-[30px] font-semibold">Giỏ hàng</h1>
             </div>
-            <a
-              href="/shop"
-              className="mb-8 flex flex-row items-center gap-[10px] text-sm text-purple-600 hover:underline"
-            >
-              <span>Tiếp tục mua sắm</span>
-              <Icon icon="mingcute:right-line" className="mt-[1px]" />
-            </a>
           </div>
           <div>
             <CartStepper activeStep={activeStep} />

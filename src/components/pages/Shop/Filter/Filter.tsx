@@ -32,15 +32,26 @@ export default function Filter({
 
   return (
     <>
-      <div className="glass sticky left-0 top-4 z-40 my-4 ml-[80px] w-fit rounded-full px-6 py-2 text-left text-[14px] text-white">
-        <div>
-          <button
-            onClick={handleOpenFilter}
-            className="flex items-center gap-1"
-          >
-            <p>Lọc</p>
-            <Icon icon="ion:filter" />
-          </button>
+      <div className="container sticky top-4 z-40 my-4">
+        <div className="flex gap-4">
+          <div className="glass w-fit rounded-full px-4 py-2 text-[14px] text-white">
+            <button
+              onClick={handleOpenFilter}
+              className="flex items-center gap-1"
+            >
+              <p>Lọc</p>
+              <Icon icon="ion:filter" />
+            </button>
+          </div>
+          <div className="glass w-fit rounded-full px-6 py-2 text-[14px] text-white">
+            <button
+              onClick={handleOpenFilter}
+              className="flex items-center gap-1"
+            >
+              <p>Lọc</p>
+              <Icon icon="ion:filter" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -56,20 +67,22 @@ export default function Filter({
         initial={false}
         animate={{ x: openFilter ? 0 : 100 + "%" }}
         transition={{ type: "tween" }}
-        className="fixed right-0 top-0 z-50 h-screen space-y-2 bg-white px-8 py-4 md:w-1/3 lg:w-1/4"
+        className="fixed right-0 top-0 z-50 h-screen space-y-2 bg-white md:w-1/3 lg:w-1/4"
       >
-        <button
-          onClick={handleOpenFilter}
-          className="flex w-full items-center justify-between"
-        >
-          <h2 className="text-h3 font-bold">Lọc sản phẩm</h2>
-          <Icon className="size-6" icon="mingcute:close-fill" />
-        </button>
+        <div className="border-b p-4">
+          <button
+            onClick={handleOpenFilter}
+            className="flex w-full items-center justify-between"
+          >
+            <h2 className="text-h4 font-bold">Lọc sản phẩm</h2>
+            <Icon className="size-6" icon="mingcute:close-fill" />
+          </button>
+        </div>
         <FilterInput
           handleQueryProduct={handleQueryProduct}
           onSearchTermChange={handleSearchTermChange}
         />
-        {categories?.map((category) => (
+        {(categories as any)?.map((category: any) => (
           <Category key={category._id} category={category} />
         ))}
       </motion.div>

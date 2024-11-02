@@ -23,8 +23,10 @@ export default function FilterSubcategory({
     categoryId: categoryId,
   });
 
+  console.log("123");
+
   return (
-    <motion.div initial={false} className="my-2 ml-6 overflow-y-hidden">
+    <motion.div initial={false} className="my-2 overflow-y-hidden">
       <div className="ml-3">
         {subCategories?.map((subcategory) => (
           <motion.p

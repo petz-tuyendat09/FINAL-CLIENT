@@ -4,6 +4,7 @@ import { PaginateOrder } from "@/types/Order";
 
 // Define the shape of your context
 interface OrderContextProps {
+  isLoading: boolean;
   orderList: PaginateOrder | undefined;
   handleDateChange: (date: Date) => void;
   statusFilter: any;
@@ -31,6 +32,7 @@ const OrderContext = createContext<OrderContextProps | undefined>(undefined);
 // Create a provider component
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const {
+    isLoading,
     orderList,
     handleDateChange,
     handleClearDate,
@@ -55,6 +57,8 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   return (
     <OrderContext.Provider
       value={{
+        isLoading,
+
         orderList,
         handleDateChange,
         handleClearDate,

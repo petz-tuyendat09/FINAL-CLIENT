@@ -22,7 +22,7 @@ export default function useOrdergAction({ initialPage }: useOrdergActionProps) {
   const [orderId, setOrderId] = useState("");
 
   const [page, setPage] = useState(initialPage);
-  const { data: orderList } = useGetOrdersQuery({
+  const { data: orderList, isLoading } = useGetOrdersQuery({
     ...queryParams,
     limit: 20,
     page: page,
@@ -114,6 +114,7 @@ export default function useOrdergAction({ initialPage }: useOrdergActionProps) {
   };
 
   return {
+    isLoading,
     orderList,
     handleDateChange,
     setStatusFilter,

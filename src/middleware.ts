@@ -16,7 +16,9 @@ function isAuthorized(session: any, pathname: any) {
       const isSellerPath = sellerPaths.some((path) =>
         pathname.startsWith(path),
       );
-      if (!isSellerPath) return false;
+      if (pathname.startsWith("/user")) {
+        return true;
+      } else if (!isSellerPath) return false;
     }
 
     if (userRole === "spa") {

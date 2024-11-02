@@ -10,6 +10,7 @@ import {
   getKeyValue,
   Button,
   Pagination,
+  Spinner,
 } from "@nextui-org/react";
 import { OrderAdmin, OrderStatus } from "@/types/Order";
 import formatDate from "@/utils/formatDate";
@@ -57,6 +58,7 @@ const statusColors = {
 
 export default function OrderTable() {
   const {
+    isLoading,
     orderList,
     page,
     totalPages,
@@ -71,6 +73,8 @@ export default function OrderTable() {
     if (!userId) return "Khách lẻ";
     return userId.slice(-3).toUpperCase();
   };
+
+  const loadingState = isLoading ? "loading" : "idle";
 
   return (
     <div className="mt-4">
@@ -99,6 +103,8 @@ export default function OrderTable() {
           )}
         </TableHeader>
         <TableBody
+          loadingContent={<Spinner />}
+          loadingState={loadingState}
           emptyContent="Không tìm thấy đơn hàng nào"
           items={orderList?.orders || []}
         >

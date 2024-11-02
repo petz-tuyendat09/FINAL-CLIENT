@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import ServicesImageSection from "@@/public/images/services-image-setion.png";
 import ServicesItem from "./ServicesItem";
@@ -26,7 +27,7 @@ export default function ServicesSection() {
           <div className="w-1/2">
             <div>
               <div className="mb-4 flex items-center">
-                <div className="md:w-1/6 lg:w-1/4">
+                <div className="w-1/6 lg:w-1/4">
                   <ResponsiveImage
                     additionClass="rounded-button"
                     imageSrc={ServicesImageSection}
@@ -35,7 +36,7 @@ export default function ServicesSection() {
                     imageHeight={500}
                   />
                 </div>
-                <div className="font-bold text-black md:text-[44px] lg:text-[80px] xl:text-[100px] 2xl:text-[132px]">
+                <div className="text-[32px] font-bold text-black md:text-[44px] lg:text-[80px] xl:text-[100px] 2xl:text-[132px]">
                   DỊCH VỤ
                 </div>
               </div>
@@ -75,8 +76,7 @@ export default function ServicesSection() {
           >
             {[...images, ...images].map((src, index) => {
               const ref = useRef(null);
-              const isInView = useInView(ref, { once: true }); // Sử dụng useInView
-
+              const isInView = useInView(ref, { once: true });
               return (
                 <SwiperSlide className="h-[600px]" key={index}>
                   <motion.div
@@ -105,7 +105,7 @@ export default function ServicesSection() {
           <div className="text-display font-bold text-primary lg:text-h2 xl:text-h1 2xl:text-display">
             PETZ
           </div>
-          <div className="my-4 w-1/3 min-w-[200px] text-h4 md:text-base">
+          <div className="my-4 w-full min-w-[200px] text-h4 md:w-1/2 md:text-base lg:w-1/3">
             Dịch vụ spa chuyên nghiệp cho thú cưng, từ chăm sóc lông, da đến thư
             giãn. Chúng tôi cam kết mang lại sự thoải mái và an toàn tối đa cho
             thú cưng của bạn

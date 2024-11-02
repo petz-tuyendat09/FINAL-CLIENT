@@ -120,8 +120,6 @@ export default function ModalAdd({
     }
   }, [mutationError, data, handleCloseDialog]);
 
-  console.log(serviceType);
-
   return (
     <Modal
       backdrop="blur"

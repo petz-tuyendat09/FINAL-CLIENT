@@ -188,8 +188,6 @@ export default function ModalEdit({
     );
   }
 
-  console.log(serviceType);
-
   return (
     <Modal
       backdrop="blur"

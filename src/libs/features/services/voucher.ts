@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { VoucherPaginate } from "@/types/Voucher";
 
 export interface QueryParams {
+  voucherId?: string;
   page?: number;
   salePercentSort?: string; // asc || desc
   pointSort?: string; // asc || desc
@@ -20,7 +21,7 @@ export const vouchersAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/voucher`,
   }),
-  tagTypes: ["Voucher"],
+  tagTypes: ["Voucher", "HeldVouchers"],
 
   endpoints: (builder) => ({
     getVouchers: builder.query<VoucherPaginate, QueryParams>({
@@ -109,7 +110,7 @@ export const vouchersAPI = createApi({
         method: "post",
         body: formData,
       }),
-      invalidatesTags: ["Voucher"],
+      invalidatesTags: ["HeldVouchers"],
     }),
   }),
 });

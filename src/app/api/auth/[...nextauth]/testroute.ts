@@ -26,7 +26,6 @@ const handler = NextAuth({
           });
 
           const data = await response.json();
-          console.log(data);
 
           if (response.ok && data.canLogin) {
             return {
@@ -69,7 +68,6 @@ const handler = NextAuth({
             },
           );
           const data = await response.json();
-          console.log(data);
           if (response.ok && data.canLogin) {
             return {
               ...data.data.user,

@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { LoginUser, RegisterUser, VerifyEmail } from "@/types/User";
 
+interface ResetPasswordPayload {
+  email: string;
+  newPassword: string;
+}
+
 export const authAPI = createApi({
   reducerPath: "authAPI",
   baseQuery: fetchBaseQuery({
@@ -39,6 +44,27 @@ export const authAPI = createApi({
         body: { email: email },
       }),
     }),
+    forgotPassword: builder.mutation<any, string>({
+      query: (email: string) => ({
+        url: "/forgot-password",
+        method: "POST",
+        body: { email: email },
+      }),
+    }),
+    verifyOTPForgetPassword: builder.mutation<any, VerifyEmail>({
+      query: (formData: VerifyEmail) => ({
+        url: "/verify-otp-forget-password",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+    resetPassword: builder.mutation<any, ResetPasswordPayload>({
+      query: (formData: ResetPasswordPayload) => ({
+        url: "/reset-password",
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -47,4 +73,7 @@ export const {
   useSignUpMutation,
   useVerifyEmailMutation,
   useResendOTPMutation,
+  useForgotPasswordMutation,
+  useVerifyOTPForgetPasswordMutation,
+  useResetPasswordMutation,
 } = authAPI;

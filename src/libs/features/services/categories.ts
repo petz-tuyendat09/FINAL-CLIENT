@@ -30,7 +30,7 @@ export const categoriesAPI = createApi({
           editCategoryName: editCategoryName,
         },
       }),
-      invalidatesTags: ["Categories"], 
+      invalidatesTags: ["Categories"],
     }),
     addCategory: builder.mutation<any, { newCategoryName: string }>({
       query: ({ newCategoryName }) => ({
@@ -42,12 +42,21 @@ export const categoriesAPI = createApi({
       }),
       invalidatesTags: ["Categories"], // Correcting to invalidate tags after mutation
     }),
-    deleteCategory: builder.mutation<any, { deleteCategoryId: string }>({
-      query: ({ deleteCategoryId }) => ({
+    deleteCategory: builder.mutation<
+      any,
+      {
+        deleteCategoryId: string;
+        deleteAlong: boolean;
+        newCategory?: string | null;
+      }
+    >({
+      query: ({ deleteCategoryId, deleteAlong, newCategory }) => ({
         url: "", // Adjust the URL based on your API structure
         method: "DELETE",
         body: {
           deleteCategoryId: deleteCategoryId,
+          deleteAlong: deleteAlong,
+          newCategory: newCategory,
         },
       }),
       invalidatesTags: ["Categories"], // Correcting to invalidate tags after mutation

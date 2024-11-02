@@ -38,10 +38,10 @@ const Category = ({ category }: CategoryProps) => {
       variants={parentVariant}
       initial={false}
       animate={selectedCategory ? "extend" : "default"}
-      className="w-full overflow-hidden"
+      className="w-full overflow-hidden px-4"
     >
       <button
-        className={`flex w-full items-center justify-between border-b border-gray-300 py-2 text-left font-bold transition delay-75 duration-300`}
+        className={`flex w-full items-center justify-between border-b py-2 text-left text-[14px] font-semibold transition delay-75 duration-300`}
         onClick={() => handleCategoryToggle(category._id)}
       >
         <p className="">{category.categoryName}</p>
@@ -52,8 +52,7 @@ const Category = ({ category }: CategoryProps) => {
           <Icon icon="iconamoon:arrow-up-2-duotone" />
         </motion.div>
       </button>
-
-      {/* <FilterSubcategory categoryId={category._id} /> */}
+      <FilterSubcategory categoryId={category._id} />
     </motion.div>
   );
 };

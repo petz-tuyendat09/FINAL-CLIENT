@@ -82,3 +82,4 @@ export default function Voucher ({ setSalePercent, handleChangeVoucher, voucherI
         </>
     )
 }
+

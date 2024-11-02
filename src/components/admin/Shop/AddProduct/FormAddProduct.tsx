@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { ModalProvider, useModal } from "./_store/ModalContext"; // Import the ModalProvider
 import { useEffect } from "react";
-import FormAddProductPrice from "./PriceAndStock/FormAddProductPrice";
 import FormAddProductType from "./FormAddProductType";
 import useAddProductForm from "./_hook/useAddProductForm";
 import { useLazyGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
@@ -13,20 +11,9 @@ import GerneralInformation from "./GerneralInfor/GerneralInformation";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
-import { AnimatePresence } from "framer-motion";
-import NoActionModal from "@/components/ui/NoActionModal";
 
-export default function FormAddProductWithContext() {
-  return (
-    <ModalProvider>
-      <FormAddProduct />
-    </ModalProvider>
-  );
-}
-
-function FormAddProduct() {
+export default function FormAddProduct() {
   const { data: categories } = useGetCategoriesQuery("");
-  const { modalText, modalDisplay } = useModal();
 
   const [getSubCategories, { data: subCategories }] =
     useLazyGetSubCategoriesQuery();
@@ -39,18 +26,6 @@ function FormAddProduct() {
       categoryId: formik.values.productCategory,
     });
   }, [formik.values.productCategory, getSubCategories]);
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (modalDisplay) {
-      timer = setTimeout(() => {
-        router.push("/admin/shop");
-      }, 5000);
-    }
-
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalDisplay]);
 
   function handleButtonSubmit() {
     formik.handleSubmit();
@@ -127,9 +102,6 @@ function FormAddProduct() {
         </div>
         <MyEditor formik={formik} />
       </form>
-      <AnimatePresence>
-        {modalDisplay && <NoActionModal modalText={modalText} />}
-      </AnimatePresence>
     </>
   );
 }

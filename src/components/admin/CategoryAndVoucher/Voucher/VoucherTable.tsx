@@ -13,6 +13,7 @@ import {
   TableCell,
   Pagination,
   getKeyValue,
+  Button,
 } from "@nextui-org/react";
 import ModalAdd from "./ModalVoucher/ModalAdd";
 import ModalDelete from "./ModalVoucher/ModalDelete";
@@ -80,8 +81,6 @@ export default function VoucherTable() {
     }
   };
 
-  console.log(selectedIds);
-
   function handleDeleteMultiple() {
     deleteVoucherMutation({ deleteVoucherId: selectedIds as any });
   }
@@ -97,19 +96,18 @@ export default function VoucherTable() {
             Xóa
           </button>
         )}
-        <button
+        <Button
           onClick={handleAddVoucher}
-          className="mb-4 ml-auto block w-fit rounded-full bg-black px-4 py-2 text-white"
+          className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
         >
-          Thêm voucher
-        </button>
+          + Thêm voucher
+        </Button>
       </div>
       <Table
         selectionMode="multiple"
         aria-label="Bảng hiển thị danh mục"
         className="w-full"
         onSelectionChange={(selectedKeys: any) => {
-          console.log(selectedKeys);
           handleSelectedRows(selectedKeys);
         }}
         checkboxesProps={{

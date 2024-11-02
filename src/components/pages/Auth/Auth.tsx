@@ -7,6 +7,9 @@ import { AnimatePresence } from "framer-motion";
 import Verify from "./Verify/Verify";
 import NoActionModal from "../../ui/NoActionModal";
 import { useEffect } from "react";
+import ForgotPassword from "./ForgotPassord/ForgotPassword";
+import VerifyChangePassword from "./VerifyChangePassword/VerifyChangePassword";
+import ResetPassword from "./ResetPassword/ResetPassword";
 
 export default function Auth() {
   return (
@@ -22,8 +25,11 @@ function AuthContent() {
     verifying,
     modalDisplay,
     modalText,
+    forgotPassword,
     setModalDisplay,
     setModalText,
+    verifyChangePassword,
+    isReset,
   } = useAuth();
 
   useEffect(() => {
@@ -45,12 +51,19 @@ function AuthContent() {
       <AnimatePresence mode="wait">
         {verifying ? (
           <Verify key="verify" />
+        ) : forgotPassword ? (
+          <ForgotPassword key="forgotPassword" />
+        ) : verifyChangePassword ? (
+          <VerifyChangePassword key="verifyChangePassword" />
+        ) : isReset ? (
+          <ResetPassword key="resetPassword" />
         ) : isSignUp ? (
           <SignUp key="signUp" />
         ) : (
           <Login key="login" />
         )}
       </AnimatePresence>
+
       <AnimatePresence>
         {modalDisplay && <NoActionModal modalText={modalText} />}
       </AnimatePresence>

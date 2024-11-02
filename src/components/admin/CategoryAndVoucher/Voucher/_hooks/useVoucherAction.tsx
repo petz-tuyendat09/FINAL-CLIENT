@@ -17,8 +17,6 @@ export default function useVoucherAction({
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [deleteVoucher, setDeleteVoucher] = useState<string>("");
 
-  console.log(voucher);
-
   useEffect(() => {
     setTotalPages(voucher?.totalPages);
   }, [voucher]);
@@ -28,7 +26,7 @@ export default function useVoucherAction({
     refetch(); // Refetch data when page changes
   }
 
-  console.log(pages);
+  pages;
 
   function handleAddVoucher() {
     setAddModalOpen(true);

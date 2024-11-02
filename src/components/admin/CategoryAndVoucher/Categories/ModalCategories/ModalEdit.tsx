@@ -2,6 +2,7 @@ import {
   useGetCategoriesQuery,
   useEditCategoryMutation,
 } from "@/libs/features/services/categories";
+import { successModal } from "@/utils/callModalANTD";
 import {
   Modal,
   ModalContent,
@@ -12,6 +13,7 @@ import {
   Input,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { useRefetchContext } from "../_store/reFetchContext";
 
 interface ModalEditProps {
   isDialogOpen: boolean;
@@ -24,6 +26,8 @@ export default function ModalEdit({
   handleCloseDialog,
   categoryId,
 }: ModalEditProps) {
+  const { handleRefetch } = useRefetchContext();
+
   const { data } = useGetCategoriesQuery(categoryId);
   const [editedCategoryName, setEditedCategoryName] = useState<string>("");
   const [editCategory, { data: mutationResponse, error: mutationError }] =
@@ -58,11 +62,13 @@ export default function ModalEdit({
       setErrorMessage((mutationError as any).data.message);
     }
     if (mutationResponse) {
+      handleRefetch();
+      successModal({ content: "Sửa danh mục thành công", duration: 3 });
       handleCloseDialog();
     }
-  }, [mutationResponse, mutationError, handleCloseDialog]);
+  }, [mutationResponse, mutationError]);
 
-  console.log(mutationError);
+  console.log(mutationResponse);
 
   return (
     <Modal

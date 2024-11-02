@@ -20,7 +20,8 @@ export default function SiteLink() {
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-  const itemsToDisplay = cartItems || unauthenticatedCarts;
+  const authStatus = session.status;
+  const itemsToDisplay = authStatus === "authenticated" ? cartItems : unauthenticatedCarts;
   const dispatch = useDispatch();
 
   function handleToggleCart () {
@@ -34,7 +35,7 @@ export default function SiteLink() {
         <NormalTransitionLink href="/cart">
             <div className="flex flex-row gap-[7px]" onMouseEnter={handleToggleCart}>
               <p>Giỏ hàng</p>
-              <span className="text-[12px]">( {itemsToDisplay.length} )</span>
+              <span className="text-[12px]">( {itemsToDisplay ? itemsToDisplay?.length : 0} )</span>
             </div>
         </NormalTransitionLink>
         <NavBarIcon />

@@ -75,7 +75,7 @@ export default function ModalOrderDetail({
           <>
             <ModalHeader className="text-center">
               Xác nhận thông tin
-            </ModalHeader>
+            </Modal>
             <ModalBody>
               <p>
                 <span className="font-bold">Tên khách hàng:</span>{" "}

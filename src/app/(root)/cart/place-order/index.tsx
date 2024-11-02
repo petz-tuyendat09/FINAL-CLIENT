@@ -44,6 +44,7 @@ export const Index = () => {
     const [discount, setDiscount] = useState(0);
     const dispatch = useDispatch();
     const [salePercent, setSalePercent] = useState(0);
+    const { update: sessionUpdate } = useSession();
     const [insertOrder] = useInsertOrderMutation();
     const [addressSelected, setAddressSelected] =  useState<string | null>(null);
     const voucher = useSelector((state: { user: UserState }) => state.user.voucher);
@@ -133,13 +134,17 @@ export const Index = () => {
                         try {
                             if (paymentMethod === 'COD') {
                                 const res = await insertOrder(formData);
-                                console.log(res);
-                                await deleteCartByUser(session.data?.user?._id as string);
-                                if (session.data?.user?.userCart) {
-                                    session.data.user.userCart.cartItems = [];
+                                if (res) {
+                                    await deleteCartByUser(session.data?.user?._id as string);
+                                    sessionUpdate({
+                                        ...session,
+                                        user: {
+                                          ...session?.data?.user,
+                                          userCart: [],
+                                        },
+                                    });
+                                    resetForm();
                                 }
-                        
-                                resetForm();
                             }
                         } catch (error) {
                             console.error('Order submission failed:', error);

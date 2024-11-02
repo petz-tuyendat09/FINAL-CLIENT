@@ -28,7 +28,7 @@ const CartPage = () => {
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-  const itemsToDisplay = cartItems || unauthenticatedCarts;
+  const itemsToDisplay = authStatus === "authenticated" ? cartItems : unauthenticatedCarts;
   const authenticatedCartId = session.data?.user?.userCart?._id;
   function handleClearCart() {
     if (authStatus === "authenticated") {
@@ -65,7 +65,7 @@ const CartPage = () => {
             <h2>Cửa hàng thức ăn thú cưng</h2>
             <h1 className="text-black font-[500] text-[50px] leading-[60px] mt-[20px]">Cửa hàng thú cưng cho Những Người Bạn Lông Xù</h1>
             <div className="flex justify-center mt-[30px]"> 
-              <button className="hover:bg-black hover:text-white transition duration-200 ease-in flex flex-row items-center gap-[7px] border-2 border-black px-[15px] py-[7px] rounded-[30px]">
+              <button type="button" className="hover:bg-black hover:text-white transition duration-200 ease-in flex flex-row items-center gap-[7px] border-2 border-black px-[15px] py-[7px] rounded-[30px]">
                 <span className="font-[500]">Nhận nuôi</span>
                 <Icon icon="mingcute:arrow-right-line" />
               </button>
@@ -96,75 +96,79 @@ const CartPage = () => {
             <CartStepper activeStep={activeStep} />
           </div>
         </div>
-        <div className="flex justify-end">
-          <button className="border-b-2 border-primary text-primary" onClick={handleClearCart}>
-              Xóa tất cả
-          </button>
-        </div>
-        <div>
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="text-left">Sản phẩm</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-                <th>Tổng phụ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {itemsToDisplay.map((item) => (
-                <CartItem
-                  authenticatedCartId={authenticatedCartId}
-                  key={item.productId}
-                  cartItem={item as any}
-                />
-              ))}
-              <tr>
-                <td className="border-b-0"></td>
-                <td className="border-b-0"></td>
-                <td colSpan={2}>
-                  <div className="flex flex-row items-center justify-between">
-                    <h4 className="font-[500]">Thành tiền:</h4>
-                    <h3 className="text-[20px] font-[500]">
-                      {formatMoney(
-                        itemsToDisplay.reduce(
-                          (acc, item) =>
-                            acc + item.productPrice * item.productQuantity,
-                          0,
-                        ),
-                      )}
-                    </h3>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="border-b-0"></td>
-                <td className="border-b-0"></td>
-                <td
-                  className="border-b-0 text-[15px] text-gray-800"
-                  colSpan={2}
-                >
-                  Tax included and shipping calculated at checkout
-                </td>
-              </tr>
-              <tr></tr>
-              <tr>
-                <td className="border-b-0"></td>
-                <td className="border-b-0"></td>
-                <td
-                  className="border-b-0 text-[15px] text-gray-800"
-                  colSpan={2}
-                >
-                  <Link href="/cart/place-order">
-                    <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
-                      THANH TOÁN
-                    </button>
-                  </Link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        { itemsToDisplay 
+          ? <>
+            <div className="flex justify-end">
+            <button className="border-b-2 border-primary text-primary" onClick={handleClearCart}>
+                Xóa tất cả
+            </button>
+          </div>
+          <div>
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th className="text-left">Sản phẩm</th>
+                  <th>Giá</th>
+                  <th>Số lượng</th>
+                  <th>Tổng phụ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {itemsToDisplay?.map((item) => (
+                  <CartItem
+                    authenticatedCartId={authenticatedCartId}
+                    key={item.productId}
+                    cartItem={item as any}
+                  />
+                ))}
+                <tr>
+                  <td className="border-b-0"></td>
+                  <td className="border-b-0"></td>
+                  <td colSpan={2}>
+                    <div className="flex flex-row items-center justify-between">
+                      <h4 className="font-[500]">Thành tiền:</h4>
+                      <h3 className="text-[20px] font-[500]">
+                        {formatMoney(
+                          itemsToDisplay?.reduce(
+                            (acc, item) =>
+                              acc + item.productPrice * item.productQuantity,
+                            0,
+                          ),
+                        )}
+                      </h3>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border-b-0"></td>
+                  <td className="border-b-0"></td>
+                  <td
+                    className="border-b-0 text-[15px] text-gray-800"
+                    colSpan={2}
+                  >
+                    Tax included and shipping calculated at checkout
+                  </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                  <td className="border-b-0"></td>
+                  <td className="border-b-0"></td>
+                  <td
+                    className="border-b-0 text-[15px] text-gray-800"
+                    colSpan={2}
+                  >
+                    <Link href="/cart/place-order">
+                      <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
+                        THANH TOÁN
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </> 
+        : <div>Giỏ hàng trống.</div>}
       </div>
     </div>
   );

@@ -3,9 +3,8 @@ import { CartItem } from "./Cart";
 export interface Order {
   customerName: string;
   customerPhone: string;
-  customerEmail: string;
-  customerAddress: string;
-
+  customerEmail: string | undefined;
+  customerAddress: string | null;
   products: CartItem[];
   orderTotal: number;
   voucherId: string;

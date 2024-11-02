@@ -98,7 +98,7 @@ const CartPage = () => {
             <CartStepper activeStep={activeStep} />
           </div>
         </div>
-        {itemsToDisplay ? (
+        {itemsToDisplay && (
           <>
             <div className="flex justify-end">
               <button
@@ -119,13 +119,20 @@ const CartPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemsToDisplay?.map((item) => (
-                    <CartItem
-                      authenticatedCartId={authenticatedCartId}
-                      key={item.productId}
-                      cartItem={item as any}
-                    />
-                  ))}
+                  {itemsToDisplay.length === 0 && (
+                    <tr>
+                      <td className="text-center">Giỏ hàng trống</td>
+                    </tr>
+                  )}
+
+                  {itemsToDisplay.length > 0 &&
+                    itemsToDisplay?.map((item) => (
+                      <CartItem
+                        authenticatedCartId={authenticatedCartId}
+                        key={item.productId}
+                        cartItem={item as any}
+                      />
+                    ))}
                   <tr>
                     <td className="border-b-0"></td>
                     <td className="border-b-0"></td>
@@ -162,19 +169,18 @@ const CartPage = () => {
                       className="border-b-0 text-[15px] text-gray-800"
                       colSpan={2}
                     >
-                      <Link href="/cart/place-order">
-                        <button className="w-full rounded-[20px] bg-primary py-[12px] font-bold text-white">
-                          THANH TOÁN
-                        </button>
-                      </Link>
+                      <NormalTransitionLink
+                        className="w-full rounded-[20px] bg-primary py-[12px] text-center font-bold text-white"
+                        href="/cart/place-order"
+                      >
+                        Thanh toán
+                      </NormalTransitionLink>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </>
-        ) : (
-          <div>Giỏ hàng trống.</div>
         )}
       </div>
     </div>

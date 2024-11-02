@@ -29,3 +29,15 @@ export const errorModal = ({
     className,
   });
 };
+
+export const loadingModal = ({
+  content,
+  duration = 5,
+  className = "custom-message",
+}: ModalProps): void => {
+  message.loading({
+    content,
+    duration,
+    className,
+  });
+};

@@ -304,6 +304,7 @@ export const Index = () => {
 
                   <div className="mt-[30px]">
                     <button
+                      type="button"
                       onClick={() => setIsDisplay(!isDisplay)}
                       className="flex items-center justify-center rounded-[25px] border border-black bg-black px-[45px] py-[10px] text-[15px] tracking-[0.8px] text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                     >
@@ -421,6 +422,7 @@ export const Index = () => {
                     <span>Voucher</span>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setIsModalOpen(true)}
                     className="font-[500] text-primary"
                   >

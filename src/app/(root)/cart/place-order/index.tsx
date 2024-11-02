@@ -44,7 +44,8 @@ export const Index = () => {
   const [discount, setDiscount] = useState(0);
   const dispatch = useDispatch();
   const [salePercent, setSalePercent] = useState(0);
-  const [insertOrder] = useInsertOrderMutation();
+  const [insertOrder, { data: insertResponse, isLoading }] =
+    useInsertOrderMutation();
   const [addressSelected, setAddressSelected] = useState<string | null>(null);
   const voucher = useSelector(
     (state: { user: UserState }) => state.user.voucher,

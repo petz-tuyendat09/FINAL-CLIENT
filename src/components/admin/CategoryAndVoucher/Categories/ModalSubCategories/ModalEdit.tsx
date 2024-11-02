@@ -3,6 +3,7 @@ import {
   useEditSubCategoryMutation,
   useGetSubCategoriesQuery,
 } from "@/libs/features/services/subcategories";
+import { successModal } from "@/utils/callModalANTD";
 import {
   Modal,
   ModalContent,
@@ -15,6 +16,7 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { useRefetchContext } from "../_store/reFetchContext";
 
 interface ModalEditProps {
   isDialogOpen: boolean;
@@ -30,6 +32,7 @@ export default function ModalEdit({
   const { data: categories } = useGetCategoriesQuery();
   const { data } = useGetSubCategoriesQuery({ subCategoryId: subCategoryId });
   const [editSubCategoryName, setEditSubCategoryName] = useState("");
+  const [oldCate, setOldCate] = useState("");
   const [currentCategory, setCurrentCategory] = useState("");
 
   const [editSubCategory, { data: mutationResponse, error: mutationError }] =
@@ -39,23 +42,27 @@ export default function ModalEdit({
   useEffect(() => {
     if (data) {
       setEditSubCategoryName(data[0]?.subCategoryName);
+      setOldCate(data[0].categoryId);
       setCurrentCategory(data[0].categoryId);
     }
   }, [data]);
 
   function handleChangeSubCategoryName(e: React.ChangeEvent<HTMLInputElement>) {
     setEditSubCategoryName(e.target.value);
-    console.log(editSubCategoryName);
   }
 
   function handleEditSubCategoryName() {
-    if (
+    const isNameUnchanged =
       data &&
       data[0]?.subCategoryName.trim().replace(/\s+/g, " ") ===
-        editSubCategoryName
-    ) {
-      handleCloseDialog();
+        editSubCategoryName.trim().replace(/\s+/g, " ");
+
+    const isCategoryUnchanged = oldCate === currentCategory;
+
+    if (isNameUnchanged && isCategoryUnchanged) {
+      return handleCloseDialog();
     }
+
     if (subCategoryId && editSubCategoryName) {
       editSubCategory({
         editSubCategoryId: subCategoryId,
@@ -68,8 +75,10 @@ export default function ModalEdit({
   useEffect(() => {
     if (mutationError) {
       setErrorMessage((mutationError as any).data.message);
+      console.log(mutationError);
     }
     if (mutationResponse) {
+      successModal({ content: "Sửa danh mục thành công", duration: 3 });
       handleCloseDialog();
     }
   }, [mutationResponse, mutationError, handleCloseDialog]);
@@ -96,10 +105,10 @@ export default function ModalEdit({
                 items={(categories as any) || []}
                 label="Danh mục cha"
                 className="w-full"
-                selectedKeys={[currentCategory]} // Controlled component
+                selectedKeys={[currentCategory]}
                 onSelectionChange={(keys) =>
                   setCurrentCategory(Array.from(keys)[0] as string)
-                } // Update currentCategory state
+                }
               >
                 {(category) => (
                   <SelectItem key={(category as any)._id}>

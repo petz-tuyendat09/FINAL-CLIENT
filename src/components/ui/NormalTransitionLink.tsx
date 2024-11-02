@@ -24,9 +24,12 @@ export default function NormalTransitionLink({
   }
   return (
     <div>
-      <button onClick={handleClick} className={className}>
+      <div
+        onClick={handleClick}
+        className={`w-fit cursor-pointer ${className}`}
+      >
         {children}
-      </button>
+      </div>
     </div>
   );
 }

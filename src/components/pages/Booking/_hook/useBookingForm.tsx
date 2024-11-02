@@ -21,8 +21,6 @@ export default function useBookingForm() {
   const [isConfirm, setIsConfirm] = useState(false);
   const session = useSession();
 
-  console.log(session.data?.user._id);
-
   const formik = useFormik({
     initialValues: {
       customerName: "",
@@ -33,16 +31,12 @@ export default function useBookingForm() {
       bookingHours: "",
     },
     onSubmit: (values) => {
-      // console.log(values);
-      // createBooking(values);
       setIsConfirm(true);
     },
     validate: (values) => {
       let errors: Partial<errorsValues> = {};
       const hasSelectedService =
         Object.keys(values.selectedServices).length > 0;
-
-      console.log({ ...values.selectedServices });
 
       const phoneRegex = /^[0-9]{10}$/;
 
@@ -101,8 +95,6 @@ export default function useBookingForm() {
   function handleCancelConfirm() {
     setIsConfirm(false);
   }
-
-  console.log(formik.errors);
 
   return {
     formik,

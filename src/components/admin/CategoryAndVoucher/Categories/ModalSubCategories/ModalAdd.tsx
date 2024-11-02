@@ -1,5 +1,6 @@
 import { useGetCategoriesQuery } from "@/libs/features/services/categories";
 import { useAddSubCategoryMutation } from "@/libs/features/services/subcategories";
+import { successModal } from "@/utils/callModalANTD";
 import {
   Modal,
   ModalContent,
@@ -60,6 +61,7 @@ export default function ModalAdd({
     if (data) {
       setNewSubCategoryName("");
       handleCloseDialog();
+      successModal({ content: "Thêm danh mục con thành công", duration: 3 });
     }
   }, [mutationError, data, handleCloseDialog]);
 

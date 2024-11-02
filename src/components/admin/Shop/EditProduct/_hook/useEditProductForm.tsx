@@ -5,7 +5,8 @@ import {
   useEditProductMutation,
   useGetProductsQuery,
 } from "@/libs/features/services/product";
-import { useRouter } from "next/router"; // Use 'next/router' instead of 'next/navigation'
+import { successModal } from "@/utils/callModalANTD";
+import { useRouter } from "next/navigation";
 
 interface ErrorsValues {
   productName?: string;
@@ -23,6 +24,7 @@ interface ErrorsValues {
 
 export default function useEditProductForm({ slug }: { slug: string }) {
   const { data: productBySlug } = useGetProductsQuery({ productSlug: slug });
+  const router = useRouter();
   const [editProduct, { data, error: mutationError }] =
     useEditProductMutation();
   const [duplicatedMessage, setDuplicatedMessage] = useState();
@@ -60,8 +62,6 @@ export default function useEditProductForm({ slug }: { slug: string }) {
         productOption: [],
         productDetailDescription: "",
       };
-
-  console.log(initialValues);
 
   const formik = useFormik({
     initialValues,
@@ -153,6 +153,8 @@ export default function useEditProductForm({ slug }: { slug: string }) {
       setDuplicatedMessage((mutationError.data as any).message);
     }
     if (data) {
+      successModal({ content: "Sửa sản phẩm thành công", duration: 3 });
+      router.push("/admin/shop");
     }
   }, [mutationError, data]);
 

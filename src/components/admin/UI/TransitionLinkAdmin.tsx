@@ -20,6 +20,7 @@ export default function TransitionLinkAdmin({
       animatePageOut(href, router);
     }
   }
+
   return (
     <button className={className} onClick={handleClick}>
       {children}

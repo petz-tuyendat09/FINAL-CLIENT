@@ -6,35 +6,29 @@ import CategoryButton from "./CategoryButton";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-type FilterProductState =
-  | { productBuy: number }
-  | { productStatus: string }
-  | { salePercent: number };
+type FilterProductState = { productBuy: number } | { sortBy: string };
 
 export default function Categories() {
   const [filterOption, setFilterOption] = useState<FilterProductState>({
-    productStatus: "lastest",
+    sortBy: "lastest",
   });
   const [currentFilter, setCurrentFilter] = useState("lastest");
 
   function handleFilterProduct(filterOption: string) {
     switch (filterOption) {
       case "lastest":
-        setFilterOption({ productStatus: "latest" });
+        setFilterOption({ sortBy: "latest" });
         setCurrentFilter("lastest");
 
         break;
-      case "discount":
-        setFilterOption({ salePercent: 1 });
-        setCurrentFilter("discount");
-        break;
+
       case "bestseller":
         setFilterOption({ productBuy: 100 });
         setCurrentFilter("bestseller");
 
         break;
       default:
-        setFilterOption({ productStatus: "latest" });
+        setFilterOption({ sortBy: "latest" });
     }
   }
 
@@ -42,8 +36,8 @@ export default function Categories() {
     <section className="container mt-[200px]">
       <div className="mb-8">
         <div className="space-x-4">
-          <div className="flex justify-between items-center gap-2 text-[30px] font-bold">
-            <div className="flex flex-row gap-[10px] items-center">
+          <div className="flex items-center justify-between gap-2 text-[16px] font-bold md:text-[32px]">
+            <div className="flex flex-row items-center gap-[10px]">
               <h1>SẢN PHẨM</h1>
               <div className="flex flex-row gap-[10px]">
                 <CategoryButton
@@ -60,7 +54,10 @@ export default function Categories() {
                 />
               </div>
             </div>
-            <NormalTransitionLink href="/shop" className="flex flex-row gap-[7px] items-center ml-auto font-[500] text-[17px]">
+            <NormalTransitionLink
+              href="/shop"
+              className="ml-auto flex flex-row items-center gap-[7px] text-[12px] font-[500] md:text-[17px]"
+            >
               <span>Xem tất cả</span>
               <Icon icon="lsicon:right-filled" width={20} />
             </NormalTransitionLink>
@@ -68,6 +65,6 @@ export default function Categories() {
         </div>
       </div>
       <ProductSlider filterOption={filterOption} />
-    </section> 
+    </section>
   );
 }

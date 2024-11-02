@@ -45,33 +45,60 @@ export default function ModalBookingDetail({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">
-              Xác nhận thông tin
-            </ModalHeader>
+            <ModalHeader className="text-center">Chi tiết lịch đặt</ModalHeader>
             <ModalBody>
               <p>
                 <span className="font-bold">Tên khách hàng:</span>{" "}
                 {bookingDetail?.customerName}
               </p>
-              <p>
-                <span className="font-bold">Dịch vụ đã chọn:</span>{" "}
-                {bookingDetail?.service.map(
-                  (service) => (service as any).serviceName + " - ",
-                )}
-              </p>
-              <p>
-                <span className="font-bold">Giờ đặt:</span>{" "}
-                {bookingDetail?.bookingHours}
-              </p>
+              <div>
+                <p>
+                  <span className="font-bold">Giờ đặt:</span>{" "}
+                  {bookingDetail?.bookingHours}
+                </p>
 
-              <p>
-                <span className="font-bold">Ngày đặt:</span>{" "}
-                {formatDate(bookingDetail?.bookingDate as any)}
-              </p>
-              <p>
-                <span className="font-bold">Tổng tiền thiệt hại:</span>{" "}
-                {formatMoney(bookingDetail?.totalPrice)}
-              </p>
+                <p>
+                  <span className="font-bold">Ngày đặt:</span>{" "}
+                  {formatDate(bookingDetail?.bookingDate as any)}
+                </p>
+              </div>
+              <div>
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="text-left font-[14px]">Dịch vụ</th>
+                      <th className="text-right font-[14px]">Giá tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody className="space-y-2">
+                    {bookingDetail?.service.map((service: any) => (
+                      <tr
+                        key={service._id}
+                        className="border-b border-[#e5e7eb] text-[14px]"
+                      >
+                        <td className="p-0.5 text-[#4a4a4a]">
+                          {service.serviceName}
+                        </td>
+                        <td className="p-0.5 text-right text-[#4a4a4a]">
+                          {formatMoney(service.servicePrice)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+                <table className="w-full border-collapse text-[14px]">
+                  <tbody>
+                    <tr>
+                      <th className="text-left text-[#4a4a4a]">Tổng tiền:</th>
+                      <th className="text-right text-[#4a4a4a]">
+                        {formatMoney(bookingDetail?.totalPrice)}
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               <p>
                 <span className="font-bold">Trạng thái:</span>{" "}
                 {

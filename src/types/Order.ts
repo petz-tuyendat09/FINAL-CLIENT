@@ -3,8 +3,9 @@ import { CartItem } from "./Cart";
 export interface Order {
   customerName: string;
   customerPhone: string;
-  customerEmail: string | undefined;
-  customerAddress: string | null;
+  customerEmail: string;
+  customerAddress: string;
+
   products: CartItem[];
   orderTotal: number;
   voucherId: string;
@@ -13,9 +14,9 @@ export interface Order {
   totalAfterDiscount: number;
   paymentMethod: string;
   orderStatus: string;
-  createdAt: string; 
-  updatedAt: string; 
-  orderDate: string; 
+  createdAt: string;
+  updatedAt: string;
+  orderDate: string;
 }
 
 export interface OrderProduct {
@@ -33,12 +34,13 @@ export interface User {
 
 export enum OrderStatus {
   PENDING = "Đang chờ",
-  COMPLETED = "Hoàn thành",
+  DELIVERING = "Đang giao",
+  DELIVERED = "Đã giao",
   CANCELLED = "Đã hủy",
 }
 
 interface Product {
-  productId: string;
+  _id: string;
   productQuantity: number;
   productOption: string;
   productPrice: number;
@@ -50,7 +52,7 @@ export interface OrderAdmin {
   customerPhone: string;
   customerEmail: string;
   customerAddress: string;
-  productId: Product[];
+  products: Product[];
   orderTotal: number;
   voucherId: string;
   orderDiscount: number;

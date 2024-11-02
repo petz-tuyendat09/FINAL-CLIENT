@@ -21,6 +21,7 @@ import formatMoney from "@/utils/formatMoney";
 import formatDate from "@/utils/formatDate";
 import Link from "next/link";
 import ModalCancelOrder from "./Modal/ModalCancelOrder";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 const columns = [
   {
@@ -118,7 +119,10 @@ export default function OrdersHistory() {
               <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
           </TableHeader>
-          <TableBody items={orderList || []}>
+          <TableBody
+            emptyContent={"Bạn chưa đặt đơn hàng nào."}
+            items={orderList || []}
+          >
             {(orderItem) => (
               <TableRow key={orderItem._id}>
                 {(columnKey) => {
@@ -129,7 +133,7 @@ export default function OrdersHistory() {
                   }
                   if (columnKey === "productCount") {
                     return (
-                      <TableCell>{orderItem.productId?.length || 0} </TableCell>
+                      <TableCell>{orderItem.products?.length || 0} </TableCell>
                     );
                   }
                   if (columnKey === "paymentMethod") {
@@ -165,11 +169,12 @@ export default function OrdersHistory() {
                     const pastDate = isPastDate(orderItem.createdAt as any);
                     return (
                       <TableCell className="space-x-2">
-                        <Button variant="flat" size="sm" color="default">
-                          <Link href={`order-history/${orderItem._id}`}>
+                        <Link href={`order-history/${orderItem._id}`}>
+                          <Button variant="flat" size="sm" color="default">
                             Xem
-                          </Link>
-                        </Button>
+                          </Button>
+                        </Link>
+
                         {!pastDate && orderItem.orderStatus !== "CANCELLED" && (
                           <Button
                             variant="flat"

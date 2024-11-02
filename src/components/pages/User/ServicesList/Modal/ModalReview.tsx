@@ -19,6 +19,7 @@ import { Booking, BookingStatus } from "@/types/Booking";
 import AnimateRating from "./AnimateRating";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
+import { successModal } from "@/utils/callModalANTD";
 
 interface ModalReviewProps {
   isDialogOpen: boolean;
@@ -55,7 +56,8 @@ export default function ModalReview({
           userPoint: (reviewResponse as any).userPoint,
         },
       });
-      console.log(session?.user.userPoint);
+      successModal({ content: "Đánh giá thành công", duration: 3 });
+      handleCloseDialog();
     }
   }, [data, reviewResponse]);
 
@@ -77,8 +79,6 @@ export default function ModalReview({
     const serviceIds = bookingDetail?.service.map(
       (service: any) => service._id,
     );
-
-    console.log(bookingDetail?.customerName);
 
     createReview({
       userId: userId as any,
@@ -104,7 +104,10 @@ export default function ModalReview({
         {(onClose) => (
           <>
             <ModalHeader className="text-center">
-              Xác nhận thông tin
+              Đánh giá dịch vụ
+              <p className="ml-2 text-[12px] font-normal">
+                (Nhận ngay 50 điểm khi đánh giá)
+              </p>
             </ModalHeader>
             <ModalBody>
               <p>

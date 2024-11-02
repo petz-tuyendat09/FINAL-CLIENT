@@ -98,7 +98,7 @@ export default function NavigateBar({ onTop }: NavigateBarProps) {
     <motion.div
       initial={false}
       animate={{
-        width: isHidden ? 160 : 380,
+        width: isHidden ? 140 : 340,
       }}
       transition={{
         type: "spring",
@@ -108,7 +108,7 @@ export default function NavigateBar({ onTop }: NavigateBarProps) {
       }}
       className={`glass-navbar fixed ${onTop ? "top-1" : "bottom-4"} left-1/2 z-50 flex -translate-x-1/2 overflow-x-hidden rounded-full text-white shadow-md`}
     >
-      <div className="flex items-center gap-2 py-2 pr-4">
+      <div className="flex items-center gap-2 py-2 pr-4 text-[14px]">
         <button
           onClick={handleToggleNavbar}
           className="flex h-full w-full items-center justify-center rounded-full px-4"
@@ -126,11 +126,7 @@ export default function NavigateBar({ onTop }: NavigateBarProps) {
         />
         <TransitionLink isHidden={isHidden} href="/" label="Trang chủ" />
         <TransitionLink isHidden={isHidden} href="/shop" label="Cửa hàng" />
-        <TransitionLink
-          isHidden={isHidden}
-          href="/marketplace"
-          label="Tìm bạn"
-        />
+        <TransitionLink isHidden={isHidden} href="/booking" label="Đặt lịch" />
       </div>
     </motion.div>
   );

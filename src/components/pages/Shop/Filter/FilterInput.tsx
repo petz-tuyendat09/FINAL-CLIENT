@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import debounce from "lodash.debounce";
+import { Input } from "@nextui-org/react";
 
 interface FilterInputProps {
   handleQueryProduct: (productName: string) => void;
@@ -38,9 +39,8 @@ export default function FilterInput({
   }, [debouncedHandleQueryProduct]);
 
   return (
-    <div className="mb-4 w-full rounded-full bg-black">
-      <input
-        className="w-full rounded-full bg-transparent px-4 py-2 text-white focus:outline-none"
+    <div className="px-4">
+      <Input
         type="text"
         placeholder="Tìm sản phẩm"
         value={searchTerm}

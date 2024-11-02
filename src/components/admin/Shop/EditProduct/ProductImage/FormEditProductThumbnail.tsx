@@ -39,7 +39,6 @@ export default function FormEditProductThumbnail({
       ...formik.values.removeImages,
       removeImage,
     ]);
-    console.log(formik.values.removeImages);
   };
 
   const getImageSrc = (image: File | string) => {

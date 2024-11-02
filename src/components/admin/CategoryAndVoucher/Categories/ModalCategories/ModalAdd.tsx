@@ -1,4 +1,5 @@
 import { useAddCategoryMutation } from "@/libs/features/services/categories";
+import { successModal } from "@/utils/callModalANTD";
 import {
   Modal,
   ModalContent,
@@ -45,10 +46,9 @@ export default function ModalAdd({
     if (data) {
       setNewCategoryName("");
       handleCloseDialog();
+      successModal({ content: "Thêm danh mục thành công", duration: 3 });
     }
   }, [mutationError, data, handleCloseDialog]);
-
-  console.log(mutationError);
 
   return (
     <Modal

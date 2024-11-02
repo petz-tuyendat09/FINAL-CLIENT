@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Avatar,
-  Button,
-  Input,
-} from "@nextui-org/react";
+import { Card, CardHeader, Avatar } from "@nextui-org/react";
 import usePreviewUploadImage from "./_hooks/usePreviewImage";
 import { useSession } from "next-auth/react";
 import ChangePasswordInput from "./ChangePasswordInput";
@@ -18,7 +10,7 @@ export default function App() {
   const userId = session?.user?._id;
   const { data: userData, isLoading } = useGetUserQuery(userId || "");
 
-  const { imagePreview, handlePreviewImg } = usePreviewUploadImage({});
+  const { imagePreview } = usePreviewUploadImage({});
   return (
     <Card className="">
       <CardHeader className="justify-between">
@@ -31,15 +23,6 @@ export default function App() {
               size="lg"
               src={imagePreview}
             />
-            {/* <Button>
-              <label htmlFor="userImage">Sửa</label>
-              <Input
-                onChange={handlePreviewImg}
-                type="file"
-                className="hidden"
-                id="userImage"
-              />
-            </Button> */}
           </div>
           <div className="flex flex-col items-start justify-center gap-1">
             <h4 className="text-small font-semibold leading-none text-default-600">

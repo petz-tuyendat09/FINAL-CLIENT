@@ -5,7 +5,7 @@ interface OrderDetailTotalProps {
 }
 
 export default function OrderDetailTotal({ order }: OrderDetailTotalProps) {
-  console.log(order);
+  order;
   return (
     <div className="flex w-full flex-col space-y-6 bg-gray-50 px-4 py-6 md:p-6 xl:p-8">
       <h3 className="text-xl font-semibold leading-5 text-gray-800">

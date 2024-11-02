@@ -39,9 +39,11 @@ export default function Voucher ({ setSalePercent, handleChangeVoucher, voucherI
                     )}
 
                     <div className="flex flex-col gap-[20px] mt-[20px]">
-                        <div className="flex justify-end ">
-                            <button className="text-red-300 hover:text-red-600" onClick={() => { setVoucherId(''); setSalePercent(0); }}>Xóa voucher</button>
-                        </div>
+                        { data?.vouchers?.length !== 0 && (
+                            <div className="flex justify-end ">
+                                <button className="text-red-300 hover:text-red-600" onClick={() => { setVoucherId(''); setSalePercent(0); }}>Xóa voucher</button>
+                            </div>
+                        )}
                         {
                             data?.vouchers.map((item, i) => {
                                 return (

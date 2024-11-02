@@ -41,6 +41,13 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    deleteCartByUser: builder.mutation<any, string>({
+      query: (id: string) => ({
+        url: `/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
     getVouchersHeld: builder.query<
       HeldVouchersResponse,
       HeldVoucherQueryParams
@@ -55,5 +62,5 @@ export const userAPI = createApi({
   }),
 });
 
-export const { useGetUserQuery, useEditUserMutation, useGetVouchersHeldQuery } =
+export const { useGetUserQuery, useEditUserMutation, useGetVouchersHeldQuery, useDeleteCartByUserMutation } =
   userAPI;

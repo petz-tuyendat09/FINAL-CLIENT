@@ -13,7 +13,7 @@ export default function BarChart() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:8888/api/stats?year=2024');
+                const response = await fetch('http://localhost:8888/api/orderStats?year=2024');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -33,7 +33,7 @@ export default function BarChart() {
 
     return (
         <div className='w-1/2 mt-10 p-8' style={{ background: "#37373e", borderRadius: "40px" }}>
-            <div className='text-white text-3xl'>Sales Report</div>
+            <div className='text-white text-3xl'>Order Report</div>
             <div className='text-white'>Earnings</div>
             <Bar className='mt-8'
                 data={{
@@ -43,7 +43,7 @@ export default function BarChart() {
                             label: "Revenue",
                             data: data,
                             backgroundColor: data.map(value => value === maxValue ? '#AD3E39' : 'grey'),
-                            borderRadius: 40,
+                            borderRadius: 0,
                             borderSkipped: false,
                         }
                     ]

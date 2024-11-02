@@ -139,9 +139,12 @@ export const Index = () => {
                                     sessionUpdate({
                                         ...session,
                                         user: {
-                                          ...session?.data?.user,
-                                          userCart: [],
-                                        },
+                                            ...session?.data?.user,
+                                            userCart: {
+                                                ...session?.data?.user?.userCart,
+                                                cartItems: [],
+                                            },
+                                        }
                                     });
                                     resetForm();
                                 }

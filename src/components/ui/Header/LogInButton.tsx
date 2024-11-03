@@ -90,6 +90,14 @@ export default function LoginButton() {
           >
             Đăng xuất
           </DropdownItem>
+          <DropdownItem textValue="Lịch sử mua hàng" key="/order-history">
+            <NormalTransitionLink
+              className="w-full text-left"
+              href="/order-history"
+            >
+              Lịch sử mua hàng
+            </NormalTransitionLink>
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>

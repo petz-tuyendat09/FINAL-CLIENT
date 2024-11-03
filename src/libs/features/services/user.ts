@@ -95,13 +95,12 @@ export const userAPI = createApi({
   }),
 });
 
-
 export const {
   useGetUserQuery,
   useEditUserMutation,
   useGetVouchersHeldQuery,
+  useLazyGetVouchersHeldQuery,
   useGetUserPaginateQuery,
   useEditUserRoleMutation,
   useDeleteCartByUserMutation,
 } = userAPI;
-

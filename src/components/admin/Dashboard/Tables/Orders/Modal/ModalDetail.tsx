@@ -75,7 +75,7 @@ export default function ModalOrderDetail({
           <>
             <ModalHeader className="text-center">
               Xác nhận thông tin
-            </Modal>
+            </ModalHeader>
             <ModalBody>
               <p>
                 <span className="font-bold">Tên khách hàng:</span>{" "}
@@ -107,7 +107,7 @@ export default function ModalOrderDetail({
                     const isOnSale = (data as any).productId.salePercent > 0;
                     const salePrice = isOnSale
                       ? (selectedOption?.productPrice || 0) *
-                      ((100 - (data as any).productId.salePercent) / 100)
+                        ((100 - (data as any).productId.salePercent) / 100)
                       : selectedOption?.productPrice || 0;
 
                     return (
@@ -151,8 +151,8 @@ export default function ModalOrderDetail({
                 <span className="font-bold">Trạng thái:</span>{" "}
                 {
                   OrderStatus[
-                  (orderDetail as any)
-                    ?.orderStatus as keyof typeof OrderStatus
+                    (orderDetail as any)
+                      ?.orderStatus as keyof typeof OrderStatus
                   ]
                 }
               </p>

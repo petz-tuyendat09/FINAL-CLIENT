@@ -67,7 +67,10 @@ export default function useChangeVoucherAction({
     }
 
     if (changeVoucherError) {
-      errorModal({ content: "Không đủ điểm đổi voucher", duration: 3 });
+      errorModal({
+        content: (changeVoucherError as any).data.message,
+        duration: 3,
+      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

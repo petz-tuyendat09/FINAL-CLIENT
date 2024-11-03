@@ -27,7 +27,6 @@ export default function Voucher({
   const session = useSession();
   const userId = session?.data?.user?._id;
 
-  // Chỉ gọi useGetVouchersHeldQuery nếu userId tồn tại
   const { data, error, isLoading } = useGetVouchersHeldQuery(
     userId
       ? {

@@ -16,6 +16,8 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
   orderDate: string;
+  orderId: string;
+  userPoint: number;
 }
 
 export interface OrderProduct {

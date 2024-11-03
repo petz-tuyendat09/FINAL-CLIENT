@@ -69,7 +69,7 @@ export const orderAPI = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
-    insertOrder: builder.mutation<Order[], Order>({
+    insertOrder: builder.mutation<Order, Order>({
       query: (payload) => ({
         url: `/`,
         method: "POST",

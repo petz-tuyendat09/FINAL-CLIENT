@@ -16,7 +16,6 @@ import cartImg2 from "@@/public/images/cartImg2.png";
 import Image from "next/image";
 import Link from "next/link";
 import CartStepper from "./CartStepper";
-import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 const CartPage = () => {
   const activeStep = 0;
   const session = useSession();
@@ -90,7 +89,7 @@ const CartPage = () => {
             <CartStepper activeStep={activeStep} />
           </div>
         </div>
-        { itemsToDisplay 
+        { itemsToDisplay?.length
           ? <>
             <div className="flex justify-end">
             <button className="border-b-2 border-primary text-primary" onClick={handleClearCart}>

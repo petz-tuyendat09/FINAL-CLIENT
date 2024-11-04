@@ -176,6 +176,7 @@ export default function ProductTable() {
                   return (
                     <TableCell>
                       <Image
+                        unoptimized
                         src={item.productThumbnail}
                         alt={item.productName}
                         width={500}

@@ -203,6 +203,7 @@ export const Index = () => {
               </div>
               <div className="w-[38%]">
                 <Image
+                  unoptimized
                   src={item.productThumbnail}
                   width="500"
                   height="400"
@@ -228,6 +229,7 @@ export const Index = () => {
                   {item?.productImages.map((img, i) => {
                     return (
                       <Image
+                        unoptimized
                         src={img}
                         width={150}
                         height={300}

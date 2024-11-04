@@ -14,18 +14,16 @@ export const orderAPI = createApi({
   tagTypes: ["Payment"],
   endpoints: (builder) => ({
     handlePaymentMomo: builder.mutation<Payment, Payment>({
-        query: (payload) => ({
-          url: `/`,
-          method: "POST",
-          body: payload,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }),
+      query: (payload) => ({
+        url: `/`,
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
     }),
   }),
 });
 
-export const {
-  useHandlePaymentMomoMutation,
-} = orderAPI;
+export const { useHandlePaymentMomoMutation } = orderAPI;

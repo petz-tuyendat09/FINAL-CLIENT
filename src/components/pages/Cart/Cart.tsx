@@ -14,7 +14,6 @@ import { useEffect } from "react";
 import cartImg from "@@/assets/images/cartImg.png";
 import cartImg2 from "@@/public/images/cartImg2.png";
 import Image from "next/image";
-import Link from "next/link";
 import CartStepper from "./CartStepper";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 const CartPage = () => {

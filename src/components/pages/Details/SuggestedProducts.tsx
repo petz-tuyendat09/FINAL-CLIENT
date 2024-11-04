@@ -20,6 +20,7 @@ export default function SuggestedProducts({
           return (
             <div key={item._id}>
               <Image
+                unoptimized
                 src={item.productThumbnail}
                 width={300}
                 height={300}

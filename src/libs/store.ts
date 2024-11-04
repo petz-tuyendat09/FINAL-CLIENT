@@ -48,7 +48,7 @@ const persistConfig = {
 };
 
 // Enhance rootReducer with persist capabilities and encryption
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer as any);
 
 // Initialize the store with the persistedReducer
 export const store = configureStore({

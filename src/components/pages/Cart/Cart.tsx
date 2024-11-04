@@ -119,7 +119,7 @@ const CartPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemsToDisplay?.map((item) => (
+                  {itemsToDisplay?.map((item: any) => (
                     <CartItem
                       authenticatedCartId={authenticatedCartId}
                       key={item.productId}
@@ -135,7 +135,7 @@ const CartPage = () => {
                         <h3 className="text-[20px] font-[500]">
                           {formatMoney(
                             itemsToDisplay?.reduce(
-                              (acc, item) =>
+                              (acc: any, item: any) =>
                                 acc + item.productPrice * item.productQuantity,
                               0,
                             ),

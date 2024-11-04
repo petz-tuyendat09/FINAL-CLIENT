@@ -123,7 +123,7 @@ export default function OrdersHistory() {
             emptyContent={"Bạn chưa đặt đơn hàng nào."}
             items={orderList || []}
           >
-            {(orderItem) => (
+            {(orderItem: any) => (
               <TableRow key={orderItem._id}>
                 {(columnKey) => {
                   if (columnKey === "createdAt") {

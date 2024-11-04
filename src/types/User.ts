@@ -63,7 +63,6 @@ export interface PaginateUser {
 }
 
 export interface UserState {
-  user: SecureUser | null;
   token: string | null;
   voucher: VoucherOrder | null;
 }

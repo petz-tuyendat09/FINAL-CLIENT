@@ -29,7 +29,10 @@ export default function OrderDetail({ orderId }: OrderDetailProps) {
         </button>
         <h1 className="text-3xl font-semibold leading-7 text-gray-800 lg:text-4xl lg:leading-9">
           {orderById &&
-            "#" + orderById[0]._id.substring(orderById[0]._id.length - 4)}
+            "#" +
+              (orderById as any)[0]._id.substring(
+                (orderById as any)[0]._id.length - 4,
+              )}
         </h1>
         <p className="text-base font-medium leading-6 text-gray-600">
           {orderById && formatDate(orderById[0].createdAt)}

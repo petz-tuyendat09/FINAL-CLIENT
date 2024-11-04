@@ -9,14 +9,3 @@ const nextConfig = {
     domains: ["final-asm.s3.ap-southeast-2.amazonaws.com", "www.maxbone.com"],
   },
 };
-
-const createNextIntlPlugin = require("next-intl/plugin");
-const withNextIntl = createNextIntlPlugin();
-
-module.exports = withNextIntl({
-  ...nextConfig,
-
-  webpack: (config, { isServer }) => {
-    return config;
-  },
-});

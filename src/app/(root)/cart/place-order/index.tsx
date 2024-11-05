@@ -13,16 +13,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/libs/store";
 import Image from "next/image";
 import Voucher from "./voucher";
-import { Field, FieldProps, Form, Formik } from "formik";
+import { Field, FieldProps, Form, Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 import { UserState } from "@/types/User";
 import { useDispatch } from "react-redux";
 import userSlice from "@/libs/features/user/user";
 import { useInsertOrderMutation } from "@/libs/features/services/order";
-import { useDeleteCartByUserMutation } from "@/libs/features/services/user";
-import { successModal } from "@/utils/callModalANTD";
+import { errorModal, successModal } from "@/utils/callModalANTD";
 import { useRouter } from "next/navigation";
 import { useHandlePaymentMomoMutation } from "@/libs/features/services/payment";
+import { values } from "lodash";
 interface CartItem {
   productId: string;
   productName: string;
@@ -36,7 +36,7 @@ interface CartItem {
 
 export const Index = () => {
   const session = useSession();
-  const [paymentMethod, setPaymentMethod] = useState("BANKING");
+  const [paymentMethod, setPaymentMethod] = useState("COD");
   const [isDisplay, setIsDisplay] = useState(false);
   const [total, setTotal] = useState(0);
   const [itemsToDisplay, setItemsToDisplay] = useState<CartItem[]>([]);
@@ -57,7 +57,6 @@ export const Index = () => {
   const voucher = useSelector(
     (state: { user: UserState }) => state.user.voucher,
   );
-  const [deleteCartByUser] = useDeleteCartByUserMutation();
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -119,12 +118,10 @@ export const Index = () => {
 
   useEffect(() => {
     if (paymentMethod === "COD" && insertResponse) {
-      deleteCartByUser(session.data?.user?._id as string);
       sessionUpdate({
         ...session,
         user: {
           ...session?.data?.user,
-          userPoint: insertResponse?.userPoint,
           userCart: {
             _id: session?.data?.user.userCart._id,
             cartItems: [],
@@ -139,35 +136,35 @@ export const Index = () => {
     }
 
     if (insertError) {
-      console.log(insertError);
+      errorModal({ content: (insertError as any).data.message });
     }
   }, [insertError, insertResponse]);
 
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required("Họ và tên là bắt buộc."),
+    customerEmail: Yup.string().required("Email là bắt buộc."),
     customerPhone: Yup.string()
       .required("Số điện thoại là bắt buộc.")
       .matches(/^[0-9]+$/, "Phone must be a number")
       .min(10, "Số điện thoại ít nhất 10 số")
-      .max(11, "Số điện thoại không quá 11 số"),
+      .max(10, "Số điện thoại không quá 11 số"),
   });
 
-  console.log(itemsToDisplay);
-  console.log(voucherId);
   return (
     <>
       <div className="mt-[100px] px-[30px] pb-[50px]">
         <Formik
           initialValues={{
             customerName: "",
-            customerPhone: "",
+            customerEmail: session.data?.user?.userEmail,
+            customerPhone: session.data?.user?.userPhone,
             customerAddress: "",
           }}
+          enableReinitialize
           validationSchema={validationSchema}
           onSubmit={async (values, {}) => {
             const formData = {
               ...values,
-              customerEmail: session.data?.user?.userEmail,
               customerAddress: addressSelected,
               paymentMethod: paymentMethod,
               orderTotal: initialTotal,
@@ -181,6 +178,7 @@ export const Index = () => {
               updatedAt: new Date().toISOString(),
               orderDate: new Date().toISOString(),
             };
+
             if (paymentMethod === "COD") {
               insertOrder(formData as any).unwrap();
             }
@@ -190,7 +188,7 @@ export const Index = () => {
               ).unwrap();
               if (insertResponse) {
                 const res = await handlePaymentMomo({
-                  amount: 1000 as any,
+                  amount: total as any,
                   orderId: insertResponse.orderId,
                 }).unwrap();
                 if (res?.payUrl) {
@@ -200,7 +198,7 @@ export const Index = () => {
             }
           }}
         >
-          {({ handleChange, handleSubmit }) => (
+          {({ handleChange, handleSubmit, setFieldValue }) => (
             <Form onSubmit={handleSubmit} className="flex flex-row gap-[20px]">
               <div className="w-[62%]">
                 <CartStepper activeStep={activeStep} />
@@ -209,24 +207,7 @@ export const Index = () => {
                     <h1 className="mb-[20px] text-[24px] font-[600]">
                       Địa chỉ giao hàng
                     </h1>
-                    <div className="flex flex-row gap-[10px]">
-                      <Link
-                        href="/auth"
-                        className="flex h-[44px] items-center justify-center rounded-[10px] border border-black bg-black px-[40px] text-[15px] font-[500] text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
-                      >
-                        ĐĂNG NHẬP
-                      </Link>
-                      <Link
-                        href="/auth"
-                        className="flex h-[44px] items-center justify-center rounded-[10px] border border-black px-[40px] text-[15px] font-[500] transition duration-200 ease-in-out hover:bg-black hover:text-white"
-                      >
-                        ĐĂNG KÝ
-                      </Link>
-                    </div>
-                    <p className="mt-[10px] text-[13px]">
-                      Đăng nhập/ Đăng ký tài khoản để được tích điểm và nhận
-                      thêm nhiều ưu đãi từ PETZ.
-                    </p>
+
                     <div className="mt-[30px]">
                       <div className="flex flex-row items-center gap-[10px]">
                         <button className="rounded-[50%] bg-black p-[2px]">
@@ -274,7 +255,27 @@ export const Index = () => {
                           )}
                         </Field>
                       </div>
-                      <div className="mt-[20px] w-[100%]">
+                      <div>
+                        <Field name="customerEmail">
+                          {({ field, meta }: FieldProps) => (
+                            <div>
+                              <input
+                                {...field}
+                                value={field.value}
+                                autoComplete="off"
+                                placeholder="Email"
+                                className={`mt-4 w-full rounded-[5px] border border-gray-200 px-[10px] py-[10px] outline-none transition duration-150 ease-in-out placeholder:text-[15px] placeholder:text-black focus:shadow-input ${meta.touched && meta.error ? "border-red-500" : ""}`}
+                              />
+                              {meta.touched && meta.error && (
+                                <div className="text-sm text-red-500">
+                                  {meta.error}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="mt-4 w-[100%]">
                         <Autocomplete
                           defaultItems={addresses}
                           label="Địa chỉ"
@@ -284,7 +285,9 @@ export const Index = () => {
                           onSelectionChange={(value) => {
                             setAddressSelected(value as string | null);
                           }}
-                          onInputChange={handleChange}
+                          onInputChange={(value) => {
+                            setAddressSelected(value);
+                          }}
                           allowsCustomValue={true}
                         >
                           {(suggestion) => (
@@ -325,11 +328,11 @@ export const Index = () => {
                             value={paymentMethod}
                             className="flex flex-col gap-[15px]"
                           >
-                            <Radio value="BANKING" className="custom-radio">
-                              Thanh toán bằng Momo
-                            </Radio>
                             <Radio value="COD" className="custom-radio">
                               Thanh toán khi giao hàng
+                            </Radio>
+                            <Radio value="BANKING" className="custom-radio">
+                              Thanh toán bằng Momo
                             </Radio>
                           </Radio.Group>
                         </div>

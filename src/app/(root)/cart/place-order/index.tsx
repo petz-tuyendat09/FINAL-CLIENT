@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/libs/store";
 import Image from "next/image";
 import Voucher from "./voucher";
-import { Field, FieldProps, Form, Formik } from "formik";
+import { Field, FieldProps, Form, Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 import { UserState } from "@/types/User";
 import { useDispatch } from "react-redux";
@@ -124,7 +124,6 @@ export const Index = () => {
         ...session,
         user: {
           ...session?.data?.user,
-          userPoint: insertResponse?.userPoint,
           userCart: {
             _id: session?.data?.user.userCart._id,
             cartItems: [],
@@ -149,11 +148,9 @@ export const Index = () => {
       .required("Số điện thoại là bắt buộc.")
       .matches(/^[0-9]+$/, "Phone must be a number")
       .min(10, "Số điện thoại ít nhất 10 số")
-      .max(11, "Số điện thoại không quá 11 số"),
+      .max(10, "Số điện thoại không quá 11 số"),
   });
 
-  console.log(itemsToDisplay);
-  console.log(voucherId);
   return (
     <>
       <div className="mt-[100px] px-[30px] pb-[50px]">
@@ -181,6 +178,7 @@ export const Index = () => {
               updatedAt: new Date().toISOString(),
               orderDate: new Date().toISOString(),
             };
+
             if (paymentMethod === "COD") {
               insertOrder(formData as any).unwrap();
             }
@@ -190,7 +188,7 @@ export const Index = () => {
               ).unwrap();
               if (insertResponse) {
                 const res = await handlePaymentMomo({
-                  amount: 1000 as any,
+                  amount: total as any,
                   orderId: insertResponse.orderId,
                 }).unwrap();
                 if (res?.payUrl) {
@@ -200,7 +198,7 @@ export const Index = () => {
             }
           }}
         >
-          {({ handleChange, handleSubmit }) => (
+          {({ handleChange, handleSubmit, setFieldValue }) => (
             <Form onSubmit={handleSubmit} className="flex flex-row gap-[20px]">
               <div className="w-[62%]">
                 <CartStepper activeStep={activeStep} />
@@ -284,7 +282,9 @@ export const Index = () => {
                           onSelectionChange={(value) => {
                             setAddressSelected(value as string | null);
                           }}
-                          onInputChange={handleChange}
+                          onInputChange={(value) => {
+                            setAddressSelected(value);
+                          }}
                           allowsCustomValue={true}
                         >
                           {(suggestion) => (

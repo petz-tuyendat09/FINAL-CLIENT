@@ -6,7 +6,7 @@ export interface Payment {
   payUrl?: string | undefined;
 }
 
-export const orderAPI = createApi({
+export const paymentAPI = createApi({
   reducerPath: "paymentAPI",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/payment`,
@@ -26,4 +26,4 @@ export const orderAPI = createApi({
   }),
 });
 
-export const { useHandlePaymentMomoMutation } = orderAPI;
+export const { useHandlePaymentMomoMutation } = paymentAPI;

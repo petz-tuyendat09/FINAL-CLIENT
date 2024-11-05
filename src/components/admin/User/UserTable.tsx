@@ -9,11 +9,15 @@ import {
   Pagination,
   SelectItem,
   Select,
+  Tabs,
+  Tab,
+  Button,
 } from "@nextui-org/react";
 
 import { useUserContext } from "./_store/UserContext";
 import { User, UserRole } from "@/types/User";
 import { useSession } from "next-auth/react";
+import ModalEdit from "./Modal/EditModal";
 
 const columns = [
   {
@@ -28,7 +32,6 @@ const columns = [
     key: "userEmail",
     label: "EMAIL USER",
   },
-
   {
     key: "userRole",
     label: "ROLE",
@@ -38,16 +41,28 @@ const columns = [
     key: "userPoint",
     label: "ĐIỂM USER",
   },
+  {
+    key: "userShift",
+    label: "CA LÀM VIỆC HIỆN TẠI",
+  },
+  {
+    key: "action",
+    label: "ACTION",
+  },
 ];
 
 export default function BookingsTable() {
-  const { userList, handleSetPage, page, totalPages, handleChangeUserRole } =
-    useUserContext();
-
-  const formatUserId = (userId: string | null) => {
-    if (!userId) return "Khách lẻ";
-    return userId.slice(-3).toUpperCase();
-  };
+  const {
+    userList,
+    handleSetPage,
+    page,
+    totalPages,
+    handleChangeUserRole,
+    changeShift,
+    editUserId,
+    handleCancelChangeShift,
+    handleChangeShift,
+  } = useUserContext();
 
   const session = useSession();
   const userId = session.data?.user._id;
@@ -118,12 +133,55 @@ export default function BookingsTable() {
                       </TableCell>
                     );
                   }
+                  if (columnKey === "userShift") {
+                    if (["admin", "manager", "user"].includes(user.userRole)) {
+                      return (
+                        <TableCell className="text-[12px]">
+                          Không phải nhân viên
+                        </TableCell>
+                      );
+                    }
+                    return (
+                      <TableCell>
+                        {user.userShift.length > 0
+                          ? user.userShift.map((shift: any, index) => (
+                              <p className="mb-1 text-[12px]" key={shift._id}>
+                                Thời gian: {shift.startTime} - {shift.endTime}
+                              </p>
+                            ))
+                          : "Chưa có ca làm việc"}
+                      </TableCell>
+                    );
+                  }
+                  if (columnKey === "action") {
+                    const notEmployee = ["admin", "manager", "user"].includes(
+                      user.userRole,
+                    );
+                    return (
+                      <TableCell>
+                        <Button
+                          onClick={() => handleChangeShift(user._id)}
+                          isDisabled={notEmployee}
+                          className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+                        >
+                          Sửa ca
+                        </Button>
+                      </TableCell>
+                    );
+                  }
                   return <TableCell>{getKeyValue(user, columnKey)}</TableCell>;
                 }}
               </TableRow>
             )}
           </TableBody>
         </Table>
+        {changeShift && (
+          <ModalEdit
+            handleCloseDialog={handleCancelChangeShift}
+            userId={editUserId}
+            isDialogOpen={changeShift}
+          />
+        )}
       </div>
     </>
   );

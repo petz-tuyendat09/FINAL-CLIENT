@@ -9,6 +9,7 @@ import { message } from "antd";
 import { useSession } from "next-auth/react";
 import { errorModal, successModal } from "@/utils/callModalANTD";
 import { duration } from "@mui/material";
+import { useGetUserQuery } from "@/libs/features/services/user";
 
 export interface useVoucherActionProps {
   initialPage: number;
@@ -24,8 +25,9 @@ export default function useChangeVoucherAction({
   const [userPoint, setUserPoint] = useState<number | undefined>(0);
   const [decreasePoint, setDecreasePoint] = useState(0);
 
-  const [] = message.useMessage();
   const { data: session, update: sessionUpdate } = useSession();
+
+  const [] = message.useMessage();
 
   const [selectedKeys, setSelectedKeys] = useState(
     new Set(["Sắp xếp theo điểm"]),
@@ -35,6 +37,9 @@ export default function useChangeVoucherAction({
   );
 
   // Query
+  const { data: userData, isLoading } = useGetUserQuery(
+    session?.user._id || "",
+  );
   const [
     changeVoucher,
     { data: changeVoucherResponse, error: changeVoucherError },
@@ -51,6 +56,14 @@ export default function useChangeVoucherAction({
       setUserPoint(session?.user.userPoint);
     }
   }, [voucher, session]);
+
+  useEffect(() => {
+    if (userData) {
+      sessionUpdate({
+        user: userData,
+      });
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (changeVoucherResponse) {

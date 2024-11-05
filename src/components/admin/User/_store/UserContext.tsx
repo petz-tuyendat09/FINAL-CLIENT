@@ -15,6 +15,10 @@ interface UserContextProps {
   UserId: any;
   handleEmailUserSearch: (value: string) => void;
   handleChangeUserRole: (userId: string, newRole: string) => void;
+  changeShift: any;
+  editUserId: any;
+  handleCancelChangeShift: () => void;
+  handleChangeShift: (changeShiftUserId: string) => void;
 }
 
 // Create the context
@@ -34,6 +38,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     UserId,
     handleEmailUserSearch,
     handleChangeUserRole,
+    changeShift,
+    editUserId,
+    handleCancelChangeShift,
+    handleChangeShift,
   } = useUserAction({ initialPage: 1 });
 
   return (
@@ -50,6 +58,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         UserId,
         handleEmailUserSearch,
         handleChangeUserRole,
+        changeShift,
+        editUserId,
+        handleCancelChangeShift,
+        handleChangeShift,
       }}
     >
       {children}

@@ -19,24 +19,24 @@ export const Index = () => {
 
   const { data: userData } = useGetUserQuery(userId ?? skipToken);
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     sessionUpdate({
-  //       user: {
-  //         userData,
-  //       },
-  //     });
-  //   }
-  // }, [userData]);
+  useEffect(() => {
+    if (userData) {
+      sessionUpdate({
+        user: userData,
+      });
+    }
+  }, [userData]);
 
   const isSuccess = resultCode === "0";
   const activeStep = 3;
 
-  // useEffect(() => {
-  //   if (!resultCode || !orderId) {
-  //     router.push("/");
-  //   }
-  // }, [resultCode, orderId, router]);
+  useEffect(() => {
+    if (!resultCode || !orderId) {
+      router.push("/");
+    }
+  }, [resultCode, orderId, router]);
+
+  console.log(sessionData);
 
   return (
     <div className="mt-[70px] min-h-screen px-[20px]">

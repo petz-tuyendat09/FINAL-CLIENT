@@ -45,7 +45,10 @@ const columns = [
     key: "productOption",
     label: "OPTION",
   },
-
+  {
+    key: "productStatus",
+    label: "TRẠNG THÁI",
+  },
   {
     key: "action",
     label: "ACTION",
@@ -72,6 +75,8 @@ export default function ProductTable() {
     productBuyFilter,
     subCateFilter,
     setSubCateFilter,
+    handleLowstockNofi,
+    lowstockNofiLoading,
   } = useProductActionAdmin({ initialPage: 1 });
 
   const session = useSession();
@@ -136,7 +141,10 @@ export default function ProductTable() {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={productList || []}>
+        <TableBody
+          emptyContent="Không tìm thấy sản phẩm nào"
+          items={productList || []}
+        >
           {(item) => (
             <TableRow key={item._id}>
               {(columnKey) => {
@@ -144,7 +152,13 @@ export default function ProductTable() {
                   return (
                     <TableCell>
                       {userRole === "seller" ? (
-                        <Button>Thông báo hết hàng</Button>
+                        <Button
+                          isDisabled={lowstockNofiLoading}
+                          onClick={() => handleLowstockNofi(item._id)}
+                          className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
+                        >
+                          Thông báo hết hàng
+                        </Button>
                       ) : (
                         <div className="flex items-center gap-2">
                           <button onClick={() => handleDeleteProduct(item._id)}>
@@ -189,6 +203,25 @@ export default function ProductTable() {
                       />
                     </TableCell>
                   );
+                } else if (columnKey === "productStatus") {
+                  const totalQuantity = item.productOption.reduce(
+                    (sum: number, option: ProductOption) =>
+                      sum + option.productQuantity,
+                    0,
+                  );
+
+                  const status =
+                    totalQuantity < 5 ? (
+                      <span className="rounded-full bg-red-500 px-4 py-2 text-white">
+                        Sắp hết hàng
+                      </span>
+                    ) : (
+                      <span className="rounded-full bg-green-700 px-4 py-2 text-white">
+                        Còn hàng
+                      </span>
+                    );
+
+                  return <TableCell>{status}</TableCell>;
                 } else {
                   return <TableCell>{getKeyValue(item, columnKey)}</TableCell>;
                 }

@@ -10,14 +10,17 @@ export default function page() {
         <p className="text-[64px] text-black">PETZ</p>
       </div>
       <div className="space-y-4">
-        <p>Xin chào Phan Tuyến Đạt</p>
-        <p>Xin chào seller, bạn có đơn hàng mới trong ca làm hiện tại.</p>
-        <a
-          href=""
-          className="mt-4 block rounded-full bg-[#AD3E39] px-6 py-2 text-center text-white"
-        >
-          Kiểm tra ngay
-        </a>
+        <p>Xin chào Phan Tuyến Đạt, đơn hàng của bạn đang được vận chuyển.</p>
+        <div className="flex items-center justify-center gap-4">
+          <img
+            width="40"
+            src="https://cdn-icons-png.flaticon.com/128/16104/16104958.png"
+            alt=""
+          />
+          <div className="rounded-full bg-[#77CC00] px-6 py-2 text-white">
+            Đang vận chuyển
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -31,7 +31,6 @@ export default function ProductTableFilter({
   setSubCateFilter,
 }: ProductTableFilterProps) {
   const { data } = useGetSubCategoriesQuery({});
-  console.log(data);
 
   return (
     <>

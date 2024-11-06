@@ -87,14 +87,20 @@ export default function LoginButton() {
             ) as any)}
 
           <DropdownItem textValue="Lịch sử mua hàng" key="/order-history">
-            <Link className="w-full text-left" href="/user/change-voucher">
+            <NormalTransitionLink
+              className="w-full text-left"
+              href="/user/change-voucher"
+            >
               Đổi voucher
-            </Link>
+            </NormalTransitionLink>
           </DropdownItem>
           <DropdownItem textValue="Lịch sử mua hàng" key="/order-history">
-            <Link className="w-full text-left" href="/user/order-history">
+            <NormalTransitionLink
+              className="w-full text-left"
+              href="/user/order-history"
+            >
               Lịch sử mua hàng
-            </Link>
+            </NormalTransitionLink>
           </DropdownItem>
           <DropdownItem
             textValue="Đăng xuất"

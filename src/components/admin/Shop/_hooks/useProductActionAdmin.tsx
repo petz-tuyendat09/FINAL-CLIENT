@@ -3,7 +3,10 @@ import { Product } from "@/types/Product";
 import { getProduct, deleteProduct } from "@/apis/product"; // Your custom API function
 import { errorModal, successModal } from "@/utils/callModalANTD";
 import formatSelectedKeys from "@/utils/formatSelectedValue";
-import { QueryParams } from "@/libs/features/services/product";
+import {
+  QueryParams,
+  useLowstockNofiMutation,
+} from "@/libs/features/services/product";
 
 interface UseGetProductProps {
   initialPage: number;
@@ -24,6 +27,8 @@ export default function useProductActionAdmin({
     new Set(["Lượt mua"]),
   );
   const [subCateFilter, setSubCateFilter] = useState(new Set(["Danh mục"]));
+  const [lowstockNofi, { data, error, isLoading: lowstockNofiLoading }] =
+    useLowstockNofiMutation();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -115,7 +120,17 @@ export default function useProductActionAdmin({
     setSubCateFilter(new Set(["Danh mục"]));
   }
 
-  console.log(queryParams);
+  function handleLowstockNofi(productId: string) {
+    setTimeout(() => {
+      lowstockNofi(productId);
+    }, 1000);
+  }
+
+  useEffect(() => {
+    if (data) {
+      successModal({ content: "Gửi thông báo thành công" });
+    }
+  }, [data]);
 
   return {
     productList,
@@ -137,5 +152,7 @@ export default function useProductActionAdmin({
     productBuyFilter,
     subCateFilter,
     setSubCateFilter,
+    handleLowstockNofi,
+    lowstockNofiLoading,
   };
 }

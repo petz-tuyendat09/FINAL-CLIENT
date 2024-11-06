@@ -89,6 +89,15 @@ export const productsAPI = createApi({
         body: formData,
       }),
     }),
+    lowstockNofi: builder.mutation<any, string>({
+      query: (productId) => ({
+        url: `/lowstock-nofi`,
+        method: "post",
+        body: {
+          productId: productId,
+        },
+      }),
+    }),
   }),
 });
 
@@ -99,4 +108,5 @@ export const {
   useAddNewProductMutation,
   useDeleteProductMutation,
   useEditProductMutation,
+  useLowstockNofiMutation,
 } = productsAPI;

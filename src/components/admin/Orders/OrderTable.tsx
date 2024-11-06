@@ -50,8 +50,8 @@ const columns = [
 ];
 
 const statusColors = {
-  [OrderStatus.DELIVERED]: "bg-green-600",
-  [OrderStatus.PAID]: "bg-green-600",
+  [OrderStatus.DELIVERED]: "bg-green-700",
+  [OrderStatus.PAID]: "bg-green-700",
   [OrderStatus.FAILED]: "bg-red-600",
   [OrderStatus.DELIVERING]: "bg-blue-600	",
   [OrderStatus.CANCELLED]: "bg-red-600",

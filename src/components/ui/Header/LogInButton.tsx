@@ -7,12 +7,9 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import Link from "next/link";
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
-
-  console.log(session?.user);
 
   // Xác định URL cho Trang Admin dựa trên userRole
   const getAdminUrl = () => {

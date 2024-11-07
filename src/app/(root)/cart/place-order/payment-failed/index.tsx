@@ -2,17 +2,19 @@
 import { useEffect, useState } from 'react';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from 'next/navigation';
+import { useUpdatePaymentStatusMutation } from '@/libs/features/services/order';
 
 export const Index = () => {
     const router = useRouter();
     const [orderId, setOrderId] = useState('');
     const [message, setMessage] = useState('');
-
+    const [updatePaymentStatus] = useUpdatePaymentStatusMutation();
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const currentUrl = new URL(window.location.href);
             setOrderId(currentUrl.searchParams.get('orderId') as string);
             setMessage(currentUrl.searchParams.get('message') || "Kết nối đến hệ thống tạm thời gián đoạn.");
+            updatePaymentStatus({ orderId: orderId, paymentStatus: false });
         }
     }, []);
 

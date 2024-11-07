@@ -18,6 +18,7 @@ export interface Order {
   orderDate: string;
   orderId: string;
   userPoint: number;
+  paymentStatus: Boolean;
 }
 
 export interface OrderProduct {

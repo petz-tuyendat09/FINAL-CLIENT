@@ -9,12 +9,12 @@ import { servicesAPI } from "./features/services/services";
 import { bookingsAPI } from "./features/services/booking";
 import { orderAPI } from "./features/services/order";
 import { userAPI } from "./features/services/user";
-import { paymentAPI } from "./features/services/payment";
 import cartSlice from "./features/cart/cart";
 import userSlice from "./features/user/user";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { encryptTransform } from "redux-persist-transform-encrypt";
+import { paymentAPI } from "./features/services/payment";
 
 const encryptor = encryptTransform({
   secretKey: "your-secret-key", 
@@ -47,7 +47,7 @@ const persistConfig = {
 };
 
 // Enhance rootReducer with persist capabilities and encryption
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer as any);
 
 // Initialize the store with the persistedReducer
 export const store = configureStore({

@@ -121,7 +121,7 @@ export default function CartItem({
         </Link>
       </td>
       <td className="text-center">
-        {cartItem?.productPrice && formatMoney(cartItem?.productPrice)}
+        {formatMoney(price)}
       </td>
       <td>
         <div className="flex justify-center">

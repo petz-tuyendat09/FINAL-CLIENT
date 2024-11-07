@@ -151,13 +151,7 @@ export const Index = () => {
       .min(10, "Số điện thoại ít nhất 10 số")
       .max(10, "Số điện thoại không quá 11 số"),
   });
-  const totalPrice = itemsToDisplay?.reduce((acc: any, item: any) => {
-    const price = item?.salePercent > 0
-      ? item.productPrice - (item.productPrice * item.salePercent) / 100
-      : item.productPrice;
-    
-    return acc + price * item.productQuantity;
-  }, 0);
+
   return (
     <>
       <div className="mt-[100px] px-[30px] pb-[50px]">
@@ -423,7 +417,13 @@ export const Index = () => {
                       <div className="flex flex-row justify-between">
                         <span>Tổng tiền hàng</span>
                         <span>
-                          {formatCurrency(totalPrice)}
+                          {formatCurrency(
+                            itemsToDisplay.reduce(
+                              (acc, item) =>
+                                acc + item.productPrice * item.productQuantity,
+                              0,
+                            ),
+                          )}
                         </span>
                       </div>
                       <div className="flex flex-row justify-between">

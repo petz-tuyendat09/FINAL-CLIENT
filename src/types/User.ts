@@ -51,6 +51,18 @@ export interface User {
   userVoucher: string[];
   userOrders: UserOrder[];
   userCart: UserCart;
+  userShift: [
+    {
+      startTime: {
+        type: String;
+        required: false;
+      };
+      endTime: {
+        type: String;
+        required: false;
+      };
+    },
+  ];
   __v: number;
   token: string;
   refreshToken: string;
@@ -63,7 +75,6 @@ export interface PaginateUser {
 }
 
 export interface UserState {
-  user: SecureUser | null;
   token: string | null;
   voucher: VoucherOrder | null;
 }

@@ -18,11 +18,7 @@ export default function DynamicLink() {
     } else if (userRole === "spa") {
       // Spa chỉ có quyền truy cập /admin/bookings
       return ["/admin/bookings"].includes(link.url);
-    } else if (userRole === "manager") {
-      // Manager không có quyền truy cập /admin/users
-      return link.url !== "/admin/users";
     }
-    // Mặc định: admin và các role khác có thể thấy tất cả liên kết
     return true;
   });
 

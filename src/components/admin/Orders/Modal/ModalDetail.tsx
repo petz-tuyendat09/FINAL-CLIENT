@@ -198,6 +198,8 @@ export default function ModalOrderDetail({
                         </TableCell>
                         <TableCell>
                           <Image
+                            unoptimized
+                            priority
                             src={(data as any).productId.productThumbnail}
                             alt="product"
                             style={{ width: "80px", height: "100px" }}

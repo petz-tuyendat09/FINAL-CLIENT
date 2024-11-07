@@ -75,7 +75,7 @@ export default function ModalOrderDetail({
           <>
             <ModalHeader className="text-center">
               Xác nhận thông tin
-            </Modal>
+            </ModalHeader>
             <ModalBody>
               <p>
                 <span className="font-bold">Tên khách hàng:</span>{" "}
@@ -95,7 +95,7 @@ export default function ModalOrderDetail({
                     <TableColumn key={column.key}>{column.label}</TableColumn>
                   )}
                 </TableHeader>
-                <TableBody items={orderDetail?.productId || []}>
+                <TableBody items={orderDetail?.products || []}>
                   {(data) => {
                     const selectedOption = (
                       data as any
@@ -111,7 +111,7 @@ export default function ModalOrderDetail({
                       : selectedOption?.productPrice || 0;
 
                     return (
-                      <TableRow key={data._id}>
+                      <TableRow key={data.productId}>
                         <TableCell>
                           {(data as any).productId.productName}
                         </TableCell>

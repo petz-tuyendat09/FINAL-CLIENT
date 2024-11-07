@@ -17,11 +17,13 @@ export default function useUserAction({ initialPage }: useUserActionProps) {
   const [queryParams, setQueryParams] = useState<QueryUserParams>({});
   const [viewDetail, setViewDetail] = useState(false);
   const [UserId, setUserId] = useState("");
+  const [editUserId, setEditUserId] = useState("");
+  const [changeShift, setChangeShift] = useState(false);
 
   const [page, setPage] = useState(initialPage);
   const { data: userList } = useGetUserPaginateQuery({
     ...queryParams,
-    limit: 2,
+    limit: 25,
     page: page,
   });
 
@@ -91,6 +93,16 @@ export default function useUserAction({ initialPage }: useUserActionProps) {
     }
   }, [data]);
 
+  function handleChangeShift(changeShiftUserId: string) {
+    setChangeShift(true);
+    setEditUserId(changeShiftUserId);
+  }
+
+  function handleCancelChangeShift() {
+    setChangeShift(false);
+    setUserId("");
+  }
+
   return {
     userList,
     roleFilter,
@@ -104,5 +116,9 @@ export default function useUserAction({ initialPage }: useUserActionProps) {
     UserId,
     handleEmailUserSearch,
     handleChangeUserRole,
+    changeShift,
+    editUserId,
+    handleCancelChangeShift,
+    handleChangeShift,
   };
 }

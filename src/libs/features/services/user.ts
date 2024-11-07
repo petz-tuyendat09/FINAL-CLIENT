@@ -73,10 +73,11 @@ export const userAPI = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    deleteCartByUser: builder.mutation<any, string>({
-      query: (id: string) => ({
-        url: `/${id}`,
-        method: "DELETE",
+    editUserShift: builder.mutation<any, any>({
+      query: (formData: any) => ({
+        url: `/change-shift`,
+        method: "PUT",
+        body: formData,
       }),
       invalidatesTags: ["User"],
     }),
@@ -95,13 +96,12 @@ export const userAPI = createApi({
   }),
 });
 
-
 export const {
   useGetUserQuery,
   useEditUserMutation,
   useGetVouchersHeldQuery,
+  useLazyGetVouchersHeldQuery,
   useGetUserPaginateQuery,
   useEditUserRoleMutation,
-  useDeleteCartByUserMutation,
+  useEditUserShiftMutation,
 } = userAPI;
-

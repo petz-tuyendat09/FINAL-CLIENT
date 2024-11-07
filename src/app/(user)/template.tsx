@@ -2,12 +2,19 @@
 
 import { animatePageIn } from "@/utils/animation";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
   useEffect(() => {
-    animatePageIn();
-  }, []);
+    const timeout = setTimeout(() => {
+      animatePageIn();
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [pathname]);
 
   return (
     <div>

@@ -7,9 +7,12 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
+
+  console.log(session?.user);
 
   // Xác định URL cho Trang Admin dựa trên userRole
   const getAdminUrl = () => {
@@ -83,6 +86,22 @@ export default function LoginButton() {
               </DropdownItem>
             ) as any)}
 
+          <DropdownItem textValue="Lịch sử mua hàng" key="/order-history">
+            <NormalTransitionLink
+              className="w-full text-left"
+              href="/user/change-voucher"
+            >
+              Đổi voucher
+            </NormalTransitionLink>
+          </DropdownItem>
+          <DropdownItem textValue="Lịch sử mua hàng" key="/order-history">
+            <NormalTransitionLink
+              className="w-full text-left"
+              href="/user/order-history"
+            >
+              Lịch sử mua hàng
+            </NormalTransitionLink>
+          </DropdownItem>
           <DropdownItem
             textValue="Đăng xuất"
             key="logout"

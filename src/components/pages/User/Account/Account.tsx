@@ -18,9 +18,17 @@ interface User {
 
 export default function Profile() {
   const { formik } = useChangeProfile();
-  const { data: session } = useSession();
+  const { data: session, update: sessionUpdate } = useSession();
   const userId = session?.user?._id;
   const { data: userData, isLoading } = useGetUserQuery(userId || "");
+
+  useEffect(() => {
+    if (userData) {
+      sessionUpdate({
+        user: userData,
+      });
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (userData) {

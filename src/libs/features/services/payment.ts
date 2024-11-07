@@ -6,7 +6,7 @@ export interface Payment {
   payUrl?: string | undefined;
 }
 
-export const orderAPI = createApi({
+export const paymentAPI = createApi({
   reducerPath: "paymentAPI",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/payment`,
@@ -14,18 +14,16 @@ export const orderAPI = createApi({
   tagTypes: ["Payment"],
   endpoints: (builder) => ({
     handlePaymentMomo: builder.mutation<Payment, Payment>({
-        query: (payload) => ({
-          url: `/`,
-          method: "POST",
-          body: payload,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }),
+      query: (payload) => ({
+        url: `/`,
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
     }),
   }),
 });
 
-export const {
-  useHandlePaymentMomoMutation,
-} = orderAPI;
+export const { useHandlePaymentMomoMutation } = paymentAPI;

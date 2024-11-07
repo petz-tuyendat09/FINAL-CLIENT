@@ -50,9 +50,12 @@ const columns = [
 ];
 
 const statusColors = {
-  [OrderStatus.COMPLETED]: "text-green-600",
-  [OrderStatus.PENDING]: "text-amber-500",
+  [OrderStatus.DELIVERED]: "text-green-600",
+  [OrderStatus.DELIVERING]: "text-blue-600	",
   [OrderStatus.CANCELLED]: "text-red-600",
+  [OrderStatus.PENDING]: "text-amber-500",
+  [OrderStatus.PAID]: "text-red-600", // Add color for PAID
+  [OrderStatus.FAILED]: "text-green-600", // Add color for FAILED
 };
 
 export default function OrderTable() {
@@ -83,7 +86,6 @@ export default function OrderTable() {
     if (!userId) return "Khách lẻ";
     return userId.slice(0, 5).toUpperCase();
   };
-
 
   return (
     <div className="">
@@ -153,11 +155,14 @@ export default function OrderTable() {
                   );
                 }
                 if (columnKey === "productId") {
-                  return <TableCell>{orderItem.productId.length}</TableCell>;
+                  return <TableCell>{orderItem.products.length}</TableCell>;
                 }
 
                 if (columnKey === "orderStatus") {
-                  const statusLabel = OrderStatus[orderItem.orderStatus as keyof typeof OrderStatus];
+                  const statusLabel =
+                    OrderStatus[
+                      orderItem.orderStatus as keyof typeof OrderStatus
+                    ];
                   const statusClass = statusColors[statusLabel];
 
                   return (

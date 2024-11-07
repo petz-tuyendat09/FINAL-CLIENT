@@ -10,39 +10,16 @@ export default function page() {
         <p className="text-[64px] text-black">PETZ</p>
       </div>
       <div className="space-y-4">
-        <p>Xin chào Phan Tuyến Đạt</p>
-        <p>Bạn đã đặt lịch thành công</p>
-        <p>Chúng tôi sẽ liên hệ để xác nhận lịch hẹn của bạn sớm nhất</p>
-      </div>
-      <div>
-        <p>
-          <span className="font-bold">Ngày đặt:</span> 28/10/2020
-        </p>
-        <p>
-          <span className="font-bold">Giờ đặt:</span> 14:00
-        </p>
-      </div>
-      <div className="mt-4">
-        <div className="mb-4 flex items-center justify-between">
-          <div className="rounded text-xs font-bold text-black">Dịch vụ</div>
-          <div className="rounded text-xs font-bold text-black">Giá tiền</div>
-        </div>
-        <div className="mb-2 flex justify-between border-b border-gray-200 pb-2">
-          <span className="text-gray-800">Chăm Sóc Móng</span>
-          <span className="text-gray-800">5.000.000 VND</span>
-        </div>
-        <div className="mb-2 flex justify-between border-b border-gray-200 pb-2">
-          <span className="text-gray-800">Chăm Sóc Móng</span>
-          <span className="text-gray-800">5.000.000 VND</span>
-        </div>
-        <div className="mb-2 flex justify-between border-b border-gray-200 pb-2">
-          <span className="text-gray-800">Chăm Sóc Móng</span>
-          <span className="text-gray-800">5.000.000 VND</span>
-        </div>
-
-        <div className="flex justify-between pt-2">
-          <span className="font-bold text-gray-800">Total:</span>
-          <span className="font-bold text-gray-800">$20.00</span>
+        <p>Xin chào Phan Tuyến Đạt, đơn hàng của bạn đang được vận chuyển.</p>
+        <div className="flex items-center justify-center gap-4">
+          <img
+            width="40"
+            src="https://cdn-icons-png.flaticon.com/128/16104/16104958.png"
+            alt=""
+          />
+          <div className="rounded-full bg-[#77CC00] px-6 py-2 text-white">
+            Đang vận chuyển
+          </div>
         </div>
       </div>
     </div>

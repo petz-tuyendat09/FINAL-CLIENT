@@ -99,18 +99,30 @@ export default function CartItem({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartAfterRemoveItem, cartAfterAdjust]);
+  console.log(cartItem?.productImage);
   return (
     <tr>
       <td>
-        <Link href={`shop/${cartItem?.productSlug}`} className="flex flex-row items-center gap-[20px]">
-          <Image src={cartItem?.productImage} width={100} height={100} alt="" />
+        <Link
+          href={`shop/${cartItem?.productSlug}`}
+          className="flex flex-row items-center gap-[20px]"
+        >
+          <Image
+            unoptimized
+            src={cartItem?.productImage}
+            width={100}
+            height={100}
+            alt=""
+          />
           <div>
             <h2>{cartItem?.productName}</h2>
             <p className="text-gray-800">{cartItem.productOption}</p>
           </div>
         </Link>
       </td>
-      <td className="text-center">{cartItem?.productPrice && formatMoney(cartItem?.productPrice)}</td>
+      <td className="text-center">
+        {cartItem?.productPrice && formatMoney(cartItem?.productPrice)}
+      </td>
       <td>
         <div className="flex justify-center">
           <div className="flex items-center gap-[5px] rounded-lg border px-3 py-1">
@@ -152,7 +164,7 @@ export default function CartItem({
       </td>
       <td>
         <button
-          className="p-[10px] rounded-[10px] bg-slate-200 hover:bg-slate-300"
+          className="rounded-[10px] bg-slate-200 p-[10px] hover:bg-slate-300"
           onClick={() =>
             handleRemove(cartItem?.productId, cartItem?.productOption as string)
           }

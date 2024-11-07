@@ -38,7 +38,7 @@ const rootReducer = combineReducers({
   [servicesAPI.reducerPath]: servicesAPI.reducer,
   [bookingsAPI.reducerPath]: bookingsAPI.reducer,
   [orderAPI.reducerPath]: orderAPI.reducer,
-  [orderStatsAPI.reducerPath]: orderAPI.reducer,
+  [orderStatsAPI.reducerPath]: orderStatsAPI.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
   [paymentAPI.reducerPath]: paymentAPI.reducer,
 });

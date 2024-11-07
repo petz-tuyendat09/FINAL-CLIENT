@@ -13,11 +13,12 @@ export default function DynamicLink() {
   // Lọc liên kết dựa trên userRole
   const filteredLinks = links.filter((link) => {
     if (userRole === "seller") {
-      // Seller chỉ có quyền truy cập /admin/orders và /admin/shop
       return ["/admin/orders", "/admin/shop"].includes(link.url);
     } else if (userRole === "spa") {
-      // Spa chỉ có quyền truy cập /admin/bookings
       return ["/admin/bookings"].includes(link.url);
+    } else if (userRole === "manager") {
+      // Manager không có quyền truy cập /admin/users
+      return link.url !== "/admin/users";
     }
     return true;
   });

@@ -81,6 +81,7 @@ export default function OrderTable() {
   return (
     <div className="mt-4">
       <Table
+        className="dark:text-white"
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination

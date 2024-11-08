@@ -58,13 +58,13 @@ export default function CategoriesTable() {
     <div className="w-1/2">
       <ButtonAdmin
         onClick={handleAddCategory}
-        className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
+        className="ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
       >
         + Thêm danh mục
       </ButtonAdmin>
       <Table
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full"
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination

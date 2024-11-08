@@ -85,6 +85,7 @@ export default function ModalOrderDetail({
   if (isLoading) {
     return (
       <Modal
+        className="dark:text-white"
         size="2xl"
         backdrop="blur"
         onClose={handleCloseDialog}
@@ -148,6 +149,7 @@ export default function ModalOrderDetail({
       backdrop="blur"
       onClose={handleCloseDialog}
       isOpen={isDialogOpen}
+      className="dark:text-white"
       classNames={{
         backdrop:
           "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",

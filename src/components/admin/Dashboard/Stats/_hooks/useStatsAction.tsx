@@ -1,15 +1,20 @@
-"use client";
-
 import { useState, useCallback, useEffect } from "react";
 import { useGetOrderStatsQuery } from "@/libs/features/services/orderStatsAPI";
-import { getToday, getThisMonth, getThisYear } from "@/utils/formatDateStats";
+import { formatDate, getToday, getThisMonth, getThisYear } from "@/utils/formatDateStats";
+
+interface ReportData {
+  totalRevenue?: number;
+  ordersSold?: number;
+  ordersCancelled?: number;
+}
 
 export const useStatsAction = () => {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [shouldFetch, setShouldFetch] = useState(false);
+  const [firstDayOfMonth, lastDayOfMonth] = getThisMonth();
 
-  const [report, setReport] = useState({
+  const [startDate, setStartDate] = useState<string>(firstDayOfMonth);
+  const [endDate, setEndDate] = useState<string>(lastDayOfMonth);
+  const [shouldFetch, setShouldFetch] = useState<boolean>(false);
+  const [report, setReport] = useState<{ cash: number; ordersSold: number; ordersCancelled: number }>({
     cash: 0,
     ordersSold: 0,
     ordersCancelled: 0,
@@ -19,80 +24,45 @@ export const useStatsAction = () => {
     setShouldFetch(true);
   }, []);
 
-  const { data, error, isLoading } = useGetOrderStatsQuery({
-    startDate,
-    endDate,
-    year: startDate
-      ? new Date(startDate).getFullYear()
-      : new Date().getFullYear(),
-    month: startDate
-      ? new Date(startDate).getMonth() + 1
-      : new Date().getMonth() + 1,
-    day: startDate ? new Date(startDate).getDate() : new Date().getDate(),
-  });
+  // console.log(startDate)
+  // console.log(endDate)
 
-  console.log(data);
-
-  const calculateReport = (statsData: {
-    monthlyRevenue: number[];
-    ordersSold: number[];
-    ordersCancelled: number[];
-  }) => {
-    let cash = 0;
-    let ordersSold = 0;
-    let ordersCancelled = 0;
-
-    if (statsData?.monthlyRevenue) {
-      statsData.monthlyRevenue.forEach((revenue, index) => {
-        if (revenue > 0) {
-          ordersSold += statsData.ordersSold[index];
-          cash += revenue;
-        }
-      });
+  const { data, error, isLoading } = useGetOrderStatsQuery(
+    {
+      startDate: formatDate(new Date(startDate)),
+      endDate: formatDate(new Date(endDate)),
+      year: startDate ? new Date(startDate).getFullYear() : undefined,
+      month: startDate ? new Date(startDate).getMonth() + 1 : undefined,
+      day: startDate === endDate ? new Date(startDate).getDate() : undefined,
     }
 
-    if (statsData?.ordersCancelled) {
-      statsData.ordersCancelled.forEach((cancelledOrders, index) => {
-        ordersCancelled += cancelledOrders;
-      });
-    }
+  )
 
+  console.log(data)
+
+
+  const calculateReport = (statsData: ReportData) => {
+    const { totalRevenue = 0, ordersSold = 0, ordersCancelled = 0 } = statsData;
     setReport({
-      cash,
+      cash: totalRevenue,
       ordersSold,
       ordersCancelled,
     });
   };
 
   useEffect(() => {
-    if (data && !isLoading && !error) {
-      calculateReport(data); // Đảm bảo chỉ tính toán khi dữ liệu có sẵn
+    if (data && !isLoading && !error && shouldFetch) {
+      calculateReport(data);
+      setShouldFetch(false);
     }
-  }, [data, isLoading, error]); // Chạy khi data, isLoading, error thay đổi
+  }, [data, isLoading, error, shouldFetch]);
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const option = event.target.value;
-
-    if (option === "today") {
-      const today = getToday();
-      setStartDate(today);
-      setEndDate(today);
-    } else if (option === "thisMonth") {
-      const [firstDay, lastDay] = getThisMonth();
-      setStartDate(firstDay);
-      setEndDate(lastDay);
-    } else if (option === "thisYear") {
-      const [firstDay, lastDay] = getThisYear();
-      setStartDate(firstDay);
-      setEndDate(lastDay);
-    }
-  };
 
   return {
+    data,
     startDate,
     endDate,
     report,
-    handleOptionChange,
     handleGenerateReport,
     setStartDate,
     setEndDate,

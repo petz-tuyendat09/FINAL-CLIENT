@@ -2,13 +2,14 @@
 
 import { Skeleton } from "@nextui-org/react";
 import { useStatsAction } from "./_hooks/useStatsAction";
+import formatMoney from "@/utils/formatMoney";
 
 export default function Stats() {
   const {
     startDate,
     endDate,
     report,
-    handleOptionChange,
+    data,
     handleGenerateReport,
     setStartDate,
     setEndDate,
@@ -47,34 +48,23 @@ export default function Stats() {
   if (error) return <div>Error: {errorMessage}</div>;
 
   return (
-    <div className="mt-8 w-full rounded-lg bg-white p-8 shadow-lg">
+    <div className="mt-8 w-full rounded-lg bg-white dark:bg-[#18181b] dark:text-white p-8 shadow-lg">
       <div className="mb-4 flex items-center">
         <h1 className="text-2xl font-semibold">Báo cáo doanh thu</h1>
       </div>
 
       <div className="mb-2 mt-6">Thời gian báo cáo</div>
       <div className="mb-6 flex gap-4">
-        <select
-          id="options"
-          className="w-1/3 rounded-lg border border-black p-2"
-          onChange={handleOptionChange}
-        >
-          <option value="today">Hôm nay</option>
-          <option value="thisMonth">Tháng này</option>
-          <option value="thisYear">Năm này</option>
-          <option value="custom">Tùy chọn</option>
-        </select>
-
         <input
           type="date"
-          className="w-1/3 rounded-lg border border-black p-2"
+          className="w-1/2 rounded-lg border border-black p-2"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
 
         <input
           type="date"
-          className="w-1/3 rounded-lg border border-black p-2"
+          className="w-1/2 rounded-lg border border-black p-2"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
@@ -93,16 +83,16 @@ export default function Stats() {
         <h2 className="mb-4 text-3xl font-semibold">Tổng doanh thu</h2>
         <div className="space-y-5">
           <div className="flex justify-between">
-            <span className="font-medium">Tiền mặt</span>
-            <span className="text-gray-500">{report.cash} VND</span>
+            <span className="font-medium">Tổng tiền</span>
+            <span className="text-gray-500">{formatMoney(data.totalRevenue)}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Số đơn hàng đã bán</span>
-            <span className="text-gray-500">{report.ordersSold} đơn</span>
+            <span className="text-gray-500">{data.ordersSold} đơn</span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Số đơn hàng đã hủy</span>
-            <span className="text-gray-500">{report.ordersCancelled} đơn</span>
+            <span className="text-gray-500">{data.ordersCancelled} đơn</span>
           </div>
         </div>
       </div>

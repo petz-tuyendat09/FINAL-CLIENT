@@ -69,7 +69,7 @@ export default function OrderFilter() {
           onSelectionChange={setStatusFilter as any}
         >
           {Object.keys(OrderStatus).map((statusKey) => (
-            <DropdownItem key={statusKey}>
+            <DropdownItem className="dark:text-white" key={statusKey}>
               {OrderStatus[statusKey as keyof typeof OrderStatus]}
             </DropdownItem>
           ))}
@@ -95,8 +95,12 @@ export default function OrderFilter() {
           selectionMode="single"
           onSelectionChange={setOrderTotalFilter as any}
         >
-          <DropdownItem key="desc">Tổng tiền giảm dần</DropdownItem>
-          <DropdownItem key="asc">Tổng tiền tăng dần</DropdownItem>
+          <DropdownItem className="dark:text-white" key="desc">
+            Tổng tiền giảm dần
+          </DropdownItem>
+          <DropdownItem className="dark:text-white" key="asc">
+            Tổng tiền tăng dần
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
@@ -118,8 +122,12 @@ export default function OrderFilter() {
           selectionMode="single"
           onSelectionChange={setUserFilter as any}
         >
-          <DropdownItem key="no">Khách lẻ</DropdownItem>
-          <DropdownItem key="yes">Khách có đăng ký</DropdownItem>
+          <DropdownItem className="dark:text-white" key="no">
+            Khách lẻ
+          </DropdownItem>
+          <DropdownItem className="dark:text-white" key="yes">
+            Khách có đăng ký
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <Button variant="flat" onClick={handleClearDate}>

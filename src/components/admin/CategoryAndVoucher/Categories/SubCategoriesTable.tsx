@@ -70,7 +70,7 @@ export default function SubCategoriesTable() {
       </div>
       <Table
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full"
         checkboxesProps={{
           classNames: {
             icon: "bg-black h-full w-full",

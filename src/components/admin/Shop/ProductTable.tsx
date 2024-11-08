@@ -105,7 +105,7 @@ export default function ProductTable() {
         </Button>
 
         <Button
-          className="bg-[#f3f3f3] dark:text-black"
+          className="bg-[#f3f3f3] px-6 dark:text-black"
           variant="flat"
           isDisabled={userRole === "seller"}
         >

@@ -110,7 +110,7 @@ export default function VoucherTable() {
       <Table
         selectionMode="multiple"
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full"
         onSelectionChange={(selectedKeys: any) => {
           handleSelectedRows(selectedKeys);
         }}

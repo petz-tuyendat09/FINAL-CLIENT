@@ -34,7 +34,7 @@ export default function useProductActionAdmin({
     const fetchProducts = async () => {
       const response = await getProduct({
         page: pages,
-        limit: 2,
+        limit: 25,
         ...queryParams,
       });
       setTotalPages(response?.totalPages);

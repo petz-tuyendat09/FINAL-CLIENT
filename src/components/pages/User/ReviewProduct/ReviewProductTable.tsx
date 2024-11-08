@@ -15,12 +15,12 @@ import {
   DropdownItem,
   DropdownMenu,
 } from "@nextui-org/react";
-import { today, getLocalTimeZone } from "@internationalized/date";
 import { BookingStatus } from "@/types/Booking";
-import formatMoney from "@/utils/formatMoney"; // Import the formatMoney function
+import formatMoney from "@/utils/formatMoney";
 import useReviewAction from "./_hooks/useReviewAction";
 import formatDate from "@/utils/formatDate";
 import formatSelectedKeys from "@/utils/formatSelectedValue";
+import ModalReview from "./Modal/ModalReview";
 
 const columns = [
   {
@@ -46,30 +46,13 @@ export default function ServicesList() {
     reviewList,
     selectedKeys,
     setSelectedKeys,
-    bookingDetailId,
-    viewDetail,
-    handleCancelBooking,
-    cancelBookingId,
-    cancelBooking,
+    reviewId,
     handleReview,
     handleCancelReview,
-    handleCloseCancelBooking,
+
     isReview,
     handleClearQuery,
   } = useReviewAction();
-
-  // Get the local time zone
-  const currentDate = today(getLocalTimeZone());
-
-  const isPastDate = (bookingDate: string) => {
-    const booking = new Date(bookingDate);
-    const current = new Date(
-      currentDate.year,
-      currentDate.month - 1,
-      currentDate.day,
-    );
-    return booking < current;
-  };
 
   return (
     <>
@@ -146,15 +129,20 @@ export default function ServicesList() {
                   if (columnKey === "rating") {
                     return (
                       <TableCell>
-                        {formatMoney(reviewItem.rating) || "Chưa đánh giá"}
+                        {reviewItem.rating || "Chưa đánh giá"}
                       </TableCell>
                     );
                   }
                   if (columnKey === "action") {
                     return (
                       <TableCell className="space-x-2">
-                        <Button variant="flat" size="sm">
-                          Đánh giá
+                        <Button
+                          isDisabled={reviewItem !== null}
+                          onClick={() => handleReview(reviewItem._id)}
+                          variant="flat"
+                          size="sm"
+                        >
+                          {reviewItem !== null ? "Đã đánh giá" : "Đánh giá"}
                         </Button>
                       </TableCell>
                     );
@@ -167,6 +155,11 @@ export default function ServicesList() {
             )}
           </TableBody>
         </Table>
+        <ModalReview
+          isDialogOpen={isReview}
+          handleCloseDialog={handleCancelReview}
+          reviewId={reviewId}
+        />
       </div>
     </>
   );

@@ -11,32 +11,19 @@ export default function useReviewAction() {
   const { data: session, status } = useSession();
   const [selectedKeys, setSelectedKeys] = useState(new Set(["Status"]));
   const [userId, setUserId] = useState();
-  const [viewDetail, setViewDetail] = useState(false);
-  const [cancelBooking, setCancelBooking] = useState(false);
-  const [cancelBookingId, setCancelBookingId] = useState("");
   const [isReview, setIsReview] = useState(false);
-  const [bookingDetailId, setBookingDetailId] = useState("");
+  const [reviewId, setReviewId] = useState("");
 
   const [queryParams, setQueryParams] = useState<ReviewQueryParams>({});
 
   const handleReview = (bookingId: string) => {
     setIsReview(true);
-    setBookingDetailId(bookingId);
+    setReviewId(bookingId);
   };
 
   const handleCancelReview = () => {
     setIsReview(false);
-    setBookingDetailId("");
-  };
-
-  const handleCancelBooking = (cancelBookingId: string) => {
-    setCancelBooking(true);
-    setCancelBookingId(cancelBookingId);
-  };
-
-  const handleCloseCancelBooking = () => {
-    setCancelBooking(false);
-    setCancelBookingId("");
+    setReviewId("");
   };
 
   useEffect(() => {
@@ -70,15 +57,11 @@ export default function useReviewAction() {
     reviewList,
     setSelectedKeys,
     selectedKeys,
-    viewDetail,
-    bookingDetailId,
+
     handleReview,
     isReview,
     handleCancelReview,
-    handleCancelBooking,
-    cancelBookingId,
-    cancelBooking,
-    handleCloseCancelBooking,
+    reviewId,
     handleClearQuery,
   };
 }

@@ -24,7 +24,7 @@ export interface QueryParams {
 
 export interface ReviewQueryParams {
   userId?: string | undefined;
-  ratingStatus?: "yes | no";
+  ratingStatus?: "yes" | "no";
   sort?: "asc" | "desc";
   page?: number;
   limit?: number;
@@ -105,6 +105,13 @@ export const productsAPI = createApi({
         body: formData,
       }),
     }),
+    review: builder.mutation<any, FormData>({
+      query: (formData: FormData) => ({
+        url: `/review`,
+        method: "PUT",
+        body: formData,
+      }),
+    }),
     lowstockNofi: builder.mutation<any, string>({
       query: (productId) => ({
         url: `/lowstock-nofi`,
@@ -126,4 +133,5 @@ export const {
   useEditProductMutation,
   useLowstockNofiMutation,
   useGetReviewQuery,
+  useReviewMutation,
 } = productsAPI;

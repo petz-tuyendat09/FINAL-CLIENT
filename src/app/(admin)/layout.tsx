@@ -27,7 +27,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <StoreProvider>
-          <div className="flex py-12">
+          <div className="flex min-h-screen py-12">
             <Sidebar />
             <div className="mx-auto w-3/4">{children}</div>
           </div>

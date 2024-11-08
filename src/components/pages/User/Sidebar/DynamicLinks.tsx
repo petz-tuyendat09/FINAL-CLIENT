@@ -17,7 +17,7 @@ export default function DynamicLink() {
   const session = useSession();
   const userId = useMemo(() => session.data?.user._id, [session.data]);
   const { data } = useGetReviewQuery(
-    userId ? { userId: userId, limit: 99 } : skipToken,
+    userId ? { userId: userId, limit: 99, ratingStatus: "no" } : skipToken,
   );
 
   return (

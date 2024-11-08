@@ -39,7 +39,7 @@ export default function ModalDelete({
           "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
       }}
     >
-      <ModalContent>
+      <ModalContent className="dark:text-white">
         {(onClose) => (
           <>
             <ModalHeader className="text-center">Xóa voucher</ModalHeader>

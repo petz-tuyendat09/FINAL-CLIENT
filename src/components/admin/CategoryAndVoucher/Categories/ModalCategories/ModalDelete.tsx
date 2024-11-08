@@ -100,8 +100,10 @@ export default function ModalDelete({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
-            <ModalBody>
+            <ModalHeader className="text-center dark:text-white">
+              Xóa danh mục
+            </ModalHeader>
+            <ModalBody className="dark:text-white">
               <p>Bạn có chắc chắn muốn xóa danh mục</p>
               <p>Vui lòng cập nhật sản phẩm và danh mục con trước khi xóa</p>
 
@@ -116,12 +118,14 @@ export default function ModalDelete({
                   labelPlacement={"inside"}
                   items={(filteredCategories as any) || []}
                   label="Cập nhật danh mục cha"
-                  className="w-full"
                   onSelectionChange={setNewCate as any}
                   selectedKeys={newCate}
                 >
                   {(category) => (
-                    <SelectItem key={(category as any)._id}>
+                    <SelectItem
+                      className="dark:text-white"
+                      key={(category as any)._id}
+                    >
                       {(category as any).categoryName}
                     </SelectItem>
                   )}

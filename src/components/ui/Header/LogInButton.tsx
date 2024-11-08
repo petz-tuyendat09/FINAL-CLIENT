@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import NormalTransitionLink from "../NormalTransitionLink";
 import {
   Dropdown,
@@ -7,6 +7,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import Notification from "./Notification";
 
 export default function LoginButton() {
   const { data: session, status } = useSession();
@@ -33,6 +34,7 @@ export default function LoginButton() {
 
   return (
     <div>
+      <Notification />
       <Dropdown
         classNames={{
           base: "before:bg-default-200", // change arrow background

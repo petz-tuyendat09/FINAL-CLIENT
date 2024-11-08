@@ -77,3 +77,7 @@ select:-webkit-autofill:focus {
   color: #fff; /* White text */
   border-radius: 999px !important; /* Full-rounded corners */
 }
+
+.dark {
+  background: #0d0d0d;
+}

@@ -100,17 +100,14 @@ export default function ProductTable() {
           subCateFilter={subCateFilter}
           setSubCateFilter={setSubCateFilter}
         />
-        <Button
-          className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-          onClick={handleClearQueryParams}
-        >
+        <Button variant="flat" onClick={handleClearQueryParams}>
           Xóa lọc
         </Button>
 
         <Button
+          className="bg-[#f3f3f3] dark:text-black"
+          variant="flat"
           isDisabled={userRole === "seller"}
-          className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-          color="default"
         >
           <NormalTransitionLink href="/admin/add-product">
             + Thêm sản phẩm
@@ -146,7 +143,7 @@ export default function ProductTable() {
           items={productList || []}
         >
           {(item) => (
-            <TableRow key={item._id}>
+            <TableRow className="dark:text-white" key={item._id}>
               {(columnKey) => {
                 if (columnKey === "action") {
                   return (

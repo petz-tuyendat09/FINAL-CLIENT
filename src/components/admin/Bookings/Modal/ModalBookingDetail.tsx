@@ -57,6 +57,7 @@ export default function ModalBookingDetail({
   if (isLoading) {
     return (
       <Modal
+        className="dark:text-white"
         backdrop="blur"
         onClose={handleCloseDialog}
         isOpen={isDialogOpen}
@@ -110,6 +111,7 @@ export default function ModalBookingDetail({
 
   return (
     <Modal
+      className="dark:text-white"
       backdrop="blur"
       onClose={handleCloseDialog}
       isOpen={isDialogOpen}

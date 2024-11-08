@@ -11,6 +11,7 @@ import GerneralInformation from "./GerneralInfor/GerneralInformation";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 export default function FormAddProduct() {
   const { data: categories } = useGetCategoriesQuery("");
@@ -34,10 +35,13 @@ export default function FormAddProduct() {
   return (
     <>
       <div className="mb-2 flex justify-between text-xl">
-        <Link className="flex items-center gap-1" href="/admin/shop">
+        <NormalTransitionLink
+          className="flex items-center gap-1 dark:text-white"
+          href="/admin/shop"
+        >
           <Icon icon="gravity-ui:arrow-left" />
           Quay về
-        </Link>
+        </NormalTransitionLink>
 
         <button
           onClick={handleButtonSubmit}

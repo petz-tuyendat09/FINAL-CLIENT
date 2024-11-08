@@ -175,7 +175,7 @@ export default function OrdersHistory() {
                           </Button>
                         </Link>
 
-                        {!pastDate && orderItem.orderStatus !== "CANCELLED" && (
+                        {!pastDate && orderItem.orderStatus !== "CANCELLED" && orderItem.orderStatus !== "PAID" && (
                           <Button
                             variant="flat"
                             size="sm"

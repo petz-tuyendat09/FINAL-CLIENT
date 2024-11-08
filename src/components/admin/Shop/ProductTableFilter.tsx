@@ -1,4 +1,3 @@
-import { useGetCategoriesQuery } from "@/libs/features/services/categories";
 import { useGetSubCategoriesQuery } from "@/libs/features/services/subcategories";
 import formatSelectedKeys from "@/utils/formatSelectedValue";
 import {
@@ -36,10 +35,7 @@ export default function ProductTableFilter({
     <>
       <Dropdown>
         <DropdownTrigger className="border-none">
-          <Button
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-            variant="bordered"
-          >
+          <Button variant="flat">
             {(formatSelectedKeys(saleFilter) as any) == 1
               ? "Sale"
               : "Không sale"}
@@ -53,16 +49,17 @@ export default function ProductTableFilter({
           selectionMode="single"
           onSelectionChange={setSaleFilter}
         >
-          <DropdownItem key={1}>Sale</DropdownItem>
-          <DropdownItem key={0}>Không sale</DropdownItem>
+          <DropdownItem className="dark:text-white" key={1}>
+            Sale
+          </DropdownItem>
+          <DropdownItem className="dark:text-white" key={0}>
+            Không sale
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
         <DropdownTrigger className="border-none">
-          <Button
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-            variant="bordered"
-          >
+          <Button variant="flat">
             {((formatSelectedKeys(outStockFilter) as any) == 1 && "Hết hàng") ||
               "Trạng thái"}
           </Button>
@@ -75,15 +72,14 @@ export default function ProductTableFilter({
           selectionMode="single"
           onSelectionChange={setOutStockFilter}
         >
-          <DropdownItem key={1}>Sắp hết hàng</DropdownItem>
+          <DropdownItem className="dark:text-white" key={1}>
+            Sắp hết hàng
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
         <DropdownTrigger className="border-none">
-          <Button
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-            variant="bordered"
-          >
+          <Button variant="flat">
             {((formatSelectedKeys(productBuyFilter) as any) ==
               "productBuyDesc" &&
               "Hết hàng") ||
@@ -98,16 +94,17 @@ export default function ProductTableFilter({
           selectionMode="single"
           onSelectionChange={setProductBuyFilter}
         >
-          <DropdownItem key="productBuyDesc">Lượt mua giảm dần</DropdownItem>
-          <DropdownItem key="productBuyAsc">Lượt mua tăng dần</DropdownItem>
+          <DropdownItem className="dark:text-white" key="productBuyDesc">
+            Lượt mua giảm dần
+          </DropdownItem>
+          <DropdownItem className="dark:text-white" key="productBuyAsc">
+            Lượt mua tăng dần
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
       <Dropdown className="h-full">
         <DropdownTrigger className="border-none">
-          <Button
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-            variant="bordered"
-          >
+          <Button variant="flat">
             {subCateFilter
               ? data?.find(
                   (item) => item._id === formatSelectedKeys(subCateFilter),
@@ -125,7 +122,9 @@ export default function ProductTableFilter({
           items={data}
         >
           {(item) => (
-            <DropdownItem key={item._id}>{item.subCategoryName}</DropdownItem>
+            <DropdownItem className="dark:text-white" key={item._id}>
+              {item.subCategoryName}
+            </DropdownItem>
           )}
         </DropdownMenu>
       </Dropdown>

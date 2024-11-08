@@ -201,7 +201,9 @@ export default function ModalEdit({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Chỉnh sửa dịch vụ</ModalHeader>
+            <ModalHeader className="text-center dark:text-white">
+              Chỉnh sửa dịch vụ
+            </ModalHeader>
             <ModalBody>
               <p className="text-base text-red-500">{duplicatedMessage}</p>
               <Select
@@ -217,7 +219,11 @@ export default function ModalEdit({
                 }}
               >
                 {SERVICES_TYPE.map((type) => (
-                  <SelectItem key={type} value={type}>
+                  <SelectItem
+                    className="dark:text-white"
+                    key={type}
+                    value={type}
+                  >
                     {ServicesType[type as keyof typeof ServicesType]}
                   </SelectItem>
                 ))}
@@ -258,7 +264,8 @@ export default function ModalEdit({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                color="success"
+                className="rounded-full text-white"
                 onPress={handleSave}
               >
                 Lưu

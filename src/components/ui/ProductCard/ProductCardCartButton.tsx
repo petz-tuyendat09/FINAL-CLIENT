@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { message } from "antd";
 import Link from "next/link";
 import NormalTransitionLink from "../NormalTransitionLink";
+import { animatePageOut } from "@/utils/animation";
+import { useRouter } from "next/navigation";
 interface ProductCardSelectWeightProps {
   Product: Product;
 }
@@ -22,15 +24,20 @@ export default function ProductCardCartButton({
   const authStatus = session?.status;
 
   const [addToCart, { data: newCart }] = useAddItemToCartMutation();
-
+  const router = useRouter();
   const success = () => {
     message.success({
       content: (
-        <div>
+        <div className="flex gap-2">
           Thêm giỏ hàng thành công.{" "}
-          <Link href="/cart" className="text-blue-400">
-            Xem giỏ hàng
-          </Link>
+          <div
+            onClick={() => {
+              animatePageOut("/user/review-product", router);
+            }}
+            className="cursor-pointer text-blue-500"
+          >
+            Đánh giá ngay
+          </div>
         </div>
       ),
       duration: 30,

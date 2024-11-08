@@ -29,8 +29,10 @@ export default function DynamicLink() {
         <li
           key={link.url}
           className={`${
-            pathname === link.url ? "bg-black text-white" : ""
-          } rounded-xl flex items-center gap-1 rounded-full px-8 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white`}
+            pathname === link.url
+              ? "bg-black text-white dark:bg-white dark:text-black"
+              : "text-black dark:text-white"
+          } rounded-xl flex items-center gap-1 rounded-full px-8 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white dark:hover:bg-[#f9f9f9] dark:hover:text-black`}
         >
           <span>{link.icon}</span>
           <NormalTransitionLink href={link.url}>

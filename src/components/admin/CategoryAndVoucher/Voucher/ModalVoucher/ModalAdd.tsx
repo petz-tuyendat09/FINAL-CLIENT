@@ -128,7 +128,9 @@ export default function ModalAdd({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center dark:text-white">
+              Thêm voucher mới
+            </ModalHeader>
             <ModalBody>
               <p className="text-base text-red-500">{duplicatedMessage}</p>
               <Select
@@ -143,7 +145,11 @@ export default function ModalAdd({
                 }}
               >
                 {DISCOUNT_TYPE.map((type) => (
-                  <SelectItem key={type} value={type}>
+                  <SelectItem
+                    className="dark:text-white"
+                    key={type}
+                    value={type}
+                  >
                     {VoucherType[type as keyof typeof VoucherType]}
                   </SelectItem>
                 ))}

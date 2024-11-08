@@ -63,7 +63,9 @@ export default function ModalAdd({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center dark:text-white">
+              Thêm danh mục mới
+            </ModalHeader>
             <ModalBody>
               <Input
                 value={newCategoryName}
@@ -83,7 +85,8 @@ export default function ModalAdd({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                className="rounded-full text-white"
+                color="success"
                 onPress={handleAddCategory}
               >
                 Lưu

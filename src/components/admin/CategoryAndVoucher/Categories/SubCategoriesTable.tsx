@@ -18,6 +18,7 @@ import ModalAdd from "./ModalSubCategories/ModalAdd";
 import ModalDelete from "./ModalSubCategories/ModalDelete";
 import { useState } from "react";
 import { useDeleteSubCategoryMutation } from "@/libs/features/services/subcategories";
+import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
 
 const columns = [
   {
@@ -56,49 +57,20 @@ export default function SubCategoriesTable() {
     handleCancelDelete,
     deleteSubCategory,
   } = useSubCategoriesAction({ initialPage: 1 });
-  const [deleteCategory] = useDeleteSubCategoryMutation();
-
-  const [selectedIds, setSelectedIds] = useState<React.Key[]>([]);
-
-  const handleSelectedRows = (selectedKeys: any) => {
-    if (selectedKeys === "all") {
-      const allIds = subcategories?.subCategories.map((item) => item._id);
-      setSelectedIds(allIds || []);
-    } else {
-      const selectedIdsArray = Array.from(selectedKeys);
-      setSelectedIds(selectedIdsArray as any);
-    }
-  };
-
-  function handleDeleteMultiple() {
-    deleteCategory({ subCategoryId: selectedIds as any });
-  }
 
   return (
     <div className="w-1/2">
       <div className="flex">
-        {selectedIds.length > 0 && (
-          <button
-            onClick={handleDeleteMultiple}
-            className="mb-4 block w-fit rounded-full bg-black px-4 py-2 text-white"
-          >
-            Xóa
-          </button>
-        )}
-        <Button
+        <ButtonAdmin
           onClick={handleAddSubCategory}
           className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
         >
           + Thêm danh mục con
-        </Button>
+        </ButtonAdmin>
       </div>
       <Table
-        selectionMode="multiple"
         aria-label="Bảng hiển thị danh mục"
         className="w-full"
-        onSelectionChange={(selectedKeys: any) =>
-          handleSelectedRows(selectedKeys)
-        }
         checkboxesProps={{
           classNames: {
             icon: "bg-black h-full w-full",
@@ -128,7 +100,7 @@ export default function SubCategoriesTable() {
         </TableHeader>
         <TableBody items={subcategories?.subCategories || []}>
           {(item) => (
-            <TableRow key={item._id}>
+            <TableRow className="dark:text-white" key={item._id}>
               {(columnKey) => {
                 if (columnKey === "action") {
                   return (

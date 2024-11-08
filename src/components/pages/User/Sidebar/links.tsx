@@ -17,6 +17,10 @@ export const links = [
     icon: <Icon className="size-6" icon="material-symbols:feedback-outline" />,
     label: "Lịch sử đơn hàng",
   },
+  {
+    url: "/user/review-product",
+    icon: <Icon className="size-6" icon="mdi:voucher-outline" />,
+  },
 
   {
     url: "/user/change-voucher",

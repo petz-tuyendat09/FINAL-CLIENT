@@ -28,7 +28,6 @@ export default function RecallBooking() {
         scrub: true,
         start: "top 70%",
         end: "bottom 75%",
-        markers: true,
       },
     });
   }, []);
@@ -37,19 +36,19 @@ export default function RecallBooking() {
     <section>
       <div>
         <div ref={triggerRef} className="relative z-10 py-[250px]">
-          <div className="container px-64">
+          <div className="container px-8 lg:px-64">
             <div className="recall-section">
-              <h1 className="w-full text-display">
+              <div className="w-full text-h2 lg:text-display">
                 {text.split("").map((letter, index) => (
                   <span
                     ref={(el: any) => ((textsRef as any).current[index] = el)}
-                    className="text-h1 text-[#bababa] opacity-0"
+                    className="text-[#bababa] opacity-0"
                     key={index}
                   >
                     {letter}
                   </span>
                 ))}
-              </h1>
+              </div>
               <NormalTransitionLink
                 href="/booking"
                 className="mt-4 rounded-full bg-primary px-6 py-2 text-h3 text-white"

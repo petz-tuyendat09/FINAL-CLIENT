@@ -37,13 +37,13 @@ export default function AboutUs() {
   }, []);
 
   return (
-    <div className="container flex justify-center gap-[300px]">
+    <div className="container flex flex-col justify-center gap-4 lg:flex-row lg:gap-[300px]">
       <p>++ bạn đang lo lắng</p>
-      <div ref={triggerRef} className="w-[900px]">
+      <div ref={triggerRef} className="w-full text-h2 lg:w-[900px] lg:text-h1">
         {text.split("").map((letter, index) => (
           <span
             ref={setLetterRef as any}
-            className="text-h1 text-[#bababa]"
+            className="text-[#bababa]"
             key={index}
           >
             {letter}

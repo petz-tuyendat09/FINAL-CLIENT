@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 export default function Footer() {
   return (
     <footer className="relative z-10 py-16 text-black dark:text-white sm:px-6 lg:px-8 lg:py-20">
-      <div className="flex flex-col justify-between px-4 lg:px-32 xl:flex-row 2xl:px-48">
+      <div className="flex flex-col justify-between gap-8 px-4 lg:px-32 xl:flex-row 2xl:px-48">
         <div className="grid grid-cols-1 gap-8 text-left md:grid-cols-3 xl:w-1/2 xl:text-left">
           <div>
             <h2 className="text-lg text-gray-400">THÔNG TIN LIỆN HỆ</h2>
@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <p className="text-center text-[32px] lg:text-[100px] 2xl:text-[172px]">
+      <p className="text-center text-[64px] lg:text-[100px] 2xl:text-[172px]">
         ++PETZ
       </p>
     </footer>

@@ -29,7 +29,7 @@ export default function SaleSection() {
                   <div>Cho bạn</div>
                 </div>
                 <video
-                  className="hidden h-[300px] w-full rounded-lg object-cover md:block"
+                  className="h-[300px] w-full rounded-lg object-cover object-right lg:h-[400px] lg:object-center"
                   autoPlay
                   loop
                   muted

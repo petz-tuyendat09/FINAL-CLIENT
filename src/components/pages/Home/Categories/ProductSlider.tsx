@@ -43,6 +43,7 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
         }}
         modules={[FreeMode]}
         breakpoints={{
+          375: { slidesPerView: 2 },
           768: { slidesPerView: 3 },
           1280: { slidesPerView: 4 },
         }}

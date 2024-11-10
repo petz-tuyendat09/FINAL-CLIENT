@@ -51,25 +51,27 @@ export default function WhyChooseUs() {
   }, []);
 
   return (
-    <div className="my-[200px]">
-      <div ref={triggerRef}>
-        {textContent.map((text, index) => (
-          <div key={index} className="relative my-12">
-            <div
-              ref={(el: any) => ((linesRef as any).current[index] = el)}
-              className="line absolute left-0 right-0 top-1/2 h-[1px] w-0 rounded-full bg-[#1a1a1a]"
-            />
-            <div
-              ref={(el: any) => ((textsRef as any).current[index] = el)}
-              className={`relative z-10 translate-y-6 px-6 text-h3 opacity-0 ${
-                index % 2 === 0 ? `ml-[50%]` : "ml-32"
-              } w-fit bg-white text-center`}
-            >
-              {text}
+    <section className="my-[200px] w-full">
+      <div>
+        <div ref={triggerRef}>
+          {textContent.map((text, index) => (
+            <div key={index} className="relative my-12">
+              <div
+                ref={(el: any) => ((linesRef as any).current[index] = el)}
+                className="line absolute left-0 right-0 top-1/2 h-[1px] w-0 rounded-full bg-[#1a1a1a]"
+              />
+              <div
+                ref={(el: any) => ((textsRef as any).current[index] = el)}
+                className={`relative z-10 translate-y-6 text-[12px] opacity-0 md:text-[16px] lg:px-6 lg:text-h3 ${
+                  index % 2 === 0 ? `ml-24 md:ml-[50%]` : "ml-24 md:ml-32"
+                } w-fit bg-white text-center`}
+              >
+                {text}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

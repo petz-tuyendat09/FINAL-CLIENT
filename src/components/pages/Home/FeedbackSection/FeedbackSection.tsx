@@ -26,7 +26,7 @@ export default function MarketSection() {
           </div>
           <NormalTransitionLink
             href="/booking"
-            className="ml-auto rounded-full bg-primary px-4 py-2 text-right text-white"
+            className="mt-4 rounded-full bg-primary px-4 py-2 text-right text-white md:ml-auto"
           >
             Đặt lịch ngay
           </NormalTransitionLink>

@@ -52,27 +52,49 @@ export default function ServicesSection() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.to(boxesRef.current, {
-      y: "0%",
-      opacity: 1,
-      duration: 1,
-      stagger: 0.4,
-      scrollTrigger: {
-        trigger: triggerRef.current,
-        scrub: true,
-        start: "top 30%",
-        end: "bottom 70%",
+    let mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        // Cấu hình các điều kiện cho từng loại thiết bị
+        isMobile: "(max-width: 500px)",
+        isTablet: "(min-width: 501px) and (max-width: 1022px)",
+        isDesktop: "(min-width: 1023px)",
       },
-    });
+      (context) => {
+        // Lấy điều kiện hiện tại
+        let { isMobile, isTablet, isDesktop } = context.conditions as any;
+
+        gsap.to(boxesRef.current, {
+          y: "0%",
+          opacity: 1,
+          duration: 1,
+          stagger: 0.4,
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            scrub: true,
+            start: "top 50%",
+            end: isMobile
+              ? "bottom bottom"
+              : isTablet
+                ? "bottom 60%"
+                : "bottom 80%", // Tùy chỉnh giá trị end dựa trên thiết bị
+            markers: true,
+          },
+        });
+      },
+    );
   }, []);
 
   return (
     <div className="pin-section">
-      <div ref={triggerRef} className="h-[300vh]">
-        <div className="sticky top-0 h-[100vh]">
+      <div ref={triggerRef} className="h-[200vh] md:h-[100vh] lg:h-[300vh]">
+        <div className="static lg:sticky lg:top-0 lg:h-[100vh]">
           <div>
-            <div className="mb-4 flex justify-center gap-[300px]">
-              <h1 className="text-display">Dịch vụ của PETZ</h1>
+            <div className="mb-4 flex flex-col justify-center gap-4 lg:flex-row lg:gap-[300px]">
+              <h1 className="text-h1 lg:text-h1 2xl:text-display">
+                Dịch vụ của PETZ
+              </h1>
               <p className="max-w-[500px]">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Ratione deleniti adipisci in, vel rem laudantium eveniet dolores
@@ -80,13 +102,13 @@ export default function ServicesSection() {
                 beatae consequatur voluptate quis molestias veniam eos possimus.
               </p>
             </div>
-            <div className="h-[900px] bg-services-image">
-              <div className="flex h-full">
+            <div className="h-[700px] bg-services-image">
+              <div className="grid h-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                 {services.map((service, index) => (
                   <div
                     key={index}
                     ref={(el: any) => ((boxesRef as any).current[index] = el)}
-                    className="service-box h-full w-1/4 translate-y-full border border-[#dadada] bg-white p-4 duration-500 dark:border-none dark:bg-[#0d0d0d]"
+                    className="service-box h-full translate-y-[130%] border border-[#dadada] bg-white p-4 duration-500 dark:border-none dark:bg-[#0d0d0d]"
                   >
                     <h2 className="mb-4 text-h3">{service.title}</h2>
                     {service.items.map((item, index) => (

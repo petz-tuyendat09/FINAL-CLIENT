@@ -61,7 +61,7 @@ export default function Categories() {
     <section className="container mt-[200px] text-center">
       <p
         ref={triggerRef}
-        className="lg:tetxt-[100px] relative translate-y-20 text-[32px] dark:text-white 2xl:text-[172px]"
+        className="relative translate-y-10 text-[82px] dark:text-white md:text-[172px] lg:translate-y-20"
       >
         Products
       </p>

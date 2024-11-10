@@ -52,6 +52,7 @@ transition: background-position 0.5s ease;
 
 body {
   background-color: #fff;
+  overflow-x: hidden;
 }
 
 /* Change Autocomplete styles in Chrome*/
@@ -78,6 +79,8 @@ select:-webkit-autofill:focus {
   border-radius: 999px !important; /* Full-rounded corners */
 }
 
+
+
 .dark {
-  background: #0d0d0d;
+  background-color: #0d0d0d;
 }

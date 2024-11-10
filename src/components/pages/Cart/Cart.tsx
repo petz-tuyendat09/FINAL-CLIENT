@@ -18,6 +18,15 @@ import CartStepper from "./CartStepper";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 import calculateSalePrice from "@/utils/caculateSalePrice";
 const CartPage = () => {
+  useEffect(() => {
+    document.body.classList.remove("dark");
+
+    // Xóa lớp "dark" khỏi body khi component unmount
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  }, []);
+
   const activeStep = 0;
   const session = useSession();
   const authStatus = session.status;

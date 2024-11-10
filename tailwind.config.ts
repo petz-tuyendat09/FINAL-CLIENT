@@ -77,6 +77,7 @@ const config: Config = {
       },
 
       backgroundImage: {
+        "services-image": "url('/images/ServiceSection.webp')",
         "services-image-1": "url('/images/services-image-1.png')",
         "services-image-2": "url('/images/services-image-2.png')",
         "services-image-3": "url('/images/services-image-3.png')",

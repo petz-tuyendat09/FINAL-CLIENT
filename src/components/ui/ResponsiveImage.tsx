@@ -8,6 +8,7 @@ interface ResponsiveImageProps {
   imageHeight: number;
   fill?: boolean;
   priority?: boolean;
+  unoptimized?: boolean;
 }
 
 export default function ResponsiveImage({
@@ -18,9 +19,11 @@ export default function ResponsiveImage({
   imageHeight,
   fill,
   priority,
+  unoptimized,
 }: ResponsiveImageProps) {
   return (
     <Image
+      unoptimized={unoptimized}
       src={imageSrc}
       alt={altImage}
       className={additionClass}

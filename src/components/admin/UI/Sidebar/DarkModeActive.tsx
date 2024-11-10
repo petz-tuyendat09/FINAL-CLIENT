@@ -5,7 +5,7 @@ export default function DarkModeActive() {
     <>
       <div
         aria-hidden="true"
-        className="fixed -bottom-[40%] -left-[20%] -z-10 hidden dark:opacity-70 dark:md:block"
+        className="fixed -bottom-[40%] -left-[20%] z-0 hidden dark:opacity-70 dark:md:block"
       >
         <img
           src="https://nextui.org/gradients/docs-left.png"
@@ -16,7 +16,7 @@ export default function DarkModeActive() {
       </div>
       <div
         aria-hidden="true"
-        className="fixed -right-[60%] -top-[80%] -z-10 hidden rotate-12 dark:opacity-70 dark:md:block 2xl:-right-[45%] 2xl:-top-[60%]"
+        className="fixed -right-[60%] -top-[80%] z-0 hidden rotate-12 dark:opacity-70 dark:md:block 2xl:-right-[45%] 2xl:-top-[60%]"
       >
         <img
           src="https://nextui.org/gradients/docs-right.png"

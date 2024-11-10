@@ -1,6 +1,7 @@
 import MarketSectionImage from "@@/public/images/adopted-section.png";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import FeedbackSlide from "./FeedbackSlide";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 export default function MarketSection() {
   return (
     <section className="my-24">
@@ -23,6 +24,12 @@ export default function MarketSection() {
               </div>
             </div>
           </div>
+          <NormalTransitionLink
+            href="/booking"
+            className="ml-auto rounded-full bg-primary px-4 py-2 text-right text-white"
+          >
+            Đặt lịch ngay
+          </NormalTransitionLink>
         </div>
         <FeedbackSlide />
       </div>

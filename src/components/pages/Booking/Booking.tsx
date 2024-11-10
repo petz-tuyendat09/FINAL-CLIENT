@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import useBookingForm from "./_hook/useBookingForm";
 import BookingDetail from "./BookingDetail";
 import BookingForm from "./BookingForm";
@@ -12,6 +13,15 @@ export default function Booking() {
     handleCreateBooking,
     handleCancelConfirm,
   } = useBookingForm();
+
+  useEffect(() => {
+    document.body.classList.remove("dark");
+
+    // Xóa lớp "dark" khỏi body khi component unmount
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  }, []);
 
   return (
     <section className="mt-14">

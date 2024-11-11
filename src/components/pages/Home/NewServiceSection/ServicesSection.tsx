@@ -79,7 +79,6 @@ export default function ServicesSection() {
               : isTablet
                 ? "bottom 60%"
                 : "bottom 80%", // Tùy chỉnh giá trị end dựa trên thiết bị
-            markers: true,
           },
         });
       },

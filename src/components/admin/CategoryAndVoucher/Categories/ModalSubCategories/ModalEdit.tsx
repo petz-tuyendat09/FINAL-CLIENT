@@ -96,7 +96,7 @@ export default function ModalEdit({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">
+            <ModalHeader className="text-center dark:text-white">
               Chỉnh sửa danh mục con
             </ModalHeader>
             <ModalBody>
@@ -134,7 +134,8 @@ export default function ModalEdit({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                color="success"
+                className="rounded-full text-white"
                 onPress={handleEditSubCategoryName}
               >
                 Lưu

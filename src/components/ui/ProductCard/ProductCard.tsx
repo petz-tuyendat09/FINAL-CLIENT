@@ -34,11 +34,6 @@ const ProductCard = memo(
                 </p>
               </>
             )}
-            {status === "latest" && (
-              <i className="absolute right-0 top-[20%] bg-[#feeae7] px-[46px] py-[3px] font-cormorant text-[20px]">
-                New
-              </i>
-            )}
           </Link>
           <ProductCardCartButton Product={Product} />
           <ProductInfo

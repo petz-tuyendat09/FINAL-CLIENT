@@ -54,8 +54,10 @@ export default function ModalDelete({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Xóa danh mục</ModalHeader>
-            <ModalBody>
+            <ModalHeader className="text-center dark:text-white">
+              Xóa danh mục
+            </ModalHeader>
+            <ModalBody className="dark:text-white">
               <p>Bạn có chắc chắn muốn xóa danh mục</p>
             </ModalBody>
             <ModalFooter>
@@ -68,7 +70,8 @@ export default function ModalDelete({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                color="danger"
+                className="rounded-full text-white"
                 onPress={handleDeleteCategory}
               >
                 Xóa

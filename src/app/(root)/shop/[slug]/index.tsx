@@ -81,6 +81,7 @@ export const Index = () => {
       });
     }
   }, [newCart]);
+
   useEffect(() => {
     const cursor = document.querySelector(".cursor") as HTMLElement;
     const zone = document.getElementById("this-zone");
@@ -109,6 +110,7 @@ export const Index = () => {
       zone.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
   return (
     <div className="bg-[#F4F2EE] px-[20px] py-[110px]">
       {data?.products?.map((item, i) => {
@@ -262,6 +264,7 @@ export const Index = () => {
               </div>
               <div className="w-[35%]">
                 <Image
+                  unoptimized
                   src={item.productThumbnail}
                   width="500"
                   height="400"

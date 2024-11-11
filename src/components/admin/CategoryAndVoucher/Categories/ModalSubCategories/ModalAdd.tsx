@@ -78,23 +78,27 @@ export default function ModalAdd({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center dark:text-white">
+              Thêm danh mục mới
+            </ModalHeader>
             <ModalBody>
               <Select
                 labelPlacement={"inside"}
                 items={(categories as any) || []}
                 label="Danh mục cha"
-                className="w-full"
-                selectedKeys={[currentCategory]} // Controlled component
+                selectedKeys={[currentCategory]}
                 errorMessage={categoryErrorMessage}
                 isInvalid={categoryErrorMessage === "" ? false : true}
                 onSelectionChange={(keys) => {
                   setCurrentCategory(Array.from(keys)[0] as string);
                   setCategoryErrorMessage("");
-                }} // Update currentCategory state
+                }}
               >
                 {(category) => (
-                  <SelectItem key={(category as any)._id}>
+                  <SelectItem
+                    className="dark:text-white"
+                    key={(category as any)._id}
+                  >
                     {(category as any).categoryName}
                   </SelectItem>
                 )}
@@ -117,7 +121,8 @@ export default function ModalAdd({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                color="success"
+                className="rounded-full text-white"
                 onPress={handleAddCategory}
               >
                 Lưu

@@ -12,6 +12,7 @@ import FormEditProductThumnail from "./ProductImage/FormEditProductThumbnail";
 import GerneralInformation from "./GerneralInfor/GerneralInformation";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
 
 interface FormEditProductProps {
   slug: string;
@@ -35,10 +36,13 @@ export default function FormEditProduct({ slug }: FormEditProductProps) {
   return (
     <>
       <div className="mb-2 flex justify-between text-xl">
-        <Link className="flex items-center gap-1" href="/admin/shop">
+        <NormalTransitionLink
+          className="flex items-center gap-1 dark:text-white"
+          href="/admin/shop"
+        >
           <Icon icon="gravity-ui:arrow-left" />
           Quay về
-        </Link>
+        </NormalTransitionLink>
 
         <button
           type="submit"

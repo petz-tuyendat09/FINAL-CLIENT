@@ -13,11 +13,12 @@ export default function DynamicLink() {
   // Lọc liên kết dựa trên userRole
   const filteredLinks = links.filter((link) => {
     if (userRole === "seller") {
-      // Seller chỉ có quyền truy cập /admin/orders và /admin/shop
       return ["/admin/orders", "/admin/shop"].includes(link.url);
     } else if (userRole === "spa") {
-      // Spa chỉ có quyền truy cập /admin/bookings
       return ["/admin/bookings"].includes(link.url);
+    } else if (userRole === "manager") {
+      // Manager không có quyền truy cập /admin/users
+      return link.url !== "/admin/users";
     }
     return true;
   });
@@ -28,8 +29,10 @@ export default function DynamicLink() {
         <li
           key={link.url}
           className={`${
-            pathname === link.url ? "bg-black text-white" : ""
-          } rounded-xl flex items-center gap-1 rounded-full px-8 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white`}
+            pathname === link.url
+              ? "bg-black text-white dark:bg-white dark:text-black"
+              : "text-black dark:text-white"
+          } rounded-xl flex items-center gap-1 rounded-full px-8 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white dark:hover:bg-[#f9f9f9] dark:hover:text-black`}
         >
           <span>{link.icon}</span>
           <NormalTransitionLink href={link.url}>

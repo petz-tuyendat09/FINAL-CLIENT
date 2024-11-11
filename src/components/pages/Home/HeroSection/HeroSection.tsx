@@ -86,7 +86,7 @@ export default function HeroSection() {
                 {bottomText.map((word, index) => (
                   <p
                     key={index}
-                    className={`${index == 0 ? "" : "ml-3 italic"} inline-block`}
+                    className={`${index == 0 ? "" : "ml-3"} inline-block`}
                   >
                     {word.split("").map((char, charIndex) => (
                       <motion.span
@@ -107,7 +107,7 @@ export default function HeroSection() {
                 ))}
               </div>
               <NormalTransitionLink
-                className="w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
+                className="ml-auto w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
                 href="/booking"
               >
                 Đặt lịch ngay

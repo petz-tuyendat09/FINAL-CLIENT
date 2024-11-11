@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 const { nextui } = require("@nextui-org/react");
 const config: Config = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -76,6 +77,7 @@ const config: Config = {
       },
 
       backgroundImage: {
+        "services-image": "url('/images/ServiceSection.webp')",
         "services-image-1": "url('/images/services-image-1.png')",
         "services-image-2": "url('/images/services-image-2.png')",
         "services-image-3": "url('/images/services-image-3.png')",

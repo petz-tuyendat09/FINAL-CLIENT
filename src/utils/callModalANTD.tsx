@@ -41,3 +41,15 @@ export const loadingModal = ({
     className,
   });
 };
+
+export const warningModal = ({
+  content,
+  duration = 5,
+  className = "custom-message",
+}: ModalProps): void => {
+  message.warning({
+    content,
+    duration,
+    className,
+  });
+};

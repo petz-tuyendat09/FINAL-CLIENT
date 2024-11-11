@@ -20,6 +20,7 @@ import ModalDelete from "./ModalVoucher/ModalDelete";
 import { useState } from "react";
 import { useDeleteVoucherMutation } from "@/libs/features/services/voucher";
 import ModalEdit from "./ModalVoucher/ModalEdit";
+import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
 
 const columns = [
   {
@@ -86,7 +87,10 @@ export default function VoucherTable() {
   }
 
   return (
-    <div className="mt-4">
+    <div className="mt-8">
+      <p className="w-fit rounded-full bg-black px-8 py-2 text-h4 font-bold text-white shadow-sm shadow-[#3b284e] dark:bg-black dark:text-white">
+        Voucher
+      </p>
       <div className="flex">
         {selectedIds.length > 0 && (
           <button
@@ -96,17 +100,17 @@ export default function VoucherTable() {
             Xóa
           </button>
         )}
-        <Button
+        <ButtonAdmin
           onClick={handleAddVoucher}
           className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
         >
           + Thêm voucher
-        </Button>
+        </ButtonAdmin>
       </div>
       <Table
         selectionMode="multiple"
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full"
         onSelectionChange={(selectedKeys: any) => {
           handleSelectedRows(selectedKeys);
         }}
@@ -139,7 +143,7 @@ export default function VoucherTable() {
         </TableHeader>
         <TableBody items={voucher?.vouchers || []}>
           {(item) => (
-            <TableRow key={item._id}>
+            <TableRow className="dark:text-white" key={item._id}>
               {(columnKey) =>
                 columnKey === "action" ? (
                   <TableCell>

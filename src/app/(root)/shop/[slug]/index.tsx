@@ -9,6 +9,7 @@ import SuggestedProducts from "@/components/pages/Details/SuggestedProducts";
 import { useAddItemToCartMutation } from "@/libs/features/services/cart";
 import { useSession } from "next-auth/react";
 import { message } from "antd";
+import { useCursorHover } from "@/components/ui/Cursor/_store/CursorContext";
 import Link from "next/link";
 export const Index = () => {
   const { slug } = useParams();
@@ -23,6 +24,17 @@ export const Index = () => {
   const { update: sessionUpdate } = useSession();
   const userId = session.data?.user?._id;
   const [messageApi, contextHolder] = message.useMessage();
+  const { handleMouseEnterActionButton, handleMouseLeaveActionButton } =
+    useCursorHover();
+
+  useEffect(() => {
+    document.body.classList.remove("dark");
+
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  }, []);
+
   const success = () => {
     message.success(
       <div>
@@ -82,35 +94,6 @@ export const Index = () => {
     }
   }, [newCart]);
 
-  useEffect(() => {
-    const cursor = document.querySelector(".cursor") as HTMLElement;
-    const zone = document.getElementById("this-zone");
-
-    if (!cursor || !zone) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = zone.getBoundingClientRect();
-      if (
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom
-      ) {
-        cursor.style.left = e.pageX + "px";
-        cursor.style.top = e.pageY + "px";
-        cursor.style.opacity = "1";
-      } else {
-        cursor.style.opacity = "0";
-      }
-    };
-
-    zone.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      zone.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
   return (
     <div className="bg-[#F4F2EE] px-[20px] py-[110px]">
       {data?.products?.map((item, i) => {
@@ -132,14 +115,19 @@ export const Index = () => {
                 </div>
                 <div className="mt-[50px] flex w-[500px] flex-row items-center justify-between rounded-[25px] bg-black pr-[30px] text-white">
                   <div className="flex flex-row items-center gap-[5px] px-[30px] py-[12px]">
-                    <button onClick={() => handleQuantity("decrease")}>
+                    <button
+                      onMouseEnter={() => handleMouseEnterActionButton("Tăng")}
+                      onMouseLeave={handleMouseLeaveActionButton}
+                      onClick={() => handleQuantity("decrease")}
+                    >
                       -
                     </button>
-                    <input
-                      className="ml-[10px] w-[20px] bg-black outline-none"
-                      value={quantity}
-                    />
+                    <span className="ml-[10px] inline-block w-[20px] bg-black outline-none">
+                      {quantity}
+                    </span>
                     <button
+                      onMouseEnter={() => handleMouseEnterActionButton("Giảm")}
+                      onMouseLeave={handleMouseLeaveActionButton}
                       onClick={() => {
                         handleQuantity("increase");
                         setMaxQuantity(
@@ -165,7 +153,11 @@ export const Index = () => {
                       </button>
                     ) : (
                       <button
-                        className="text-[14px] font-[500] tracking-[0.5px] hover:text-primary"
+                        className="cursor-none text-[14px] font-[500] tracking-[0.5px]"
+                        onMouseEnter={() =>
+                          handleMouseEnterActionButton("Thêm")
+                        }
+                        onMouseLeave={handleMouseLeaveActionButton}
                         onClick={() =>
                           handleAddToCart(
                             item.productName,
@@ -175,7 +167,7 @@ export const Index = () => {
                           )
                         }
                       >
-                        ADD TO CART
+                        Thêm vào giỏ
                       </button>
                     )}
                   </div>
@@ -185,6 +177,10 @@ export const Index = () => {
                     return (
                       option?.name && (
                         <div
+                          onMouseEnter={() =>
+                            handleMouseEnterActionButton("Chọn")
+                          }
+                          onMouseLeave={handleMouseLeaveActionButton}
                           key={i}
                           onClick={() => {
                             setIndex(i);
@@ -193,7 +189,7 @@ export const Index = () => {
                           }}
                         >
                           <button
-                            className={`${index === i ? "bg-[#D36166] text-white" : ""} rounded-[5px] border-2 border-[#D36166] px-[10px] py-[2px]`}
+                            className={`${index === i ? "bg-primary text-white" : ""} rounded-[5px] border-2 border-primary px-[10px] py-[2px]`}
                           >
                             {option?.name}
                           </button>
@@ -284,7 +280,6 @@ export const Index = () => {
             />
           </div>
         </div>
-        <div className="cursor"></div>
       </div>
       {contextHolder}
     </div>

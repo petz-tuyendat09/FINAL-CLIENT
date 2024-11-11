@@ -6,6 +6,7 @@ import Footer from "@/components/ui/Footer";
 import NavigateBar from "@/components/ui/NavigateBar/NavigateBar";
 import DarkModeActive from "@/components/admin/UI/Sidebar/DarkModeActive";
 import LenisScroll from "@/utils/LenisScroll";
+import Cursor from "@/components/ui/Cursor/Cursor";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
       <body>
         <StoreProvider>
           <LenisScroll />
+          <Cursor />
           <DarkModeActive />
           <Header />
           <main>{children}</main>

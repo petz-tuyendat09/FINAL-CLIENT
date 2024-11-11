@@ -17,7 +17,6 @@ export default function Booking() {
   useEffect(() => {
     document.body.classList.remove("dark");
 
-    // Xóa lớp "dark" khỏi body khi component unmount
     return () => {
       document.body.classList.remove("dark");
     };

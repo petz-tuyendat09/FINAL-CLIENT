@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { animatePageOut } from "@/utils/animation";
+import { useCursorHover } from "@/components/ui/Cursor/_store/CursorContext";
 
 interface TransitionLinkProps {
   href: string;
@@ -14,6 +15,7 @@ export default function NormalTransitionLink({
   children,
   className,
 }: TransitionLinkProps) {
+  const { handleMouseEnterLink, handleMouseLeaveLink } = useCursorHover();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -25,8 +27,10 @@ export default function NormalTransitionLink({
   return (
     <div>
       <div
+        onMouseEnter={handleMouseEnterLink}
+        onMouseLeave={handleMouseLeaveLink}
         onClick={handleClick}
-        className={`w-fit cursor-pointer ${className}`}
+        className={`w-fit cursor-none ${className}`}
       >
         {children}
       </div>

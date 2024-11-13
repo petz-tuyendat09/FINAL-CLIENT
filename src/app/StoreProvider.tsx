@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@/libs/store";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
+import { CursorProvider } from "@/components/ui/Cursor/_store/CursorContext";
 
 const StoreProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const Store = store;
@@ -14,7 +15,9 @@ const StoreProvider: React.FC<PropsWithChildren> = ({ children }) => {
     <Provider store={Store}>
       <PersistGate loading={null} persistor={persistor}>
         <NextUIProvider>
-          <SessionProvider>{children}</SessionProvider>
+          <SessionProvider>
+            <CursorProvider>{children}</CursorProvider>
+          </SessionProvider>
         </NextUIProvider>
       </PersistGate>
     </Provider>

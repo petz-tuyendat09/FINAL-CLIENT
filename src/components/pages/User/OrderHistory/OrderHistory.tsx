@@ -62,8 +62,6 @@ export default function OrdersHistory() {
     handleCloseCancel,
   } = useOrdersHistoryAction();
 
-  const currentDate = today(getLocalTimeZone());
-
   const isPastDate = (createdAt: string) => {
     const orderDate = new Date(createdAt);
 
@@ -75,6 +73,8 @@ export default function OrdersHistory() {
 
     return differenceInDays >= 1;
   };
+
+
 
   return (
     <>
@@ -167,27 +167,35 @@ export default function OrdersHistory() {
                   }
                   if (columnKey === "action") {
                     const pastDate = isPastDate(orderItem.createdAt as any);
+                
                     return (
                       <TableCell className="space-x-2">
-                        <Link href={`order-history/${orderItem._id}`}>
-                          <Button variant="flat" size="sm" color="default">
-                            Xem
-                          </Button>
-                        </Link>
-
-                        {!pastDate && orderItem.orderStatus !== "CANCELLED" && orderItem.orderStatus !== "PAID" && (
-                          <Button
-                            variant="flat"
-                            size="sm"
-                            color="danger"
-                            isDisabled={pastDate}
-                            onClick={() => {
-                              handleCancelOrder(orderItem._id);
-                            }}
+                        <Button variant="flat" size="sm" color="default">
+                          <NormalTransitionLink
+                            className="cursor-pointer"
+                            href={`order-history/${orderItem._id}`}
                           >
-                            Hủy
-                          </Button>
-                        )}
+                            Xem
+                          </NormalTransitionLink>
+                        </Button>
+
+                        {!pastDate &&
+                          orderItem.orderStatus !== "CANCELLED" &&
+                          orderItem.orderStatus !== "PAID" && (
+                            <Button
+                              variant="flat"
+                              size="sm"
+                              color="danger"
+                              isDisabled={pastDate}
+                              onClick={() => {
+                                handleCancelOrder(orderItem._id);
+                              }}
+                            >
+                              Hủy
+                            </Button>
+                          )}
+
+               
                       </TableCell>
                     );
                   }

@@ -4,7 +4,7 @@ export default function ButtonAdmin({ ...props }: ButtonProps) {
   return (
     <Button
       {...props}
-      className="ml-auto block w-fit bg-[#f3f3f3] text-black hover:bg-[#e0e0e0] dark:bg-white dark:hover:bg-[#f2f2f2]"
+      className="block w-fit bg-[#f3f3f3] text-black hover:bg-[#e0e0e0] dark:bg-white dark:hover:bg-[#f2f2f2]"
     ></Button>
   );
 }

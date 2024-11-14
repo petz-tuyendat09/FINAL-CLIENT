@@ -39,14 +39,14 @@ export default function TransitionLink({
       variants={variant}
       initial="hidden"
       animate={isHidden ? "hidden" : "show"}
-      className={`${pathname === href ? "white bg-black" : "text-white"} relative z-[60] h-full min-w-max max-w-max cursor-none rounded-full px-4 py-2`}
+      className={`${pathname === href ? "white bg-black" : "text-white"} relative h-full min-w-max max-w-max cursor-none rounded-full px-4 py-2`}
     >
       <button
         ref={buttonRef}
         className="w-fit cursor-none"
-        onClick={handleClick}
         onMouseEnter={() => handleMouseEnterButton(buttonRef)}
         onMouseLeave={handleMouseLeaveButton}
+        onClick={handleClick}
       >
         {label}
       </button>

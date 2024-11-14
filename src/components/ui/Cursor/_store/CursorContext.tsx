@@ -81,12 +81,10 @@ export const CursorProvider: React.FC<CursorProviderProps> = ({ children }) => {
     (buttonRef: React.RefObject<HTMLButtonElement>) => {
       if (buttonRef.current) {
         const rect = buttonRef.current.getBoundingClientRect();
+
         gsap.to(circle.current, {
           width: rect.width + 20,
           height: rect.height + 20,
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-          opacity: 0.6,
           duration: 0.3,
           ease: "power2.out",
         });

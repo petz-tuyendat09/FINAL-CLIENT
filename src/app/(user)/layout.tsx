@@ -5,6 +5,7 @@ import Header from "@/components/ui/Header/Header";
 import Footer from "@/components/ui/Footer";
 import NavigateBar from "@/components/ui/NavigateBar/NavigateBar";
 import Sidebar from "@/components/pages/User/Sidebar/Sidebar";
+import MessengerIcon from "@/components/ui/MessengerIcon/MessengerIcon";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
             <div className="flex">
               <Sidebar />
               <div className="mx-auto w-3/4 px-12">{children}</div>
+              <MessengerIcon />
             </div>
           </main>
           <NavigateBar />

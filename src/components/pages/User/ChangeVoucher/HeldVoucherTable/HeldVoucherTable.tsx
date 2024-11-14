@@ -12,6 +12,8 @@ import {
   getKeyValue,
 } from "@nextui-org/react";
 import { useHeldVoucherContext } from "../store/HeldVoucherContext";
+import formatDate from "@/utils/formatDate";
+import formatMoney from "@/utils/formatMoney";
 
 const columns = [
   {
@@ -23,8 +25,16 @@ const columns = [
     label: "SỐ LƯỢNG",
   },
   {
-    key: "salePercent",
+    key: "sale",
     label: "GIẢM GIÁ",
+  },
+  {
+    key: "expirationDate",
+    label: "NGÀY HẾT HẠN",
+  },
+  {
+    key: "redemptionCount",
+    label: "ĐÃ ĐỔI",
   },
   {
     key: "voucherType",
@@ -76,27 +86,54 @@ export default function ChangeVoucherTable() {
                 if (columnKey === "_id") {
                   return (
                     <TableCell className="font-bold">
-                      {item.voucherId._id.slice(-3).toUpperCase()}
+                      {item.voucherId &&
+                        item.voucherId._id.slice(-3).toUpperCase()}
                     </TableCell>
                   );
                 }
+
+                if (columnKey === "sale") {
+                  return (
+                    <TableCell className="font-bold">
+                      {item.voucherId.voucherType === "FLAT_DISCOUNT" &&
+                        formatMoney(item.voucherId.flatDiscountAmount)}
+                      {(item.voucherId.voucherType !== "FLAT_DISCOUNT" &&
+                        item.voucherId.salePercent) ||
+                        item.voucherId.shippingDiscountAmount}
+                      {item.voucherId.voucherType !== "FLAT_DISCOUNT" && "%"}
+                    </TableCell>
+                  );
+                }
+
                 if (columnKey === "voucherType") {
                   return (
                     <TableCell>
-                      {
+                      {item.voucherId &&
                         VoucherType[
                           item.voucherId.voucherType as keyof typeof VoucherType
-                        ]
-                      }
+                        ]}
                     </TableCell>
                   );
                 }
                 if (columnKey === "salePercent") {
-                  return <TableCell>{item.voucherId.salePercent}%</TableCell>;
+                  return (
+                    <TableCell>
+                      {item.voucherId && item.voucherId.salePercent}%
+                    </TableCell>
+                  );
+                }
+                if (columnKey === "expirationDate") {
+                  return (
+                    <TableCell>
+                      {item.voucherId && formatDate(item.expirationDate)}
+                    </TableCell>
+                  );
                 }
                 if (columnKey === "voucherDescription") {
                   return (
-                    <TableCell>{item.voucherId.voucherDescription}</TableCell>
+                    <TableCell>
+                      {item.voucherId && item.voucherId.voucherDescription}
+                    </TableCell>
                   );
                 }
                 return <TableCell>{getKeyValue(item, columnKey)}</TableCell>;

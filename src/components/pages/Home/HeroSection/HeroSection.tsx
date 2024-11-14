@@ -4,6 +4,7 @@ import HeroSectionImage2 from "@@/public/images/hero-section-2.png";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import { motion } from "framer-motion";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
+import { useEffect } from "react";
 
 const upperText = ["Spa", "đẳng", "cấp", "cho"];
 const middleText = ["những", "người", "bạn"];
@@ -15,6 +16,14 @@ const TextVariant = {
 };
 
 export default function HeroSection() {
+  useEffect(() => {
+    document.body.classList.remove("dark");
+
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  }, []);
+
   return (
     <section className="container">
       <div className="mb-24 flex h-screen items-center justify-center">

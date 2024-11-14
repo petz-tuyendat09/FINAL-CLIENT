@@ -106,9 +106,9 @@ export default function NavigateBar({ onTop }: NavigateBarProps) {
         damping: 6, // Lực cản (giá trị càng thấp, bounce càng nhiều)
         mass: 0.4, // Khối lượng của đối tượng (khối lượng lớn hơn sẽ làm chậm chuyển động)
       }}
-      className={`glass-navbar fixed ${onTop ? "top-1" : "bottom-4"} left-1/2 z-50 flex -translate-x-1/2 overflow-x-hidden rounded-full text-white shadow-md`}
+      className={`glass-navbar fixed ${onTop ? "top-1" : "bottom-8"} left-1/2 z-[60] flex -translate-x-1/2 overflow-x-hidden rounded-full text-white shadow-md`}
     >
-      <div className="flex items-center gap-2 py-2 pr-4 text-[14px]">
+      <div className="relative flex items-center gap-2 py-2 pr-4 text-[14px]">
         <button
           onClick={handleToggleNavbar}
           className="flex h-full w-full items-center justify-center rounded-full px-4"

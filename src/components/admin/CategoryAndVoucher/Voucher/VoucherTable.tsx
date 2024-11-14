@@ -91,18 +91,20 @@ export default function VoucherTable() {
       <p className="w-fit rounded-full bg-black px-8 py-2 text-h4 font-bold text-white shadow-sm shadow-[#3b284e] dark:bg-black dark:text-white">
         Voucher
       </p>
-      <div className="flex">
+      <div className="flex items-center justify-end gap-4">
         {selectedIds.length > 0 && (
-          <button
+          <Button
             onClick={handleDeleteMultiple}
-            className="mb-4 block w-fit rounded-full bg-black px-4 py-2 text-white"
+            color="danger"
+            className="block w-fit px-4 py-2 text-white"
           >
             Xóa
-          </button>
+          </Button>
         )}
+
         <ButtonAdmin
           onClick={handleAddVoucher}
-          className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
+          className="block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
         >
           + Thêm voucher
         </ButtonAdmin>

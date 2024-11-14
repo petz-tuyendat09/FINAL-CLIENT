@@ -137,12 +137,14 @@ export default function ServicesList() {
                     return (
                       <TableCell className="space-x-2">
                         <Button
-                          isDisabled={reviewItem !== null}
+                          isDisabled={reviewItem.rating !== null}
                           onClick={() => handleReview(reviewItem._id)}
                           variant="flat"
                           size="sm"
                         >
-                          {reviewItem !== null ? "Đã đánh giá" : "Đánh giá"}
+                          {reviewItem.rating !== null
+                            ? "Đã đánh giá"
+                            : "Đánh giá"}
                         </Button>
                       </TableCell>
                     );

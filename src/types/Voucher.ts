@@ -1,27 +1,27 @@
 export enum VoucherType {
   ON_ORDER_SAVINGS = "Giảm tổng đơn",
-  PER_ITEM_SAVINGS = "Giảm trên giá món",
+  FLAT_DISCOUNT = "Giảm tiền thẳng",
+  SHIPPING_DISCOUNT = "Giảm phí vận chuyển",
 }
 
 export interface Voucher {
   _id: string;
   voucherPoint: number;
-  salePercent: number;
-  voucherType: string;
-  voucherDescription: string;
-}
-
-interface VoucherId {
-  _id: string;
-  voucherPoint: number;
-  voucherType: "PER_ITEM_SAVINGS" | "ON_ORDER_SAVINGS";
+  voucherType: "ON_ORDER_SAVINGS" | "FLAT_DISCOUNT" | "SHIPPING_DISCOUNT";
+  expirationDate: number;
+  maxRedemption: number;
   voucherDescription: string;
   salePercent: number;
   updatedAt?: string;
+  flatDiscountAmount?: number;
+  shippingDiscountAmount?: number;
+  totalToUse?: string;
 }
 
 interface HeldVoucher {
-  voucherId: VoucherId;
+  voucherId: Voucher;
+  expirationDate: any;
+  redemptionCount: number;
   quantity: number;
   _id: string;
 }

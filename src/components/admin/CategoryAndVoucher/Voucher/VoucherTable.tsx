@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useDeleteVoucherMutation } from "@/libs/features/services/voucher";
 import ModalEdit from "./ModalVoucher/ModalEdit";
 import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
+import formatMoney from "@/utils/formatMoney";
 
 const columns = [
   {
@@ -32,13 +33,22 @@ const columns = [
     label: "ĐIỂM",
   },
   {
-    key: "salePercent",
+    key: "sale",
     label: "GIẢM GIÁ",
   },
   {
     key: "voucherType",
     label: "KIỂU GIẢM GIÁ",
   },
+  {
+    key: "maxRedemption",
+    label: "ĐỔI TỐI ĐA",
+  },
+  {
+    key: "expirationDate",
+    label: "HẾT HẠN SAU ĐỔI",
+  },
+
   {
     key: "voucherDescription",
     label: "MÔ TẢ",
@@ -169,6 +179,21 @@ export default function VoucherTable() {
                 ) : columnKey === "voucherType" ? (
                   <TableCell>
                     {VoucherType[item.voucherType as keyof typeof VoucherType]}
+                  </TableCell>
+                ) : columnKey === "expirationDate" ? (
+                  <TableCell>{item.expirationDate} ngày</TableCell>
+                ) : columnKey === "maxRedemption" ? (
+                  <TableCell className="font-bold">
+                    {item.maxRedemption || "Không giới hạn"}
+                  </TableCell>
+                ) : columnKey === "sale" ? (
+                  <TableCell>
+                    {item.voucherType === "FLAT_DISCOUNT" &&
+                      formatMoney(item.flatDiscountAmount)}
+                    {(item.voucherType !== "FLAT_DISCOUNT" &&
+                      item.salePercent) ||
+                      item.shippingDiscountAmount}
+                    {item.voucherType !== "FLAT_DISCOUNT" && "%"}
                   </TableCell>
                 ) : (
                   <TableCell>{getKeyValue(item, columnKey)}</TableCell>

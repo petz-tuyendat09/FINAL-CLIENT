@@ -52,7 +52,7 @@ export default function UserFilter() {
           onSelectionChange={setRoleFilter as any}
         >
           {Object.keys(UserRole).map((statusKey) => (
-            <DropdownItem key={statusKey}>
+            <DropdownItem className="dark:text-white" key={statusKey}>
               {UserRole[statusKey as keyof typeof UserRole]}
             </DropdownItem>
           ))}

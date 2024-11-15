@@ -39,7 +39,7 @@ export default function DynamicLink() {
             >
               <span>Đánh giá sản phẩm</span>
               <span className="text-[14px]">
-                ({(data as any)?.reviews.length})
+                ({(data as any)?.reviews.length || 0})
               </span>
             </NormalTransitionLink>
           )}

@@ -46,7 +46,7 @@ const columns = [
   },
 ];
 
-export default function ChangeVoucherTable() {
+export default function HeldVoucherTable() {
   const { voucher, pages, totalPages, handleSetPage } = useHeldVoucherContext();
 
   return (
@@ -123,12 +123,22 @@ export default function ChangeVoucherTable() {
                   );
                 }
                 if (columnKey === "expirationDate") {
+                  const expirationDate = new Date(item.expirationDate);
+                  const currentDate = new Date();
+
                   return (
                     <TableCell>
-                      {item.voucherId && formatDate(item.expirationDate)}
+                      {expirationDate.getTime() < currentDate.getTime() ? (
+                        <span className="rounded-full bg-red-600 px-4 py-1 text-white">
+                          Hết hạn
+                        </span>
+                      ) : (
+                        formatDate(expirationDate.toISOString())
+                      )}
                     </TableCell>
                   );
                 }
+
                 if (columnKey === "voucherDescription") {
                   return (
                     <TableCell>

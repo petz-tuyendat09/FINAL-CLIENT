@@ -58,7 +58,7 @@ export default function ServicesList() {
     <>
       <div className="">
         <h1 className="mb-6 text-2xl font-semibold">
-          Danh sách dịch vụ đã đặt
+          Danh sách sản phẩm đã đặt
         </h1>
         <div className="mb-6 flex gap-4">
           <Dropdown>
@@ -69,7 +69,7 @@ export default function ServicesList() {
               >
                 {formatSelectedKeys(selectedKeys) === "yes"
                   ? "Đã đánh giá"
-                  : "Chưa đánh giá" || "Status"}
+                  : "Chưa đánh giá"}
               </Button>
             </DropdownTrigger>
             <DropdownMenu

@@ -14,7 +14,6 @@ import {
   DropdownItem,
   DropdownMenu,
 } from "@nextui-org/react";
-import { today, getLocalTimeZone } from "@internationalized/date";
 import useOrdersHistoryAction from "./_hook/useGetOrderAction";
 import { OrderStatus } from "@/types/Order";
 import formatMoney from "@/utils/formatMoney";
@@ -73,8 +72,6 @@ export default function OrdersHistory() {
 
     return differenceInDays >= 1;
   };
-
-
 
   return (
     <>
@@ -167,7 +164,7 @@ export default function OrdersHistory() {
                   }
                   if (columnKey === "action") {
                     const pastDate = isPastDate(orderItem.createdAt as any);
-                
+
                     return (
                       <TableCell className="space-x-2">
                         <Button variant="flat" size="sm" color="default">
@@ -194,8 +191,6 @@ export default function OrdersHistory() {
                               Hủy
                             </Button>
                           )}
-
-               
                       </TableCell>
                     );
                   }

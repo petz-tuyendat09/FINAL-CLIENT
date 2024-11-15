@@ -21,25 +21,24 @@ export default function BookingsFilter() {
 
   return (
     <div className="mt-16 border-t-1 pt-12">
-      <h1 className="mb-4 text-2xl font-semibold">
+      <h1 className="mb-4 text-2xl font-semibold dark:text-white">
         Danh sách dịch vụ
       </h1>
-      <div className="flex items-center gap-4 mb-6">
+      <div className="mb-6 flex items-center gap-4">
         <DatePicker
           className="w-1/2"
-          label="Chọn ngày"
           aria-label="Chọn ngày"
           onChange={(date) => handleDateChange(date as any)}
         />
         <Input
           onValueChange={handleCustomerNameSearch}
           className="w-1/2"
-          label="Tên khách hàng"
+          placeholder="Tên khách hàng"
         />
 
         <Dropdown className="h-full">
-          <DropdownTrigger>
-            <Button variant="bordered" className="capitalize">
+          <DropdownTrigger className="border-none">
+            <Button variant="flat" className="capitalize">
               {BookingStatus[selectedValue as keyof typeof BookingStatus] ||
                 "Status"}
             </Button>
@@ -53,7 +52,7 @@ export default function BookingsFilter() {
             onSelectionChange={setSelectedKeys as any}
           >
             {Object.keys(BookingStatus).map((statusKey) => (
-              <DropdownItem key={statusKey}>
+              <DropdownItem className="dark:text-white" key={statusKey}>
                 {BookingStatus[statusKey as keyof typeof BookingStatus]}
               </DropdownItem>
             ))}

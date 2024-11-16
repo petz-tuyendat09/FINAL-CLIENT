@@ -31,10 +31,10 @@ const config: Config = {
       center: true,
       padding: "1rem",
       screens: {
-        sm: "1600px",
+        sm: "1400px",
         md: "1600",
         lg: "1600",
-        xl: "1700px",
+        xl: "1300",
         "2xl": "1880px",
       },
     },

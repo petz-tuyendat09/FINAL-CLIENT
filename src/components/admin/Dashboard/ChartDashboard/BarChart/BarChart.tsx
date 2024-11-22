@@ -13,14 +13,13 @@ export default function BarChart() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://localhost:8888/api/orderStats?year=2024');
+                const response = await fetch('http://localhost:8888/api/orderStats?startDate=2024-01-01&endDate=2024-12-31&year=2024');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const stats = await response.json();
 
-                const monthlyData = stats.monthlyRevenue || Array(12).fill(0); // Đảm bảo mảng có đủ 12 tháng
-
+                const monthlyData = stats.monthlyRevenue || Array(12).fill(0); // Đảm bảo có dữ liệu 12 tháng.
                 setData(monthlyData);
                 setMaxValue(Math.max(...monthlyData));
             } catch (error) {
@@ -40,10 +39,10 @@ export default function BarChart() {
                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [
                         {
-                            label: "Revenue",
+                            label: "Revenue (VND)",
                             data: data,
                             backgroundColor: data.map(value => value === maxValue ? '#AD3E39' : 'grey'),
-                            borderRadius: 0,
+                            borderRadius: 5,
                             borderSkipped: false,
                         }
                     ]
@@ -56,11 +55,21 @@ export default function BarChart() {
                         },
                         title: {
                             display: true,
-                            text: 'Monthly Revenue'
-                        }
+                            text: "Monthly Revenue",
+                            color: "#ffffff", // Màu tiêu đề
+                        },
                     },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => `${value.toLocaleString()} VND`
+                            }
+                        }
+                    }
                 }}
             />
+
         </div>
     );
 }

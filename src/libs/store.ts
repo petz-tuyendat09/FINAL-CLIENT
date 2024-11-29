@@ -8,6 +8,7 @@ import { cartAPI } from "./features/services/cart";
 import { servicesAPI } from "./features/services/services";
 import { bookingsAPI } from "./features/services/booking";
 import { orderAPI } from "./features/services/order";
+import { orderStatsAPI } from "./features/services/orderStatsAPI";
 import { userAPI } from "./features/services/user";
 import { paymentAPI } from "./features/services/payment";
 import cartSlice from "./features/cart/cart";
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   [servicesAPI.reducerPath]: servicesAPI.reducer,
   [bookingsAPI.reducerPath]: bookingsAPI.reducer,
   [orderAPI.reducerPath]: orderAPI.reducer,
+  [orderStatsAPI.reducerPath]: orderStatsAPI.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
   [paymentAPI.reducerPath]: paymentAPI.reducer,
 });
@@ -70,6 +72,7 @@ export const store = configureStore({
       servicesAPI.middleware,
       bookingsAPI.middleware,
       orderAPI.middleware,
+      orderStatsAPI.middleware,
       userAPI.middleware,
       paymentAPI.middleware,
     ),

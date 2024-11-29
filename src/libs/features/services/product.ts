@@ -22,6 +22,14 @@ export interface QueryParams {
   sortBy?: "productBuyAsc" | "productBuyDesc" | "latest" | "oldest";
 }
 
+export interface ReviewQueryParams {
+  userId?: string | undefined;
+  ratingStatus?: "yes" | "no";
+  sort?: "asc" | "desc";
+  page?: number;
+  limit?: number;
+}
+
 export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
@@ -46,7 +54,7 @@ export const productsAPI = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ["Product", "ProductList"],
+  tagTypes: ["Product", "ProductList", "Review"],
 
   endpoints: (builder) => ({
     getProducts: builder.query<PaginateProduct, QueryParams>({
@@ -64,6 +72,15 @@ export const productsAPI = createApi({
         const queryParams = new URLSearchParams({ categoryId }).toString();
         return `/by-cat-id?${queryParams}`;
       },
+    }),
+    getReview: builder.query<void, ReviewQueryParams>({
+      query: (params) => {
+        const queryParams = new URLSearchParams(
+          params as Record<string, string>,
+        ).toString();
+        return `/get-review?${queryParams}`;
+      },
+      providesTags: ["Review"],
     }),
 
     addNewProduct: builder.mutation<any, FormData>({
@@ -89,6 +106,14 @@ export const productsAPI = createApi({
         body: formData,
       }),
     }),
+    review: builder.mutation<any, FormData>({
+      query: (formData: FormData) => ({
+        url: `/review`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["Review"],
+    }),
     lowstockNofi: builder.mutation<any, string>({
       query: (productId) => ({
         url: `/lowstock-nofi`,
@@ -109,4 +134,6 @@ export const {
   useDeleteProductMutation,
   useEditProductMutation,
   useLowstockNofiMutation,
+  useGetReviewQuery,
+  useReviewMutation,
 } = productsAPI;

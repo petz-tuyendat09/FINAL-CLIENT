@@ -6,8 +6,9 @@ import { useSession } from "next-auth/react";
 import { useAddItemToCartMutation } from "@/libs/features/services/cart";
 import { useEffect } from "react";
 import { message } from "antd";
-import Link from "next/link";
-import NormalTransitionLink from "../NormalTransitionLink";
+import { useCursorHover } from "@/components/ui/Cursor/_store/CursorContext";
+import { animatePageOut } from "@/utils/animation";
+import { useRouter } from "next/navigation";
 interface ProductCardSelectWeightProps {
   Product: Product;
 }
@@ -21,16 +22,24 @@ export default function ProductCardCartButton({
   const [messageApi, contextHolder] = message.useMessage();
   const authStatus = session?.status;
 
-  const [addToCart, { data: newCart }] = useAddItemToCartMutation();
+  const { handleMouseEnterActionButton, handleMouseLeaveActionButton } =
+    useCursorHover();
 
+  const [addToCart, { data: newCart }] = useAddItemToCartMutation();
+  const router = useRouter();
   const success = () => {
     message.success({
       content: (
-        <div>
+        <div className="flex gap-2">
           Thêm giỏ hàng thành công.{" "}
-          <Link href="/cart" className="text-blue-400">
-            Xem giỏ hàng
-          </Link>
+          <div
+            onClick={() => {
+              animatePageOut("/user/review-product", router);
+            }}
+            className="cursor-pointer text-blue-500"
+          >
+            Đánh giá ngay
+          </div>
         </div>
       ),
       duration: 30,
@@ -74,8 +83,10 @@ export default function ProductCardCartButton({
   return (
     <div className="group absolute right-1 top-1 text-white lg:right-2 lg:top-2">
       <button
+        onMouseEnter={() => handleMouseEnterActionButton("Thêm")}
+        onMouseLeave={handleMouseLeaveActionButton}
         onClick={handleAddToCart}
-        className="w-fit rounded-full bg-white p-1 text-black transition delay-75 duration-300 group-hover:bg-gray-100 lg:p-3"
+        className="w-fit cursor-none rounded-full bg-white p-1 text-black transition delay-75 duration-300 group-hover:bg-gray-100 lg:p-3"
       >
         <Icon className="size-4 lg:size-5" icon="icon-park-outline:mall-bag" />
       </button>

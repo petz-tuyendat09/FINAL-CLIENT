@@ -19,6 +19,7 @@ import ModalAdd from "./Modal/ModalAdd";
 import ModalDelete from "./Modal/ModalDelete";
 import ModalEdit from "./Modal/ModalEdit";
 import ServiceTableFilter from "./ServiceTableFilter";
+import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
 
 const columns = [
   {
@@ -74,8 +75,11 @@ export default function ServicesTable() {
   });
 
   return (
-    <div className="mt-4">
-      <div className="flex">
+    <div className="mt-8">
+      <p className="mb-4 w-fit rounded-full bg-black px-8 py-2 text-h4 font-bold text-white shadow-sm shadow-[#3b284e] dark:bg-black dark:text-white">
+        Dịch vụ
+      </p>
+      <div className="flex gap-2">
         <ServiceTableFilter
           setbookingOrder={setbookingOrder}
           bookingOrderSelect={bookingOrderSelect}
@@ -83,16 +87,11 @@ export default function ServicesTable() {
           setSelectedKeys={setSelectedKeys}
           clearQueryParams={clearQueryParams}
         />
-        <Button
-          onClick={handleAddServices}
-          className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
-        >
-          + Thêm dịch vụ
-        </Button>
+        <ButtonAdmin onClick={handleAddServices}>+ Thêm dịch vụ</ButtonAdmin>
       </div>
       <Table
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full dark:text-white"
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination

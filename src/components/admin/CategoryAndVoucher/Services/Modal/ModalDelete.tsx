@@ -38,10 +38,10 @@ export default function ModalDelete({
           "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
       }}
     >
-      <ModalContent>
+      <ModalContent className="dark:text-white">
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center">Xóa dịch vụ</ModalHeader>
             <ModalBody>
               <p>Bạn có chắc chắn muốn xóa dịch vụ này</p>
             </ModalBody>
@@ -55,7 +55,8 @@ export default function ModalDelete({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                color="danger"
+                className="rounded-full"
                 onPress={handleDeleteCategory}
               >
                 Xóa

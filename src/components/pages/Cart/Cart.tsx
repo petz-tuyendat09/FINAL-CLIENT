@@ -10,13 +10,23 @@ import { RootState } from "@/libs/store";
 import { cartAction } from "@/libs/features/cart/cart";
 import { useAdjustQuantityMutation } from "@/libs/features/services/cart";
 import { AdjustQuantity } from "@/types/Cart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import cartImg from "@@/assets/images/cartImg.png";
 import cartImg2 from "@@/public/images/cartImg2.png";
 import Image from "next/image";
 import CartStepper from "./CartStepper";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
+import calculateSalePrice from "@/utils/caculateSalePrice";
 const CartPage = () => {
+  useEffect(() => {
+    document.body.classList.remove("dark");
+
+    // Xóa lớp "dark" khỏi body khi component unmount
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  }, []);
+
   const activeStep = 0;
   const session = useSession();
   const authStatus = session.status;
@@ -28,9 +38,19 @@ const CartPage = () => {
   const unauthenticatedCarts = useSelector(
     (state: RootState) => state.cart?.items || [],
   );
-  const itemsToDisplay =
-    authStatus === "authenticated" ? cartItems : unauthenticatedCarts;
+
+  const [itemsToDisplay, setItemToDisplay] = useState<any>();
+
+  useEffect(() => {
+    if (authStatus == "authenticated") {
+      setItemToDisplay(cartItems);
+    } else {
+      setItemToDisplay(unauthenticatedCarts);
+    }
+  }, [cartItems, unauthenticatedCarts]);
+
   const authenticatedCartId = session.data?.user?.userCart?._id;
+
   function handleClearCart() {
     if (authStatus === "authenticated") {
       const adjustObject: AdjustQuantity = {

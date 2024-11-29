@@ -75,7 +75,6 @@ export default function ModalAdd({
       setPriceErrorMessage("Giá dịch vụ không được để trống");
       valid = false;
     } else {
-      // Remove dots and convert to number
       const priceValue = parseInt(servicePrice.replace(/\./g, ""), 10);
       if (isNaN(priceValue) || priceValue < 0) {
         setPriceErrorMessage("Giá dịch vụ không được là số âm");
@@ -133,7 +132,9 @@ export default function ModalAdd({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center dark:text-white">
+              Thêm danh mục mới
+            </ModalHeader>
             <ModalBody>
               <p className="text-base text-red-500">{duplicatedMessage}</p>
               <Select
@@ -149,7 +150,11 @@ export default function ModalAdd({
                 }}
               >
                 {SERVICES_TYPE.map((type) => (
-                  <SelectItem key={type} value={type}>
+                  <SelectItem
+                    className="dark:text-white"
+                    key={type}
+                    value={type}
+                  >
                     {ServicesType[type as keyof typeof ServicesType]}
                   </SelectItem>
                 ))}
@@ -190,7 +195,8 @@ export default function ModalAdd({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
+                color="success"
+                className="rounded-full text-white"
                 onPress={handleSave}
               >
                 Lưu

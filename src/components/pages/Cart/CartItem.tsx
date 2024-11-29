@@ -11,6 +11,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect } from "react";
 import { AdjustQuantity } from "@/types/Cart";
 import Link from "next/link";
+import calculateSalePrice from "@/utils/caculateSalePrice";
 
 interface CartItem {
   productId: string;
@@ -36,6 +37,10 @@ export default function CartItem({
   const session = useSession();
   const authStatus = session.status;
   const { update: sessionUpdate } = useSession();
+  const { salePrice } = calculateSalePrice(
+    cartItem?.salePercent,
+    cartItem?.productPrice,
+  );
 
   const [removeItemFromCart, { data: cartAfterRemoveItem }] =
     useRemoveItemFromCartMutation();
@@ -99,7 +104,7 @@ export default function CartItem({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartAfterRemoveItem, cartAfterAdjust]);
-  const price = cartItem?.salePercent > 0 ? (cartItem.productPrice - (cartItem.productPrice * cartItem.salePercent) / 100) : cartItem.productPrice; 
+  console.log(cartItem?.productImage);
   return (
     <tr>
       <td>
@@ -121,7 +126,7 @@ export default function CartItem({
         </Link>
       </td>
       <td className="text-center">
-        {formatMoney(price)}
+        {cartItem?.productPrice && formatMoney(cartItem?.productPrice)}
       </td>
       <td>
         <div className="flex justify-center">
@@ -159,7 +164,7 @@ export default function CartItem({
       </td>
       <td className="text-center">
         <p className="font-medium text-gray-700">
-          {formatMoney(price * cartItem.productQuantity)}
+          {formatMoney(cartItem.productPrice * cartItem.productQuantity)}
         </p>
       </td>
       <td>

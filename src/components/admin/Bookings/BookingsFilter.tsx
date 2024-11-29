@@ -51,7 +51,7 @@ export default function BookingsFilter() {
           onSelectionChange={setSelectedKeys as any}
         >
           {Object.keys(BookingStatus).map((statusKey) => (
-            <DropdownItem key={statusKey}>
+            <DropdownItem className="dark:text-white" key={statusKey}>
               {BookingStatus[statusKey as keyof typeof BookingStatus]}
             </DropdownItem>
           ))}

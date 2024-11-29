@@ -16,6 +16,17 @@ export interface ChangeVoucherParams {
   userId: string;
 }
 
+interface newVoucher {
+  voucherType: string;
+  voucherPoint: string;
+  expirationDate: string;
+  voucherDescription: string;
+  flatDiscountAmount?: number;
+  salePercent?: string;
+  shippingDiscountAmount?: number;
+  maxRedemption?: number | null;
+}
+
 export const vouchersAPI = createApi({
   reducerPath: "vouchersAPI",
   baseQuery: fetchBaseQuery({
@@ -34,29 +45,11 @@ export const vouchersAPI = createApi({
       },
       providesTags: ["Voucher"],
     }),
-    insertVoucher: builder.mutation<
-      void,
-      {
-        voucherType: string;
-        salePercent: number;
-        voucherPoint: number;
-        voucherDescription: string;
-      }
-    >({
-      query: ({
-        voucherType,
-        salePercent,
-        voucherPoint,
-        voucherDescription,
-      }) => ({
+    insertVoucher: builder.mutation<any, newVoucher>({
+      query: (formData: newVoucher) => ({
         url: `/`,
         method: "POST",
-        body: {
-          voucherType: voucherType,
-          salePercent: salePercent,
-          voucherPoint: voucherPoint,
-          voucherDescription: voucherDescription,
-        },
+        body: formData,
       }),
       invalidatesTags: ["Voucher"],
     }),
@@ -75,32 +68,11 @@ export const vouchersAPI = createApi({
       }),
       invalidatesTags: ["Voucher"],
     }),
-    editVoucher: builder.mutation<
-      void,
-      {
-        editVoucherId: string;
-        newVoucherType: string;
-        newSalePercent: number;
-        newVoucherPoint: number;
-        newVoucherDescription: string;
-      }
-    >({
-      query: ({
-        editVoucherId,
-        newVoucherType,
-        newSalePercent,
-        newVoucherPoint,
-        newVoucherDescription,
-      }) => ({
+    editVoucher: builder.mutation<void, newVoucher>({
+      query: (formData: newVoucher) => ({
         url: `/`,
         method: "PUT",
-        body: {
-          editVoucherId: editVoucherId,
-          newVoucherType: newVoucherType,
-          newSalePercent: newSalePercent,
-          newVoucherPoint: newVoucherPoint,
-          newVoucherDescription: newVoucherDescription,
-        },
+        body: formData,
       }),
       invalidatesTags: ["Voucher"],
     }),

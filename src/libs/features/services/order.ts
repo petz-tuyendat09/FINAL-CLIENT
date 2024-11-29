@@ -12,6 +12,8 @@ export interface BaseOrderQuery {
   totalPriceSort?: string;
   productQuantitySort?: string;
   orderStatus?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 interface QueryParams {

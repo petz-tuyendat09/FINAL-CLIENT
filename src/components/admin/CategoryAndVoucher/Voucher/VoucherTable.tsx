@@ -20,6 +20,8 @@ import ModalDelete from "./ModalVoucher/ModalDelete";
 import { useState } from "react";
 import { useDeleteVoucherMutation } from "@/libs/features/services/voucher";
 import ModalEdit from "./ModalVoucher/ModalEdit";
+import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
+import formatMoney from "@/utils/formatMoney";
 
 const columns = [
   {
@@ -31,13 +33,22 @@ const columns = [
     label: "ĐIỂM",
   },
   {
-    key: "salePercent",
+    key: "sale",
     label: "GIẢM GIÁ",
   },
   {
     key: "voucherType",
     label: "KIỂU GIẢM GIÁ",
   },
+  {
+    key: "maxRedemption",
+    label: "ĐỔI TỐI ĐA",
+  },
+  {
+    key: "expirationDate",
+    label: "HẾT HẠN SAU ĐỔI",
+  },
+
   {
     key: "voucherDescription",
     label: "MÔ TẢ",
@@ -86,27 +97,32 @@ export default function VoucherTable() {
   }
 
   return (
-    <div className="mt-4">
-      <div className="flex">
+    <div className="mt-8">
+      <p className="w-fit rounded-full bg-black px-8 py-2 text-h4 font-bold text-white shadow-sm shadow-[#3b284e] dark:bg-black dark:text-white">
+        Voucher
+      </p>
+      <div className="flex items-center justify-end gap-4">
         {selectedIds.length > 0 && (
-          <button
+          <Button
             onClick={handleDeleteMultiple}
-            className="mb-4 block w-fit rounded-full bg-black px-4 py-2 text-white"
+            color="danger"
+            className="block w-fit px-4 py-2 text-white"
           >
             Xóa
-          </button>
+          </Button>
         )}
-        <Button
+
+        <ButtonAdmin
           onClick={handleAddVoucher}
-          className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
+          className="block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
         >
           + Thêm voucher
-        </Button>
+        </ButtonAdmin>
       </div>
       <Table
         selectionMode="multiple"
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full"
         onSelectionChange={(selectedKeys: any) => {
           handleSelectedRows(selectedKeys);
         }}
@@ -139,7 +155,7 @@ export default function VoucherTable() {
         </TableHeader>
         <TableBody items={voucher?.vouchers || []}>
           {(item) => (
-            <TableRow key={item._id}>
+            <TableRow className="dark:text-white" key={item._id}>
               {(columnKey) =>
                 columnKey === "action" ? (
                   <TableCell>
@@ -163,6 +179,21 @@ export default function VoucherTable() {
                 ) : columnKey === "voucherType" ? (
                   <TableCell>
                     {VoucherType[item.voucherType as keyof typeof VoucherType]}
+                  </TableCell>
+                ) : columnKey === "expirationDate" ? (
+                  <TableCell>{item.expirationDate} ngày</TableCell>
+                ) : columnKey === "maxRedemption" ? (
+                  <TableCell className="font-bold">
+                    {item.maxRedemption || "Không giới hạn"}
+                  </TableCell>
+                ) : columnKey === "sale" ? (
+                  <TableCell>
+                    {item.voucherType === "FLAT_DISCOUNT" &&
+                      formatMoney(item.flatDiscountAmount)}
+                    {(item.voucherType !== "FLAT_DISCOUNT" &&
+                      item.salePercent) ||
+                      item.shippingDiscountAmount}
+                    {item.voucherType !== "FLAT_DISCOUNT" && "%"}
                   </TableCell>
                 ) : (
                   <TableCell>{getKeyValue(item, columnKey)}</TableCell>

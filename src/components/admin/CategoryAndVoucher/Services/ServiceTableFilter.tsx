@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
 
 interface ServiceTableFilterProps {
   setSelectedKeys: any;
@@ -23,13 +24,10 @@ export default function ServiceTableFilter({
   bookingOrderSelect,
 }: ServiceTableFilterProps) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <Dropdown className="h-full">
         <DropdownTrigger className="border-none">
-          <Button
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-            variant="bordered"
-          >
+          <Button variant="flat">
             {ServicesType[selectedValue as keyof typeof ServicesType] ||
               "Loại dịch vụ"}
           </Button>
@@ -43,7 +41,7 @@ export default function ServiceTableFilter({
           onSelectionChange={setSelectedKeys as any}
         >
           {Object.keys(ServicesType).map((statusKey) => (
-            <DropdownItem key={statusKey}>
+            <DropdownItem className="dark:text-white" key={statusKey}>
               {ServicesType[statusKey as keyof typeof ServicesType]}
             </DropdownItem>
           ))}
@@ -51,12 +49,7 @@ export default function ServiceTableFilter({
       </Dropdown>
       <Dropdown className="h-full">
         <DropdownTrigger className="border-none">
-          <Button
-            className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-            variant="bordered"
-          >
-            Sắp xếp theo lượt đặt
-          </Button>
+          <Button variant="flat">Sắp xếp theo lượt đặt</Button>
         </DropdownTrigger>
         <DropdownMenu
           aria-label="Multiple selection example"
@@ -66,15 +59,15 @@ export default function ServiceTableFilter({
           selectionMode="single"
           onSelectionChange={setbookingOrder as any}
         >
-          <DropdownItem key="asc">Lượt booking tăng dần</DropdownItem>
-          <DropdownItem key="desc">Lượt booking giảm dần</DropdownItem>
+          <DropdownItem className="dark:text-white" key="asc">
+            Lượt booking tăng dần
+          </DropdownItem>
+          <DropdownItem className="dark:text-white" key="desc">
+            Lượt booking giảm dần
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <Button
-        className="bg-[#f2f2f2] text-black hover:bg-[#e0e0e0]"
-        variant="flat"
-        onClick={clearQueryParams}
-      >
+      <Button variant="flat" onClick={clearQueryParams}>
         Xóa lọc
       </Button>
     </div>

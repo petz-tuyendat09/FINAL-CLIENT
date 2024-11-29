@@ -2,6 +2,7 @@ import Sidebar from "@/components/admin/UI/Sidebar/Sidebar";
 import "../../styles/globals.css";
 import StoreProvider from "../StoreProvider";
 import { Roboto, Roboto_Slab } from "next/font/google";
+import DarkModeActive from "@/components/admin/UI/Sidebar/DarkModeActive";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -27,7 +28,9 @@ const App = async ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <StoreProvider>
-          <div className="flex py-12">
+          <div className="flex min-h-screen py-12">
+            <DarkModeActive />
+
             <Sidebar />
             <div className="mx-auto w-3/4">{children}</div>
           </div>

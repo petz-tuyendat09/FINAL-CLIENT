@@ -43,10 +43,6 @@ const columns = [
     key: "orderStatus",
     label: "TRẠNG THÁI",
   },
-  {
-    key: "action",
-    label: "ACTION",
-  },
 ];
 
 const statusColors = {
@@ -89,8 +85,11 @@ export default function OrderTable() {
 
   return (
     <div className="">
-      <h1 className="mb-4 mt-12 text-2xl font-semibold">Danh sách đơn hàng</h1>
+      <h1 className="mb-4 mt-12 text-2xl font-semibold dark:text-white">
+        Danh sách đơn hàng
+      </h1>
       <Table
+        className="dark:text-white"
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination
@@ -138,22 +137,7 @@ export default function OrderTable() {
                     </TableCell>
                   );
                 }
-                if (columnKey === "action") {
-                  const pastDate = isPastDate(orderItem.createdAt);
-                  return (
-                    <TableCell className="space-x-2">
-                      <Button
-                        variant="flat"
-                        size="sm"
-                        onClick={() => {
-                          handleViewOrderDetail(orderItem._id);
-                        }}
-                      >
-                        Xem
-                      </Button>
-                    </TableCell>
-                  );
-                }
+
                 if (columnKey === "productId") {
                   return <TableCell>{orderItem.products.length}</TableCell>;
                 }

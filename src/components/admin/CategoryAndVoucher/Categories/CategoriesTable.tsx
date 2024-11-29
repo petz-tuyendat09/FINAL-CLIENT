@@ -16,6 +16,7 @@ import ModalEdit from "./ModalCategories/ModalEdit";
 import ModalAdd from "./ModalCategories/ModalAdd";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import ModalDelete from "./ModalCategories/ModalDelete";
+import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
 
 const columns = [
   {
@@ -55,15 +56,15 @@ export default function CategoriesTable() {
 
   return (
     <div className="w-1/2">
-      <Button
+      <ButtonAdmin
         onClick={handleAddCategory}
-        className="mb-4 ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
+        className="ml-auto block w-fit bg-[#f2f2f2] px-4 py-2 text-black hover:bg-[#e0e0e0]"
       >
         + Thêm danh mục
-      </Button>
+      </ButtonAdmin>
       <Table
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="mt-4 w-full"
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination
@@ -88,7 +89,7 @@ export default function CategoriesTable() {
         </TableHeader>
         <TableBody items={categories?.categories || []}>
           {(item) => (
-            <TableRow key={item._id}>
+            <TableRow className="dark:text-white" key={item._id}>
               {(columnKey) =>
                 columnKey === "action" ? (
                   <TableCell>
@@ -107,7 +108,9 @@ export default function CategoriesTable() {
                   </TableCell>
                 ) : columnKey === "_id" ? (
                   <TableCell className="font-bold">
-                    {item._id.slice(-3).toUpperCase()}
+                    <p className="dark:text-white">
+                      {item._id.slice(-3).toUpperCase()}
+                    </p>
                   </TableCell>
                 ) : (
                   <TableCell>{getKeyValue(item, columnKey)}</TableCell>

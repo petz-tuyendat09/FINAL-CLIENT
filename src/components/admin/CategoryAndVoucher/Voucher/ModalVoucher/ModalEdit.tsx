@@ -1,8 +1,5 @@
-import {
-  useGetVouchersQuery,
-  useEditVoucherMutation,
-} from "@/libs/features/services/voucher";
 import { VoucherType } from "@/types/Voucher";
+import useEditVoucher from "../_hooks/useEditVoucher";
 import {
   Modal,
   ModalContent,
@@ -14,120 +11,36 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-interface ModalEditProps {
+interface ModalAddProps {
   isDialogOpen: boolean;
   handleCloseDialog: () => void;
   voucherId: string;
 }
 
-const DISCOUNT_TYPE = ["ON_ORDER_SAVINGS", "PER_ITEM_SAVINGS"];
+const DISCOUNT_TYPE = [
+  "ON_ORDER_SAVINGS",
+  "FLAT_DISCOUNT",
+  "SHIPPING_DISCOUNT",
+];
 
-export default function ModalEdit({
+export default function ModalAdd({
   isDialogOpen,
   handleCloseDialog,
   voucherId,
-}: ModalEditProps) {
-  const { data: voucher } = useGetVouchersQuery({ voucherId: voucherId });
-
-  const [salePercent, setSalePercent] = useState<number | string>("");
-  const [voucherPoint, setVoucherPoint] = useState<number | string>("");
-  const [voucherType, setVoucherType] = useState<string>("");
-  const [voucherDescription, setVoucherDescription] = useState<string>("");
-
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [pointErrorMessage, setPointErrorMessage] = useState<string>("");
-  const [typeErrorMessage, setTypeErrorMessage] = useState<string>("");
-  const [descriptionErrorMessage, setDescriptionErrorMessage] =
-    useState<string>("");
-  const [duplicatedMessage, setDuplicatedMessage] = useState<string>("");
-  const [editVoucher, { data, error: mutationError }] =
-    useEditVoucherMutation();
-
-  const validateInput = (value: string) => {
-    // Regular expression to disallow special characters including periods (.) and commas (,)
-    const regex = /^[0-9]*$/;
-    return regex.test(value);
-  };
-
-  function handleChangeVoucherDiscount(e: any) {
-    const value = e.target.value;
-    if (!validateInput(value)) {
-      setErrorMessage(
-        "Giá trị giảm giá không hợp lệ (không chứa ký tự đặc biệt hoặc dấu phẩy, chấm)",
-      );
-    } else {
-      setErrorMessage("");
-      setSalePercent(value);
-    }
-  }
-
-  function handleChangeVoucherPoint(e: any) {
-    const value = e.target.value;
-    if (!validateInput(value)) {
-      setPointErrorMessage(
-        "Điểm voucher không hợp lệ (không chứa ký tự đặc biệt hoặc dấu phẩy, chấm)",
-      );
-    } else {
-      setPointErrorMessage("");
-      setVoucherPoint(value);
-    }
-  }
-
-  function handleChangeVoucherDescription(e: any) {
-    if (descriptionErrorMessage) setDescriptionErrorMessage("");
-    setVoucherDescription(e.target.value);
-  }
-
-  useEffect(() => {
-    if (Number(salePercent) > 100 || Number(salePercent) < 0) {
-      setErrorMessage("Phần trăm giảm giá không hợp lệ");
-    }
-
-    if (Number(voucherPoint) < 0) {
-      setPointErrorMessage("Điểm voucher không hợp lệ");
-    }
-  }, [salePercent, voucherPoint]);
-
-  function handleInsertVoucher() {
-    if (!salePercent) {
-      setErrorMessage("Vui lòng nhập đầy đủ thông tin hợp lệ");
-      return;
-    }
-    if (!voucherType) {
-      setTypeErrorMessage("Vui lòng nhập đầy đủ thông tin hợp lệ");
-    }
-    if (!voucherDescription) {
-      setDescriptionErrorMessage("Vui lòng nhập đầy đủ thông tin hợp lệ");
-    }
-    if (!voucherPoint) {
-      setPointErrorMessage("Vui lòng nhập đầy đủ thông tin hợp lệ");
-    }
-    editVoucher({
-      editVoucherId: voucherId,
-      newVoucherType: voucherType,
-      newSalePercent: salePercent as any,
-      newVoucherPoint: voucherPoint as any,
-      newVoucherDescription: voucherDescription,
-    });
-  }
-
-  useEffect(() => {
-    if (mutationError) {
-      setDuplicatedMessage((mutationError as any).data?.message);
-    }
-    if (data) {
-      handleCloseDialog();
-    }
-  }, [mutationError, data, handleCloseDialog]);
-
-  useEffect(() => {
-    setVoucherPoint((voucher as any)?.vouchers[0].voucherPoint);
-    setSalePercent((voucher as any)?.vouchers[0].salePercent);
-    setVoucherType((voucher as any)?.vouchers[0].voucherType);
-    setVoucherDescription((voucher as any)?.vouchers[0].voucherDescription);
-  }, [voucher]);
+}: ModalAddProps) {
+  const {
+    formik,
+    formattedPrice,
+    handleResetValueOnChange,
+    handleChangePrice,
+    formattedTotalToUse,
+    handleChangeTotalTouse,
+  } = useEditVoucher({
+    handleCloseDialog: handleCloseDialog,
+    voucherId: voucherId,
+  });
 
   return (
     <Modal
@@ -142,53 +55,147 @@ export default function ModalEdit({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">Thêm danh mục mới</ModalHeader>
+            <ModalHeader className="text-center dark:text-white">
+              Thêm voucher mới
+            </ModalHeader>
             <ModalBody>
-              <p className="text-base text-red-500">{duplicatedMessage}</p>
+              {/* <p className="text-base text-red-500">{duplicatedMessage}</p> */}
               <Select
                 labelPlacement={"inside"}
+                name="voucherType"
                 label="Loại giảm giá"
                 className="w-full"
-                selectedKeys={[voucherType]} // Controlled component
-                errorMessage={typeErrorMessage}
-                isInvalid={typeErrorMessage === "" ? false : true}
+                onBlur={formik.handleBlur}
+                selectedKeys={[formik.values.voucherType]}
+                errorMessage={
+                  formik.touched.voucherType && formik.errors.voucherType
+                }
+                isInvalid={
+                  formik.touched.voucherType && !!formik.errors.voucherType
+                }
                 onSelectionChange={(key) => {
-                  setVoucherType(key as string);
-                  setTypeErrorMessage("");
+                  handleResetValueOnChange(key);
                 }}
               >
                 {DISCOUNT_TYPE.map((type) => (
-                  <SelectItem key={type} value={type}>
+                  <SelectItem
+                    className="dark:text-white"
+                    key={type}
+                    value={type}
+                  >
                     {VoucherType[type as keyof typeof VoucherType]}
                   </SelectItem>
                 ))}
               </Select>
+              {formik.values.voucherType === "ON_ORDER_SAVINGS" && (
+                <Input
+                  onBlur={formik.handleBlur}
+                  type="number"
+                  label="Nhập phần trăm giảm giá"
+                  name="salePercent"
+                  onChange={formik.handleChange}
+                  value={formik.values.salePercent as any}
+                  errorMessage={
+                    formik.touched.salePercent && formik.errors.salePercent
+                  }
+                  isInvalid={
+                    formik.touched.salePercent && !!formik.errors.salePercent
+                  }
+                />
+              )}
+              {formik.values.voucherType === "FLAT_DISCOUNT" && (
+                <Input
+                  name="flatDiscountAmount"
+                  value={formattedPrice}
+                  onChange={handleChangePrice}
+                  onBlur={formik.handleBlur}
+                  type="text"
+                  label="Nhập số tiền giảm trực tiếp"
+                  errorMessage={
+                    formik.touched.flatDiscountAmount &&
+                    formik.errors.flatDiscountAmount
+                  }
+                  isInvalid={
+                    formik.touched.flatDiscountAmount &&
+                    !!formik.errors.flatDiscountAmount
+                  }
+                />
+              )}
+              {formik.values.voucherType === "SHIPPING_DISCOUNT" && (
+                <Input
+                  name="shippingDiscountAmount"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  errorMessage={
+                    formik.touched.shippingDiscountAmount &&
+                    formik.errors.shippingDiscountAmount
+                  }
+                  isInvalid={
+                    formik.touched.shippingDiscountAmount &&
+                    !!formik.errors.shippingDiscountAmount
+                  }
+                  value={formik.values.shippingDiscountAmount as any}
+                  type="number"
+                  label="Nhập số % giảm ship"
+                />
+              )}
               <Input
-                type="number"
-                label="Nhập phần trăm giảm giá"
-                onChange={handleChangeVoucherDiscount}
-                value={salePercent as any}
-                max={100}
-                min={0}
-                errorMessage={errorMessage}
-                isInvalid={errorMessage === "" ? false : true}
-              />
-              <Input
+                name="voucherPoint"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.voucherPoint as any}
+                errorMessage={
+                  formik.touched.voucherPoint && formik.errors.voucherPoint
+                }
+                isInvalid={
+                  formik.touched.voucherPoint && !!formik.errors.voucherPoint
+                }
                 type="number"
                 label="Nhập điểm của voucher"
-                onChange={handleChangeVoucherPoint}
-                value={voucherPoint as any}
-                max={100}
-                min={0}
-                errorMessage={pointErrorMessage}
-                isInvalid={pointErrorMessage === "" ? false : true}
               />
               <Input
-                label="Mô tả ngắn của voucher (Giảm xx phần trăm)"
-                value={voucherDescription}
-                onChange={handleChangeVoucherDescription}
-                errorMessage={descriptionErrorMessage}
-                isInvalid={descriptionErrorMessage === "" ? false : true}
+                value={formattedTotalToUse}
+                name="totalToUse"
+                onChange={handleChangeTotalTouse}
+                onBlur={formik.handleBlur}
+                type="text"
+                label="Nhập tổng đơn tối đa để sử dụng"
+              />
+              <Input
+                name="expirationDate"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                errorMessage={
+                  formik.touched.expirationDate && formik.errors.expirationDate
+                }
+                isInvalid={
+                  formik.touched.expirationDate &&
+                  !!formik.errors.expirationDate
+                }
+                value={formik.values.expirationDate as any}
+                label="Ngày hết hạn của voucher (VD: x ngày)"
+              />
+              <Input
+                onChange={formik.handleChange}
+                name="maxRedemption"
+                label="Số lần có thể đổi tối đa (tùy chọn)"
+                value={formik.values.maxRedemption as any}
+                errorMessage={formik.errors.maxRedemption}
+                isInvalid={!!formik.errors.maxRedemption}
+              />
+              <Input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="voucherDescription"
+                value={formik.values.voucherDescription as any}
+                errorMessage={
+                  formik.touched.expirationDate && formik.errors.expirationDate
+                }
+                isInvalid={
+                  formik.touched.expirationDate &&
+                  !!formik.errors.expirationDate
+                }
+                label="Mô tả ngắn của voucher (VD: Giảm xx phần trăm)"
               />
             </ModalBody>
             <ModalFooter>
@@ -201,8 +208,9 @@ export default function ModalEdit({
                 Hủy
               </Button>
               <Button
-                className="rounded-full bg-black text-white"
-                onPress={handleInsertVoucher}
+                onPress={formik.handleSubmit as any}
+                color="success"
+                className="rounded-full text-white"
               >
                 Lưu
               </Button>

@@ -4,6 +4,7 @@ import HeroSectionImage2 from "@@/public/images/hero-section-2.png";
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import { motion } from "framer-motion";
 import NormalTransitionLink from "@/components/ui/NormalTransitionLink";
+import { useEffect } from "react";
 
 const upperText = ["Spa", "đẳng", "cấp", "cho"];
 const middleText = ["những", "người", "bạn"];
@@ -15,6 +16,14 @@ const TextVariant = {
 };
 
 export default function HeroSection() {
+  useEffect(() => {
+    document.body.classList.remove("dark");
+
+    return () => {
+      document.body.classList.remove("dark");
+    };
+  }, []);
+
   return (
     <section className="container">
       <div className="mb-24 flex h-screen items-center justify-center">
@@ -86,7 +95,7 @@ export default function HeroSection() {
                 {bottomText.map((word, index) => (
                   <p
                     key={index}
-                    className={`${index == 0 ? "" : "ml-3 italic"} inline-block`}
+                    className={`${index == 0 ? "" : "ml-3"} inline-block`}
                   >
                     {word.split("").map((char, charIndex) => (
                       <motion.span
@@ -107,7 +116,7 @@ export default function HeroSection() {
                 ))}
               </div>
               <NormalTransitionLink
-                className="w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
+                className="ml-auto w-fit self-end rounded-full bg-primary px-6 py-2 font-sans text-base text-white"
                 href="/booking"
               >
                 Đặt lịch ngay

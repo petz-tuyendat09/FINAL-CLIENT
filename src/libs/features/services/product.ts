@@ -56,7 +56,7 @@ export const productsAPI = createApi({
     //   return headers;
     // },
   }),
-  tagTypes: ["Product", "ProductList"],
+  tagTypes: ["Product", "ProductList", "Review"],
 
   endpoints: (builder) => ({
     getProducts: builder.query<PaginateProduct, QueryParams>({
@@ -82,6 +82,7 @@ export const productsAPI = createApi({
         ).toString();
         return `/get-review?${queryParams}`;
       },
+      providesTags: ["Review"],
     }),
 
     addNewProduct: builder.mutation<any, FormData>({
@@ -113,6 +114,7 @@ export const productsAPI = createApi({
         method: "PUT",
         body: formData,
       }),
+      invalidatesTags: ["Review"],
     }),
     lowstockNofi: builder.mutation<any, string>({
       query: (productId) => ({

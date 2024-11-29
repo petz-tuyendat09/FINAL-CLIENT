@@ -29,17 +29,17 @@ export default function DynamicLink() {
             pathname === link.url ? "bg-black text-white" : ""
           } rounded-xl flex items-center gap-1 rounded-full px-6 py-3 transition delay-75 duration-300 hover:bg-[#5d5d5d] hover:text-white`}
         >
-          <NormalTransitionLink href={link.url}>
+          <NormalTransitionLink className="cursor-auto" href={link.url}>
             {link.label}
           </NormalTransitionLink>
           {link.url == "/user/review-product" && (
             <NormalTransitionLink
-              className="space-x-2"
+              className="cursor-auto space-x-2"
               href="/user/review-product"
             >
               <span>Đánh giá sản phẩm</span>
               <span className="text-[14px]">
-                ({(data as any)?.reviews.length})
+                ({(data as any)?.reviews.length || 0})
               </span>
             </NormalTransitionLink>
           )}

@@ -47,7 +47,7 @@ export default function ChangeVoucherFilter() {
         <DropdownTrigger>
           <Button variant="bordered" className="capitalize">
             {VoucherType[selectedType as keyof typeof VoucherType] ||
-              "Sắp xếp theo điểm"}
+              "Theo loại voucher"}
           </Button>
         </DropdownTrigger>
         <DropdownMenu

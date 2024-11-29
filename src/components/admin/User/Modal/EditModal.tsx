@@ -72,7 +72,7 @@ export default function ModalEdit({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="text-center">
+            <ModalHeader className="text-center dark:text-white">
               Thay đổi ca làm việc
             </ModalHeader>
             <ModalBody>
@@ -86,7 +86,10 @@ export default function ModalEdit({
                 }
               >
                 {userShifts.map((shift, index) => (
-                  <SelectItem key={index.toString()}>
+                  <SelectItem
+                    className="dark:text-white"
+                    key={index.toString()}
+                  >
                     {`Ca ${index + 1}: Từ ${shift.startTime} đến ${shift.endTime}`}
                   </SelectItem>
                 ))}

@@ -43,10 +43,6 @@ const columns = [
     key: "bookingStatus",
     label: "TRẠNG THÁI",
   },
-  {
-    key: "action",
-    label: "ACTION",
-  },
 ];
 
 const statusColors = {
@@ -79,6 +75,7 @@ export default function BookingsTable() {
     <>
       <div className="">
         <Table
+          className="dark:text-white"
           bottomContent={
             <div className="flex w-full justify-center">
               <Pagination
@@ -128,23 +125,12 @@ export default function BookingsTable() {
                       </TableCell>
                     );
                   }
-                  if (columnKey === "action") {
-                    return (
-                      <TableCell className="space-x-2">
-                        <Button
-                          variant="flat"
-                          size="sm"
-                          onClick={() => {
-                            console.log("Viewing booking", bookingItem._id);
-                          }}
-                        >
-                          Xem
-                        </Button>
-                      </TableCell>
-                    );
-                  }
+
                   if (columnKey === "bookingStatus") {
-                    const statusLabel = BookingStatus[bookingItem.bookingStatus as keyof typeof BookingStatus];
+                    const statusLabel =
+                      BookingStatus[
+                        bookingItem.bookingStatus as keyof typeof BookingStatus
+                      ];
                     const statusClass = statusColors[statusLabel];
 
                     return (

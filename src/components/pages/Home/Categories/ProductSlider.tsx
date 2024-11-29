@@ -7,6 +7,7 @@ import { FreeMode } from "swiper/modules";
 import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { gsap } from "gsap";
+import { useCursorHover } from "@/components/ui/Cursor/_store/CursorContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,9 @@ interface ProductSliderProps {
 }
 
 export default function ProductSlider({ filterOption }: ProductSliderProps) {
+  const { handleMouseEnterActionButton, handleMouseLeaveActionButton } =
+    useCursorHover();
+
   const { data } = useGetProductsQuery({
     ...filterOption,
     limit: 8,

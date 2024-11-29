@@ -78,7 +78,6 @@ const CartPage = () => {
       });
     }
   }, [cartAfterAdjust]);
-
   return (
     <div className="flex min-h-screen flex-col items-center px-[100px] py-10">
       <div className="w-full rounded-lg p-8">
@@ -154,13 +153,11 @@ const CartPage = () => {
                         <h4 className="font-[500]">Thành tiền:</h4>
                         <h3 className="text-[20px] font-[500]">
                           {formatMoney(
-                            itemsToDisplay?.reduce((acc: any, item: any) => {
-                              const { salePrice } = calculateSalePrice(
-                                item.salePercent,
-                                item.productPrice,
-                              );
-                              return acc + salePrice * item.productQuantity;
-                            }, 0),
+                            itemsToDisplay?.reduce(
+                              (acc: any, item: any) =>
+                                acc + item.productPrice * item.productQuantity,
+                              0,
+                            ),
                           )}
                         </h3>
                       </div>

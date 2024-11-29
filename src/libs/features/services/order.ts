@@ -82,6 +82,17 @@ export const orderAPI = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    updatePaymentStatus: builder.mutation<
+      Order,
+      { orderId: string; paymentStatus: Boolean }
+    >({
+      query: ({ orderId, paymentStatus }) => ({
+        url: `/payment-status`,
+        method: "PUT",
+        body: { orderId, paymentStatus },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
   }),
 });
 
@@ -93,4 +104,5 @@ export const {
   useCancelOrderMutation,
   useEditOrderStatusMutation,
   useInsertOrderMutation,
+  useUpdatePaymentStatusMutation
 } = orderAPI;

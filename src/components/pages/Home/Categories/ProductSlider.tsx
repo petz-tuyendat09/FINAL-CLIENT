@@ -54,7 +54,7 @@ export default function ProductSlider({ filterOption }: ProductSliderProps) {
       >
         <SwiperSlide />
 
-        {data?.products.map((product) => (
+        {data?.products?.map((product) => (
           <SwiperSlide className="relative z-50 shadow-sm" key={product._id}>
             <ProductBox Product={product} status={filterOption?.sortBy} />
           </SwiperSlide>

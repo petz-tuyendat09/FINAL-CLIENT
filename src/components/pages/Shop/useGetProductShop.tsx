@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { Product } from "@/types/Product";
+import { Product } from "../../../types/Product";
 import {
   useGetProductsQuery,
   useLazyGetProductsQuery,
-} from "@/libs/features/services/product";
+} from "../../../libs/features/services/product";
 
 interface UseGetProductProps {
   filterCategory: string[];
@@ -34,7 +34,7 @@ export default function useGetProductShop({
     if (PaginateProduct?.products) {
       setListProduct(PaginateProduct.products);
       setPaginatedProducts(PaginateProduct.products);
-      setTotalPages(PaginateProduct.totalPages);
+      setTotalPages(PaginateProduct?.totalPages);
       setCurrPage(1); // Reset current page to 1 when filters change
     }
   }, [PaginateProduct]);

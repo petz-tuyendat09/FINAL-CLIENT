@@ -90,19 +90,22 @@ export const orderAPI = createApi({
         headers: {
           "Content-Type": "application/json",
         },
+      }),
+    }),
     updatePaymentStatus: builder.mutation<
       Order,
-      { orderId: string; paymentStatus: Boolean }
+      { orderId: string; paymentStatus: boolean }
     >({
       query: ({ orderId, paymentStatus }) => ({
-        url: `/payment-status`,
+        url: `/update-payment-status`,
         method: "PUT",
         body: { orderId, paymentStatus },
-
+        headers: {
+          "Content-Type": "application/json",
+        },
       }),
-      invalidatesTags: ["Orders"],
     }),
-  }),
+  }), // Đóng đúng endpoints tại đây
 });
 
 export const {
@@ -114,6 +117,5 @@ export const {
   useEditOrderStatusMutation,
   useInsertOrderMutation,
   useRefundOrderMutation,
-
-  useUpdatePaymentStatusMutation
+  useUpdatePaymentStatusMutation,
 } = orderAPI;

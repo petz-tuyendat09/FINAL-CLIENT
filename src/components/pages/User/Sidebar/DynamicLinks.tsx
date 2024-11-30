@@ -20,6 +20,8 @@ export default function DynamicLink() {
     userId ? { userId: userId, limit: 99, ratingStatus: "no" } : skipToken,
   );
 
+  console.log(data);
+
   return (
     <ul className="my-4 space-y-4">
       {links.map((link) => (

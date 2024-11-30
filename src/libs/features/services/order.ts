@@ -82,6 +82,14 @@ export const orderAPI = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    refundOrder: builder.mutation<any, any>({
+      query: (payload) => ({
+        url: `/refund`,
+        method: "POST",
+        body: payload,
+        headers: {
+          "Content-Type": "application/json",
+        },
     updatePaymentStatus: builder.mutation<
       Order,
       { orderId: string; paymentStatus: Boolean }
@@ -90,6 +98,7 @@ export const orderAPI = createApi({
         url: `/payment-status`,
         method: "PUT",
         body: { orderId, paymentStatus },
+
       }),
       invalidatesTags: ["Orders"],
     }),
@@ -104,5 +113,7 @@ export const {
   useCancelOrderMutation,
   useEditOrderStatusMutation,
   useInsertOrderMutation,
+  useRefundOrderMutation,
+
   useUpdatePaymentStatusMutation
 } = orderAPI;

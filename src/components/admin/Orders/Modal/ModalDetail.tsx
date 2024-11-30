@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import {
   useEditOrderStatusMutation,
   useGetOrdersByOrderIdQuery,
+  useRefundOrderMutation,
 } from "@/libs/features/services/order";
 import { OrderAdmin, OrderStatus } from "@/types/Order";
 import Image from "next/image";
@@ -59,11 +60,36 @@ export default function ModalOrderDetail({
   const [orderDetail, setOrderDetail] = useState<OrderAdmin>();
   const [editOrderStatus, { data: editResponse, error: editError }] =
     useEditOrderStatusMutation();
+  const [refundOrder, { data: refundResponse, error: refundError }] =
+    useRefundOrderMutation();
 
   const handleStatusChange = (orderId: any, newStatus: string) => {
-    console.log("hủy thành công");
     editOrderStatus({ orderId: orderId, newStatus: newStatus });
   };
+
+  const handleRefundMomo = (
+    orderId: any,
+    transIDMomo: any,
+    totalAfterDiscount: any,
+  ) => {
+    const refundObject = {
+      transId: transIDMomo,
+      orderId: orderId,
+      amount: totalAfterDiscount,
+    };
+
+    refundOrder(refundObject);
+  };
+
+  useEffect(() => {
+    if (refundError) {
+      errorModal({ content: (refundError as any)?.data.details.message });
+    }
+    if (refundResponse) {
+      successModal({ content: (refundResponse as any)?.data.details.message });
+      console.log(refundResponse);
+    }
+  }, [refundError, refundResponse]);
 
   useEffect(() => {
     if (data) {
@@ -79,8 +105,6 @@ export default function ModalOrderDetail({
       errorModal({ content: "Cập nhật trạng thái thất bại", duration: 3 });
     }
   }, [editResponse, editError]);
-
-  console.log(isLoading);
 
   if (isLoading) {
     return (
@@ -225,13 +249,11 @@ export default function ModalOrderDetail({
               </p>
               <p>
                 <span className="font-bold">Giảm giá:</span>{" "}
-                {formatMoney(
-                  (orderDetail as any)?.orderDiscount || "Không giảm",
-                )}
+                {formatMoney(orderDetail?.orderDiscount || "Không giảm")}
               </p>
               <p>
                 <span className="font-bold">Thành tiền sau giảm:</span>{" "}
-                {formatMoney((orderDetail as any)?.totalAfterDiscount)}
+                {formatMoney(orderDetail?.totalAfterDiscount)}
               </p>
               <p>
                 <span className="font-bold">Trạng thái:</span>{" "}
@@ -283,6 +305,19 @@ export default function ModalOrderDetail({
                   }}
                 >
                   Đã giao hàng
+                </Button>
+                <Button
+                  className="bg-gray-500 text-white"
+                  isDisabled={(orderDetail as any)?.orderStatus !== "DELIVERED"}
+                  onPress={() => {
+                    handleRefundMomo(
+                      orderDetail?._id,
+                      orderDetail?.transIDMomo,
+                      orderDetail?.totalAfterDiscount,
+                    );
+                  }}
+                >
+                  Hoàn tiền
                 </Button>
               </div>
             </ModalBody>

@@ -10,8 +10,16 @@ import {
   Input,
   Select,
   SelectItem,
+  DatePicker,
 } from "@nextui-org/react";
 import { useEffect } from "react";
+import {
+  getLocalTimeZone,
+  today,
+  parseZonedDateTime,
+  parseDate,
+} from "@internationalized/date";
+import formatDate from "@/utils/formatDate";
 
 interface ModalAddProps {
   isDialogOpen: boolean;
@@ -37,6 +45,9 @@ export default function ModalAdd({
     handleChangePrice,
     formattedTotalToUse,
     handleChangeTotalTouse,
+    handleDateChange,
+    limitedDate,
+    handleClearDate,
   } = useEditVoucher({
     handleCloseDialog: handleCloseDialog,
     voucherId: voucherId,
@@ -174,6 +185,25 @@ export default function ModalAdd({
                 }
                 value={formik.values.expirationDate as any}
                 label="Ngày hết hạn của voucher (VD: x ngày)"
+              />
+              <div>
+                <DatePicker
+                  aria-label="Ngày hết hạn"
+                  label="Ngày hết hạn của voucher (tùy chọn)"
+                  name="limitedDate"
+                  onChange={handleDateChange}
+                  value={limitedDate}
+                  minValue={today(getLocalTimeZone()) as any}
+                />
+                <button onClick={handleClearDate} className="ml-2 text-[12px]">
+                  Xóa ngày{" "}
+                </button>
+              </div>
+              <Input
+                onChange={formik.handleChange}
+                name="voucherQuantity"
+                value={formik.values.voucherQuantity as any}
+                label="Số lượng voucher (tùy chọn)"
               />
               <Input
                 onChange={formik.handleChange}

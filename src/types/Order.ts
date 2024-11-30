@@ -19,6 +19,7 @@ export interface Order {
   orderId: string;
   userPoint: number;
   transIDMomo?: string;
+  paymentStatus: Boolean;
 }
 
 export interface OrderProduct {

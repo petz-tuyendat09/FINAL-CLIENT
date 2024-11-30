@@ -5,8 +5,8 @@ import Stats from "./Stats/Stats"
 export default function Dashboard() {
     return (
         <>
+            <ChartDashboard />
             <Stats />
-            {/* <ChartDashboard /> */}
             <Tables />
         </>
     )

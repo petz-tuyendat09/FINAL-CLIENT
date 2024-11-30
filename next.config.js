@@ -10,9 +10,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "final-asm.s3.ap-southeast-2.amazonaws.com",
-        port: "",
         pathname: "/**",
       },
     ],
   },
 };
+
+module.exports = nextConfig;

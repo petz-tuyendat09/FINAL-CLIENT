@@ -104,6 +104,7 @@ export default function CartItem({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartAfterRemoveItem, cartAfterAdjust]);
+  console.log(cartItem?.productImage);
   return (
     <tr>
       <td>
@@ -125,12 +126,7 @@ export default function CartItem({
         </Link>
       </td>
       <td className="text-center">
-        {cartItem?.productPrice && formatMoney(salePrice)}
-        {cartItem?.salePercent !== 0 && (
-          <span className="ml-1 rounded-full bg-primary px-2 py-1 text-[14px] text-white">
-            {-cartItem?.salePercent}%
-          </span>
-        )}
+        {cartItem?.productPrice && formatMoney(cartItem?.productPrice)}
       </td>
       <td>
         <div className="flex justify-center">
@@ -168,7 +164,7 @@ export default function CartItem({
       </td>
       <td className="text-center">
         <p className="font-medium text-gray-700">
-          {formatMoney(salePrice * cartItem.productQuantity)}
+          {formatMoney(cartItem.productPrice * cartItem.productQuantity)}
         </p>
       </td>
       <td>

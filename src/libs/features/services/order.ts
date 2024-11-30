@@ -90,6 +90,15 @@ export const orderAPI = createApi({
         headers: {
           "Content-Type": "application/json",
         },
+    updatePaymentStatus: builder.mutation<
+      Order,
+      { orderId: string; paymentStatus: Boolean }
+    >({
+      query: ({ orderId, paymentStatus }) => ({
+        url: `/payment-status`,
+        method: "PUT",
+        body: { orderId, paymentStatus },
+
       }),
       invalidatesTags: ["Orders"],
     }),
@@ -105,4 +114,6 @@ export const {
   useEditOrderStatusMutation,
   useInsertOrderMutation,
   useRefundOrderMutation,
+
+  useUpdatePaymentStatusMutation
 } = orderAPI;

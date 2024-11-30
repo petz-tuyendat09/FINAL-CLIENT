@@ -11,6 +11,7 @@ export interface QueryParams {
   productName?: string;
   status?: string;
   limit?: number;
+  search?: string;
   productQuantity?: number;
   productCategory?: string | string[];
   productSlug?: string;
@@ -20,7 +21,8 @@ export interface QueryParams {
   productBuy?: number;
   productOption?: Option[];
   lowStock?: boolean;
-  sortBy?: "productBuyAsc" | "productBuyDesc" | "latest" | "oldest";
+  sortBy?: string;
+  size?: string[];
 }
 
 export interface ReviewQueryParams {

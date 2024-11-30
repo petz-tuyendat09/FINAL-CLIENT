@@ -69,9 +69,12 @@ export default function useInsertVoucher({
       flatDiscountAmount: 0,
       salePercent: 0,
       shippingDiscountAmount: 0,
+      limitedDate: { day: 0, year: 0, month: 0 },
       totalToUse: 0,
+      voucherQuantity: 0,
     },
     onSubmit: (values) => {
+      console.log(values);
       insertVoucher(values as any);
     },
     validate: (values) => {
@@ -137,6 +140,13 @@ export default function useInsertVoucher({
     }
   }, [data, insertError]);
 
+  const handleDateChange = (value: any) => {
+    if (value) {
+      const { day, year, month } = value; // Lấy day, year, month từ dữ liệu trả về
+      formik.setFieldValue("limitedDate", { day, year, month });
+    }
+  };
+
   return {
     formik,
     formattedPrice,
@@ -144,5 +154,6 @@ export default function useInsertVoucher({
     handleChangePrice,
     formattedTotalToUse,
     handleChangeTotalTouse,
+    handleDateChange,
   };
 }

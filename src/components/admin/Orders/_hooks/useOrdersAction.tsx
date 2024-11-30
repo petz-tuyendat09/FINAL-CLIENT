@@ -1,7 +1,7 @@
 import { useGetOrdersQuery } from "@/libs/features/services/order";
 import { BaseOrderQuery } from "@/libs/features/services/order";
 import formatSelectedKeys from "@/utils/formatSelectedValue";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 interface useOrdergActionProps {
   initialPage: number;
 }
@@ -100,8 +100,6 @@ export default function useOrdergAction({ initialPage }: useOrdergActionProps) {
       }));
     }
   };
-
-  console.log(queryParams);
 
   const handleViewOrderDetail = (orderId: string) => {
     setViewDetail(true);

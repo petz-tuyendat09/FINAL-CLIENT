@@ -42,7 +42,7 @@ export default function ProductCardCartButton({
           </div>
         </div>
       ),
-      duration: 30,
+      duration: 1,
       className: "custom-message", // Optionally for further styling if needed
     });
   };

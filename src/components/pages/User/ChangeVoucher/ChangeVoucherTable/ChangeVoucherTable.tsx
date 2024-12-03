@@ -15,6 +15,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import formatMoney from "@/utils/formatMoney";
+import formatDate from "@/utils/formatDate";
 
 const columns = [
   {
@@ -40,6 +41,14 @@ const columns = [
   {
     key: "expirationDate",
     label: "HẾT HẠN SAU ĐỔI",
+  },
+  {
+    key: "voucherQuantity",
+    label: "SỐ LƯỢNG CÒN",
+  },
+  {
+    key: "limitedDate",
+    label: "NGÀY HẾT HẠN",
   },
 
   {
@@ -133,6 +142,16 @@ export default function ChangeVoucherTable() {
                   </TableCell>
                 ) : columnKey === "expirationDate" ? (
                   <TableCell>{item.expirationDate} ngày</TableCell>
+                ) : columnKey === "voucherQuantity" ? (
+                  <TableCell>
+                    {item.voucherQuantity === 0
+                      ? "Đã hết voucher"
+                      : item.voucherQuantity || "Không giới hạn"}
+                  </TableCell>
+                ) : columnKey === "limitedDate" ? (
+                  <TableCell>
+                    {formatDate(item.limitedDate) || "Không giới hạn"}
+                  </TableCell>
                 ) : columnKey === "sale" ? (
                   <TableCell>
                     {item.voucherType === "FLAT_DISCOUNT" &&

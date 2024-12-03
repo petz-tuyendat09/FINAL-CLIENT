@@ -22,6 +22,7 @@ import { useDeleteVoucherMutation } from "@/libs/features/services/voucher";
 import ModalEdit from "./ModalVoucher/ModalEdit";
 import ButtonAdmin from "../../UI/Sidebar/ButtonAdmin";
 import formatMoney from "@/utils/formatMoney";
+import formatDate from "@/utils/formatDate";
 
 const columns = [
   {
@@ -196,7 +197,7 @@ export default function VoucherTable() {
                   </TableCell>
                 ) : columnKey === "limitedDate" ? (
                   <TableCell className="font-bold">
-                    {item.limitedDate || "Không giới hạn"}
+                    {formatDate(item.limitedDate) || "Không giới hạn"}
                   </TableCell>
                 ) : columnKey === "voucherQuantity" ? (
                   <TableCell className="font-bold">

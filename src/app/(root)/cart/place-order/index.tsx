@@ -375,7 +375,6 @@ export const Index = () => {
                       </thead>
                       <tbody>
                         {itemsToDisplay.map((item: any, i: number) => {
-                          console.log(itemsToDisplay)
                           return (
                             <tr key={i}>
                               <td>
@@ -389,10 +388,10 @@ export const Index = () => {
                                   />
                                   <div>
                                     <h1 className="text-[17px]">
-                                      {item.productName}
+                                      {item?.productName}
                                     </h1>
                                     <p className="text-[15px]">
-                                      {item.productOption}
+                                      {item?.productOption}
                                     </p>
                                   </div>
                                 </div>
@@ -402,7 +401,7 @@ export const Index = () => {
                               </td>
                               <td>
                                 <span className="rounded-br-[15px] rounded-tl-[15px] border border-gray-200 bg-gray-100 px-[40px] py-[10px] text-[17px]">
-                                  {item.productQuantity}
+                                  {item?.productQuantity}
                                 </span>
                               </td>
                               <td className="text-[18px] font-[500]">

@@ -66,6 +66,7 @@ export default function OrderDetailProduct({
             >
               <div className="w-full pb-4 md:w-40 md:pb-8">
                 <ResponsiveImage
+                  unoptimized
                   additionClass="hidden w-full md:block"
                   imageSrc={data.productId.productThumbnail as any}
                   altImage="Product Img"

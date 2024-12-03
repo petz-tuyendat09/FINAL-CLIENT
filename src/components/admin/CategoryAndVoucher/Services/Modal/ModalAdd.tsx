@@ -75,7 +75,6 @@ export default function ModalAdd({
       setPriceErrorMessage("Giá dịch vụ không được để trống");
       valid = false;
     } else {
-      // Remove dots and convert to number
       const priceValue = parseInt(servicePrice.replace(/\./g, ""), 10);
       if (isNaN(priceValue) || priceValue < 0) {
         setPriceErrorMessage("Giá dịch vụ không được là số âm");

@@ -38,12 +38,13 @@ export default function Cursor() {
     gsap.set(circle.current, { x, y, xPercent: -50, yPercent: -50 });
   };
 
-  // useEffect(() => {
-  //   animate();
-  //   window.addEventListener("mousemove", manageMouseMove);
-  //   document.body.style.cursor = "none";
-  //   return () => window.removeEventListener("mousemove", manageMouseMove);
-  // }, []);
+
+  useEffect(() => {
+    animate();
+    window.addEventListener("mousemove", manageMouseMove);
+    return () => window.removeEventListener("mousemove", manageMouseMove);
+  }, []);
+
 
   return (
     <div
@@ -52,7 +53,7 @@ export default function Cursor() {
         width: circleSize,
         height: circleSize,
       }}
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden items-center justify-center rounded-full bg-black text-center dark:bg-white xl:flex"
+      className="pointer-events-none fixed left-0 top-0 z-[51] hidden items-center justify-center rounded-full bg-black text-center dark:bg-white xl:flex"
     >
       <Icon
         ref={iconRef}

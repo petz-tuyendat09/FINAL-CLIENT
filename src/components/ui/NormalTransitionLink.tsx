@@ -30,7 +30,7 @@ export default function NormalTransitionLink({
         onMouseEnter={handleMouseEnterLink}
         onMouseLeave={handleMouseLeaveLink}
         onClick={handleClick}
-        className={`w-fit cursor-none ${className}`}
+        className={`w-fit cursor-pointer ${className}`}
       >
         {children}
       </div>

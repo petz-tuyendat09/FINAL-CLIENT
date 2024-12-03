@@ -71,6 +71,7 @@ export default function BookingsTable() {
     <>
       <div className="mt-4">
         <Table
+          className="dark:text-white"
           bottomContent={
             <div className="flex w-full justify-center">
               <Pagination
@@ -124,7 +125,11 @@ export default function BookingsTable() {
                             label="Role"
                           >
                             {Object.keys(UserRole).map((userRole) => (
-                              <SelectItem key={userRole} value={userRole}>
+                              <SelectItem
+                                className="dark:text-white"
+                                key={userRole}
+                                value={userRole}
+                              >
                                 {UserRole[userRole as keyof typeof UserRole]}
                               </SelectItem>
                             ))}

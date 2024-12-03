@@ -24,7 +24,7 @@ export default function ServiceTableFilter({
   bookingOrderSelect,
 }: ServiceTableFilterProps) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <Dropdown className="h-full">
         <DropdownTrigger className="border-none">
           <Button variant="flat">

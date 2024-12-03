@@ -34,10 +34,22 @@ export const orderStatsAPI = createApi({
             },
             providesTags: ["Orders"],
         }),
+        getBookingStats: builder.query<any, BaseOrderQuery>({
+            query: (params: BaseOrderQuery) => {
+                const queryParams = new URLSearchParams(params as any).toString();
+                console.log("Điều kiện", params)
+                const url = `bookingStats?${queryParams}`;
+                console.log("Fetching URL:", url);
+                return url;
+
+            },
+            providesTags: ["Orders"],
+        }),
 
     }),
 });
 
 export const {
-    useGetOrderStatsQuery
+    useGetOrderStatsQuery,
+    useGetBookingStatsQuery,
 } = orderStatsAPI;

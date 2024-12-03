@@ -77,7 +77,14 @@ const CartPage = () => {
         },
       });
     }
-  }, [cartAfterAdjust]);
+  }, [cartAfterAdjust]); 
+  const totalPrice = itemsToDisplay?.reduce((acc: any, item: any) => {
+    const price = item?.salePercent > 0
+      ? item.productPrice - (item.productPrice * item.salePercent) / 100
+      : item.productPrice;
+    
+    return acc + price * item.productQuantity;
+  }, 0);
   return (
     <div className="flex min-h-screen flex-col items-center px-[100px] py-10">
       <div className="w-full rounded-lg p-8">
@@ -152,13 +159,7 @@ const CartPage = () => {
                       <div className="flex flex-row items-center justify-between">
                         <h4 className="font-[500]">Thành tiền:</h4>
                         <h3 className="text-[20px] font-[500]">
-                          {formatMoney(
-                            itemsToDisplay?.reduce(
-                              (acc: any, item: any) =>
-                                acc + item.productPrice * item.productQuantity,
-                              0,
-                            ),
-                          )}
+                          {formatMoney(totalPrice)}
                         </h3>
                       </div>
                     </td>

@@ -7,6 +7,7 @@ import NavigateBar from "@/components/ui/NavigateBar/NavigateBar";
 import DarkModeActive from "@/components/admin/UI/Sidebar/DarkModeActive";
 import LenisScroll from "@/utils/LenisScroll";
 import Cursor from "@/components/ui/Cursor/Cursor";
+import MessengerIcon from "@/components/ui/MessengerIcon/MessengerIcon";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ const App = async ({ children }: { children: React.ReactNode }) => {
           <Header />
           <main>{children}</main>
           <NavigateBar />
+          <MessengerIcon />
           <Footer />
         </StoreProvider>
       </body>

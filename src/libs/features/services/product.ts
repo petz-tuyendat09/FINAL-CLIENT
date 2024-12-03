@@ -1,5 +1,6 @@
+import { PaginateReview } from "@/types/Review";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { PaginateProduct, Product } from "@/types/Product";
+import { PaginateProduct } from "@/types/Product";
 
 interface Option {
   name: string;
@@ -25,8 +26,10 @@ export interface QueryParams {
 }
 
 export interface ReviewQueryParams {
-  userId?: string | undefined;
-  ratingStatus?: "yes" | "no";
+  publicStatus?: boolean;
+  productId?: string;
+  reviewId?: string;
+  start?: number | undefined;
   sort?: "asc" | "desc";
   page?: number;
   limit?: number;
@@ -36,27 +39,8 @@ export const productsAPI = createApi({
   reducerPath: "productsAPI",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/product`,
-    // Prepare headers dynamically
-    // prepareHeaders: (headers, { getState }) => {
-    //   // Ensure Content-Type is correctly set
-    //   const contentType = headers.get("Content-Type");
-    //   if (contentType !== "") {
-    //     headers.set("Content-Type", "application/json");
-    //   }
-    //   if (contentType === "") {
-    //     headers.delete("Content-Type");
-    //   }
-
-    //   // Get the token from the store and set the Authorization header
-    //   const token = (getState() as RootState).user.token; // Adjust based on your state structure
-    //   if (token) {
-    //     headers.set("authorization", `Bearer ${token}`);
-    //   }
-
-    //   return headers;
-    // },
   }),
-  tagTypes: ["Product", "ProductList"],
+  tagTypes: ["Product", "ProductList", "Review"],
 
   endpoints: (builder) => ({
     getProducts: builder.query<PaginateProduct, QueryParams>({
@@ -75,13 +59,14 @@ export const productsAPI = createApi({
         return `/by-cat-id?${queryParams}`;
       },
     }),
-    getReview: builder.query<void, ReviewQueryParams>({
+    getReview: builder.query<PaginateReview, ReviewQueryParams>({
       query: (params) => {
         const queryParams = new URLSearchParams(
           params as Record<string, string>,
         ).toString();
         return `/get-review?${queryParams}`;
       },
+      providesTags: ["Review"],
     }),
 
     addNewProduct: builder.mutation<any, FormData>({
@@ -113,6 +98,15 @@ export const productsAPI = createApi({
         method: "PUT",
         body: formData,
       }),
+      invalidatesTags: ["Review"],
+    }),
+    publicReview: builder.mutation<any, FormData>({
+      query: (formData: FormData) => ({
+        url: `/public-review`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["Review"],
     }),
     lowstockNofi: builder.mutation<any, string>({
       query: (productId) => ({
@@ -136,4 +130,5 @@ export const {
   useLowstockNofiMutation,
   useGetReviewQuery,
   useReviewMutation,
+  usePublicReviewMutation,
 } = productsAPI;

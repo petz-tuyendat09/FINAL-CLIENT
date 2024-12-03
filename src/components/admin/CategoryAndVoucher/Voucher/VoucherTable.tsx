@@ -48,6 +48,14 @@ const columns = [
     key: "expirationDate",
     label: "HẾT HẠN SAU ĐỔI",
   },
+  {
+    key: "limitedDate",
+    label: "NGÀY HẾT HẠN ",
+  },
+  {
+    key: "voucherQuantity",
+    label: "SỐ LƯỢNG CÒN LẠI",
+  },
 
   {
     key: "voucherDescription",
@@ -185,6 +193,14 @@ export default function VoucherTable() {
                 ) : columnKey === "maxRedemption" ? (
                   <TableCell className="font-bold">
                     {item.maxRedemption || "Không giới hạn"}
+                  </TableCell>
+                ) : columnKey === "limitedDate" ? (
+                  <TableCell className="font-bold">
+                    {item.limitedDate || "Không giới hạn"}
+                  </TableCell>
+                ) : columnKey === "voucherQuantity" ? (
+                  <TableCell className="font-bold">
+                    {item.voucherQuantity || "Không giới hạn"}
                   </TableCell>
                 ) : columnKey === "sale" ? (
                   <TableCell>

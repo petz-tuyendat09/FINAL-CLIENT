@@ -10,22 +10,20 @@ import { bookingsAPI } from "./features/services/booking";
 import { orderAPI } from "./features/services/order";
 import { orderStatsAPI } from "./features/services/orderStatsAPI";
 import { userAPI } from "./features/services/user";
-import { paymentAPI } from "./features/services/payment";
 import cartSlice from "./features/cart/cart";
 import userSlice from "./features/user/user";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { encryptTransform } from "redux-persist-transform-encrypt";
+import { paymentAPI } from "./features/services/payment";
 
-// Create an encryption transform
 const encryptor = encryptTransform({
-  secretKey: "your-secret-key", // Use a strong secret key here
+  secretKey: "your-secret-key", 
   onError: (error) => {
     console.error("Encryption error:", error);
   },
 });
 
-// Combine all slice reducers and API reducers into a single rootReducer
 const rootReducer = combineReducers({
   cart: cartSlice.reducer,
   user: userSlice.reducer,
@@ -43,12 +41,11 @@ const rootReducer = combineReducers({
   [paymentAPI.reducerPath]: paymentAPI.reducer,
 });
 
-// Configuration for redux-persist with encryption
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart", "user"], // Only persist cart and user state
-  transforms: [encryptor], // Add encryption transform
+  whitelist: ["cart", "user"], 
+  transforms: [encryptor], 
 };
 
 // Enhance rootReducer with persist capabilities and encryption
@@ -80,8 +77,6 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-// Infer the type of makeStore
 export type AppStore = typeof store;
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];

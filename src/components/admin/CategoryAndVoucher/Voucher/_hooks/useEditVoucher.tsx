@@ -5,10 +5,10 @@ import { errorModal, successModal } from "@/utils/callModalANTD";
 import {
   useEditVoucherMutation,
   useGetVouchersQuery,
-  useInsertVoucherMutation,
 } from "@/libs/features/services/voucher";
 import formatSelectedKeys from "@/utils/formatSelectedValue";
-import { off } from "process";
+import formatDate from "@/utils/formatDate";
+import { parseDate } from "@internationalized/date";
 
 interface errorsValues {
   voucherType: string;
@@ -33,6 +33,7 @@ export default function useEditVoucher({
   const [editVoucher, { data, error: editError }] = useEditVoucherMutation();
   const [formattedPrice, setFormattedPrice] = useState("");
   const [formattedTotalToUse, setFormattedTotalToUse] = useState("");
+  const [limitedDate, setLimitedDate] = useState<any>(null);
 
   async function handleResetValueOnChange(key: any) {
     await formik.setFieldValue("voucherType", formatSelectedKeys(key));
@@ -77,6 +78,17 @@ export default function useEditVoucher({
       shippingDiscountAmount:
         voucherById?.vouchers[0].shippingDiscountAmount || 0,
       totalToUse: voucherById?.vouchers[0].totalToUse || "",
+      limitedDate: voucherById?.vouchers[0].limitedDate
+        ? {
+            day: new Date(voucherById.vouchers[0].limitedDate).getUTCDate(),
+            year: new Date(
+              voucherById.vouchers[0].limitedDate,
+            ).getUTCFullYear(),
+            month:
+              new Date(voucherById.vouchers[0].limitedDate).getUTCMonth() + 1,
+          }
+        : { day: 0, year: 0, month: 0 },
+      voucherQuantity: voucherById?.vouchers[0].voucherQuantity || 0,
     },
     enableReinitialize: true,
 
@@ -93,6 +105,8 @@ export default function useEditVoucher({
         newVoucherDescription: formik.values.voucherDescription,
         newFlatDiscountAmount: formik.values.flatDiscountAmount,
         newShippingDiscountAmount: formik.values.shippingDiscountAmount,
+        newVoucherQuantity: formik.values.voucherQuantity,
+        newLimitedDate: formik.values.limitedDate,
       };
       editVoucher(editVoucherObject as any);
     },
@@ -167,6 +181,27 @@ export default function useEditVoucher({
     }
   }, [formik.values.flatDiscountAmount, formik.values.totalToUse]);
 
+  useEffect(() => {
+    if (voucherById && voucherById.vouchers[0].limitedDate) {
+      setLimitedDate(
+        parseDate(formatDate(voucherById.vouchers[0]?.limitedDate) as any),
+      );
+    }
+  }, [voucherById]);
+
+  const handleClearDate = () => {
+    setLimitedDate(null);
+    formik.setFieldValue("limitedDate", null);
+  };
+
+  const handleDateChange = (value: any) => {
+    if (value) {
+      setLimitedDate(value);
+      const { day, year, month } = value;
+      formik.setFieldValue("limitedDate", { day, year, month });
+    }
+  };
+
   return {
     formik,
     formattedPrice,
@@ -174,5 +209,8 @@ export default function useEditVoucher({
     handleChangePrice,
     formattedTotalToUse,
     handleChangeTotalTouse,
+    handleDateChange,
+    limitedDate,
+    handleClearDate,
   };
 }

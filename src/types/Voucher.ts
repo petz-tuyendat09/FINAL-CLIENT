@@ -1,6 +1,6 @@
 export enum VoucherType {
-  ON_ORDER_SAVINGS = "Giảm tổng đơn",
-  FLAT_DISCOUNT = "Giảm tiền thẳng",
+  ON_ORDER_SAVINGS = "Giảm theo %",
+  FLAT_DISCOUNT = "Giảm theo tiền",
   SHIPPING_DISCOUNT = "Giảm phí vận chuyển",
 }
 
@@ -16,6 +16,8 @@ export interface Voucher {
   flatDiscountAmount?: number;
   shippingDiscountAmount?: number;
   totalToUse?: string;
+  limitedDate?: any;
+  voucherQuantity?: number;
 }
 
 interface HeldVoucher {
@@ -23,6 +25,7 @@ interface HeldVoucher {
   expirationDate: any;
   redemptionCount: number;
   quantity: number;
+  limitedDate?: any;
   _id: string;
 }
 export interface VoucherOrder {

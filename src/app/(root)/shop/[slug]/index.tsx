@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { message } from "antd";
 import { useCursorHover } from "@/components/ui/Cursor/_store/CursorContext";
 import Link from "next/link";
+import Feedback from "@/components/pages/Details/Feedback/Feedback";
 export const Index = () => {
   const { slug } = useParams();
   const [addToCart, { data: newCart }] = useAddItemToCartMutation();
@@ -282,6 +283,11 @@ export const Index = () => {
         </div>
       </div>
       {contextHolder}
+      <Feedback
+        totalReview={data?.products[0].productRating}
+        reviewCount={data?.products[0].ratingCount}
+        productId={data?.products[0]._id as any}
+      />
     </div>
   );
 };

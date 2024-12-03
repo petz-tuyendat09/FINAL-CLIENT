@@ -1,7 +1,6 @@
 import { createContext, useContext, ReactNode } from "react";
 import useBookingAction from "../_hooks/useBookingsAction";
 
-// Define the shape of your context
 interface BookingContextProps {
   isLoading: boolean;
   bookingList: any;
@@ -19,12 +18,10 @@ interface BookingContextProps {
   bookingId: any;
 }
 
-// Create the context
 const BookingContext = createContext<BookingContextProps | undefined>(
   undefined,
 );
 
-// Create a provider component
 export const BookingProvider = ({ children }: { children: ReactNode }) => {
   const {
     isLoading,

@@ -11,8 +11,11 @@ import {
   Input,
   Select,
   SelectItem,
+  DateInput,
+  DatePicker,
 } from "@nextui-org/react";
 import { useState } from "react";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 interface ModalAddProps {
   isDialogOpen: boolean;
@@ -36,6 +39,7 @@ export default function ModalAdd({
     handleChangePrice,
     formattedTotalToUse,
     handleChangeTotalTouse,
+    handleDateChange,
   } = useInsertVoucher({ handleCloseDialog: handleCloseDialog });
 
   return (
@@ -55,7 +59,6 @@ export default function ModalAdd({
               Thêm voucher mới
             </ModalHeader>
             <ModalBody>
-              {/* <p className="text-base text-red-500">{duplicatedMessage}</p> */}
               <Select
                 labelPlacement={"inside"}
                 name="voucherType"
@@ -166,7 +169,19 @@ export default function ModalAdd({
                   formik.touched.expirationDate &&
                   !!formik.errors.expirationDate
                 }
-                label="Ngày hết hạn của voucher (VD: x ngày)"
+                label="Ngày hết hạn sau khi đổi (VD: x ngày)"
+              />
+              <DatePicker
+                minValue={today(getLocalTimeZone()) as any}
+                aria-label="Ngày hết hạn"
+                label="Ngày hết hạn của voucher (tùy chọn)"
+                name="limitedDate"
+                onChange={handleDateChange}
+              />
+              <Input
+                onChange={formik.handleChange}
+                name="voucherQuantity"
+                label="Số lượng voucher (tùy chọn)"
               />
               <Input
                 onChange={formik.handleChange}
@@ -180,11 +195,12 @@ export default function ModalAdd({
                 onBlur={formik.handleBlur}
                 name="voucherDescription"
                 errorMessage={
-                  formik.touched.expirationDate && formik.errors.expirationDate
+                  formik.touched.voucherDescription &&
+                  formik.errors.voucherDescription
                 }
                 isInvalid={
-                  formik.touched.expirationDate &&
-                  !!formik.errors.expirationDate
+                  formik.touched.voucherDescription &&
+                  !!formik.errors.voucherDescription
                 }
                 label="Mô tả ngắn của voucher (VD: Giảm xx phần trăm)"
               />

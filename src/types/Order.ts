@@ -18,6 +18,8 @@ export interface Order {
   orderDate: string;
   orderId: string;
   userPoint: number;
+  transIDMomo?: string;
+  paymentStatus: Boolean;
 }
 
 export interface OrderProduct {
@@ -65,6 +67,8 @@ export interface OrderAdmin {
   orderStatus: string;
   createdAt: string;
   updateAt: string;
+  transIDMomo?: string;
+  totalAfterDiscount: number;
 }
 
 export interface PaginateOrder {

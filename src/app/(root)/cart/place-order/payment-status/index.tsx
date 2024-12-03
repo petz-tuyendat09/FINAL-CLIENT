@@ -36,8 +36,6 @@ export const Index = () => {
     }
   }, [resultCode, orderId, router]);
 
-  console.log(sessionData);
-
   return (
     <div className="mt-[70px] min-h-screen px-[20px]">
       <CartStepper activeStep={activeStep} />

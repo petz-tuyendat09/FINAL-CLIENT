@@ -9,13 +9,15 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function SaleSection() {
-  const { data: Products } = useGetProductsQuery({ salePercent: 1 });
+  const { data: Products } = useGetProductsQuery({ salePercent: 1, limit: 4 });
 
   useEffect(() => {
     if (Products) {
       ScrollTrigger.refresh();
     }
   }, [Products]);
+
+  console.log(Products);
 
   return (
     <section className="mt-[250px]">
@@ -43,6 +45,7 @@ export default function SaleSection() {
               </div>
             </div>
           </div>
+
           <div className="mt-20 grid grid-cols-2 gap-4 md:grid-cols-3 2xl:grid-cols-4">
             {Products?.products.map((product) => (
               <ProductCard key={product._id} Product={product} />

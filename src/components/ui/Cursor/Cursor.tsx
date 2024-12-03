@@ -38,11 +38,13 @@ export default function Cursor() {
     gsap.set(circle.current, { x, y, xPercent: -50, yPercent: -50 });
   };
 
+
   useEffect(() => {
     animate();
     window.addEventListener("mousemove", manageMouseMove);
     return () => window.removeEventListener("mousemove", manageMouseMove);
   }, []);
+
 
   return (
     <div

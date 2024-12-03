@@ -77,7 +77,6 @@ const CartPage = () => {
         },
       });
     }
-<<<<<<<<< Temporary merge branch 1
   }, [cartAfterAdjust]); 
   const totalPrice = itemsToDisplay?.reduce((acc: any, item: any) => {
     const price = item?.salePercent > 0
@@ -86,10 +85,6 @@ const CartPage = () => {
     
     return acc + price * item.productQuantity;
   }, 0);
-=========
-  }, [cartAfterAdjust]);
-
->>>>>>>>> Temporary merge branch 2
   return (
     <div className="flex min-h-screen flex-col items-center px-[100px] py-10">
       <div className="w-full rounded-lg p-8">
@@ -164,19 +159,17 @@ const CartPage = () => {
                       <div className="flex flex-row items-center justify-between">
                         <h4 className="font-[500]">Thành tiền:</h4>
                         <h3 className="text-[20px] font-[500]">
-<<<<<<<<< Temporary merge branch 1
+<<<<<<< HEAD
                           {formatMoney(totalPrice)}
-=========
+=======
                           {formatMoney(
-                            itemsToDisplay?.reduce((acc: any, item: any) => {
-                              const { salePrice } = calculateSalePrice(
-                                item.salePercent,
-                                item.productPrice,
-                              );
-                              return acc + salePrice * item.productQuantity;
-                            }, 0),
+                            itemsToDisplay?.reduce(
+                              (acc: any, item: any) =>
+                                acc + item.productPrice * item.productQuantity,
+                              0,
+                            ),
                           )}
->>>>>>>>> Temporary merge branch 2
+>>>>>>> 6b5603887627ec4a60fefd0dc0ab206b604601eb
                         </h3>
                       </div>
                     </td>

@@ -375,6 +375,7 @@ export const Index = () => {
                       </thead>
                       <tbody>
                         {itemsToDisplay.map((item: any, i: number) => {
+                          console.log(itemsToDisplay)
                           return (
                             <tr key={i}>
                               <td>
@@ -397,7 +398,7 @@ export const Index = () => {
                                 </div>
                               </td>
                               <td className="text-[17px]">
-                                {formatCurrency(item.productPrice)}
+                                {item.salePercent ? formatCurrency(item.productPrice - ((item.productPrice * item.salePercent) / 100)) : formatCurrency(item.productPrice)}
                               </td>
                               <td>
                                 <span className="rounded-br-[15px] rounded-tl-[15px] border border-gray-200 bg-gray-100 px-[40px] py-[10px] text-[17px]">
@@ -405,9 +406,9 @@ export const Index = () => {
                                 </span>
                               </td>
                               <td className="text-[18px] font-[500]">
-                                {formatCurrency(
-                                  item.productPrice * item.productQuantity,
-                                )}
+                                {item.salePercent 
+                                  ? formatCurrency((item.productPrice - ((item.productPrice * item.salePercent) / 100)) * item.productQuantity) 
+                                  : formatCurrency(item.productPrice * item.productQuantity)}
                               </td>
                             </tr>
                           );

@@ -126,7 +126,7 @@ export default function CartItem({
       </td>
       <td className="text-center">
         {cartItem?.salePercent > 0
-        ? formatMoney(cartItem.productPrice - ((cartItem.productPrice * cartItem.salePercent) / 100)) 
+        ? formatMoney(cartItem?.productPrice - ((cartItem?.productPrice * cartItem?.salePercent) / 100)) 
         : formatMoney(cartItem?.productPrice)}
       </td>
       <td>
@@ -166,8 +166,8 @@ export default function CartItem({
       <td className="text-center">
         <p className="font-medium text-gray-700">
           {cartItem.salePercent > 0
-            ? formatMoney((cartItem.productPrice - ((cartItem.productPrice * cartItem.salePercent) / 100)) * cartItem.productQuantity)
-            : formatMoney(cartItem.productPrice * cartItem.productQuantity)}
+            ? formatMoney((cartItem?.productPrice - ((cartItem?.productPrice * cartItem?.salePercent) / 100)) * cartItem?.productQuantity)
+            : formatMoney(cartItem?.productPrice * cartItem?.productQuantity)}
         </p>
       </td>
       <td>

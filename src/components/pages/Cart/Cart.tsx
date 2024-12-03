@@ -159,17 +159,7 @@ const CartPage = () => {
                       <div className="flex flex-row items-center justify-between">
                         <h4 className="font-[500]">Thành tiền:</h4>
                         <h3 className="text-[20px] font-[500]">
-<<<<<<< HEAD
                           {formatMoney(totalPrice)}
-=======
-                          {formatMoney(
-                            itemsToDisplay?.reduce(
-                              (acc: any, item: any) =>
-                                acc + item.productPrice * item.productQuantity,
-                              0,
-                            ),
-                          )}
->>>>>>> 6b5603887627ec4a60fefd0dc0ab206b604601eb
                         </h3>
                       </div>
                     </td>

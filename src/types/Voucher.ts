@@ -14,7 +14,7 @@ export interface Voucher {
   salePercent: number;
   updatedAt?: string;
   flatDiscountAmount?: number;
-  shippingDiscountAmount?: number;
+  shippingDiscountAmount?: number | undefined;
   totalToUse?: string;
   limitedDate?: any;
   voucherQuantity?: number;
@@ -26,6 +26,7 @@ interface HeldVoucher {
   redemptionCount: number;
   quantity: number;
   limitedDate?: any;
+  voucherType: string;
   _id: string;
 }
 export interface VoucherOrder {

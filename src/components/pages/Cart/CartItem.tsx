@@ -104,7 +104,6 @@ export default function CartItem({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartAfterRemoveItem, cartAfterAdjust]);
-  console.log(cartItem?.productImage);
   return (
     <tr>
       <td>

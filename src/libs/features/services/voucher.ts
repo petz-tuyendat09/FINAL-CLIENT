@@ -82,7 +82,7 @@ export const vouchersAPI = createApi({
         method: "post",
         body: formData,
       }),
-      invalidatesTags: ["HeldVouchers"],
+      invalidatesTags: ["HeldVouchers", "Voucher"],
     }),
   }),
 });

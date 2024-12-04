@@ -284,9 +284,9 @@ export const Index = () => {
       </div>
       {contextHolder}
       <Feedback
-        totalReview={data?.products[0].productRating}
-        reviewCount={data?.products[0].ratingCount}
-        productId={data?.products[0]._id as any}
+        totalReview={data?.products[0]?.productRating}
+        reviewCount={data?.products[0]?.ratingCount}
+        productId={data?.products[0]?._id as any}
       />
     </div>
   );

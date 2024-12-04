@@ -2,7 +2,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Select } from "antd";
 import { useCallback, useState } from "react";
 import './index.css';
-import { useGetProductsQuery } from "@/libs/features/services/product";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { Swiper } from 'swiper/react';
@@ -15,6 +14,7 @@ import './swiper.css';
 import { useRouter } from "next/navigation";
 import CDrawer from "@/components/ui/Drawer";
 import ReactPagination from "@/components/ui/ReactPagination";
+import { useGetShopQuery } from "@/libs/features/services/shop";
 
 export const Filter = () => {
     const [searchVal, setSearchVal] = useState('');
@@ -35,7 +35,7 @@ export const Filter = () => {
         toPrice: priceRange.to.replace(/,/g, ''),
         productCategory: category
     };
-    const { refetch, data, isLoading } = useGetProductsQuery(queryParams);
+    const { refetch, data, isLoading } = useGetShopQuery(queryParams);
     const [activeIndexes, setActiveIndexes] = useState<number[]>(
         data?.products?.map(() => 0) || []
     );
@@ -125,7 +125,7 @@ export const Filter = () => {
                 {data?.products?.map((item, index) => {
                     const rating = (item?.productRating / item?.ratingCount).toFixed(1);
                     return (
-                        <div onClick={() => router.push(`/shop/${item._id}`)} className="cursor-pointer flex flex-col gap-[10px]">
+                        <div onClick={() => router.push(`/shop/${item.productSlug}`)} className="cursor-pointer flex flex-col gap-[10px]">
                             <div key={index} className='w-[352px] relative swiper-container'>
                                 <button className={`swiper-button-prev-${index}`}>
                                     <Icon icon="uil:angle-left" width={22} />

@@ -16,6 +16,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import { paymentAPI } from "./features/services/payment";
+import { shopAPI } from "./features/services/shop";
 
 const encryptor = encryptTransform({
   secretKey: "your-secret-key", 
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   [orderStatsAPI.reducerPath]: orderStatsAPI.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
   [paymentAPI.reducerPath]: paymentAPI.reducer,
+  [shopAPI.reducerPath]: shopAPI.reducer
 });
 
 const persistConfig = {
@@ -72,6 +74,7 @@ export const store = configureStore({
       orderStatsAPI.middleware,
       userAPI.middleware,
       paymentAPI.middleware,
+      shopAPI.middleware
     ),
 });
 

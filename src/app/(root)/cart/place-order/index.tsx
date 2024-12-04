@@ -22,7 +22,6 @@ import { useInsertOrderMutation } from "@/libs/features/services/order";
 import { errorModal, successModal } from "@/utils/callModalANTD";
 import { useRouter } from "next/navigation";
 import { useHandlePaymentMomoMutation } from "@/libs/features/services/payment";
-import { values } from "lodash";
 interface CartItem {
   productId: string;
   productName: string;
@@ -40,6 +39,7 @@ export const Index = () => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [total, setTotal] = useState(0);
   const [itemsToDisplay, setItemsToDisplay] = useState<CartItem[]>([]);
+  const [shippingDiscount, setShippingDiscount] = useState(0);
   const activeStep = 1;
   const [addresses, setAddresses] = useState<MapSearchType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +47,7 @@ export const Index = () => {
   const [discount, setDiscount] = useState(0);
   const dispatch = useDispatch();
   const [salePercent, setSalePercent] = useState(0);
-
+  let shippingFee = 38000;
   const [insertOrder, { data: insertResponse, isLoading, error: insertError }] =
     useInsertOrderMutation();
   const [handlePaymentMomo, { data: response }] =
@@ -89,7 +89,9 @@ export const Index = () => {
       discount: salePercent,
     };
     dispatch(userSlice.actions.setVoucher(voucher));
-    success();
+    if (voucher.voucherId !== '' || shippingDiscount > 0) {
+      success();
+    }
   };
   const authStatus = session.status;
   const cartItems = session.data?.user?.userCart?.cartItems || [];
@@ -106,17 +108,23 @@ export const Index = () => {
   useEffect(() => {
     setItemsToDisplay(data);
     const discount = voucher?.discount ?? 0;
+    let finalTotal = initialTotal + shippingFee;
 
-    let finalTotal = initialTotal;
     if (voucherId !== "" && discount > 0) {
-      finalTotal = (initialTotal * (100 - discount)) / 100;
+      const voucherDiscount = (initialTotal * discount) / 100;
+      finalTotal -= voucherDiscount;
     }
 
+    if (shippingDiscount > 0) {
+      finalTotal -= shippingDiscount;
+    }
+
+    finalTotal = Math.max(finalTotal, 0);
     setTotal(finalTotal);
     setDiscount(
-      voucherId !== "" && discount > 0 ? initialTotal - finalTotal : 0,
+      voucherId !== "" && discount > 0 ? ((initialTotal * salePercent) / 100) : 0,
     );
-  }, [voucherId, handleChangeVoucher, session]);
+  }, [voucherId, handleChangeVoucher, session, shippingDiscount]);
 
   useEffect(() => {
     if (paymentMethod === "COD" && insertResponse) {
@@ -380,26 +388,26 @@ export const Index = () => {
                                   />
                                   <div>
                                     <h1 className="text-[17px]">
-                                      {item.productName}
+                                      {item?.productName}
                                     </h1>
                                     <p className="text-[15px]">
-                                      {item.productOption}
+                                      {item?.productOption}
                                     </p>
                                   </div>
                                 </div>
                               </td>
                               <td className="text-[17px]">
-                                {formatCurrency(item.productPrice)}
+                                {item?.salePercent > 0 ? formatCurrency(item?.productPrice - ((item?.productPrice * item?.salePercent) / 100)) : formatCurrency(item?.productPrice)}
                               </td>
                               <td>
                                 <span className="rounded-br-[15px] rounded-tl-[15px] border border-gray-200 bg-gray-100 px-[40px] py-[10px] text-[17px]">
-                                  {item.productQuantity}
+                                  {item?.productQuantity}
                                 </span>
                               </td>
                               <td className="text-[18px] font-[500]">
-                                {formatCurrency(
-                                  item.productPrice * item.productQuantity,
-                                )}
+                                {item.salePercent > 0
+                                  ? formatCurrency((item?.productPrice - ((item?.productPrice * item?.salePercent) / 100)) * item?.productQuantity) 
+                                  : formatCurrency(item?.productPrice * item?.productQuantity)}
                               </td>
                             </tr>
                           );
@@ -417,13 +425,7 @@ export const Index = () => {
                       <div className="flex flex-row justify-between">
                         <span>Tổng tiền hàng</span>
                         <span>
-                          {formatCurrency(
-                            itemsToDisplay.reduce(
-                              (acc, item) =>
-                                acc + item.productPrice * item.productQuantity,
-                              0,
-                            ),
-                          )}
+                          {formatCurrency(initialTotal)}
                         </span>
                       </div>
                       <div className="flex flex-row justify-between">
@@ -436,12 +438,18 @@ export const Index = () => {
                       </div>
                       <div className="flex flex-row justify-between">
                         <span>Phí vận chuyển:</span>
-                        <span>38,000đ</span>
+                        <span>{formatCurrency(shippingFee)}</span>
                       </div>
+                      {shippingDiscount > 0 && (
+                        <div className="flex flex-row justify-between">
+                          <span>Giảm giá phí vận chuyển:</span>
+                          <span>-{formatCurrency(shippingDiscount)}</span>
+                        </div>
+                      )}
                       <div className="flex flex-row justify-between">
                         <span>Tiền thanh toán:</span>
                         <span className="text-[17px] font-[500]">
-                          {formatCurrency(initialTotal)}
+                          {formatCurrency(total)}
                         </span>
                       </div>
                     </div>
@@ -465,7 +473,7 @@ export const Index = () => {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(true)}
-                    className="font-[500] text-primary"
+                    className="font-[500] text-primary z-10"
                   >
                     Chọn
                   </button>
@@ -476,6 +484,7 @@ export const Index = () => {
         </Formik>
       </div>
       <Voucher
+        setShippingDiscount={setShippingDiscount}
         setSalePercent={setSalePercent}
         handleChangeVoucher={handleChangeVoucher}
         voucherId={voucherId}

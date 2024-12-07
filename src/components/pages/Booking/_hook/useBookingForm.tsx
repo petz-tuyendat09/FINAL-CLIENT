@@ -24,12 +24,13 @@ export default function useBookingForm() {
   const formik = useFormik({
     initialValues: {
       customerName: "",
-      customerPhone: "",
-      customerEmail: "",
+      customerPhone: session?.data?.user.userPhone || "",
+      customerEmail: session?.data?.user.userEmail || "",
       selectedServices: {},
       bookingDate: "",
       bookingHours: "",
     },
+    enableReinitialize: true,
     onSubmit: (values) => {
       setIsConfirm(true);
     },
@@ -88,7 +89,7 @@ export default function useBookingForm() {
       ...formik.values,
       totalPrice: totalPrice,
     };
-    await createBooking(bookingObject);
+    createBooking(bookingObject);
     setIsConfirm(false);
   }
 

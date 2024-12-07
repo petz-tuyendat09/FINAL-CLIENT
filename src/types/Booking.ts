@@ -1,6 +1,7 @@
 export enum BookingStatus {
   Booked = "Đã đặt",
   Done = "Đã hoàn thành",
+  Confirm = "Đã xác nhận",
   Canceled = "Đã hủy",
 }
 

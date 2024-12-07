@@ -19,10 +19,6 @@ import formatDate from "@/utils/formatDate";
 
 const columns = [
   {
-    key: "_id",
-    label: "ID VOUCHER",
-  },
-  {
     key: "voucherPoint",
     label: "ĐIỂM",
   },
@@ -56,6 +52,10 @@ const columns = [
     label: "MÔ TẢ",
   },
   {
+    key: "totalToUse",
+    label: "TỔNG ĐƠN",
+  },
+  {
     key: "action",
     label: "ACTION",
   },
@@ -79,7 +79,7 @@ export default function ChangeVoucherTable() {
       </p>
       <Table
         aria-label="Bảng hiển thị danh mục"
-        className="w-full"
+        className="w-full text-[10px]"
         checkboxesProps={{
           classNames: {
             icon: "bg-black h-full w-full",
@@ -151,6 +151,10 @@ export default function ChangeVoucherTable() {
                 ) : columnKey === "limitedDate" ? (
                   <TableCell>
                     {formatDate(item.limitedDate) || "Không giới hạn"}
+                  </TableCell>
+                ) : columnKey === "totalToUse" ? (
+                  <TableCell>
+                    {formatMoney(item.totalToUse) || "Không giới hạn"}
                   </TableCell>
                 ) : columnKey === "sale" ? (
                   <TableCell>

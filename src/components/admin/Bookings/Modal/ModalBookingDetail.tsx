@@ -1,5 +1,6 @@
 import {
   useCancelBookingMutation,
+  useConfirmBookingMutation,
   useDoneBookingMutation,
   useGetBookingQuery,
 } from "@/libs/features/services/booking";
@@ -34,6 +35,8 @@ export default function ModalBookingDetail({
   const [bookingDetail, setBookingDetail] = useState<Booking>();
 
   const [cancelBooking, { data: cancelResponse }] = useCancelBookingMutation();
+  const [confirmBooking, { data: confirmResponse }] =
+    useConfirmBookingMutation();
   const [doneBooking, { data: doneResponse }] = useDoneBookingMutation();
 
   useEffect(() => {
@@ -44,15 +47,21 @@ export default function ModalBookingDetail({
 
   useEffect(() => {
     if (cancelResponse) {
-      successModal({ content: cancelResponse.message, duration: 3 });
+      successModal({ content: cancelResponse.message });
     }
   }, [cancelResponse]);
 
   useEffect(() => {
     if (doneResponse) {
-      successModal({ content: doneResponse.message, duration: 3 });
+      successModal({ content: doneResponse.message });
     }
   }, [doneResponse]);
+
+  useEffect(() => {
+    if (confirmResponse) {
+      successModal({ content: confirmResponse.message });
+    }
+  }, [confirmResponse]);
 
   if (isLoading) {
     return (
@@ -190,7 +199,8 @@ export default function ModalBookingDetail({
                 <Button
                   isDisabled={
                     bookingDetail?.bookingStatus === "Done" ||
-                    bookingDetail?.bookingStatus === "Canceled"
+                    bookingDetail?.bookingStatus === "Canceled" ||
+                    bookingDetail?.bookingStatus === "Confirm"
                   }
                   color="danger"
                   onClick={() => {
@@ -201,7 +211,23 @@ export default function ModalBookingDetail({
                   Hủy lịch
                 </Button>
                 <Button
-                  isDisabled={bookingDetail?.bookingStatus !== "Booked"}
+                  isDisabled={
+                    bookingDetail?.bookingStatus === "Done" ||
+                    bookingDetail?.bookingStatus === "Canceled" ||
+                    bookingDetail?.bookingStatus === "Confirm"
+                  }
+                  onClick={() => {
+                    confirmBooking({ bookingId: bookingDetail!._id });
+                  }}
+                  className="bg-blue-600 text-white"
+                >
+                  Đã xác nhận
+                </Button>
+                <Button
+                  isDisabled={
+                    bookingDetail?.bookingStatus === "Canceled" ||
+                    bookingDetail?.bookingStatus === "Done"
+                  }
                   color="success"
                   onClick={() => {
                     doneBooking({ bookingId: bookingDetail!._id });

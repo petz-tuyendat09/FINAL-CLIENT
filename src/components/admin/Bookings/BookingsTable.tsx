@@ -52,6 +52,7 @@ const columns = [
 
 const statusColors = {
   [BookingStatus.Done]: "bg-green-700",
+  [BookingStatus.Confirm]: "bg-blue-700",
   [BookingStatus.Booked]: "bg-amber-500	",
   [BookingStatus.Canceled]: "bg-red-600",
 };

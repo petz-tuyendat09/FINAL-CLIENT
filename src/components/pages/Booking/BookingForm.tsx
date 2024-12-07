@@ -109,6 +109,7 @@ export default function BookingForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               name="customerPhone"
+              value={formik.values.customerPhone}
               errorMessage={
                 formik.touched.customerPhone && formik.errors.customerPhone
                   ? formik.errors.customerPhone
@@ -123,6 +124,7 @@ export default function BookingForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               name="customerEmail"
+              value={formik.values.customerEmail}
               errorMessage={
                 formik.touched.customerEmail && formik.errors.customerEmail
                   ? formik.errors.customerEmail

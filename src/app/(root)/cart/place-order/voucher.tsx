@@ -62,7 +62,6 @@ export default function Voucher({
   if (isLoading) {
     return <div>Loading vouchers...</div>;
   }
-  console.log(data);
   return (
     <>
       <Modal

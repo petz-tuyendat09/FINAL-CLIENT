@@ -38,7 +38,7 @@ export interface User {
 export enum OrderStatus {
   PAID = "Đã thanh toán",
   FAILED = "Thanh toán thất bại",
-  PENDING = "Đang chờ",
+  PENDING = "Đang chờ xác nhận",
   DELIVERING = "Đang giao",
   DELIVERED = "Đã giao",
   CANCELLED = "Đã hủy",

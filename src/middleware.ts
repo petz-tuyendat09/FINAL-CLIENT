@@ -29,10 +29,6 @@ function isAuthorized(session: any, pathname: any) {
       }
     }
 
-    if (userRole === "manager" && pathname.startsWith("/admin/users")) {
-      return false;
-    }
-
     const restrictedPaths = ["/admin/add-product", "/admin/shop/edit-product/"];
     const isRestricted = restrictedPaths.some((path) =>
       pathname.startsWith(path),

@@ -33,6 +33,7 @@ export default function SearchProduct({
           src={productImg}
           alt="Product Image"
           width={150}
+          unoptimized
           height={150}
         ></Image>
       </Link>

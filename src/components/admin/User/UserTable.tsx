@@ -66,6 +66,7 @@ export default function BookingsTable() {
 
   const session = useSession();
   const userId = session.data?.user._id;
+  const currentRole = session?.data?.user.userRole;
 
   return (
     <>
@@ -112,29 +113,31 @@ export default function BookingsTable() {
                   if (columnKey === "userRole") {
                     return (
                       <TableCell>
-                        <div className="w-[150px]">
-                          <Select
-                            onSelectionChange={(value) => {
-                              handleChangeUserRole(user._id, value as any);
-                            }}
-                            isDisabled={
-                              user._id === userId || user.userRole === "admin"
-                            }
-                            disabledKeys={["admin"]}
-                            defaultSelectedKeys={[user.userRole]}
-                            label="Role"
-                          >
-                            {Object.keys(UserRole).map((userRole) => (
-                              <SelectItem
-                                className="dark:text-white"
-                                key={userRole}
-                                value={userRole}
-                              >
-                                {UserRole[userRole as keyof typeof UserRole]}
-                              </SelectItem>
-                            ))}
-                          </Select>
-                        </div>
+                        <Select
+                          onSelectionChange={(value) => {
+                            handleChangeUserRole(user._id, value as any);
+                          }}
+                          isDisabled={
+                            user._id === userId || user.userRole === "admin"
+                          }
+                          disabledKeys={
+                            currentRole === "manager"
+                              ? ["admin", "manager"]
+                              : ["admin"]
+                          }
+                          defaultSelectedKeys={[user.userRole]}
+                          label="Role"
+                        >
+                          {Object.keys(UserRole).map((userRole) => (
+                            <SelectItem
+                              className="dark:text-white"
+                              key={userRole}
+                              value={userRole}
+                            >
+                              {UserRole[userRole as keyof typeof UserRole]}
+                            </SelectItem>
+                          ))}
+                        </Select>
                       </TableCell>
                     );
                   }

@@ -34,11 +34,11 @@ export default function ProductCardCartButton({
           Thêm giỏ hàng thành công.{" "}
           <div
             onClick={() => {
-              animatePageOut("/user/review-product", router);
+              animatePageOut("/cart", router);
             }}
             className="cursor-pointer text-blue-500"
           >
-            Đánh giá ngay
+            Xem ngay
           </div>
         </div>
       ),

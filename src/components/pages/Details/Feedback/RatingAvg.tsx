@@ -6,7 +6,7 @@ export default function RatingAvg({ avgRating }: { avgRating: number }) {
       <h4>Đánh giá trung bình của sản phẩm</h4>
       <div className="mt-auto">
         <div className="flex items-center gap-2">
-          <h3 className="text-h2 font-bold">{avgRating}</h3>
+          <h3 className="text-h2 font-bold">{avgRating.toFixed(1) || 0} </h3>
           <div className="flex items-center gap-0.5 rounded-[20px] bg-yellow-500 px-4 py-1 text-[12px] text-white">
             <Icon icon="prime:star-fill" />
             <Icon icon="prime:star-fill" />

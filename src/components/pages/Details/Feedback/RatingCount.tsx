@@ -18,7 +18,7 @@ export default function RatingCount({
             {highRatingsCount}% tỉ lệ hài lòng
           </div>
         </div>
-        <p className="text-[14px] text-gray-500">
+        <p className="mt-4 text-[14px] text-gray-500">
           Đánh giá của khách hàng dành cho sản phẩm này
         </p>
       </div>

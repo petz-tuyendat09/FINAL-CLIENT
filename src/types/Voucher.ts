@@ -8,11 +8,12 @@ export interface Voucher {
   _id: string;
   voucherPoint: number;
   voucherType: "ON_ORDER_SAVINGS" | "FLAT_DISCOUNT" | "SHIPPING_DISCOUNT";
-  expirationDate: number;
+  expirationDate: Date;
   maxRedemption: number;
   voucherDescription: string;
   salePercent: number;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
   flatDiscountAmount?: number;
   shippingDiscountAmount?: number | undefined;
   totalToUse?: string;
@@ -22,7 +23,7 @@ export interface Voucher {
 
 interface HeldVoucher {
   voucherId: Voucher;
-  expirationDate: any;
+  expirationDate: Date;
   redemptionCount: number;
   quantity: number;
   limitedDate?: any;

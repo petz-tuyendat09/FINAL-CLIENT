@@ -47,6 +47,7 @@ export const Index = () => {
   const [discount, setDiscount] = useState(0);
   const dispatch = useDispatch();
   const [salePercent, setSalePercent] = useState(0);
+  const [flatDiscount, setFlatDiscount] = useState(0);
   let shippingFee = 38000;
   const [insertOrder, { data: insertResponse, isLoading, error: insertError }] =
     useInsertOrderMutation();
@@ -105,12 +106,13 @@ export const Index = () => {
     
     return acc + price * item.productQuantity;
   }, 0);
+
   useEffect(() => {
     setItemsToDisplay(data);
     const discount = voucher?.discount ?? 0;
     let finalTotal = initialTotal + shippingFee;
 
-    if (voucherId !== "" && discount > 0) {
+    if (voucherId && discount > 0) {
       const voucherDiscount = (initialTotal * discount) / 100;
       finalTotal -= voucherDiscount;
     }
@@ -119,12 +121,17 @@ export const Index = () => {
       finalTotal -= shippingDiscount;
     }
 
+    if (voucherId && flatDiscount > 0) {
+      finalTotal -= flatDiscount;
+    }
     finalTotal = Math.max(finalTotal, 0);
     setTotal(finalTotal);
-    setDiscount(
-      voucherId !== "" && discount > 0 ? ((initialTotal * salePercent) / 100) : 0,
-    );
-  }, [voucherId, handleChangeVoucher, session, shippingDiscount]);
+    const appliedDiscount = (voucherId !== "" && discount > 0)
+      ? (initialTotal * salePercent) / 100
+      : 0;
+
+    setDiscount(appliedDiscount);
+  }, [voucherId, handleChangeVoucher, session, shippingDiscount, flatDiscount]);
 
   useEffect(() => {
     if (paymentMethod === "COD" && insertResponse) {
@@ -433,7 +440,7 @@ export const Index = () => {
                         <span className="text-primary">
                           {discount !== 0
                             ? "-" + formatCurrency(discount)
-                            : "0đ"}
+                            : flatDiscount !== 0 ? "-" + formatCurrency(flatDiscount) : 0}
                         </span>
                       </div>
                       <div className="flex flex-row justify-between">
@@ -484,6 +491,8 @@ export const Index = () => {
         </Formik>
       </div>
       <Voucher
+        setFlatDiscount={setFlatDiscount}
+        total={initialTotal}
         setShippingDiscount={setShippingDiscount}
         setSalePercent={setSalePercent}
         handleChangeVoucher={handleChangeVoucher}

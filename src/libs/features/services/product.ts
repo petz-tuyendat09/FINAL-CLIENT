@@ -59,7 +59,7 @@ export const productsAPI = createApi({
         return `/by-cat-id?${queryParams}`;
       },
     }),
-    getReview: builder.query<PaginateReview, ReviewQueryParams>({
+    getReview: builder.query<PaginateReview, any>({
       query: (params) => {
         const queryParams = new URLSearchParams(
           params as Record<string, string>,

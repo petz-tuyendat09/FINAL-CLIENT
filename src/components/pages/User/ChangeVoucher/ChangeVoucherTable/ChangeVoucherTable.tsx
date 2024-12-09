@@ -141,7 +141,7 @@ export default function ChangeVoucherTable() {
                     {VoucherType[item.voucherType as keyof typeof VoucherType]}
                   </TableCell>
                 ) : columnKey === "expirationDate" ? (
-                  <TableCell>{item.expirationDate} ngày</TableCell>
+                  <TableCell>{(item as any).expirationDate} ngày</TableCell>
                 ) : columnKey === "voucherQuantity" ? (
                   <TableCell>
                     {item.voucherQuantity === 0

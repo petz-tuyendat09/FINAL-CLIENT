@@ -77,12 +77,13 @@ const CartPage = () => {
         },
       });
     }
-  }, [cartAfterAdjust]); 
+  }, [cartAfterAdjust]);
   const totalPrice = itemsToDisplay?.reduce((acc: any, item: any) => {
-    const price = item?.salePercent > 0
-      ? item.productPrice - (item.productPrice * item.salePercent) / 100
-      : item.productPrice;
-    
+    const price =
+      item?.salePercent > 0
+        ? item.productPrice - (item.productPrice * item.salePercent) / 100
+        : item.productPrice;
+
     return acc + price * item.productQuantity;
   }, 0);
   return (
@@ -167,12 +168,6 @@ const CartPage = () => {
                   <tr>
                     <td className="border-b-0"></td>
                     <td className="border-b-0"></td>
-                    <td
-                      className="border-b-0 text-[15px] text-gray-800"
-                      colSpan={2}
-                    >
-                      Tax included and shipping calculated at checkout
-                    </td>
                   </tr>
                   <tr></tr>
                   <tr>

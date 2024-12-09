@@ -47,7 +47,7 @@ export default function OrderStats() {
   if (error) return <div>Error: {errorMessage}</div>;
 
   return (
-    <div className="mt-8 w-full rounded-lg bg-white p-8 shadow-lg dark:bg-[#18181b] dark:text-white">
+    <div className="relative z-20 mt-8 w-full rounded-lg bg-white p-8 shadow-lg dark:bg-[#18181b] dark:text-white">
       <div className="mb-4 flex items-center">
         <h1 className="text-2xl font-semibold">Báo cáo doanh thu</h1>
       </div>

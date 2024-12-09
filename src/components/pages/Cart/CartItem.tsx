@@ -125,9 +125,12 @@ export default function CartItem({
         </Link>
       </td>
       <td className="text-center">
-        {cartItem?.salePercent > 0
-        ? formatMoney(cartItem?.roductPrice - ((cartItem?.productPrice * cartItem?.salePercent) / 100)) 
-        : formatMoney(cartItem?.productPrice)}
+        {cartItem?.productPrice && formatMoney(salePrice)}
+        {cartItem?.salePercent !== 0 && (
+          <span className="ml-1 rounded-full bg-primary px-2 py-1 text-[14px] text-white">
+            {-cartItem?.salePercent}%
+          </span>
+        )}
       </td>
       <td>
         <div className="flex justify-center">
@@ -165,9 +168,7 @@ export default function CartItem({
       </td>
       <td className="text-center">
         <p className="font-medium text-gray-700">
-          {cartItem.salePercent > 0
-            ? formatMoney((cartItem?.productPrice - ((cartItem?.productPrice * cartItem?.salePercent) / 100)) * cartItem?.productQuantity)
-            : formatMoney(cartItem?.productPrice * cartItem?.productQuantity)}
+          {formatMoney(salePrice * cartItem.productQuantity)}
         </p>
       </td>
       <td>

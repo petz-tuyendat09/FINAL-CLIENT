@@ -190,7 +190,7 @@ export default function VoucherTable() {
                     {VoucherType[item.voucherType as keyof typeof VoucherType]}
                   </TableCell>
                 ) : columnKey === "expirationDate" ? (
-                  <TableCell>{item.expirationDate} ngày</TableCell>
+                  <TableCell>{item.expirationDate as any} ngày</TableCell>
                 ) : columnKey === "maxRedemption" ? (
                   <TableCell className="font-bold">
                     {item.maxRedemption || "Không giới hạn"}
